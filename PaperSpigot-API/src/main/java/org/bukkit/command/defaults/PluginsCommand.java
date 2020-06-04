@@ -83,7 +83,7 @@ public class PluginsCommand extends BukkitCommand {
             stringBuilder.append(plugin.getDescription().getName());
         }
 
-        if (plugins.length == 0) return " §8» §7Server don't contains any plugins.";
+        if (plugins.length == 0) return " §8» §7Server doesn't contains any plugins.";
         else return " §8» §7Plugins: §8(§a" + enabled + "§8/§c" + disbaled + "§8/§7" + plugins.length + "§8)§7: " + stringBuilder.toString();
     }
 
