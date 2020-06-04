@@ -1,0 +1,61 @@
+{
+  "Prefix": "\u00267(*) \u0026f(o) \u0026dNatsuki \u0026f(o) \u00267(*)",
+  "API": {
+    "GeoLite2": {
+      "CountryDbFilePath": "Natsuki/GeoLite2-Country.mmdb"
+    },
+    "ProxyCheckIO": {
+      "ApiKey": "Your Key"
+    }
+  },
+  "Connection": {
+    "MaxConnectionPerAddress": 1,
+    "CheckPlayerAddress": true,
+    "Region": {
+      "Check": true,
+      "AllowedRegions": [
+        "PL"
+      ]
+    }
+  },
+  "PacketData": {
+    "MaxNbtDataSize": 7000,
+    "FixSkullNbt": true,
+    "SkipNBT": true,
+    "CustomPayload": {
+      "MaxChannelLength": 20,
+      "MaxDataLength": 500
+    }
+  },
+  "PacketSettings": {
+    "CustomPacketDecoder": true,
+    "ReadCustomPayload": false,
+    "MaxPacketsPerSecond": 300,
+    "CustomPayload": {
+      "BlockChannels": false,
+      "BlockedChannels": [
+        "WDL",
+        "FML"
+      ]
+    }
+  },
+  "Utils": {
+    "TickPerSecondCommandPermissionCheck": false,
+    "AntiRedStone": true,
+    "AntiBotCheck": true,
+    "McProtocolLibCheck": true,
+    "PacketDebugger": false
+  },
+  "DoNotTouchIfYouAreDoNotKnowWhatAreYouDoing": {
+    "MaxChannelsPerSecondPerAddress": 7
+  },
+  "Messages": {
+    "McProtocolLibKick": "\u0026c\u0026lDobra wypierdalaj jebany ulancu",
+    "AntiBotKick": "\u0026cSystem wykryl ze jestes botem\n\u00267Jesli to blad zglos to administracji",
+    "BlockedCrashKick": "\u0026cZostales wyrzucony za probe crashu",
+    "BlockedPayLoadKick": "\u0026cWysylanie tego payloadu zostalo zablokowane",
+    "ProxyOrVpnKick": "\u0026cWykrylismy ze uzywasz VPN lub proxy\n\u00267Jesli to blad zrestartuj router lub zglos to administarcji",
+    "RegionKick": "\u0026cPrzyjmujemy polaczenia tylko z Polski\n\u00267Jesli mieszkasz za granica zglos to administracji",
+    "MaxConnectionsPerIp": "\u0026cPrzekroczyles limit polaczen z 1 ip"
+  }
+}
