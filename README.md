@@ -12,7 +12,7 @@ PaperSpigot 1.8.8 with patched exploits.
 
 
 #### Posiada
-» W wiekszosci zablokowane exploity. (NBT, Handshake/Ping/Packet spam (ekhm zdazaja sie bypassy), itd).
+» W wiekszosci zablokowane exploity. (NBT, Handshake/Ping/Packet spam (ekhm zdarzaja sie bypassy), itd).
 
 » Blokade McProtocolLib.
 
