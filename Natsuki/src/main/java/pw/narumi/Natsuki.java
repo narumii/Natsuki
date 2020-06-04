@@ -36,6 +36,10 @@ public class Natsuki {
     private Config config;
 
     public void load() {
+        checkStatus();
+        checkBlackList();
+        checkVersion();
+
         configReader = new ConfigReader();
         config = new Config();
         initConfig();
