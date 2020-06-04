@@ -24,27 +24,12 @@ public class TicksPerSecondCommand extends Command
         this.setPermission( "bukkit.command.tps" );
     }
 
-
-    //ThreadMXBean tmxb = ManagementFactory.getThreadMXBean();
-
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (Natsuki.getInstance().getConfig().isCheckTpsPermission() && !testPermission(sender)) {
             return true;
         }
-        if (args.length > 0 && (args[0].equalsIgnoreCase("threads") || args[0].equalsIgnoreCase("watki") || args[0].equalsIgnoreCase("usage"))) {
-            sender.sendMessage("\n                   §d* §fThreads §d*                    ");
-            long size = 0;
-            final ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
-            for (final Thread thread : Thread.getAllStackTraces().keySet()) {
-                size += threadMXBean.getThreadCpuTime(thread.getId());
-                if (threadMXBean.getThreadCpuTime(thread.getId()) > 0) {
-                    long l = threadMXBean.getThreadCpuTime(thread.getId()) * 100L / size;
-                    if (l > 0) sender.sendMessage(" §8» §7" + thread.getName() + " §8-> §d" + l + "%");
-                }
-            }
-            return true;
-        }
+
         final Runtime runtime = Runtime.getRuntime();
         if (args.length > 0 && (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("system") || args[0].equalsIgnoreCase("machine") || args[0].equalsIgnoreCase("information"))) {
             sender.sendMessage("\n                      §d* §fInfo §d*                    ");
@@ -71,13 +56,6 @@ public class TicksPerSecondCommand extends Command
         sender.sendMessage("\n                    §d* §fSystem §d*                    ");
         sender.sendMessage(" §8» §7RAM usage: §d" + Utils.humanReadableByteCount(Utils.getSystemInfo().getHardware().getMemory().getTotal() -  Utils.getSystemInfo().getHardware().getMemory().getAvailable()) + "§7/§5" + Utils.humanReadableByteCount(Utils.getSystemInfo().getHardware().getMemory().getTotal()));
         sender.sendMessage(" §8» §7CPU usage: §d" + Utils.getFormat().format(Utils.getOsBean().getSystemCpuLoad() * 100) + "§d%");
-       //sender.sendMessage(" §8» §7Processors: §d" + runtime.availableProcessors());
-        //final NetworkIF networkIF = Utils.getSystemInfo().getHardware().getNetworkIFs()[0];
-        //sender.sendMessage(" §8» §7Network§8 -> §7speed: §d" + Utils.humanReadableByteCountInternet(networkIF.getSpeed()) + " §8| §7bytes sent: §d" + Utils.humanReadableByteCount(networkIF.getBytesSent()) + " §8| §7bytes received: §d" + Utils.humanReadableByteCount(networkIF.getBytesRecv()));
-        /*sender.sendMessage("\n                      §d* §fInfo §d*                    ");
-        sender.sendMessage(" §8» §7Processor arch: §d" + Utils.getOsBean().getArch());
-        sender.sendMessage(" §8» §7System: §d" + Utils.getSystemInfo().getOperatingSystem().getFamily() + Utils.getSystemInfo().getOperatingSystem().getVersionInfo());
-        sender.sendMessage(" §8» §7Processor: §d" + Utils.getSystemInfo().getHardware().getProcessor().getName());*/
         return true;
     }
 }
