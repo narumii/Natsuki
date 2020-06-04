@@ -107,7 +107,7 @@ public class Natsuki {
             }
 
             scanner.close();
-            System.out.println("Podiadasz najnowsza wersje silnika");
+            System.out.println("Posiadasz najnowsza wersje silnika");
         } catch (final Exception e) {
             System.err.println("Nie mozna polaczyc sie ze strona");
             System.exit(0);
