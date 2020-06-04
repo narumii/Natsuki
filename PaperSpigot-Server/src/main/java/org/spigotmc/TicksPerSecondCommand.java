@@ -19,7 +19,7 @@ public class TicksPerSecondCommand extends Command
     {
         super( name );
         this.description = "Gets the current ticks per second for the server / [] = optional (can be null/empty)";
-        this.usageMessage = "/gc [threads/info/can be empty]";
+        this.usageMessage = "/gc [info/can be empty]";
         this.setAliases(Collections.singletonList("gc"));
         this.setPermission( "bukkit.command.tps" );
     }
