@@ -2002,7 +2002,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                 this.closeChannel(
                         Natsuki.getInstance().getConfig().PREFIX
                                 + "\n\n" +
-                                Natsuki.getInstance().getConfig().MESSAGES.get("McProtocolLibKick"));
+                                Natsuki.getInstance().getConfig().MESSAGES.get("AntiBotKick"));
             } else {
                 this.keepAlive.remove((Object) packetplayinkeepalive.a());
             }
