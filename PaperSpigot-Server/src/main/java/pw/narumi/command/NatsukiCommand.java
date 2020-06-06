@@ -24,15 +24,6 @@ public class NatsukiCommand extends Command {
         sender.sendMessage(" §8» §7Blacklisted joins: §d" + Holder.getBlacklistedJoins().get());
         sender.sendMessage(" ");
 
-        for (final Field declaredField : Natsuki.getInstance().getConfig().getClass().getDeclaredFields()) {
-            try {
-                declaredField.setAccessible(true);
-                System.out.println(declaredField.getName() + ": " + declaredField.get(Natsuki.getInstance().getConfig()));
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-
         return false;
     }
 }
