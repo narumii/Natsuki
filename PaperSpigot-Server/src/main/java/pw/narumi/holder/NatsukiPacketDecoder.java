@@ -1,13 +1,11 @@
 package pw.narumi.holder;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.DecoderException;
-import net.minecraft.server.EnumProtocolDirection;
-import net.minecraft.server.NetworkManager;
-import net.minecraft.server.Packet;
-import net.minecraft.server.PacketDataSerializer;
+import net.minecraft.server.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -15,7 +13,10 @@ import org.apache.logging.log4j.MarkerManager;
 import pw.narumi.Natsuki;
 import pw.narumi.exception.NatsukiException;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,7 +33,10 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
 
     public NatsukiPacketDecoder(final EnumProtocolDirection direction) { this.direction = direction; }
 
-    protected void decode(ChannelHandlerContext channel, ByteBuf buf, List<Object> objects) throws Exception {
+    protected void decode(final ChannelHandlerContext channel, final ByteBuf buf, final List<Object> objects) throws Exception {
+        if (Natsuki.getInstance().getConfig().isDebug() && Natsuki.getInstance().getConfig().isPacketDebugger())
+            System.out.println(channel.channel().remoteAddress() + " -> " + Arrays.toString(buf.array()));
+
         if (buf.readableBytes() <= 0) { //HEHE
             channel.pipeline().remove(this);
             throw new NatsukiException("Null readable bytes received");
@@ -40,26 +44,26 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
 
         //SPRAWDZANIE PAKIEUT HANDSHAKE
         if (packetState == 0) {
-            final ByteBuf handshakeBuf = buf.duplicate(); //TWORZENIE KOPII ABY NIE INGEROWAC W ORGINALNA DATA PAKIETU
 
+            final PacketDataSerializer handshakeBuf = new PacketDataSerializer(buf.duplicate()); //TWORZENIE KOPII ABY NIE INGEROWAC W ORGINALNA DATA PAKIETU
             if (handshakeBuf.readableBytes() > 256) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Too big packet");
             }
 
-            final int packetId = readVarInt(handshakeBuf);
+            final int packetId = handshakeBuf.readVarInt();
             if (handshakeBuf.readableBytes() <= 0 || packetId != 0) { //1 PAKIET TO ZAWSZE HANDSHAKE
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Invalid handshake packet");
             }
 
-            final int protocol = readVarInt(handshakeBuf);
+            final int protocol = handshakeBuf.readVarInt();
             if (handshakeBuf.readableBytes() <= 0 || protocol != 47) { //PROTOCOL 47 BO TO 1.8.8
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Invalid protocol version");
             }
 
-            final byte[] host = new byte[readVarInt(handshakeBuf)];
+            final byte[] host = new byte[handshakeBuf.readVarInt()];
             handshakeBuf.readBytes(host);
             if (handshakeBuf.readableBytes() <= 2) { //MAGIA
                 channel.pipeline().remove(this);
@@ -72,7 +76,7 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
                 throw new NatsukiException("Invalid server port");
             }
 
-            final int state = readVarInt(handshakeBuf);
+            final int state = handshakeBuf.readVarInt();
             if (state != 1 && state != 2) { //STATE ZAWSZE MUSI BYC 1 LUB 2
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Invalid handshake state");
@@ -89,7 +93,7 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
         if (packetState > 3)
             handshakeIntent = 0;
 
-        final PacketDataSerializer serializer = new PacketDataSerializer(buf); //PIERDOLONY SYF
+        final PacketDataSerializer serializer = new PacketDataSerializer(buf);
         final Packet<?> packet = channel.channel().attr(NetworkManager.c).get().a(this.direction, serializer.readVarInt()); //POBIERANIE PAKIEUT
 
         if (handshakeIntent == 2 && serializer.readableBytes() <= 0 && (packetState < 3)) { //SPRAWDZANIE DATY
@@ -122,24 +126,5 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
         objects.add(packet); //CHUJ WIE
 
         ++packetState;
-    }
-
-    protected int readVarInt(final ByteBuf buf) {
-        int out = 0;
-        int bytes = 0;
-        byte in;
-
-        do {
-            if (buf.readableBytes() <= 0)
-                throw new NatsukiException("Null readable bytes");
-
-            in = buf.readByte();
-            out |= (in & 127) << bytes++ * 7;
-            if (bytes > 5) {
-                throw new RuntimeException("VarInt too big");
-            }
-        } while ((in & 128) == 128);
-
-        return out;
     }
 }

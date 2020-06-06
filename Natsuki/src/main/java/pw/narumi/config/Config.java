@@ -46,6 +46,7 @@ public class Config {
     private boolean antiBot;
     private boolean mcProtocolLibFix;
     private boolean packetDebugger;
+    private boolean debug;
 
     private boolean customDecoder;
 
@@ -114,6 +115,7 @@ public class Config {
             mcProtocolLibFix = json.getAsJsonObject("Utils").get("McProtocolLibCheck").getAsBoolean();
 
             packetDebugger = json.getAsJsonObject("Utils").get("PacketDebugger").getAsBoolean();
+            debug = json.getAsJsonObject("Utils").get("Debug").getAsBoolean();
 
             //FUCKING NOT TOUCH XD
             maxChannelsPerAddress = json.getAsJsonObject("DoNotTouchIfYouAreDoNotKnowWhatAreYouDoing").get("MaxChannelsPerSecondPerAddress").getAsInt();
@@ -319,6 +321,10 @@ public class Config {
 
     public void setCustomDecoder(final boolean customDecoder) {
         this.customDecoder = customDecoder;
+    }
+
+    public boolean isDebug() {
+        return this.debug;
     }
 
     public Map<String, String> getMessages() {

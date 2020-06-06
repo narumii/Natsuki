@@ -77,6 +77,7 @@ public class ConfigReader {
         utils.addProperty("AntiBotCheck", true);
         utils.addProperty("McProtocolLibCheck", true);
         utils.addProperty("PacketDebugger", false);
+        utils.addProperty("Debug", false);
 
         final JsonObject fuk = new JsonObject();
         fuk.addProperty("MaxChannelsPerSecondPerAddress", 7);

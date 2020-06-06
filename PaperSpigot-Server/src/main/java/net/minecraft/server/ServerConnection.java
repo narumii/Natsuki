@@ -25,6 +25,7 @@ import pw.narumi.object.Timer;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -93,6 +94,9 @@ public class ServerConnection {
                 @Override
                 protected void initChannel(final Channel channel) throws Exception {
                     Holder.getChannels().getAndIncrement();
+
+                    if (Natsuki.getInstance().getConfig().isDebug())
+                        System.out.println("Channel open: " + channel.remoteAddress());
 
                     if (Natsuki.getInstance().getBlockedAddresses().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress())) {
                         channel.close();
