@@ -34,7 +34,7 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
     public NatsukiPacketDecoder(final EnumProtocolDirection direction) { this.direction = direction; }
 
     protected void decode(final ChannelHandlerContext channel, final ByteBuf buf, final List<Object> objects) throws Exception {
-        if (Natsuki.getInstance().getConfig().isDebug() && Natsuki.getInstance().getConfig().isPacketDebugger())
+        if (Natsuki.getInstance().getConfig().UTILS.debug && Natsuki.getInstance().getConfig().UTILS.packetDebugger)
             System.out.println(channel.channel().remoteAddress() + " -> " + Arrays.toString(buf.array()));
 
         if (buf.readableBytes() <= 0) { //HEHE
@@ -44,7 +44,6 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
 
         //SPRAWDZANIE PAKIEUT HANDSHAKE
         if (packetState == 0) {
-
             final PacketDataSerializer handshakeBuf = new PacketDataSerializer(buf.duplicate()); //TWORZENIE KOPII ABY NIE INGEROWAC W ORGINALNA DATA PAKIETU
             if (handshakeBuf.readableBytes() > 256) {
                 channel.pipeline().remove(this);

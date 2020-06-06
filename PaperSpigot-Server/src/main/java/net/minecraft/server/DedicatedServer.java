@@ -271,7 +271,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 DedicatedServer.LOGGER.info("Preparing level \"" + this.U() + "\"");
                 this.a(this.U(), this.U(), k, worldtype, s2);
 
-                AntiRedStone.startTask(Natsuki.getInstance().getConfig().isAntiRedStone());
+                AntiRedStone.startTask(Natsuki.getInstance().getConfig().UTILS.antiRedStone);
 
                 long i1 = System.nanoTime() - j;
                 String s3 = String.format("%.3fs", new Object[]{Double.valueOf((double) i1 / 1.0E9D)});

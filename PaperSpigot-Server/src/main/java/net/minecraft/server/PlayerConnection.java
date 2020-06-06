@@ -119,11 +119,11 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             packetSpam.set(0);
         }
 
-        if (packetSpam.get() > Natsuki.getInstance().getConfig().getMaxPacketsPerSecond()) {
+        if (packetSpam.get() > Natsuki.getInstance().getConfig().PACKET.maxPackets) {
             this.closeChannel(
-                    Natsuki.getInstance().getConfig().getPrefix()
+                    Natsuki.getInstance().getConfig().PREFIX
                             + "\n\n" +
-                            Natsuki.getInstance().getConfig().getMessages().get("BlockedCrashKick"));
+                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick"));
         }
 
         this.minecraftServer.methodProfiler.a("keepAlive");
@@ -131,7 +131,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             this.k = this.e;
             this.j = this.d();
             this.i = (int) this.j;
-            if (Natsuki.getInstance().getConfig().isMcProtocolLibFix()) {
+            if (Natsuki.getInstance().getConfig().UTILS.antiBot) {
                 this.keepAlive.add((Object) this.i);
             }
             this.sendPacket(new PacketPlayOutKeepAlive(this.i));
@@ -157,11 +157,11 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         }
 
         if (System.currentTimeMillis() - joinTime > 7000) {
-            if (Natsuki.getInstance().getConfig().isAntiBot() && (!sendSettings || !sendKeepAlive)) {
+            if (Natsuki.getInstance().getConfig().UTILS.antiBot && (!sendSettings || !sendKeepAlive)) {
                 closeChannel(
-                        Natsuki.getInstance().getConfig().getPrefix()
+                        Natsuki.getInstance().getConfig().PREFIX
                                 + "\n\n" +
-                                Natsuki.getInstance().getConfig().getMessages().get("AntiBotKick"));
+                                Natsuki.getInstance().getConfig().MESSAGES.get("AntiBotKick"));
             }
         }
     }
@@ -288,7 +288,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                         Location oldTo = to.clone();
                         PlayerMoveEvent event = new PlayerMoveEvent(player, from, to);
                         this.server.getPluginManager().callEvent(event);
-                        if (Natsuki.getInstance().getConfig().isAntiBot() && (!sendSettings || !sendKeepAlive))
+                        if (Natsuki.getInstance().getConfig().UTILS.antiBot && (!sendSettings || !sendKeepAlive))
                             event.setCancelled(true);
 
                         // If the event is cancelled we move the player back to their old location.
@@ -979,7 +979,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInChat packetplayinchat) {
-        if (Natsuki.getInstance().getConfig().isAntiBot() && (!sendSettings || !sendKeepAlive))
+        if (Natsuki.getInstance().getConfig().UTILS.antiBot && (!sendSettings || !sendKeepAlive))
             return;
 
         packetSpam.set(packetSpam.get() + 1);
@@ -1997,12 +1997,12 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         if (!sendKeepAlive)
             sendKeepAlive = true;
 
-        if (Natsuki.getInstance().getConfig().isMcProtocolLibFix()) {
+        if (Natsuki.getInstance().getConfig().UTILS.antiBot) {
             if (!this.keepAlive.contains(packetplayinkeepalive.a())) {
                 this.closeChannel(
-                        Natsuki.getInstance().getConfig().getPrefix()
+                        Natsuki.getInstance().getConfig().PREFIX
                                 + "\n\n" +
-                                Natsuki.getInstance().getConfig().getMessages().get("McProtocolLibKick"));
+                                Natsuki.getInstance().getConfig().MESSAGES.get("McProtocolLibKick"));
             } else {
                 this.keepAlive.remove((Object) packetplayinkeepalive.a());
             }
@@ -2061,34 +2061,34 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInCustomPayload packetplayincustompayload) {
-        if (!Natsuki.getInstance().getConfig().isReadCustomPayload())
+        if (!Natsuki.getInstance().getConfig().PACKET.PAYLOAD.skipPayload)
             return;
 
         packetSpam.set(packetSpam.get() + 1);
 
-        if (Natsuki.getInstance().getConfig().isBlockChannels() && Natsuki.getInstance().getConfig().getBlockedChannels().contains(packetplayincustompayload.a().toLowerCase())) {
+        if (Natsuki.getInstance().getConfig().PACKET.PAYLOAD.blockChannels && Natsuki.getInstance().getConfig().PACKET.PAYLOAD.blockedChannels.contains(packetplayincustompayload.a().toLowerCase())) {
             this.closeChannel(
-                    Natsuki.getInstance().getConfig().getPrefix()
+                    Natsuki.getInstance().getConfig().PREFIX
                             + "\n\n" +
-                            Natsuki.getInstance().getConfig().getMessages().get("BlockedPayLoadKick"));
+                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedPayLoadKick"));
 
             return;
         }
 
-        if (packetplayincustompayload.a().length() < 3 || packetplayincustompayload.a().length() > Natsuki.getInstance().getConfig().getMaxPyaLoadChannelLength()) {
+        if (packetplayincustompayload.a().length() < 3 || packetplayincustompayload.a().length() > Natsuki.getInstance().getConfig().PACKET.PAYLOAD.maxChannelLength) {
             this.closeChannel(
-                    Natsuki.getInstance().getConfig().getPrefix()
+                    Natsuki.getInstance().getConfig().PREFIX
                             + "\n\n" +
-                            Natsuki.getInstance().getConfig().getMessages().get("BlockedCrashKick").
+                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick").
                                     replace("{reason}", "§fNiepoprwany channel payload"));
             return;
         }
 
-        if (packetplayincustompayload.b().readableBytes() > Natsuki.getInstance().getConfig().getMaxPayLoadDataLength()) {
+        if (packetplayincustompayload.b().readableBytes() > Natsuki.getInstance().getConfig().PACKET.PAYLOAD.maxDataLength) {
             this.closeChannel(
-                    Natsuki.getInstance().getConfig().getPrefix()
+                    Natsuki.getInstance().getConfig().PREFIX
                             + "\n\n" +
-                            Natsuki.getInstance().getConfig().getMessages().get("BlockedCrashKick").
+                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick").
                                     replace("{reason}", "§fNiepoprwana data payload"));
 
             return;

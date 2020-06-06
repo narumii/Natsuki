@@ -35,7 +35,7 @@ public class PacketPlayInBlockPlace implements Packet<PacketListenerPlayIn> {
         timestamp = System.currentTimeMillis(); // CraftBukkit
         this.b = packetdataserializer.c();
         this.c = packetdataserializer.readUnsignedByte();
-        if (!Natsuki.getInstance().getConfig().isSkipNBT())
+        if (!Natsuki.getInstance().getConfig().PACKET.NBT.skipNbt)
             this.d = packetdataserializer.i();
         else
             this.d = packetdataserializer.placeLimit();

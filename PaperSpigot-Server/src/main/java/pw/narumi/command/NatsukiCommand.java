@@ -5,6 +5,8 @@ import org.bukkit.command.CommandSender;
 import pw.narumi.Natsuki;
 import pw.narumi.object.Holder;
 
+import java.lang.reflect.Field;
+
 public class NatsukiCommand extends Command {
 
     public NatsukiCommand() {
@@ -21,6 +23,16 @@ public class NatsukiCommand extends Command {
         sender.sendMessage(" §8» §7Server UID: §d" + Natsuki.getInstance().getUID()[0]);
         sender.sendMessage(" §8» §7Blacklisted joins: §d" + Holder.getBlacklistedJoins().get());
         sender.sendMessage(" ");
+
+        for (final Field declaredField : Natsuki.getInstance().getConfig().getClass().getDeclaredFields()) {
+            try {
+                declaredField.setAccessible(true);
+                System.out.println(declaredField.getName() + ": " + declaredField.get(Natsuki.getInstance().getConfig()));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
         return false;
     }
 }

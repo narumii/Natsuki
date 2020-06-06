@@ -2,8 +2,7 @@ package net.minecraft.server;
 
 // CraftBukkit start
 
-import com.maxmind.geoip2.WebServiceClient;
-import com.maxmind.geoip2.record.Country;
+
 import json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
@@ -35,7 +34,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
     //SYF KOD WIEM
     private void handleAddressCheck() {
         try {
-            if (Natsuki.getInstance().getConfig().getProxyCheckApiKey().equals("Your Key") || Natsuki.getInstance().getConfig().getProxyCheckApiKey().equals("none")) {
+            if (Natsuki.getInstance().getConfig().API.proxyCheckKey.equals("Your Key") || Natsuki.getInstance().getConfig().API.proxyCheckKey.equals("none")) {
                 final InetAddress address = ((InetSocketAddress) b.getSocketAddress()).getAddress();
                 final String json = new String(IOUtils.toByteArray(new URL("http://api.stopforumspam.org/api?ip=%address%&json"
                         .replace("%address%", address.getHostAddress()))
@@ -47,7 +46,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
                     if (!Natsuki.getInstance().getBlockedAddresses().contains(address.getHostAddress()))
                         Natsuki.getInstance().getBlockedAddresses().add(address.getHostAddress());
 
-                    final ChatComponentText message = new ChatComponentText(Natsuki.getInstance().getConfig().getPrefix() + "\n\n" + Natsuki.getInstance().getConfig().getMessages().get("ProxyOrVpnKick"));
+                    final ChatComponentText message = new ChatComponentText(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("ProxyOrVpnKick"));
                     this.b.handle(new PacketLoginOutDisconnect(message));
                     this.b.close(message);
                 }
@@ -55,7 +54,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
                 final InetAddress address = ((InetSocketAddress) b.getSocketAddress()).getAddress();
                 final String json = new String(IOUtils.toByteArray(new URL("http://proxycheck.io/v2/%address%?&vpn=1&asn=1&risk=1&key=%key%"
                         .replace("%address%", address.getHostAddress())
-                        .replace("%key%", Natsuki.getInstance().getConfig().getProxyCheckApiKey()))
+                        .replace("%key%", Natsuki.getInstance().getConfig().API.proxyCheckKey))
                         .openStream()));
                 final JSONObject obj = new JSONObject(json).getJSONObject(address.getHostAddress());
 
@@ -64,9 +63,9 @@ public class HandshakeListener implements PacketHandshakingInListener {
                         Natsuki.getInstance().getBlockedAddresses().add(address.getHostAddress());
 
                     final ChatComponentText message = new ChatComponentText(
-                            Natsuki.getInstance().getConfig().getPrefix()
+                            Natsuki.getInstance().getConfig().PREFIX
                                     + "\n\n" +
-                                    Natsuki.getInstance().getConfig().getMessages().get("ProxyOrVpnKick"));
+                                    Natsuki.getInstance().getConfig().MESSAGES.get("ProxyOrVpnKick"));
 
                     this.b.handle(new PacketLoginOutDisconnect(message));
                     this.b.close(message);
@@ -82,19 +81,19 @@ public class HandshakeListener implements PacketHandshakingInListener {
             final String addressA = ((InetSocketAddress)b.getSocketAddress()).getAddress().getHostAddress();
 
             if (!Natsuki.getInstance().getWhiteListedAddresses().contains(addressA)
-                    && Natsuki.getInstance().getConfig().isCheckPlayerAddress())
+                    && Natsuki.getInstance().getConfig().CONNECTION.addressCheck)
                 handleAddressCheck();
 
             //SYF KOD WIEM
-            if (Natsuki.getInstance().getConfig().getMaxConnectionPerAddress() != -1) {
+            if (Natsuki.getInstance().getConfig().CONNECTION.maxConnections != -1) {
                 int same = 1;
                 for (final Player onlinePlayer : Bukkit.getServer().getOnlinePlayers()) {
                     if (onlinePlayer.getAddress().getAddress().getHostAddress().equals(addressA))
                         same++;
                 }
 
-                if (same > Natsuki.getInstance().getConfig().getMaxConnectionPerAddress()) {
-                    final ChatComponentText message = new ChatComponentText(Natsuki.getInstance().getConfig().getPrefix() + "\n\n" + Natsuki.getInstance().getConfig().getMessages().get("MaxConnectionsPerIp"));
+                if (same > Natsuki.getInstance().getConfig().CONNECTION.maxConnections) {
+                    final ChatComponentText message = new ChatComponentText(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("MaxConnectionsPerIp"));
                     this.b.handle(new PacketLoginOutDisconnect(message));
                     this.b.close(message);
                     return;

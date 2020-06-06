@@ -148,30 +148,35 @@ public class Natsuki {
             if (configFile.exists()) {
                 System.out.println("Ladowanie konfiguracji silnika");
                 configReader.readConfig();
-                config.init(configReader.getJsonObject());
             } else {
                 System.err.println("Nie znaleziono pliku konfuguracji, tworzenie pliku");
                 configReader.createConfig();
 
                 System.out.println("Ladowanie konfiguracji silnika");
                 configReader.readConfig();
-                config.init(configReader.getJsonObject());
             }
         } catch (final Exception e) {
-            System.err.println("Wystapol blad podczas ladowania pliku konfiguracyjnego");
+            e.printStackTrace();
+            System.err.println("Wystapil blad podczas ladowania pliku konfiguracyjnego. Prawdopodonie uzywasz starego configu.");
+            try {
+                configReader.createConfig();
+            } catch (IOException ioException) {
+                System.err.println("Wystapil blad podczas tworzenia nowego pliku konfigurycajnego");
+            }
+            System.exit(1);
         }
     }
 
     public void loadGeoLite() {
         try {
-            final File file = new File(getConfig().getGeoLiteFile());
+            final File file = new File(getConfig().API.getGeoLiteFile);
             if (file.exists())
                 databaseReader = new DatabaseReader.Builder(file).build();
             else
                 System.err.println("Nie mozna zaladowac bazy danych GeoLite2, wylaczam sprawdzanie regionu");
 
         } catch (IOException e) {
-            getConfig().setCheckPlayerRegion(false);
+            getConfig().CONNECTION.REGION.check = false;
             System.err.println("Nie mozna zaladowac bazy danych GeoLite2, wylaczanie sprawdzanie regionu");
         }
 

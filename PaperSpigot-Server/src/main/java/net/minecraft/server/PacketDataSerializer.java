@@ -185,7 +185,7 @@ public class PacketDataSerializer extends ByteBuf {
             this.readerIndex(i);
             try {
                 return NBTCompressedStreamTools.a(new ByteBufInputStream(this),
-                        new NBTReadLimiter( (Natsuki.getInstance().getConfig().getMaxNbtDataLength() == -1 ? 2097152L : Natsuki.getInstance().getConfig().getMaxNbtDataLength()) ));
+                        new NBTReadLimiter( (Natsuki.getInstance().getConfig().PACKET.NBT.maxNbtSize == -1 ? 2097152L : Natsuki.getInstance().getConfig().PACKET.NBT.maxNbtSize) ));
             } catch (IOException e) {
                 return null;
             }
@@ -237,7 +237,7 @@ public class PacketDataSerializer extends ByteBuf {
 
             itemstack = new ItemStack(Item.getById(short0), b0, short1);
 
-            if (Natsuki.getInstance().getConfig().isSkipNBT()) {
+            if (Natsuki.getInstance().getConfig().PACKET.NBT.skipNbt) {
                 skipBytes(readableBytes());
             }else {
                 final NBTTagCompound compound = this.h();

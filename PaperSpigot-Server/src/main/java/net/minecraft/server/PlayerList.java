@@ -155,12 +155,12 @@ public abstract class PlayerList {
         this.sendScoreboard((ScoreboardServer) worldserver.getScoreboard(), entityplayer);
         this.server.aH();
 
-        if (Natsuki.getInstance().getConfig().isMcProtocolLibFix())
+        if (Natsuki.getInstance().getConfig().UTILS.antiBot)
             playerconnection.sendPacket(new PacketPlayOutWindowData(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE));
         // CraftBukkit start - login message is handled in the event
         // ChatMessage chatmessage;
 
-        if (Natsuki.getInstance().getConfig().isPacketDebugger()) {
+        if (Natsuki.getInstance().getConfig().UTILS.packetDebugger) {
             try {
                 addPacketDebugger(playerconnection);
             } catch (IOException e) {

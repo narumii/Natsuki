@@ -38,7 +38,7 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
     CraftMetaSkull(NBTTagCompound tag) {
         super(tag);
 
-        if (Natsuki.getInstance().getConfig().isFixSkullNbt()) {
+        if (Natsuki.getInstance().getConfig().PACKET.NBT.fixSkull) {
             if (tag.hasKeyOfType(SKULL_OWNER.NBT, 10) && isValid(tag.getCompound(SKULL_OWNER.NBT))) {
                 profile = GameProfileSerializer.deserialize(tag.getCompound(SKULL_OWNER.NBT));
             } else if (tag.hasKeyOfType(SKULL_OWNER.NBT, 8) && isValid(tag.getCompound(SKULL_OWNER.NBT))) {

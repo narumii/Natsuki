@@ -26,7 +26,7 @@ public class TicksPerSecondCommand extends Command
 
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
-        if (Natsuki.getInstance().getConfig().isCheckTpsPermission() && !testPermission(sender)) {
+        if (Natsuki.getInstance().getConfig().UTILS.tpsCommandPermission && !testPermission(sender)) {
             return true;
         }
 

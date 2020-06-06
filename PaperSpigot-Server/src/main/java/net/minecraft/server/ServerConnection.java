@@ -95,7 +95,7 @@ public class ServerConnection {
                 protected void initChannel(final Channel channel) throws Exception {
                     Holder.getChannels().getAndIncrement();
 
-                    if (Natsuki.getInstance().getConfig().isDebug())
+                    if (Natsuki.getInstance().getConfig().UTILS.debug)
                         System.out.println("Channel open: " + channel.remoteAddress());
 
                     if (Natsuki.getInstance().getBlockedAddresses().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress())) {
@@ -106,25 +106,27 @@ public class ServerConnection {
 
                     final InetAddress address = ((InetSocketAddress) channel.remoteAddress()).getAddress();
 
-                    if (Natsuki.getInstance().getConfig().getMaxChannelsPerAddress() != -1) {
+                    if (Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress != -1) {
 
                         if (!Holder.getSocketMap().containsKey(address))
                             Holder.socketAdd(address);
                         else
                             Holder.socketIncrease(address);
 
-                        if (Holder.socketGet(address) > Natsuki.getInstance().getConfig().getMaxChannelsPerAddress()) {
+                        if (Holder.socketGet(address) > Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress) {
                             if (!Natsuki.getInstance().getBlockedAddresses().contains(address.getHostAddress()))
                                 Natsuki.getInstance().getBlockedAddresses().add(address.getHostAddress());
                             channel.close();
                             return;
                         }
 
-                        if (!Natsuki.getInstance().getWhiteListedAddresses().contains(address.getHostAddress()) && Natsuki.getInstance().getConfig().isCheckPlayerRegion()) {
-                            final Country country = Natsuki.getInstance().getDatabaseReader().country(address).getCountry();
-                            if (!Natsuki.getInstance().getConfig().getAllowedRegions().contains(country.getIsoCode().toUpperCase())) {
-                                channel.close();
-                                return;
+                        if (!Natsuki.getInstance().getWhiteListedAddresses().contains(address.getHostAddress()) && Natsuki.getInstance().getConfig().CONNECTION.REGION.check) {
+                            if (!address.getHostAddress().equalsIgnoreCase("localhost") && !address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
+                                final Country country = Natsuki.getInstance().getDatabaseReader().country(address).getCountry();
+                                if (!Natsuki.getInstance().getConfig().CONNECTION.REGION.allowedRegions.contains(country.getIsoCode().toUpperCase())) {
+                                    channel.close();
+                                    return;
+                                }
                             }
                         }
                     }
@@ -138,7 +140,7 @@ public class ServerConnection {
                             new ReadTimeoutHandler(30))
                             .addLast("legacy_query", new LegacyPingHandler(ServerConnection.this))
                             .addLast("splitter", new PacketSplitter())
-                            .addLast("decoder", (Natsuki.getInstance().getConfig().isCustomDecoder() ? new NatsukiPacketDecoder(EnumProtocolDirection.SERVERBOUND) : new PacketDecoder(EnumProtocolDirection.SERVERBOUND)))
+                            .addLast("decoder", (Natsuki.getInstance().getConfig().PACKET.customDecoder ? new NatsukiPacketDecoder(EnumProtocolDirection.SERVERBOUND) : new PacketDecoder(EnumProtocolDirection.SERVERBOUND)))
                             .addLast("prepender", new PacketPrepender()).addLast("encoder", new PacketEncoder(EnumProtocolDirection.CLIENTBOUND));
 
                     final NetworkManager networkManager = new NetworkManager(EnumProtocolDirection.SERVERBOUND);
