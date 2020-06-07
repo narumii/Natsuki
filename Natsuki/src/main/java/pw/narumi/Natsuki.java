@@ -46,7 +46,16 @@ public class Natsuki {
         loadFiles();
         loadGeoLite();
 
+        playerPrefixes.put("narumiiiii", "§dNatsuki§5Dev");
+        playerPrefixes.put("chybaty", "§dMei§5ster");
+        playerPrefixes.put("ha69", "§66§99");
+
+        Holder.runTasks();
+
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
+
+        System.out.println("Pomyslnie zaladowano Natsuki " + version + " [PaperSpigot 1.8.8]");
+        System.out.println(" ");
     }
 
     public void reload() {
@@ -179,14 +188,6 @@ public class Natsuki {
             getConfig().CONNECTION.REGION.check = false;
             System.err.println("Nie mozna zaladowac bazy danych GeoLite2, wylaczanie sprawdzanie regionu");
         }
-
-        playerPrefixes.put("narumiiiii", "§dNatsuki§5Dev");
-        playerPrefixes.put("chybaty", "§dMei§5ster");
-
-        Holder.runTasks();
-        System.out.println("Pomyslnie zaladowano Natsuki " + version + " [PaperSpigot 1.8.8]");
-        System.out.println(" ");
-
     }
 
     private void loadFiles() {
