@@ -46,6 +46,8 @@
             <version>${minecraft.version}-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
+
+        <!-- 4.0.23 -->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>

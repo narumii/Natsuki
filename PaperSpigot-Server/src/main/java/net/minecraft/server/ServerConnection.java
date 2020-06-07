@@ -63,7 +63,6 @@ public class ServerConnection {
     };
     private final MinecraftServer f;
     public volatile boolean d;
-    private static final Timer connectTime = new Timer();
     private final List<ChannelFuture> g = Collections.synchronizedList(Lists.newArrayList());
     private final List<NetworkManager> h = Collections.synchronizedList(Lists.newArrayList());
 
@@ -92,45 +91,7 @@ public class ServerConnection {
             this.g.add(new ServerBootstrap().channel(clazz).childHandler(new ChannelInitializer() {
 
                 @Override
-                protected void initChannel(final Channel channel) throws Exception {
-                    Holder.getChannels().getAndIncrement();
-
-                    if (Natsuki.getInstance().getConfig().UTILS.debug)
-                        System.out.println("Channel open: " + channel.remoteAddress());
-
-                    if (Natsuki.getInstance().getBlockedAddresses().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress())) {
-                        channel.close();
-                        Holder.getBlacklistedJoins().incrementAndGet();
-                        return;
-                    }
-
-                    final InetAddress address = ((InetSocketAddress) channel.remoteAddress()).getAddress();
-
-                    if (Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress != -1) {
-
-                        if (!Holder.getSocketMap().containsKey(address))
-                            Holder.socketAdd(address);
-                        else
-                            Holder.socketIncrease(address);
-
-                        if (Holder.socketGet(address) > Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress) {
-                            if (!Natsuki.getInstance().getBlockedAddresses().contains(address.getHostAddress()))
-                                Natsuki.getInstance().getBlockedAddresses().add(address.getHostAddress());
-                            channel.close();
-                            return;
-                        }
-
-                        if (!Natsuki.getInstance().getWhiteListedAddresses().contains(address.getHostAddress()) && Natsuki.getInstance().getConfig().CONNECTION.REGION.check) {
-                            if (!address.getHostAddress().equalsIgnoreCase("localhost") && !address.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
-                                final Country country = Natsuki.getInstance().getDatabaseReader().country(address).getCountry();
-                                if (!Natsuki.getInstance().getConfig().CONNECTION.REGION.allowedRegions.contains(country.getIsoCode().toUpperCase())) {
-                                    channel.close();
-                                    return;
-                                }
-                            }
-                        }
-                    }
-
+                protected void initChannel(final Channel channel) {
                     try {
                         channel.config().setOption(ChannelOption.TCP_NODELAY, true);
                     } catch (final ChannelException channelexception) {
@@ -151,7 +112,6 @@ public class ServerConnection {
             }).group((EventLoopGroup) lazyInitVar.c()).localAddress(address, i).bind().syncUninterruptibly());
         }
     }
-
     /*public void a(InetAddress inetaddress, int i) throws IOException {
         List list = this.g;
 

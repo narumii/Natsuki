@@ -1,7 +1,7 @@
 package pw.narumi.object;
 
 //NWM XD
-public final class Timer
+public class Timer
 {
     private long time;
     private final long l;

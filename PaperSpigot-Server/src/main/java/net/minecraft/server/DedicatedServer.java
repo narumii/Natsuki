@@ -163,6 +163,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 this.propertyManager.setProperty("difficulty", Integer.valueOf(3));
             }
             Natsuki.getInstance().getUID()[0] = Utils.generateUUID();
+            Natsuki.getInstance().checkBlackList();
             this.generateStructures = this.propertyManager.getBoolean("generate-structures", true);
             int i = this.propertyManager.getInt("gamemode", WorldSettings.EnumGamemode.SURVIVAL.getId());
 
@@ -325,7 +326,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
             }
         }
     }
-
 
     private void startTasks() {
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(()-> Bukkit.getServer().getOnlinePlayers().forEach(player -> {

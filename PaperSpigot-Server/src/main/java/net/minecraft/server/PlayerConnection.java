@@ -31,6 +31,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.util.NumberConversions;
 import org.github.paperspigot.PaperSpigotConfig;
 import pw.narumi.Natsuki;
+import pw.narumi.common.Utils;
 import pw.narumi.object.Holder;
 import pw.narumi.object.Timer;
 
@@ -121,9 +122,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
         if (packetSpam.get() > Natsuki.getInstance().getConfig().PACKET.maxPackets) {
             this.closeChannel(
-                    Natsuki.getInstance().getConfig().PREFIX
+                    Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
                             + "\n\n" +
-                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick"));
+                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick")));
         }
 
         this.minecraftServer.methodProfiler.a("keepAlive");
@@ -159,9 +160,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         if (System.currentTimeMillis() - joinTime > 7000) {
             if (Natsuki.getInstance().getConfig().UTILS.antiBot && (!sendSettings || !sendKeepAlive)) {
                 closeChannel(
-                        Natsuki.getInstance().getConfig().PREFIX
+                        Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
                                 + "\n\n" +
-                                Natsuki.getInstance().getConfig().MESSAGES.get("AntiBotKick"));
+                                Natsuki.getInstance().getConfig().MESSAGES.get("AntiBotKick")));
             }
         }
     }
@@ -2000,9 +2001,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         if (Natsuki.getInstance().getConfig().UTILS.antiBot) {
             if (!this.keepAlive.contains(packetplayinkeepalive.a())) {
                 this.closeChannel(
-                        Natsuki.getInstance().getConfig().PREFIX
+                        Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
                                 + "\n\n" +
-                                Natsuki.getInstance().getConfig().MESSAGES.get("AntiBotKick"));
+                                Natsuki.getInstance().getConfig().MESSAGES.get("AntiBotKick")));
             } else {
                 this.keepAlive.remove((Object) packetplayinkeepalive.a());
             }
@@ -2068,28 +2069,26 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
         if (Natsuki.getInstance().getConfig().PACKET.PAYLOAD.blockChannels && Natsuki.getInstance().getConfig().PACKET.PAYLOAD.blockedChannels.contains(packetplayincustompayload.a().toLowerCase())) {
             this.closeChannel(
-                    Natsuki.getInstance().getConfig().PREFIX
+                    Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
                             + "\n\n" +
-                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedPayLoadKick"));
+                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedPayLoadKick")));
 
             return;
         }
 
         if (packetplayincustompayload.a().length() < 3 || packetplayincustompayload.a().length() > Natsuki.getInstance().getConfig().PACKET.PAYLOAD.maxChannelLength) {
             this.closeChannel(
-                    Natsuki.getInstance().getConfig().PREFIX
+                    Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
                             + "\n\n" +
-                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick").
-                                    replace("{reason}", "§fNiepoprwany channel payload"));
+                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick")));
             return;
         }
 
         if (packetplayincustompayload.b().readableBytes() > Natsuki.getInstance().getConfig().PACKET.PAYLOAD.maxDataLength) {
             this.closeChannel(
-                    Natsuki.getInstance().getConfig().PREFIX
+                    Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
                             + "\n\n" +
-                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick").
-                                    replace("{reason}", "§fNiepoprwana data payload"));
+                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick")));
 
             return;
         }

@@ -101,7 +101,7 @@ public class Config {
             public int maxDataLength = 1000;
 
             @SerializedName(value = "BlockChannels")
-            public boolean blockChannels = false;
+            public boolean blockChannels;
 
             @SerializedName(value = "BlockedChannels")
             public final List<String> blockedChannels = Arrays.asList("FML", "WDL");
@@ -110,7 +110,7 @@ public class Config {
 
     public class Utils {
         @SerializedName(value = "TickPerSecondCommandPermissionCheck")
-        public boolean tpsCommandPermission = false;
+        public boolean tpsCommandPermission;
 
         @SerializedName(value = "AntiRedStoneLagger")
         public boolean antiRedStone = true;
@@ -119,9 +119,9 @@ public class Config {
         public boolean antiBot = true;
 
         @SerializedName(value = "PacketDebugger")
-        public boolean packetDebugger = false;
+        public boolean packetDebugger;
 
         @SerializedName(value = "Debug")
-        public boolean debug = false;
+        public boolean debug;
     }
 }

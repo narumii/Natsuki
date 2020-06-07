@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import pw.narumi.Natsuki;
+import pw.narumi.common.Utils;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -46,7 +47,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
                     if (!Natsuki.getInstance().getBlockedAddresses().contains(address.getHostAddress()))
                         Natsuki.getInstance().getBlockedAddresses().add(address.getHostAddress());
 
-                    final ChatComponentText message = new ChatComponentText(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("ProxyOrVpnKick"));
+                    final ChatComponentText message = new ChatComponentText(Utils.fixString(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("ProxyOrVpnKick")));
                     this.b.handle(new PacketLoginOutDisconnect(message));
                     this.b.close(message);
                 }
@@ -63,9 +64,9 @@ public class HandshakeListener implements PacketHandshakingInListener {
                         Natsuki.getInstance().getBlockedAddresses().add(address.getHostAddress());
 
                     final ChatComponentText message = new ChatComponentText(
-                            Natsuki.getInstance().getConfig().PREFIX
+                            Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
                                     + "\n\n" +
-                                    Natsuki.getInstance().getConfig().MESSAGES.get("ProxyOrVpnKick"));
+                                    Natsuki.getInstance().getConfig().MESSAGES.get("ProxyOrVpnKick")));
 
                     this.b.handle(new PacketLoginOutDisconnect(message));
                     this.b.close(message);
@@ -93,7 +94,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
                 }
 
                 if (same > Natsuki.getInstance().getConfig().CONNECTION.maxConnections) {
-                    final ChatComponentText message = new ChatComponentText(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("MaxConnectionsPerIp"));
+                    final ChatComponentText message = new ChatComponentText(Utils.fixString(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("MaxConnectionsPerIp")));
                     this.b.handle(new PacketLoginOutDisconnect(message));
                     this.b.close(message);
                     return;

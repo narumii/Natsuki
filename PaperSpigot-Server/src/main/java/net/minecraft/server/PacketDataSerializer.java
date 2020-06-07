@@ -215,7 +215,7 @@ public class PacketDataSerializer extends ByteBuf {
     }
 
     //otek master
-    public ItemStack placeLimit() throws IOException {
+    public ItemStack placeLimit() {
         ItemStack itemstack = null;
         short short0 = readShort();
         if (short0 >= 0) {
@@ -224,10 +224,11 @@ public class PacketDataSerializer extends ByteBuf {
             itemstack = new ItemStack(Item.getById(short0), b0, short1);
             skipBytes(readableBytes() - 3);
         }
+
         return itemstack;
     }
 
-    public ItemStack i() throws IOException {
+    public ItemStack i() {
         ItemStack itemstack = null;
         short short0 = this.readShort();
 

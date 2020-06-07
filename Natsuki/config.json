@@ -26,7 +26,7 @@
     },
     "PayloadSettings": {
       "SkipPayloadReading": true,
-      "MaxChannelLength": 64,
+      "MaxCha gtfgvdfvdfnnelLength": 64,
       "MaxDataLength": 1000,
       "BlockChannels": false,
       "BlockedChannels": [

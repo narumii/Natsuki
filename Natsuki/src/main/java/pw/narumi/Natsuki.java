@@ -37,11 +37,11 @@ public class Natsuki {
 
     public void load() {
         checkStatus();
-        checkBlackList();
         checkVersion();
 
         configReader = new ConfigReader();
         config = new Config();
+
         initConfig();
         loadFiles();
         loadGeoLite();
@@ -51,8 +51,8 @@ public class Natsuki {
 
     public void reload() {
         checkStatus();
-        checkBlackList();
         checkVersion();
+        checkBlackList();
 
         initConfig();
 
@@ -68,7 +68,7 @@ public class Natsuki {
     }
 
     //:D
-    private void checkBlackList() {
+    public void checkBlackList() {
         try {
             System.out.println("Sprawdzanie statusu serwera");
             final String url = "https://raw.githubusercontent.com/narumii/d/master/server_blacklist";
@@ -76,8 +76,8 @@ public class Natsuki {
             connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             final Scanner scanner = new Scanner(connection.getInputStream());
             while (scanner.hasNext()) {
-                if (scanner.next().equals(getUID()[0])) {
-                    System.err.println("Serwer znajduje sie na blackliste. Mozesz sie odwolac do blacklisty na naszym discord: https://discord.gg/amutHux");
+                if (scanner.nextLine().equals(getUID()[0])) {
+                    System.err.println("Serwer znajduje sie na blackliscie. Mozesz sie odwolac do blacklisty na naszym discord: https://discord.gg/amutHux");
                     System.exit(0);
                 }
             }

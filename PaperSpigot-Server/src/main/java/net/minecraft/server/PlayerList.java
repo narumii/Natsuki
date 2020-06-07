@@ -483,23 +483,12 @@ public abstract class PlayerList {
     public EntityPlayer attemptLogin(LoginListener loginlistener, GameProfile gameprofile, String hostname) {
         // Moved from processLogin
         UUID uuid = EntityHuman.a(gameprofile);
-        ArrayList arraylist = Lists.newArrayList();
 
-        EntityPlayer entityplayer;
 
-        for (int i = 0; i < this.players.size(); ++i) {
-            entityplayer = (EntityPlayer) this.players.get(i);
-            if (entityplayer.getUniqueID().equals(uuid)) {
-                arraylist.add(entityplayer);
+        for (final EntityPlayer entityPlayer : this.players) {
+            if (entityPlayer.getUniqueID().equals(uuid)) {
+                loginlistener.disconnect("You are already connected to the server.");
             }
-        }
-
-        Iterator iterator = arraylist.iterator();
-
-        while (iterator.hasNext()) {
-            entityplayer = (EntityPlayer) iterator.next();
-            savePlayerFile(entityplayer); // CraftBukkit - Force the player's inventory to be saved
-            entityplayer.playerConnection.disconnect("You logged in from another location");
         }
 
         // Instead of kicking then returning, we need to store the kick reason

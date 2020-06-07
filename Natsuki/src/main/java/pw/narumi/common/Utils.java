@@ -91,4 +91,12 @@ public class Utils {
 
     //YYY ZAJEBANE
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+
+    public static String fixString(final String string) {
+        return string
+                .replace("&", "§")
+                .replace("(o)", "●")
+                .replace("(*)", "•");
+    }
+
 }

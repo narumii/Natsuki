@@ -2,6 +2,8 @@ package net.minecraft.server;
 
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+import com.maxmind.geoip2.record.Country;
 import io.netty.channel.*;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.local.LocalChannel;
@@ -20,9 +22,12 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import pw.narumi.Natsuki;
 import pw.narumi.exception.NatsukiException;
+import pw.narumi.object.Holder;
 
 import javax.crypto.SecretKey;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.Arrays;
@@ -83,6 +88,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
 
     public void channelActive(ChannelHandlerContext channelhandlercontext) throws Exception {
         super.channelActive(channelhandlercontext);
+
+        check(channelhandlercontext);
+
         this.channel = channelhandlercontext.channel();
         this.l = this.channel.remoteAddress();
         // Spigot Start
@@ -95,6 +103,52 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
             NetworkManager.g.fatal(throwable);
         }
     }
+
+    private void check(final ChannelHandlerContext context) throws IOException, GeoIp2Exception {
+        Holder.getChannels().getAndIncrement();
+
+        final Channel channel = context.channel();
+
+        if (Natsuki.getInstance().getConfig().UTILS.debug)
+            System.out.println("Channel open: " + channel.remoteAddress());
+
+        if (Natsuki.getInstance().getBlockedAddresses().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress())) {
+            channel.close();
+            Holder.getBlacklistedJoins().incrementAndGet();
+        }
+
+        final InetAddress address = ((InetSocketAddress) channel.remoteAddress()).getAddress();
+
+        if (Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress != -1) {
+
+            if (!Holder.getSocketMap().containsKey(address))
+                Holder.socketAdd(address);
+            else
+                Holder.socketIncrease(address);
+
+            if (Holder.socketGet(address) > Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress) {
+                if (!Natsuki.getInstance().getBlockedAddresses().contains(address.getHostAddress()))
+                    Natsuki.getInstance().getBlockedAddresses().add(address.getHostAddress());
+                channel.close();
+            }
+        }
+
+
+        if (Natsuki.getInstance().getConfig().CONNECTION.REGION.check && canCheck(address.getHostAddress().toLowerCase())) {
+            final Country country = Natsuki.getInstance().getDatabaseReader().country(address).getCountry();
+            if (!Natsuki.getInstance().getConfig().CONNECTION.REGION.allowedRegions.contains(country.getIsoCode().toUpperCase())) {
+                channel.close();
+            }
+        }
+    }
+
+    private boolean canCheck(final String string) {
+        if (Natsuki.getInstance().getWhiteListedAddresses().contains(string))
+            return false;
+
+        return !string.contains("localhost") && !string.contains("127.0.0.1");
+    }
+
 
     public void a(EnumProtocol enumprotocol) {
         this.channel.attr(NetworkManager.c).set(enumprotocol);
