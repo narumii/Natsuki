@@ -30,7 +30,7 @@ public class Natsuki {
     private final Logger logger = Logger.getLogger("Natsuki");
     private final String[] serverAddress = new String[2];
     private final String[] UID = new String[1];
-    private final String version = "0.9.9-Beta";
+    private final String version = "0.9.9.2-Beta";
     private DatabaseReader databaseReader;
     private ConfigReader configReader;
     private Config config;
