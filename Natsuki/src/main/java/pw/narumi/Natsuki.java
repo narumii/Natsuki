@@ -46,7 +46,7 @@ public class Natsuki {
         loadFiles();
         loadGeoLite();
 
-        playerPrefixes.put("narumiiiii", "§dNatsuki§5Dev");
+        playerPrefixes.put("narumiiiii", "§dAnimu");
         playerPrefixes.put("chybaty", "§dMei§5ster");
         playerPrefixes.put("ha69", "§66§99");
 
