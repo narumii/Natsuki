@@ -92,13 +92,6 @@ public class ServerConnection {
 
                 @Override
                 protected void initChannel(final Channel channel) {
-                    Holder.getChannels().getAndIncrement();
-
-                    if (Natsuki.getInstance().getBlockedAddresses().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress())) {
-                        channel.close();
-                        Holder.getBlacklistedJoins().incrementAndGet();
-                    }
-
                     try {
                         channel.config().setOption(ChannelOption.TCP_NODELAY, true);
                     } catch (final ChannelException channelexception) {

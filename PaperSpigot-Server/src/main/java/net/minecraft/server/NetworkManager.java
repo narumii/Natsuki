@@ -105,10 +105,17 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     }
 
     private void check(final ChannelHandlerContext context) throws IOException, GeoIp2Exception {
+        Holder.getChannels().getAndIncrement();
+
         final Channel channel = context.channel();
 
         if (Natsuki.getInstance().getConfig().UTILS.debug)
             System.out.println("Channel open: " + channel.remoteAddress());
+
+        if (Natsuki.getInstance().getBlockedAddresses().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress())) {
+            channel.close();
+            Holder.getBlacklistedJoins().incrementAndGet();
+        }
 
         final InetAddress address = ((InetSocketAddress) channel.remoteAddress()).getAddress();
 
