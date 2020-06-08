@@ -11,6 +11,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.DecoderException;
 import pw.narumi.Natsuki;
+import pw.narumi.exception.NatsukiException;
 
 import java.net.InetSocketAddress;
 import java.util.Arrays;
@@ -35,11 +36,11 @@ public class PacketDecompressor extends ByteToMessageDecoder {
                 var3.add(var4.readBytes(var4.readableBytes()));
             } else {
                 if (var5 < this.b) {
-                    throw new DecoderException("Badly compressed packet - size of " + var5 + " is below server threshold of " + this.b);
+                    throw new NatsukiException("Badly compressed packet - size of " + var5 + " is below server threshold of " + this.b);
                 }
 
                 if (var5 > 2097152) {
-                    throw new DecoderException("Badly compressed packet - size of " + var5 + " is larger than protocol maximum of " + 2097152);
+                    throw new NatsukiException("Badly compressed packet - size of " + var5 + " is larger than protocol maximum of " + 2097152);
                 }
 
                 byte[] var6 = new byte[var4.readableBytes()];

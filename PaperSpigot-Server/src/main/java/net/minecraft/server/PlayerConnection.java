@@ -1502,237 +1502,239 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         PlayerConnectionUtils.ensureMainThread(packetplayinwindowclick, this, this.player.u());
 
         this.player.resetIdleTimer();
+
         if (this.player.activeContainer.windowId == packetplayinwindowclick.a() && this.player.activeContainer.c(this.player)) {
-            boolean cancelled = this.player.isSpectator(); // CraftBukkit - see below if
-            if (false) { // this.player.isSpectator()) {
-                ArrayList arraylist = Lists.newArrayList();
+            try {
+                boolean cancelled = this.player.isSpectator(); // CraftBukkit - see below if
+                if (false) { // this.player.isSpectator()) {
+                    ArrayList arraylist = Lists.newArrayList();
 
-                for (int i = 0; i < this.player.activeContainer.c.size(); ++i) {
-                    arraylist.add(this.player.activeContainer.c.get(i).getItem());
-                }
+                    for (int i = 0; i < this.player.activeContainer.c.size(); ++i) {
+                        arraylist.add(this.player.activeContainer.c.get(i).getItem());
+                    }
 
-                this.player.a(this.player.activeContainer, arraylist);
-            } else {
-                // ItemStack itemstack = this.player.activeContainer.clickItem(packetplayinwindowclick.b(), packetplayinwindowclick.c(), packetplayinwindowclick.f(), this.player);
-                // CraftBukkit start - Call InventoryClickEvent
-                if (packetplayinwindowclick.b() < -1 && packetplayinwindowclick.b() != -999) {
-                    return;
-                }
+                    this.player.a(this.player.activeContainer, arraylist);
+                } else {
+                    // ItemStack itemstack = this.player.activeContainer.clickItem(packetplayinwindowclick.b(), packetplayinwindowclick.c(), packetplayinwindowclick.f(), this.player);
+                    // CraftBukkit start - Call InventoryClickEvent
+                    if (packetplayinwindowclick.b() < -1 && packetplayinwindowclick.b() != -999) {
+                        return;
+                    }
 
-                InventoryView inventory = this.player.activeContainer.getBukkitView();
-                SlotType type = CraftInventoryView.getSlotType(inventory, packetplayinwindowclick.b());
+                    InventoryView inventory = this.player.activeContainer.getBukkitView();
+                    SlotType type = CraftInventoryView.getSlotType(inventory, packetplayinwindowclick.b());
 
-                InventoryClickEvent event = null;
-                ClickType click = ClickType.UNKNOWN;
-                InventoryAction action = InventoryAction.UNKNOWN;
+                    InventoryClickEvent event = null;
+                    ClickType click = ClickType.UNKNOWN;
+                    InventoryAction action = InventoryAction.UNKNOWN;
 
-                ItemStack itemstack = null;
+                    ItemStack itemstack = null;
 
-                if (packetplayinwindowclick.b() == -1) {
-                    type = SlotType.OUTSIDE; // override
-                    click = packetplayinwindowclick.c() == 0 ? ClickType.WINDOW_BORDER_LEFT : ClickType.WINDOW_BORDER_RIGHT;
-                    action = InventoryAction.NOTHING;
-                } else if (packetplayinwindowclick.f() == 0) {
-                    if (packetplayinwindowclick.c() == 0) {
-                        click = ClickType.LEFT;
-                    } else if (packetplayinwindowclick.c() == 1) {
-                        click = ClickType.RIGHT;
-                    }
-                    if (packetplayinwindowclick.c() == 0 || packetplayinwindowclick.c() == 1) {
-                        action = InventoryAction.NOTHING; // Don't want to repeat ourselves
-                        if (packetplayinwindowclick.b() == -999) {
-                            if (player.inventory.getCarried() != null) {
-                                action = packetplayinwindowclick.c() == 0 ? InventoryAction.DROP_ALL_CURSOR : InventoryAction.DROP_ONE_CURSOR;
-                            }
-                        } else {
-                            Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
-                            if (slot != null) {
-                                ItemStack clickedItem = slot.getItem();
-                                ItemStack cursor = player.inventory.getCarried();
-                                if (clickedItem == null) {
-                                    if (cursor != null) {
-                                        action = packetplayinwindowclick.c() == 0 ? InventoryAction.PLACE_ALL : InventoryAction.PLACE_ONE;
-                                    }
-                                } else if (slot.isAllowed(player)) {
-                                    if (cursor == null) {
-                                        action = packetplayinwindowclick.c() == 0 ? InventoryAction.PICKUP_ALL : InventoryAction.PICKUP_HALF;
-                                    } else if (slot.isAllowed(cursor)) {
-                                        if (clickedItem.doMaterialsMatch(cursor) && ItemStack.equals(clickedItem, cursor)) {
-                                            int toPlace = packetplayinwindowclick.c() == 0 ? cursor.count : 1;
-                                            toPlace = Math.min(toPlace, clickedItem.getMaxStackSize() - clickedItem.count);
-                                            toPlace = Math.min(toPlace, slot.inventory.getMaxStackSize() - clickedItem.count);
-                                            if (toPlace == 1) {
-                                                action = InventoryAction.PLACE_ONE;
-                                            } else if (toPlace == cursor.count) {
-                                                action = InventoryAction.PLACE_ALL;
-                                            } else if (toPlace < 0) {
-                                                action = toPlace != -1 ? InventoryAction.PICKUP_SOME : InventoryAction.PICKUP_ONE; // this happens with oversized stacks
-                                            } else if (toPlace != 0) {
-                                                action = InventoryAction.PLACE_SOME;
-                                            }
-                                        } else if (cursor.count <= slot.getMaxStackSize()) {
-                                            action = InventoryAction.SWAP_WITH_CURSOR;
-                                        }
-                                    } else if (cursor.getItem() == clickedItem.getItem() && (!cursor.usesData() || cursor.getData() == clickedItem.getData()) && ItemStack.equals(cursor, clickedItem)) {
-                                        if (clickedItem.count >= 0) {
-                                            if (clickedItem.count + cursor.count <= cursor.getMaxStackSize()) {
-                                                // As of 1.5, this is result slots only
-                                                action = InventoryAction.PICKUP_ALL;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else if (packetplayinwindowclick.f() == 1) {
-                    if (packetplayinwindowclick.c() == 0) {
-                        click = ClickType.SHIFT_LEFT;
-                    } else if (packetplayinwindowclick.c() == 1) {
-                        click = ClickType.SHIFT_RIGHT;
-                    }
-                    if (packetplayinwindowclick.c() == 0 || packetplayinwindowclick.c() == 1) {
-                        if (packetplayinwindowclick.b() < 0) {
-                            action = InventoryAction.NOTHING;
-                        } else {
-                            Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
-                            if (slot != null && slot.isAllowed(this.player) && slot.hasItem()) {
-                                action = InventoryAction.MOVE_TO_OTHER_INVENTORY;
-                            } else {
-                                action = InventoryAction.NOTHING;
-                            }
-                        }
-                    }
-                } else if (packetplayinwindowclick.f() == 2) {
-                    if (packetplayinwindowclick.c() >= 0 && packetplayinwindowclick.c() < 9) {
-                        click = ClickType.NUMBER_KEY;
-                        Slot clickedSlot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
-                        if (clickedSlot.isAllowed(player)) {
-                            ItemStack hotbar = this.player.inventory.getItem(packetplayinwindowclick.c());
-                            boolean canCleanSwap = hotbar == null || (clickedSlot.inventory == player.inventory && clickedSlot.isAllowed(hotbar)); // the slot will accept the hotbar item
-                            if (clickedSlot.hasItem()) {
-                                if (canCleanSwap) {
-                                    action = InventoryAction.HOTBAR_SWAP;
-                                } else {
-                                    int firstEmptySlot = player.inventory.getFirstEmptySlotIndex();
-                                    if (firstEmptySlot > -1) {
-                                        action = InventoryAction.HOTBAR_MOVE_AND_READD;
-                                    } else {
-                                        action = InventoryAction.NOTHING; // This is not sane! Mojang: You should test for other slots of same type
-                                    }
-                                }
-                            } else if (!clickedSlot.hasItem() && hotbar != null && clickedSlot.isAllowed(hotbar)) {
-                                action = InventoryAction.HOTBAR_SWAP;
-                            } else {
-                                action = InventoryAction.NOTHING;
-                            }
-                        } else {
-                            action = InventoryAction.NOTHING;
-                        }
-                        // Special constructor for number key
-                        event = new InventoryClickEvent(inventory, type, packetplayinwindowclick.b(), click, action, packetplayinwindowclick.c());
-                    }
-                } else if (packetplayinwindowclick.f() == 3) {
-                    if (packetplayinwindowclick.c() == 2) {
-                        click = ClickType.MIDDLE;
-                        if (packetplayinwindowclick.b() == -999) {
-                            action = InventoryAction.NOTHING;
-                        } else {
-                            Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
-                            if (slot != null && slot.hasItem() && player.abilities.canInstantlyBuild && player.inventory.getCarried() == null) {
-                                action = InventoryAction.CLONE_STACK;
-                            } else {
-                                action = InventoryAction.NOTHING;
-                            }
-                        }
-                    } else {
-                        click = ClickType.UNKNOWN;
-                        action = InventoryAction.UNKNOWN;
-                    }
-                } else if (packetplayinwindowclick.f() == 4) {
-                    if (packetplayinwindowclick.b() >= 0) {
+                    if (packetplayinwindowclick.b() == -1) {
+                        type = SlotType.OUTSIDE; // override
+                        click = packetplayinwindowclick.c() == 0 ? ClickType.WINDOW_BORDER_LEFT : ClickType.WINDOW_BORDER_RIGHT;
+                        action = InventoryAction.NOTHING;
+                    } else if (packetplayinwindowclick.f() == 0) {
                         if (packetplayinwindowclick.c() == 0) {
-                            click = ClickType.DROP;
-                            Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
-                            if (slot != null && slot.hasItem() && slot.isAllowed(player) && slot.getItem() != null && slot.getItem().getItem() != Item.getItemOf(Blocks.AIR)) {
-                                action = InventoryAction.DROP_ONE_SLOT;
-                            } else {
-                                action = InventoryAction.NOTHING;
-                            }
+                            click = ClickType.LEFT;
                         } else if (packetplayinwindowclick.c() == 1) {
-                            click = ClickType.CONTROL_DROP;
-                            Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
-                            if (slot != null && slot.hasItem() && slot.isAllowed(player) && slot.getItem() != null && slot.getItem().getItem() != Item.getItemOf(Blocks.AIR)) {
-                                action = InventoryAction.DROP_ALL_SLOT;
-                            } else {
-                                action = InventoryAction.NOTHING;
-                            }
-                        }
-                    } else {
-                        // Sane default (because this happens when they are holding nothing. Don't ask why.)
-                        click = ClickType.LEFT;
-                        if (packetplayinwindowclick.c() == 1) {
                             click = ClickType.RIGHT;
                         }
-                        action = InventoryAction.NOTHING;
-                    }
-                } else if (packetplayinwindowclick.f() == 5) {
-                    itemstack = this.player.activeContainer.clickItem(packetplayinwindowclick.b(), packetplayinwindowclick.c(), 5, this.player);
-                } else if (packetplayinwindowclick.f() == 6) {
-                    click = ClickType.DOUBLE_CLICK;
-                    action = InventoryAction.NOTHING;
-                    if (packetplayinwindowclick.b() >= 0 && this.player.inventory.getCarried() != null) {
-                        ItemStack cursor = this.player.inventory.getCarried();
-                        action = InventoryAction.NOTHING;
-                        // Quick check for if we have any of the item
-                        if (inventory.getTopInventory().contains(org.bukkit.Material.getMaterial(Item.getId(cursor.getItem()))) || inventory.getBottomInventory().contains(org.bukkit.Material.getMaterial(Item.getId(cursor.getItem())))) {
-                            action = InventoryAction.COLLECT_TO_CURSOR;
-                        }
-                    }
-                }
-                // TODO check on updates
-
-                if (packetplayinwindowclick.f() != 5) {
-                    if (click == ClickType.NUMBER_KEY) {
-                        event = new InventoryClickEvent(inventory, type, packetplayinwindowclick.b(), click, action, packetplayinwindowclick.c());
-                    } else {
-                        event = new InventoryClickEvent(inventory, type, packetplayinwindowclick.b(), click, action);
-                    }
-
-                    org.bukkit.inventory.Inventory top = inventory.getTopInventory();
-                    if (packetplayinwindowclick.b() == 0 && top instanceof CraftingInventory) {
-                        org.bukkit.inventory.Recipe recipe = ((CraftingInventory) top).getRecipe();
-                        if (recipe != null) {
-                            if (click == ClickType.NUMBER_KEY) {
-                                event = new CraftItemEvent(recipe, inventory, type, packetplayinwindowclick.b(), click, action, packetplayinwindowclick.c());
+                        if (packetplayinwindowclick.c() == 0 || packetplayinwindowclick.c() == 1) {
+                            action = InventoryAction.NOTHING; // Don't want to repeat ourselves
+                            if (packetplayinwindowclick.b() == -999) {
+                                if (player.inventory.getCarried() != null) {
+                                    action = packetplayinwindowclick.c() == 0 ? InventoryAction.DROP_ALL_CURSOR : InventoryAction.DROP_ONE_CURSOR;
+                                }
                             } else {
-                                event = new CraftItemEvent(recipe, inventory, type, packetplayinwindowclick.b(), click, action);
-                            }
-                        }
-                    }
-
-                    event.setCancelled(cancelled);
-                    server.getPluginManager().callEvent(event);
-
-                    switch (event.getResult()) {
-                        case ALLOW:
-                        case DEFAULT:
-                            itemstack = this.player.activeContainer.clickItem(packetplayinwindowclick.b(), packetplayinwindowclick.c(), packetplayinwindowclick.f(), this.player);
-                            // PaperSpigot start - Stackable Buckets
-                            if (itemstack != null &&
-                                    ((itemstack.getItem() == Items.LAVA_BUCKET && PaperSpigotConfig.stackableLavaBuckets) ||
-                                            (itemstack.getItem() == Items.WATER_BUCKET && PaperSpigotConfig.stackableWaterBuckets) ||
-                                            (itemstack.getItem() == Items.MILK_BUCKET && PaperSpigotConfig.stackableMilkBuckets))) {
-                                if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-                                    this.player.updateInventory(this.player.activeContainer);
-                                } else {
-                                    this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(-1, -1, this.player.inventory.getCarried()));
-                                    this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(this.player.activeContainer.windowId, packetplayinwindowclick.b(), this.player.activeContainer.getSlot(packetplayinwindowclick.b()).getItem()));
+                                Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
+                                if (slot != null) {
+                                    ItemStack clickedItem = slot.getItem();
+                                    ItemStack cursor = player.inventory.getCarried();
+                                    if (clickedItem == null) {
+                                        if (cursor != null) {
+                                            action = packetplayinwindowclick.c() == 0 ? InventoryAction.PLACE_ALL : InventoryAction.PLACE_ONE;
+                                        }
+                                    } else if (slot.isAllowed(player)) {
+                                        if (cursor == null) {
+                                            action = packetplayinwindowclick.c() == 0 ? InventoryAction.PICKUP_ALL : InventoryAction.PICKUP_HALF;
+                                        } else if (slot.isAllowed(cursor)) {
+                                            if (clickedItem.doMaterialsMatch(cursor) && ItemStack.equals(clickedItem, cursor)) {
+                                                int toPlace = packetplayinwindowclick.c() == 0 ? cursor.count : 1;
+                                                toPlace = Math.min(toPlace, clickedItem.getMaxStackSize() - clickedItem.count);
+                                                toPlace = Math.min(toPlace, slot.inventory.getMaxStackSize() - clickedItem.count);
+                                                if (toPlace == 1) {
+                                                    action = InventoryAction.PLACE_ONE;
+                                                } else if (toPlace == cursor.count) {
+                                                    action = InventoryAction.PLACE_ALL;
+                                                } else if (toPlace < 0) {
+                                                    action = toPlace != -1 ? InventoryAction.PICKUP_SOME : InventoryAction.PICKUP_ONE; // this happens with oversized stacks
+                                                } else if (toPlace != 0) {
+                                                    action = InventoryAction.PLACE_SOME;
+                                                }
+                                            } else if (cursor.count <= slot.getMaxStackSize()) {
+                                                action = InventoryAction.SWAP_WITH_CURSOR;
+                                            }
+                                        } else if (cursor.getItem() == clickedItem.getItem() && (!cursor.usesData() || cursor.getData() == clickedItem.getData()) && ItemStack.equals(cursor, clickedItem)) {
+                                            if (clickedItem.count >= 0) {
+                                                if (clickedItem.count + cursor.count <= cursor.getMaxStackSize()) {
+                                                    // As of 1.5, this is result slots only
+                                                    action = InventoryAction.PICKUP_ALL;
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                            // PaperSpigot end
-                            break;
-                        case DENY:
+                        }
+                    } else if (packetplayinwindowclick.f() == 1) {
+                        if (packetplayinwindowclick.c() == 0) {
+                            click = ClickType.SHIFT_LEFT;
+                        } else if (packetplayinwindowclick.c() == 1) {
+                            click = ClickType.SHIFT_RIGHT;
+                        }
+                        if (packetplayinwindowclick.c() == 0 || packetplayinwindowclick.c() == 1) {
+                            if (packetplayinwindowclick.b() < 0) {
+                                action = InventoryAction.NOTHING;
+                            } else {
+                                Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
+                                if (slot != null && slot.isAllowed(this.player) && slot.hasItem()) {
+                                    action = InventoryAction.MOVE_TO_OTHER_INVENTORY;
+                                } else {
+                                    action = InventoryAction.NOTHING;
+                                }
+                            }
+                        }
+                    } else if (packetplayinwindowclick.f() == 2) {
+                        if (packetplayinwindowclick.c() >= 0 && packetplayinwindowclick.c() < 9) {
+                            click = ClickType.NUMBER_KEY;
+                            Slot clickedSlot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
+                            if (clickedSlot.isAllowed(player)) {
+                                ItemStack hotbar = this.player.inventory.getItem(packetplayinwindowclick.c());
+                                boolean canCleanSwap = hotbar == null || (clickedSlot.inventory == player.inventory && clickedSlot.isAllowed(hotbar)); // the slot will accept the hotbar item
+                                if (clickedSlot.hasItem()) {
+                                    if (canCleanSwap) {
+                                        action = InventoryAction.HOTBAR_SWAP;
+                                    } else {
+                                        int firstEmptySlot = player.inventory.getFirstEmptySlotIndex();
+                                        if (firstEmptySlot > -1) {
+                                            action = InventoryAction.HOTBAR_MOVE_AND_READD;
+                                        } else {
+                                            action = InventoryAction.NOTHING; // This is not sane! Mojang: You should test for other slots of same type
+                                        }
+                                    }
+                                } else if (!clickedSlot.hasItem() && hotbar != null && clickedSlot.isAllowed(hotbar)) {
+                                    action = InventoryAction.HOTBAR_SWAP;
+                                } else {
+                                    action = InventoryAction.NOTHING;
+                                }
+                            } else {
+                                action = InventoryAction.NOTHING;
+                            }
+                            // Special constructor for number key
+                            event = new InventoryClickEvent(inventory, type, packetplayinwindowclick.b(), click, action, packetplayinwindowclick.c());
+                        }
+                    } else if (packetplayinwindowclick.f() == 3) {
+                        if (packetplayinwindowclick.c() == 2) {
+                            click = ClickType.MIDDLE;
+                            if (packetplayinwindowclick.b() == -999) {
+                                action = InventoryAction.NOTHING;
+                            } else {
+                                Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
+                                if (slot != null && slot.hasItem() && player.abilities.canInstantlyBuild && player.inventory.getCarried() == null) {
+                                    action = InventoryAction.CLONE_STACK;
+                                } else {
+                                    action = InventoryAction.NOTHING;
+                                }
+                            }
+                        } else {
+                            click = ClickType.UNKNOWN;
+                            action = InventoryAction.UNKNOWN;
+                        }
+                    } else if (packetplayinwindowclick.f() == 4) {
+                        if (packetplayinwindowclick.b() >= 0) {
+                            if (packetplayinwindowclick.c() == 0) {
+                                click = ClickType.DROP;
+                                Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
+                                if (slot != null && slot.hasItem() && slot.isAllowed(player) && slot.getItem() != null && slot.getItem().getItem() != Item.getItemOf(Blocks.AIR)) {
+                                    action = InventoryAction.DROP_ONE_SLOT;
+                                } else {
+                                    action = InventoryAction.NOTHING;
+                                }
+                            } else if (packetplayinwindowclick.c() == 1) {
+                                click = ClickType.CONTROL_DROP;
+                                Slot slot = this.player.activeContainer.getSlot(packetplayinwindowclick.b());
+                                if (slot != null && slot.hasItem() && slot.isAllowed(player) && slot.getItem() != null && slot.getItem().getItem() != Item.getItemOf(Blocks.AIR)) {
+                                    action = InventoryAction.DROP_ALL_SLOT;
+                                } else {
+                                    action = InventoryAction.NOTHING;
+                                }
+                            }
+                        } else {
+                            // Sane default (because this happens when they are holding nothing. Don't ask why.)
+                            click = ClickType.LEFT;
+                            if (packetplayinwindowclick.c() == 1) {
+                                click = ClickType.RIGHT;
+                            }
+                            action = InventoryAction.NOTHING;
+                        }
+                    } else if (packetplayinwindowclick.f() == 5) {
+                        itemstack = this.player.activeContainer.clickItem(packetplayinwindowclick.b(), packetplayinwindowclick.c(), 5, this.player);
+                    } else if (packetplayinwindowclick.f() == 6) {
+                        click = ClickType.DOUBLE_CLICK;
+                        action = InventoryAction.NOTHING;
+                        if (packetplayinwindowclick.b() >= 0 && this.player.inventory.getCarried() != null) {
+                            ItemStack cursor = this.player.inventory.getCarried();
+                            action = InventoryAction.NOTHING;
+                            // Quick check for if we have any of the item
+                            if (inventory.getTopInventory().contains(org.bukkit.Material.getMaterial(Item.getId(cursor.getItem()))) || inventory.getBottomInventory().contains(org.bukkit.Material.getMaterial(Item.getId(cursor.getItem())))) {
+                                action = InventoryAction.COLLECT_TO_CURSOR;
+                            }
+                        }
+                    }
+                    // TODO check on updates
+
+                    if (packetplayinwindowclick.f() != 5) {
+                        if (click == ClickType.NUMBER_KEY) {
+                            event = new InventoryClickEvent(inventory, type, packetplayinwindowclick.b(), click, action, packetplayinwindowclick.c());
+                        } else {
+                            event = new InventoryClickEvent(inventory, type, packetplayinwindowclick.b(), click, action);
+                        }
+
+                        org.bukkit.inventory.Inventory top = inventory.getTopInventory();
+                        if (packetplayinwindowclick.b() == 0 && top instanceof CraftingInventory) {
+                            org.bukkit.inventory.Recipe recipe = ((CraftingInventory) top).getRecipe();
+                            if (recipe != null) {
+                                if (click == ClickType.NUMBER_KEY) {
+                                    event = new CraftItemEvent(recipe, inventory, type, packetplayinwindowclick.b(), click, action, packetplayinwindowclick.c());
+                                } else {
+                                    event = new CraftItemEvent(recipe, inventory, type, packetplayinwindowclick.b(), click, action);
+                                }
+                            }
+                        }
+
+                        event.setCancelled(cancelled);
+                        server.getPluginManager().callEvent(event);
+
+                        switch (event.getResult()) {
+                            case ALLOW:
+                            case DEFAULT:
+                                itemstack = this.player.activeContainer.clickItem(packetplayinwindowclick.b(), packetplayinwindowclick.c(), packetplayinwindowclick.f(), this.player);
+                                // PaperSpigot start - Stackable Buckets
+                                if (itemstack != null &&
+                                        ((itemstack.getItem() == Items.LAVA_BUCKET && PaperSpigotConfig.stackableLavaBuckets) ||
+                                                (itemstack.getItem() == Items.WATER_BUCKET && PaperSpigotConfig.stackableWaterBuckets) ||
+                                                (itemstack.getItem() == Items.MILK_BUCKET && PaperSpigotConfig.stackableMilkBuckets))) {
+                                    if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+                                        this.player.updateInventory(this.player.activeContainer);
+                                    } else {
+                                        this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(-1, -1, this.player.inventory.getCarried()));
+                                        this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(this.player.activeContainer.windowId, packetplayinwindowclick.b(), this.player.activeContainer.getSlot(packetplayinwindowclick.b()).getItem()));
+                                    }
+                                }
+                                // PaperSpigot end
+                                break;
+                            case DENY:
                             /* Needs enum constructor in InventoryAction
                             if (action.modifiesOtherSlots()) {
 
@@ -1744,74 +1746,75 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                                     this.player.playerConnection.sendPacket(new Packet103SetSlot(this.player.activeContainer.windowId, packet102windowclick.slot, this.player.activeContainer.getSlot(packet102windowclick.slot).getItem()));
                                 }
                             }*/
-                            switch (action) {
-                                // Modified other slots
-                                case PICKUP_ALL:
-                                case MOVE_TO_OTHER_INVENTORY:
-                                case HOTBAR_MOVE_AND_READD:
-                                case HOTBAR_SWAP:
-                                case COLLECT_TO_CURSOR:
-                                case UNKNOWN:
-                                    this.player.updateInventory(this.player.activeContainer);
-                                    break;
-                                // Modified cursor and clicked
-                                case PICKUP_SOME:
-                                case PICKUP_HALF:
-                                case PICKUP_ONE:
-                                case PLACE_ALL:
-                                case PLACE_SOME:
-                                case PLACE_ONE:
-                                case SWAP_WITH_CURSOR:
-                                    this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(-1, -1, this.player.inventory.getCarried()));
-                                    this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(this.player.activeContainer.windowId, packetplayinwindowclick.b(), this.player.activeContainer.getSlot(packetplayinwindowclick.b()).getItem()));
-                                    break;
-                                // Modified clicked only
-                                case DROP_ALL_SLOT:
-                                case DROP_ONE_SLOT:
-                                    this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(this.player.activeContainer.windowId, packetplayinwindowclick.b(), this.player.activeContainer.getSlot(packetplayinwindowclick.b()).getItem()));
-                                    break;
-                                // Modified cursor only
-                                case DROP_ALL_CURSOR:
-                                case DROP_ONE_CURSOR:
-                                case CLONE_STACK:
-                                    this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(-1, -1, this.player.inventory.getCarried()));
-                                    break;
-                                // Nothing
-                                case NOTHING:
-                                    break;
-                            }
-                            return;
-                    }
+                                switch (action) {
+                                    // Modified other slots
+                                    case PICKUP_ALL:
+                                    case MOVE_TO_OTHER_INVENTORY:
+                                    case HOTBAR_MOVE_AND_READD:
+                                    case HOTBAR_SWAP:
+                                    case COLLECT_TO_CURSOR:
+                                    case UNKNOWN:
+                                        this.player.updateInventory(this.player.activeContainer);
+                                        break;
+                                    // Modified cursor and clicked
+                                    case PICKUP_SOME:
+                                    case PICKUP_HALF:
+                                    case PICKUP_ONE:
+                                    case PLACE_ALL:
+                                    case PLACE_SOME:
+                                    case PLACE_ONE:
+                                    case SWAP_WITH_CURSOR:
+                                        this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(-1, -1, this.player.inventory.getCarried()));
+                                        this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(this.player.activeContainer.windowId, packetplayinwindowclick.b(), this.player.activeContainer.getSlot(packetplayinwindowclick.b()).getItem()));
+                                        break;
+                                    // Modified clicked only
+                                    case DROP_ALL_SLOT:
+                                    case DROP_ONE_SLOT:
+                                        this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(this.player.activeContainer.windowId, packetplayinwindowclick.b(), this.player.activeContainer.getSlot(packetplayinwindowclick.b()).getItem()));
+                                        break;
+                                    // Modified cursor only
+                                    case DROP_ALL_CURSOR:
+                                    case DROP_ONE_CURSOR:
+                                    case CLONE_STACK:
+                                        this.player.playerConnection.sendPacket(new PacketPlayOutSetSlot(-1, -1, this.player.inventory.getCarried()));
+                                        break;
+                                    // Nothing
+                                    case NOTHING:
+                                        break;
+                                }
+                                return;
+                        }
 
-                    if (event instanceof CraftItemEvent) {
-                        // Need to update the inventory on crafting to
-                        // correctly support custom recipes
-                        player.updateInventory(player.activeContainer);
+                        if (event instanceof CraftItemEvent) {
+                            // Need to update the inventory on crafting to
+                            // correctly support custom recipes
+                            player.updateInventory(player.activeContainer);
+                        }
+                    }
+                    // CraftBukkit end
+
+                    if (ItemStack.matches(packetplayinwindowclick.e(), itemstack)) {
+                        this.player.playerConnection.sendPacket(new PacketPlayOutTransaction(packetplayinwindowclick.a(), packetplayinwindowclick.d(), true));
+                        this.player.g = true;
+                        this.player.activeContainer.b();
+                        this.player.broadcastCarriedItem();
+                        this.player.g = false;
+                    } else {
+                        this.n.a(this.player.activeContainer.windowId, Short.valueOf(packetplayinwindowclick.d()));
+                        this.player.playerConnection.sendPacket(new PacketPlayOutTransaction(packetplayinwindowclick.a(), packetplayinwindowclick.d(), false));
+                        this.player.activeContainer.a(this.player, false);
+                        ArrayList arraylist1 = Lists.newArrayList();
+
+                        for (int j = 0; j < this.player.activeContainer.c.size(); ++j) {
+                            arraylist1.add(this.player.activeContainer.c.get(j).getItem());
+                        }
+
+                        this.player.a(this.player.activeContainer, arraylist1);
                     }
                 }
-                // CraftBukkit end
-
-                if (ItemStack.matches(packetplayinwindowclick.e(), itemstack)) {
-                    this.player.playerConnection.sendPacket(new PacketPlayOutTransaction(packetplayinwindowclick.a(), packetplayinwindowclick.d(), true));
-                    this.player.g = true;
-                    this.player.activeContainer.b();
-                    this.player.broadcastCarriedItem();
-                    this.player.g = false;
-                } else {
-                    this.n.a(this.player.activeContainer.windowId, Short.valueOf(packetplayinwindowclick.d()));
-                    this.player.playerConnection.sendPacket(new PacketPlayOutTransaction(packetplayinwindowclick.a(), packetplayinwindowclick.d(), false));
-                    this.player.activeContainer.a(this.player, false);
-                    ArrayList arraylist1 = Lists.newArrayList();
-
-                    for (int j = 0; j < this.player.activeContainer.c.size(); ++j) {
-                        arraylist1.add(this.player.activeContainer.c.get(j).getItem());
-                    }
-
-                    this.player.a(this.player.activeContainer, arraylist1);
-                }
+            } catch (final IndexOutOfBoundsException e) {
             }
         }
-
     }
 
     public void a(PacketPlayInEnchantItem packetplayinenchantitem) {
@@ -2100,7 +2103,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         ItemStack itemstack1;
 
         try { // CraftBukkit
-            if ("MC|BEdit".equals(packetplayincustompayload.a())) {
+            if ("MC|BEdit".equals(packetplayincustompayload.a()) && !Natsuki.getInstance().getConfig().PACKET.NBT.skipNbt) {
                 packetdataserializer = new PacketDataSerializer(Unpooled.wrappedBuffer(packetplayincustompayload.b()));
 
                 try {
@@ -2109,9 +2112,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                         return;
                     }
 
-                    if (!ItemBookAndQuill.b(itemstack.getTag())) {
-                        throw new IOException("Invalid book tag!");
-                    }
+                        if (!ItemBookAndQuill.b(itemstack.getTag())) {
+                            throw new IOException("Invalid book tag!");
+                        }
 
                     itemstack1 = this.player.inventory.getItemInHand();
                     if (itemstack1 != null) {
@@ -2132,7 +2135,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                 }
 
                 return;
-            } else if ("MC|BSign".equals(packetplayincustompayload.a())) {
+            } else if ("MC|BSign".equals(packetplayincustompayload.a()) && !Natsuki.getInstance().getConfig().PACKET.NBT.skipNbt) {
                 packetdataserializer = new PacketDataSerializer(Unpooled.wrappedBuffer(packetplayincustompayload.b()));
 
                 try {
