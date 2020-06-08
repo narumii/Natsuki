@@ -298,11 +298,10 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
         // Spigot Start
         this.preparing = false;
         // Spigot End
-        if (this.channel.isOpen()) {
+        if (this.channel != null && this.channel.isOpen()) {
             this.channel.close(); // We can't wait as this may be called from an event loop.
             this.n = ichatbasecomponent;
         }
-
     }
 
     public boolean c() {
