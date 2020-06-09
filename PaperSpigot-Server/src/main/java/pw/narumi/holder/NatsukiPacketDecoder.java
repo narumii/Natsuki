@@ -59,7 +59,6 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
                     }
                 }catch (final NatsukiException e) {
                     channel.pipeline().remove(this);
-                    e.printStackTrace();
                     throw new NatsukiException("Decoder exception");
                 }
             }
@@ -102,7 +101,6 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
             ++packetState;
         }catch (final IndexOutOfBoundsException e) {
             channel.pipeline().remove(this);
-            e.printStackTrace();
             throw new NatsukiException("Invalid data");
         }
     }
