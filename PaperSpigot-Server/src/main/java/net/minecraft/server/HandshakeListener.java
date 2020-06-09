@@ -10,9 +10,7 @@ import org.bukkit.entity.Player;
 import pw.narumi.Natsuki;
 import pw.narumi.common.Utils;
 
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.URL;
+import java.net.*;
 import java.util.HashMap;
 // CraftBukkit end
 
@@ -32,83 +30,75 @@ public class HandshakeListener implements PacketHandshakingInListener {
         this.b = networkmanager;
     }
 
-    //SYF KOD WIEM
-    private void handleAddressCheck() {
+    private boolean isProxy(final InetAddress address) {
         try {
-            if (Natsuki.getInstance().getConfig().API.proxyCheckKey.equals("Your Key") || Natsuki.getInstance().getConfig().API.proxyCheckKey.equals("none")) {
-                final InetAddress address = ((InetSocketAddress) b.getSocketAddress()).getAddress();
-                final String json = new String(IOUtils.toByteArray(new URL("http://api.stopforumspam.org/api?ip=%address%&json"
-                        .replace("%address%", address.getHostAddress()))
-                        .openStream()));
+            String url;
 
-                final JSONObject obj = new JSONObject(json).getJSONObject("ip");
-
-                if (obj.getInt("appears") == 1) {
-                    if (!Natsuki.getInstance().getBlockedAddresses().contains(address.getHostAddress()))
-                        Natsuki.getInstance().getBlockedAddresses().add(address.getHostAddress());
-
-                    final ChatComponentText message = new ChatComponentText(Utils.fixString(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("ProxyOrVpnKick")));
-                    this.b.handle(new PacketLoginOutDisconnect(message));
-                    this.b.close(message);
-                }
-            }else {
-                final InetAddress address = ((InetSocketAddress) b.getSocketAddress()).getAddress();
-                final String json = new String(IOUtils.toByteArray(new URL("http://proxycheck.io/v2/%address%?&vpn=1&asn=1&risk=1&key=%key%"
-                        .replace("%address%", address.getHostAddress())
-                        .replace("%key%", Natsuki.getInstance().getConfig().API.proxyCheckKey))
-                        .openStream()));
-                final JSONObject obj = new JSONObject(json).getJSONObject(address.getHostAddress());
-
-                if (obj.getString("proxy").equalsIgnoreCase("yes") || obj.getInt("risk") > 40) {
-                    if (!Natsuki.getInstance().getBlockedAddresses().contains(address.getHostAddress()))
-                        Natsuki.getInstance().getBlockedAddresses().add(address.getHostAddress());
-
-                    final ChatComponentText message = new ChatComponentText(
-                            Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
-                                    + "\n\n" +
-                                    Natsuki.getInstance().getConfig().MESSAGES.get("ProxyOrVpnKick")));
-
-                    this.b.handle(new PacketLoginOutDisconnect(message));
-                    this.b.close(message);
-                }
+            if (Natsuki.getInstance().getConfig().API.proxyCheckKey.equalsIgnoreCase("Your Key") || Natsuki.getInstance().getConfig().API.proxyCheckKey.equalsIgnoreCase("none")) {
+                url = "http://api.stopforumspam.org/api?ip=%address%&json".replace("%address%", address.getHostAddress());
+            } else {
+                url = "http://proxycheck.io/v2/%address%?&vpn=1&asn=1&risk=1&key=%key%".replace("%address%", address.getHostAddress()).replace("%key%", Natsuki.getInstance().getConfig().API.proxyCheckKey);
             }
-        } catch (final Exception ignored) {
+
+            final HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setConnectTimeout(3000);
+            connection.setReadTimeout(4000);
+
+            final String json = new String(IOUtils.toByteArray(connection));
+            final JSONObject object = new JSONObject(json).getJSONObject(address.getHostAddress());
+
+            if (Natsuki.getInstance().getConfig().API.proxyCheckKey.equalsIgnoreCase("Your Key") || Natsuki.getInstance().getConfig().API.proxyCheckKey.equalsIgnoreCase("none"))
+                return checkProxy(false, object);
+            else
+                return checkProxy(true, object);
+
+        } catch (final Exception e) {
+            return false;
+        }
+    }
+
+    private boolean checkProxy(final boolean state, final JSONObject object) {
+        if (state) {
+            return object.getString("proxy").equalsIgnoreCase("yes") || object.getInt("risk") > 40;
+        }else {
+            return object.getInt("appears") == 1;
         }
     }
 
     public void a(PacketHandshakingInSetProtocol packethandshakinginsetprotocol) {
         switch (HandshakeListener.SyntheticClass_1.a[packethandshakinginsetprotocol.a().ordinal()]) {
         case 1:
-            final String addressA = ((InetSocketAddress)b.getSocketAddress()).getAddress().getHostAddress();
 
-            if (!Natsuki.getInstance().getWhiteListedAddresses().contains(addressA)
-                    && Natsuki.getInstance().getConfig().CONNECTION.addressCheck)
-                handleAddressCheck();
-
-            //SYF KOD WIEM
-            if (Natsuki.getInstance().getConfig().CONNECTION.maxConnections != -1) {
-                int same = 1;
-                for (final Player onlinePlayer : Bukkit.getServer().getOnlinePlayers()) {
-                    if (onlinePlayer.getAddress().getAddress().getHostAddress().equals(addressA))
-                        same++;
-                }
-
-                if (same > Natsuki.getInstance().getConfig().CONNECTION.maxConnections) {
-                    final ChatComponentText message = new ChatComponentText(Utils.fixString(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("MaxConnectionsPerIp")));
-                    this.b.handle(new PacketLoginOutDisconnect(message));
-                    this.b.close(message);
-                    return;
-                }
-            }
+            final InetAddress address = ((InetSocketAddress)b.getSocketAddress()).getAddress();
 
             this.b.a(EnumProtocol.LOGIN);
             ChatComponentText chatcomponenttext;
 
             // CraftBukkit start - Connection throttle
             try {
+                if (Natsuki.getInstance().getConfig().CONNECTION.maxConnections != -1) {
+                    final long limit = Bukkit.getServer().getOnlinePlayers()
+                            .stream()
+                            .filter(player -> player.getAddress().getAddress().equals(address))
+                            .count();
+
+                    if (limit > Natsuki.getInstance().getConfig().CONNECTION.maxConnections) {
+                        final ChatComponentText message = new ChatComponentText(Utils.fixString(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("MaxConnectionsPerIp")));
+                        this.b.handle(new PacketLoginOutDisconnect(message));
+                        this.b.close(message);
+                    }
+                }
+
+                if (!Natsuki.getInstance().getWhiteListedAddresses().contains(address.getHostAddress()) && Natsuki.getInstance().getConfig().CONNECTION.addressCheck) {
+                    if (isProxy(address)) {
+                        final ChatComponentText message = new ChatComponentText(Utils.fixString(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("ProxyOrVpnKick")));
+                        this.b.handle(new PacketLoginOutDisconnect(message));
+                        this.b.close(message);
+                    }
+                }
+
                 long currentTime = System.currentTimeMillis();
                 long connectionThrottle = MinecraftServer.getServer().server.getConnectionThrottle();
-                InetAddress address = ((java.net.InetSocketAddress) this.b.getSocketAddress()).getAddress();
 
                 synchronized (throttleTracker) {
                     if (throttleTracker.containsKey(address) && !"127.0.0.1".equals(address.getHostAddress()) && currentTime - throttleTracker.get(address) < connectionThrottle) {
@@ -148,7 +138,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
                 this.b.handle(new PacketLoginOutDisconnect(chatcomponenttext));
                 this.b.close(chatcomponenttext);
             } else {
-                this.b.a((PacketListener) (new LoginListener(this.a, this.b)));
+                this.b.a(new LoginListener(this.a, this.b));
                 // Spigot Start
                 if (org.spigotmc.SpigotConfig.bungee) {
                     String[] split = packethandshakinginsetprotocol.hostname.split("\00");
@@ -175,7 +165,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
 
         case 2:
             this.b.a(EnumProtocol.STATUS);
-            this.b.a((PacketListener) (new PacketStatusListener(this.a, this.b)));
+            this.b.a(new PacketStatusListener(this.a, this.b));
             break;
 
         default:
@@ -197,13 +187,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
             try {
                 HandshakeListener.SyntheticClass_1.a[EnumProtocol.LOGIN.ordinal()] = 1;
             } catch (NoSuchFieldError nosuchfielderror) {
-                ;
             }
 
             try {
                 HandshakeListener.SyntheticClass_1.a[EnumProtocol.STATUS.ordinal()] = 2;
             } catch (NoSuchFieldError nosuchfielderror1) {
-                ;
             }
 
         }

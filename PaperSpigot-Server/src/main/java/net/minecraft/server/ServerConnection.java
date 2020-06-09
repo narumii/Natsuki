@@ -72,8 +72,6 @@ public class ServerConnection {
     }
 
     public void a(final InetAddress address, final  int i) throws IOException {
-        final List<ChannelFuture> channelFutures = this.g;
-
         synchronized (this.g) {
             final Class<? extends ServerChannel> clazz;
             final LazyInitVar<?> lazyInitVar;

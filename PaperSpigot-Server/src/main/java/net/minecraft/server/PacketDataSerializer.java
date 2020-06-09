@@ -6,6 +6,7 @@ import io.netty.handler.codec.DecoderException;
 import io.netty.handler.codec.EncoderException;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import pw.narumi.Natsuki;
+import pw.narumi.exception.NatsukiException;
 import pw.narumi.object.Holder;
 
 import java.io.*;
@@ -95,14 +96,14 @@ public class PacketDataSerializer extends ByteBuf {
         return i;
     }
 
-    public int readVarInt() throws IOException {
+    public int readVarInt() {
         int out = 0;
         int bytes = 0;
         byte in;
 
         do {
             if (readableBytes() <= 0)
-                throw new IOException("Null readable bytes");
+                throw new NatsukiException("Null readable bytes");
 
             in = readByte();
             out |= (in & 127) << bytes++ * 7;

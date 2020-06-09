@@ -181,10 +181,12 @@ public class Natsuki {
             final File file = new File(getConfig().API.getGeoLiteFile);
             if (file.exists())
                 databaseReader = new DatabaseReader.Builder(file).build();
-            else
+            else {
                 System.err.println("Nie mozna zaladowac bazy danych GeoLite2, wylaczam sprawdzanie regionu");
+                getConfig().CONNECTION.REGION.check = false;
+            }
 
-        } catch (IOException e) {
+        } catch (final IOException e) {
             getConfig().CONNECTION.REGION.check = false;
             System.err.println("Nie mozna zaladowac bazy danych GeoLite2, wylaczanie sprawdzanie regionu");
         }

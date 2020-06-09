@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import pw.narumi.Natsuki;
+import pw.narumi.common.PacketUtil;
 import pw.narumi.exception.NatsukiException;
 
 import java.io.File;
@@ -38,123 +39,55 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
             System.out.println(channel.channel().remoteAddress() + " -> " + Arrays.toString(buf.array()));
 
         try {
-
-            if (buf.readableBytes() <= 0) { //HEHE
+            if (buf.readableBytes() <= 0) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Null readable bytes received");
             }
 
-            if (packetState >= 3)
-                handshakeIntent = 0;
-
-            //SPRAWDZANIE PAKIEUT HANDSHAKE
-            if (packetState == 0) {
-                final PacketDataSerializer handshakeBuf = new PacketDataSerializer(buf.duplicate()); //TWORZENIE KOPII ABY NIE INGEROWAC W ORGINALNA DATA PAKIETU
-                if (handshakeBuf.readableBytes() > 256) {
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Too big packet");
+            if (packetState == 0 || (packetState == 1 && handshakeIntent == 2)) {
+                final PacketDataSerializer buffer = new PacketDataSerializer(buf.copy());
+                if (packetState == 0) {
+                    handshakeIntent = PacketUtil.checkHandshake(buffer);
                 }
 
-                final int packetId = handshakeBuf.readVarInt();
-                if (handshakeBuf.readableBytes() <= 0 || packetId != 0) { //1 PAKIET TO ZAWSZE HANDSHAKE
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Invalid handshake packet");
-                }
-
-                final int protocol = handshakeBuf.readVarInt();
-                if (handshakeBuf.readableBytes() <= 0 || protocol != 47) { //PROTOCOL 47 BO TO 1.8.8
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Invalid protocol version");
-                }
-
-                final byte[] host = new byte[handshakeBuf.readVarInt()];
-                handshakeBuf.readBytes(host);
-                if (handshakeBuf.readableBytes() <= 2) { //MAGIA
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Invalid host address");
-                }
-
-                final int port = handshakeBuf.readUnsignedShort();
-                if (handshakeBuf.readableBytes() <= 0 || port <= 0) { //PORT ZAWSZE WIEKSZY OD 0
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Invalid server port");
-                }
-
-                final int state = handshakeBuf.readVarInt();
-                if (state != 1 && state != 2) { //STATE ZAWSZE MUSI BYC 1 LUB 2
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Invalid handshake state");
-                }
-
-                if (handshakeBuf.readableBytes() > 0) { //NO JAKBY KTOS MUTANTA WYSLAL
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Invalid packet data");
-                }
-
-                handshakeIntent = state;
-            }
-
-            if (packetState == 1 && handshakeIntent == 2) {
-                final PacketDataSerializer handshakeBuf = new PacketDataSerializer(buf.duplicate()); //TWORZENIE KOPII ABY NIE INGEROWAC W ORGINALNA DATA PAKIETU
-                if (handshakeBuf.readableBytes() > 64) {
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Too big packet");
-                }
-
-                final int id = handshakeBuf.readVarInt();
-
-                if (handshakeBuf.readableBytes() <= 0 || id != 0) { //1 PAKIET TO ZAWSZE HANDSHAKE
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Invalid packet");
-                }
-
-                final byte[] host = new byte[handshakeBuf.readVarInt()];
-                handshakeBuf.readBytes(host);
-                final String string = new String(host);
-                if (handshakeBuf.readableBytes() > 0) { //MAGIA
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Still readable?");
-                }
-
-                if (string.length() > 16 || string.length() <= 2) {
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Invalid name");
+                if (packetState == 1 && handshakeIntent == 2) {
+                    PacketUtil.checkLogin(buffer);
                 }
             }
 
             final PacketDataSerializer serializer = new PacketDataSerializer(buf);
-            if (handshakeIntent == 2 && (serializer.readableBytes() <= 0) && (packetState < 3)) { //SPRAWDZANIE DATY
+            if (handshakeIntent == 2 && (serializer.readableBytes() <= 0) && (packetState < 3)) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Empty packet");
             }
 
-            if (handshakeIntent == 1 && (serializer.readableBytes() <= 0) && (packetState == 0 || packetState == 2)) { //SPRAWDZANIE DATY
+            if (handshakeIntent == 1 && (serializer.readableBytes() <= 0) && (packetState == 0 || packetState == 2)) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Empty Packet");
             }
 
-            if (handshakeIntent == 1 && serializer.readableBytes() > 0 && packetState == 1) { //SPRAWDZANIE DATY
+            if (handshakeIntent == 1 && serializer.readableBytes() > 0 && packetState == 1) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Too big packet data");
             }
 
-            final Packet<?> packet = channel.channel().attr(NetworkManager.c).get().a(this.direction, serializer.readVarInt()); //POBIERANIE PAKIEUT
-            if (packet == null) { //JAK PAKIET JEST NULLEM TO NIECH SPIERDALA
+            final Packet<?> packet = channel.channel().attr(NetworkManager.c).get().a(this.direction, serializer.readVarInt());
+            if (packet == null) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Null packtet");
             }
 
-            packet.a(serializer); //CZYTANIE PAKIETU
-
-            if (serializer.readableBytes() > 0) { //JESLI PAKIET MA DATA PO ODCZYTANIU TO JEST ZJEBANY
+            packet.a(serializer);
+            if (serializer.readableBytes() > 0) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Packet is too big");
             }
 
-            objects.add(packet); //CHUJ WIE
-
+            objects.add(packet);
             ++packetState;
+
         }catch (final IndexOutOfBoundsException e) {
+            channel.pipeline().remove(this);
             throw new NatsukiException("Invalid data");
         }
     }
