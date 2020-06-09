@@ -36,7 +36,7 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
 
     protected void decode(final ChannelHandlerContext channel, final ByteBuf buf, final List<Object> objects) throws Exception {
         if (Natsuki.getInstance().getConfig().UTILS.debug && Natsuki.getInstance().getConfig().UTILS.packetDebugger)
-            System.out.println(channel.channel().remoteAddress() + " -> " + Arrays.toString(buf.array()));
+            System.out.println(channel.channel().remoteAddress() + " -> " + Arrays.toString(buf.array()) + " | [bytes: " + buf.readableBytes() + ", packet: " + packetState + ", handshake: " + handshakeIntent + "]");
 
         try {
             if (buf.readableBytes() <= 0) {
@@ -44,50 +44,65 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
                 throw new NatsukiException("Null readable bytes received");
             }
 
-            if (packetState == 0 || (packetState == 1 && handshakeIntent == 2)) {
-                final PacketDataSerializer buffer = new PacketDataSerializer(buf.copy());
-                if (packetState == 0) {
-                    handshakeIntent = PacketUtil.checkHandshake(buffer);
-                }
+            if (packetState >= 4)
+                handshakeIntent = 0;
 
-                if (packetState == 1 && handshakeIntent == 2) {
-                    PacketUtil.checkLogin(buffer);
+            if (packetState == 0 || (packetState == 1 && handshakeIntent == 2)) {
+                try {
+                    final PacketDataSerializer buffer = new PacketDataSerializer(buf.copy());
+                    if (packetState == 0) {
+                        handshakeIntent = PacketUtil.checkHandshake(buffer);
+                    }
+
+                    if (packetState == 1 && handshakeIntent == 2) {
+                        PacketUtil.checkLogin(buffer);
+                    }
+                }catch (final NatsukiException e) {
+                    channel.pipeline().remove(this);
+                    e.printStackTrace();
+                    throw new NatsukiException("Decoder exception");
                 }
             }
 
             final PacketDataSerializer serializer = new PacketDataSerializer(buf);
-            if (handshakeIntent == 2 && (serializer.readableBytes() <= 0) && (packetState < 3)) {
+            if ((handshakeIntent == 2 && packetState < 3) && serializer.readableBytes() <= 0) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Empty packet");
             }
 
-            if (handshakeIntent == 1 && (serializer.readableBytes() <= 0) && (packetState == 0 || packetState == 2)) {
+            if ((handshakeIntent == 1 && packetState == 1) && (serializer.readableBytes() >= 2)) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Empty Packet");
             }
 
-            if (handshakeIntent == 1 && serializer.readableBytes() > 0 && packetState == 1) {
+            if ((handshakeIntent == 1 && packetState == 2 || packetState == 0) && serializer.readableBytes() <= 0) {
                 channel.pipeline().remove(this);
-                throw new NatsukiException("Too big packet data");
+                throw new NatsukiException("Invalid packet data");
             }
 
-            final Packet<?> packet = channel.channel().attr(NetworkManager.c).get().a(this.direction, serializer.readVarInt());
+            final int packetId = serializer.readVarInt();
+            if (packetState == 2 && packetId != 1 && handshakeIntent == 1) {
+                channel.pipeline().remove(this);
+                throw new NatsukiException("Invalid packet");
+            }
+
+            final Packet<?> packet = channel.channel().attr(NetworkManager.c).get().a(this.direction, packetId);
             if (packet == null) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Null packtet");
             }
 
             packet.a(serializer);
-            if (serializer.readableBytes() > 0) {
+            if (serializer.isReadable()) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Packet is too big");
             }
 
             objects.add(packet);
             ++packetState;
-
         }catch (final IndexOutOfBoundsException e) {
             channel.pipeline().remove(this);
+            e.printStackTrace();
             throw new NatsukiException("Invalid data");
         }
     }
