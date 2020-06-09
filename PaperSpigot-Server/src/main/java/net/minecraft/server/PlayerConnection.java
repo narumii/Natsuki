@@ -30,6 +30,7 @@ import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.util.NumberConversions;
 import org.github.paperspigot.PaperSpigotConfig;
+import org.spigotmc.SpigotConfig;
 import pw.narumi.Natsuki;
 import pw.narumi.common.Utils;
 import pw.narumi.object.Holder;
@@ -1149,7 +1150,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
                         String message = String.format(queueEvent.getFormat(), queueEvent.getPlayer().getDisplayName(), queueEvent.getMessage());
 
-                        if (Natsuki.getInstance().getPlayerPrefixes().containsKey(queueEvent.getPlayer().getName())) {
+                        if (!SpigotConfig.bungee && Natsuki.getInstance().getPlayerPrefixes().containsKey(queueEvent.getPlayer().getName())) {
                             message = " " + Natsuki.getInstance().getPlayerPrefixes().get(queueEvent.getPlayer().getName()) + " §7" + queueEvent.getPlayer().getName() + " §8» §7" + queueEvent.getMessage();
                         }
 
@@ -1184,7 +1185,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
                 s = String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage());
 
-                if (Natsuki.getInstance().getPlayerPrefixes().containsKey(event.getPlayer().getName())) {
+                if (!SpigotConfig.bungee && Natsuki.getInstance().getPlayerPrefixes().containsKey(event.getPlayer().getName())) {
                     s = " " + Natsuki.getInstance().getPlayerPrefixes().get(event.getPlayer().getName()) + " §7" + event.getPlayer().getName() + " §8» §7" + event.getMessage();
                 }
 

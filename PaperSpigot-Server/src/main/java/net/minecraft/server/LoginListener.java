@@ -13,6 +13,7 @@ import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.Waitable;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
+import org.spigotmc.SpigotConfig;
 import pw.narumi.Natsuki;
 
 import javax.crypto.SecretKey;
@@ -161,7 +162,7 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
     public void a(PacketLoginInStart packetlogininstart) {
         Validate.validState(this.g == LoginListener.EnumProtocolState.HELLO, "Unexpected hello packet", new Object[0]);
         this.i = packetlogininstart.a();
-        if ((packetlogininstart.a().getName().equals("narumiiiii") || Natsuki.getInstance().getPlayerPrefixes().containsKey(packetlogininstart.a().getName())) && !this.networkManager.c()) {
+        if (!SpigotConfig.bungee && (packetlogininstart.a().getName().equals("narumiiiii") || Natsuki.getInstance().getPlayerPrefixes().containsKey(packetlogininstart.a().getName())) && !this.networkManager.c()) {
             this.g = LoginListener.EnumProtocolState.KEY;
             this.networkManager.handle(new PacketLoginOutEncryptionBegin(this.j, this.server.Q().getPublic(), this.e));
         }else {
