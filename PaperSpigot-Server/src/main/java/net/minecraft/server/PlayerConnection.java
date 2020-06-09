@@ -289,8 +289,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                         Location oldTo = to.clone();
                         PlayerMoveEvent event = new PlayerMoveEvent(player, from, to);
                         this.server.getPluginManager().callEvent(event);
-                        if (Natsuki.getInstance().getConfig().UTILS.antiBot && (!sendSettings || !sendKeepAlive))
-                            event.setCancelled(true);
 
                         // If the event is cancelled we move the player back to their old location.
                         if (event.isCancelled()) {
