@@ -14,6 +14,10 @@ public class AddressCommand extends Command {
     //TAKIE TROCHE ROZJEBANE XD
     @Override
     public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
+        if (!testPermission(sender)) {
+            return true;
+        }
+
         if (args.length < 1) {
             sender.sendMessage(" §8» §7Usage: §d/address <whitelist/blacklist/info>");
             return false;
