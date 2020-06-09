@@ -684,13 +684,8 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     private int packets = 0;
 
     public void a(PacketPlayInBlockPlace packetplayinblockplace) {
-        
         ++packetSpam;
-        
-
         PlayerConnectionUtils.ensureMainThread(packetplayinblockplace, this, this.player.u());
-
-
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
         boolean throttled = false;
         // PaperSpigot - Allow disabling the player interaction limiter
@@ -822,7 +817,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInSpectate packetplayinspectate) {
-        ++packetSpam;
         PlayerConnectionUtils.ensureMainThread(packetplayinspectate, this, this.player.u());
         if (this.player.isSpectator()) {
             Entity entity = null;
@@ -954,7 +948,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInHeldItemSlot packetplayinhelditemslot) {
-        ++packetSpam;
         // CraftBukkit start
         if (this.player.dead) return;
         PlayerConnectionUtils.ensureMainThread(packetplayinhelditemslot, this, this.player.u());
@@ -978,8 +971,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public void a(PacketPlayInChat packetplayinchat) {
         if (Natsuki.getInstance().getConfig().UTILS.antiBot && (!sendSettings || !sendKeepAlive))
             return;
-
-        ++packetSpam;
         // CraftBukkit start - async chat
 
         boolean isSync = packetplayinchat.a().startsWith("/");
@@ -1824,11 +1815,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         if (this.getPlayer().getGameMode() != GameMode.CREATIVE) {
             return;
         }
-
         ++packetSpam;
 
         PlayerConnectionUtils.ensureMainThread(packetplayinsetcreativeslot, this, this.player.u());
-
         if (this.player.playerInteractManager.isCreative()) {
             boolean flag = packetplayinsetcreativeslot.a() < 0;
             ItemStack itemstack = packetplayinsetcreativeslot.getItemStack();
@@ -1987,7 +1976,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInKeepAlive packetplayinkeepalive) {
-        ++packetSpam;
         if (packetplayinkeepalive.a() == this.i) {
             int i = (int) (this.d() - this.j);
 
@@ -2014,7 +2002,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInAbilities packetplayinabilities) {
-        
         ++packetSpam;
         PlayerConnectionUtils.ensureMainThread(packetplayinabilities, this, this.player.u());
         // CraftBukkit start
@@ -2031,8 +2018,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInTabComplete packetplayintabcomplete) {
-        
-        ++packetSpam;
         PlayerConnectionUtils.ensureMainThread(packetplayintabcomplete, this, this.player.u());
         // CraftBukkit start
         if (chatSpamField.addAndGet(this, 10) > 500 && !this.minecraftServer.getPlayerList().isOp(this.player.getProfile())) {
