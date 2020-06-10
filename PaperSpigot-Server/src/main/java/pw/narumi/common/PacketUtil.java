@@ -6,7 +6,7 @@ import pw.narumi.exception.NatsukiException;
 public class PacketUtil {
 
     public static int checkHandshake(final PacketDataSerializer buf) throws NatsukiException {
-        if (buf.readableBytes() > 50 || buf.readableBytes() < 5)
+        if (buf.readableBytes() > 300 || buf.readableBytes() < 5)
             throw new NatsukiException("Invalid Handshake packet");
 
         final int packetId = buf.readVarInt();

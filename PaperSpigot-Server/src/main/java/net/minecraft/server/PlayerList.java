@@ -1333,24 +1333,82 @@ public abstract class PlayerList {
             @Override
             public void channelRead(final ChannelHandlerContext ctx, final Object msg) throws Exception {
                 super.channelRead(ctx, msg);
-                final Packet object = (Packet) msg;
+                final Packet<?> object = (Packet) msg;
 
-                if (object instanceof PacketPlayInKeepAlive)
-                    return;
+                if (object instanceof PacketPlayInWindowClick) {
+                    final PacketPlayInWindowClick packet = (PacketPlayInWindowClick) object;
+                    final StringBuilder stringBuilder = new StringBuilder();
 
-                if (object instanceof PacketPlayInFlying)
-                    return;
+                    stringBuilder
+                            .append("window: ").append(packet.a())
+                            .append(", slot: ").append(packet.b())
+                            .append(", button: ").append(packet.c())
+                            .append(", action: ").append(packet.d())
+                            .append(", shift: ").append(packet.f())
+                            .append(" | ")
+                            .append("[ ")
+                            .append("item: ").append(packet.e() != null ? packet.e().getName() : "null")
+                            .append(", amount: ").append(packet.e() != null ? packet.e().count : "null")
+                            .append(", data: ").append(packet.e() != null ? packet.e().getData() : "null")
+                            .append(", nbt: ").append(packet.e() != null ? (packet.e().getTag() != null ? packet.e().getTag().toString() : "null") : "null")
+                            .append(" ]");
 
-                final StringBuilder stringBuilder = new StringBuilder();
+                    final String s = "\n\n\n\n" + connection.getPlayer().getName() + " -> " + object.getClass().getSimpleName() + " | " + stringBuilder.toString() + "\n\n\n\n";
+                    printStream.println(s);
+                } else if (object instanceof PacketPlayInBlockPlace) {
+                    final PacketPlayInBlockPlace packet = (PacketPlayInBlockPlace) object;
+                    final StringBuilder stringBuilder = new StringBuilder();
 
-                for (final Field declaredField : object.getClass().getDeclaredFields()) {
-                    declaredField.setAccessible(true);
-                    stringBuilder.append(declaredField.getName()).append(":").append(declaredField.get(object)).append(" ");
+                    stringBuilder
+                            .append("position: ").append(packet.a())
+                            .append(", face: ").append(packet.getFace())
+                            .append(", mx: ").append(packet.d())
+                            .append(", my: ").append(packet.e())
+                            .append(", mz: ").append(packet.f())
+                            .append(" | ")
+                            .append("[ ")
+                            .append("item: ").append(packet.getItemStack() != null ? packet.getItemStack().getName() : "null")
+                            .append(", amount: ").append(packet.getItemStack() != null ? packet.getItemStack().count : "null")
+                            .append(", data: ").append(packet.getItemStack() != null ? packet.getItemStack().getData() : "null")
+                            .append(", nbt: ").append(packet.getItemStack() != null ? (packet.getItemStack().getTag() != null ? packet.getItemStack().getTag().toString() : "null") : "null")
+                            .append(" ]");
+
+                    final String s = "\n\n\n\n" + connection.getPlayer().getName() + " -> " + object.getClass().getSimpleName() + " | " + stringBuilder.toString() + "\n\n\n\n";
+                    printStream.println(s);
+                } else if (object instanceof PacketPlayInSetCreativeSlot) {
+                    final PacketPlayInSetCreativeSlot packet = (PacketPlayInSetCreativeSlot) object;
+                    final StringBuilder stringBuilder = new StringBuilder();
+
+                    stringBuilder
+                            .append("slot: ").append(packet.a())
+                            .append(" | ")
+                            .append("[ ")
+                            .append("item: ").append(packet.getItemStack() != null ? packet.getItemStack().getName() : "null")
+                            .append(", amount: ").append(packet.getItemStack() != null ? packet.getItemStack().count : "null")
+                            .append(", data: ").append(packet.getItemStack() != null ? packet.getItemStack().getData() : "null")
+                            .append(", nbt: ").append(packet.getItemStack() != null ? (packet.getItemStack().getTag() != null ? packet.getItemStack().getTag().toString() : "null") : "null")
+                            .append(" ]");
+
+                    final String s = "\n\n\n\n" + connection.getPlayer().getName() + " -> " + object.getClass().getSimpleName() + " | " + stringBuilder.toString() + "\n\n\n\n";
+                    printStream.println(s);
+                } else {
+                    if (object instanceof PacketPlayInKeepAlive)
+                        return;
+
+                    if (object instanceof PacketPlayInFlying)
+                        return;
+
+                    final StringBuilder stringBuilder = new StringBuilder();
+
+                    for (final Field declaredField : object.getClass().getDeclaredFields()) {
+                        declaredField.setAccessible(true);
+                        stringBuilder.append(declaredField.getName()).append(":").append(declaredField.get(object)).append(" ");
+                    }
+
+                    final String s = connection.getPlayer().getName() + " -> " + object.getClass().getSimpleName() + " | " + stringBuilder.toString();
+
+                    printStream.println(s);
                 }
-
-                final String s = connection.getPlayer().getName() + " -> " + object.getClass().getSimpleName() + " | " + stringBuilder.toString();
-
-                printStream.println(s);
             }
         });
     }
