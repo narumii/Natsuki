@@ -110,7 +110,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
         if (Natsuki.getInstance().getConfig().UTILS.debug)
             System.out.println("Channel open: " + channel.remoteAddress());
 
-        if (Holder.getBlacklist().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress().getBytes())) {
+        if (Holder.getBlacklist().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress())) {
             channel.close();
         }
 
