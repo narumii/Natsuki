@@ -22,15 +22,13 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import pw.narumi.Natsuki;
 import pw.narumi.exception.NatsukiException;
-import pw.narumi.object.Holder;
+import pw.narumi.common.Holder;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.util.Arrays;
 import java.util.Queue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -105,30 +103,28 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     }
 
     private void check(final ChannelHandlerContext context) throws IOException, GeoIp2Exception {
-        Holder.getChannels().getAndIncrement();
+        Holder.getChannels().incrementAndGet();
 
         final Channel channel = context.channel();
 
         if (Natsuki.getInstance().getConfig().UTILS.debug)
             System.out.println("Channel open: " + channel.remoteAddress());
 
-        if (Natsuki.getInstance().getBlockedAddresses().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress())) {
+        if (Holder.getBlacklist().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress().getBytes())) {
             channel.close();
-            Holder.getBlacklistedJoins().incrementAndGet();
         }
 
         final InetAddress address = ((InetSocketAddress) channel.remoteAddress()).getAddress();
 
         if (Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress != -1) {
 
-            if (!Holder.getSocketMap().containsKey(address))
-                Holder.socketAdd(address);
+            if (!Holder.getChannelMap().containsKey(address.getHostAddress()))
+                Holder.getChannelMap().put(address.getHostAddress(), 1);
             else
-                Holder.socketIncrease(address);
+                Holder.getChannelMap().put(address.getHostAddress(), Holder.getChannelMap().getOrDefault(address.getHostAddress(),1) + 1);
 
-            if (Holder.socketGet(address) > Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress) {
-                if (!Natsuki.getInstance().getBlockedAddresses().contains(address.getHostAddress()))
-                    Natsuki.getInstance().getBlockedAddresses().add(address.getHostAddress());
+            if (Holder.getChannelMap().getOrDefault(address.getHostAddress(), 1) > Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress) {
+                Holder.getBlacklist().add(address.getHostAddress());
                 channel.close();
             }
         }
@@ -143,7 +139,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     }
 
     private boolean canCheck(final String string) {
-        if (Natsuki.getInstance().getWhiteListedAddresses().contains(string))
+        if (Holder.getWhitelist().contains(string))
             return false;
 
         return !string.contains("localhost") && !string.contains("127.0.0.1");
@@ -167,9 +163,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
             chatmessage = new ChatMessage("disconnect.timeout", new Object[0]);
         } else if (throwable instanceof NatsukiException){
             chatmessage = new ChatMessage("Internal Exception");
-            if (!Natsuki.getInstance().getBlockedAddresses().contains(((InetSocketAddress)l).getAddress().getHostAddress()))
-                Natsuki.getInstance().getBlockedAddresses().add(((InetSocketAddress)l).getAddress().getHostAddress());
-
+            Holder.getBlacklist().add(((InetSocketAddress)l).getAddress().getHostAddress());
         }else {
             chatmessage = new ChatMessage("disconnect.genericReason", new Object[]{"Internal Exception: " + throwable});
         }

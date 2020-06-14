@@ -3,6 +3,7 @@ package pw.narumi.command;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import pw.narumi.Natsuki;
+import pw.narumi.common.Holder;
 
 public class AddressCommand extends Command {
 
@@ -31,11 +32,11 @@ public class AddressCommand extends Command {
 
             final String address = args[1].contains(":") ? args[1].split(":")[0] : args[1];
 
-            if (Natsuki.getInstance().getWhiteListedAddresses().contains(address)) {
-                Natsuki.getInstance().getWhiteListedAddresses().remove(address);
+            if (Holder.getWhitelist().contains(address)) {
+                Holder.getWhitelist().remove(address);
                 sender.sendMessage(" §8» §7Removed §d" + address + "§7 ip from whitelist");
             }else {
-                Natsuki.getInstance().getWhiteListedAddresses().add(address);
+                Holder.getWhitelist().add(address);
                 sender.sendMessage(" §8» §7Added §d" + address + "§7 ip to whitelist");
             }
         }else if (args[0].equalsIgnoreCase("blacklist")) {
@@ -46,16 +47,16 @@ public class AddressCommand extends Command {
 
             final String address = args[1].contains(":") ? args[1].split(":")[0] : args[1];
 
-            if (Natsuki.getInstance().getBlockedAddresses().contains(address)) {
-                Natsuki.getInstance().getBlockedAddresses().remove(address);
+            if (Holder.getBlacklist().contains(address)) {
+                Holder.getBlacklist().remove(address);
                 sender.sendMessage(" §8» §7Removed §d" + address + "§7 ip from blacklist");
             }else {
-                Natsuki.getInstance().getBlockedAddresses().add(address);
+                Holder.getBlacklist().add(address);
                 sender.sendMessage(" §8» §7Added §d" + address + "§7 ip to blacklist");
             }
         }else if (args[0].equalsIgnoreCase("info")) {
-            sender.sendMessage(" §8» §7Blocked addresses: §d" + Natsuki.getInstance().getBlockedAddresses().size());
-            sender.sendMessage(" §8» §7WhiteListed addresses: §d" + Natsuki.getInstance().getWhiteListedAddresses());
+            sender.sendMessage(" §8» §7Blocked addresses: §d" + Holder.getBlacklist().size());
+            sender.sendMessage(" §8» §7WhiteListed addresses: §d" + Holder.getWhitelist());
         }else {
             sender.sendMessage(" §8» §7Usage: §d/address <whitelist/blacklist/info>");
         }

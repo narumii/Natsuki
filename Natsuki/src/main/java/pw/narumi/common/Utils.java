@@ -17,6 +17,7 @@ public class Utils {
     private static final com.sun.management.OperatingSystemMXBean osBean = (com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
     private static final DecimalFormat format = new DecimalFormat("##.##");
     private static final SystemInfo systemInfo = new SystemInfo();
+    private static final Runtime runtime = Runtime.getRuntime();
 
     public static OperatingSystemMXBean getOsBean() {
         return osBean;
@@ -28,6 +29,10 @@ public class Utils {
 
     public static SystemInfo getSystemInfo() {
         return systemInfo;
+    }
+
+    public static Runtime getRuntime() {
+        return runtime;
     }
 
     public static String getUpTime(final long time) {
@@ -98,5 +103,4 @@ public class Utils {
                 .replace("(o)", "●")
                 .replace("(*)", "•");
     }
-
 }

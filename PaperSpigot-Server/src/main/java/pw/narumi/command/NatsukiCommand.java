@@ -3,9 +3,7 @@ package pw.narumi.command;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import pw.narumi.Natsuki;
-import pw.narumi.object.Holder;
-
-import java.lang.reflect.Field;
+import pw.narumi.common.Holder;
 
 public class NatsukiCommand extends Command {
 
@@ -21,7 +19,6 @@ public class NatsukiCommand extends Command {
         sender.sendMessage(" §8» §7Discord: §dhttps://discord.gg/amutHux");
         sender.sendMessage(" ");
         sender.sendMessage(" §8» §7Server UID: §d" + Natsuki.getInstance().getUID()[0]);
-        sender.sendMessage(" §8» §7Blacklisted joins: §d" + Holder.getBlacklistedJoins().get());
         sender.sendMessage(" ");
 
         return false;

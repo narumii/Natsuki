@@ -11,9 +11,10 @@ import org.bukkit.craftbukkit.LoggerOutputStream;
 import org.bukkit.craftbukkit.util.Waitable;
 import org.bukkit.event.server.RemoteServerCommandEvent;
 import org.bukkit.event.server.ServerCommandEvent;
+import org.spigotmc.SpigotConfig;
 import pw.narumi.Natsuki;
 import pw.narumi.common.Utils;
-import pw.narumi.object.Holder;
+import pw.narumi.common.Holder;
 
 import java.io.File;
 import java.io.IOException;
@@ -273,6 +274,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 this.a(this.U(), this.U(), k, worldtype, s2);
 
                 AntiRedStone.startTask(Natsuki.getInstance().getConfig().UTILS.antiRedStone);
+
+                if (SpigotConfig.bungee) {
+                    Natsuki.getInstance().getConfig().PACKET.customDecoder = false;
+                }
 
                 long i1 = System.nanoTime() - j;
                 String s3 = String.format("%.3fs", new Object[]{Double.valueOf((double) i1 / 1.0E9D)});

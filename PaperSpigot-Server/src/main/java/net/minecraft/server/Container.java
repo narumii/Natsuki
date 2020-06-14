@@ -8,7 +8,6 @@ import org.bukkit.event.Event.Result;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
-import pw.narumi.object.Holder;
 
 import java.util.*;
 

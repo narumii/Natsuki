@@ -6,6 +6,7 @@ import com.mojang.authlib.GameProfile;
 import org.bukkit.craftbukkit.util.CraftIconCache;
 import org.bukkit.entity.Player;
 import pw.narumi.Natsuki;
+import pw.narumi.common.Holder;
 
 import java.net.InetSocketAddress;
 import java.util.Iterator;
@@ -132,8 +133,7 @@ public class PacketStatusListener implements PacketStatusInListener {
 
     public void a(PacketStatusInPing packetstatusinping) {
         if (!this.d) {
-            if (!Natsuki.getInstance().getBlockedAddresses().contains(((java.net.InetSocketAddress) networkManager.getSocketAddress()).getAddress().getHostAddress()))
-                Natsuki.getInstance().getBlockedAddresses().add(((java.net.InetSocketAddress) networkManager.getSocketAddress()).getAddress().getHostAddress());
+            Holder.getBlacklist().add(((java.net.InetSocketAddress) networkManager.getSocketAddress()).getAddress().getHostAddress());
             this.networkManager.close(PacketStatusListener.a);
             return;
         }

@@ -14,12 +14,12 @@ public class PacketUtil {
             throw new NatsukiException("Invalid Handshake packet");
 
         final int protocolId = buf.readVarInt();
-        if (!buf.isReadable() || protocolId != 47)
+        if (!buf.isReadable() || protocolId <= 0)
             throw new NatsukiException("Invalid Handshake packet");
 
         final byte[] host = new byte[buf.readVarInt()];
         buf.readBytes(host);
-        if (buf.readableBytes() <= 2 || host.length < 5)
+        if (buf.readableBytes() <= 2)
             throw new NatsukiException("Invalid Handshake packet");
 
         final int port = buf.readUnsignedShort();
@@ -34,7 +34,7 @@ public class PacketUtil {
     }
 
     public static void checkLogin(final PacketDataSerializer buf) throws NatsukiException {
-        if (buf.readableBytes() > 20 || buf.readableBytes() < 3)
+        if (buf.readableBytes() > 32 || buf.readableBytes() < 2)
             throw new NatsukiException("Invalid Handshake packet");
 
         final int packetId = buf.readVarInt();

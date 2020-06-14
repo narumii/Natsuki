@@ -124,4 +124,21 @@ public class Config {
         @SerializedName(value = "Debug")
         public boolean debug;
     }
+
+    @SerializedName(value = "PacketLimiter")
+    public final HashMap<String, Integer> PACKETS = new HashMap<String, Integer>() {{
+        put("Name of packet / max packet per second (-1 = disable)", -1);
+        put("PacketPlayInFlying", 200);
+        put("PacketPlayInBlockDig", 100);
+        put("PacketPlayInBlockPlace", 100);
+        put("PacketPlayInArmAnimation", 300);
+        put("PacketPlayInEntityAction", 300);
+        put("PacketPlayInUseEntity", 300);
+        put("PacketPlayInCloseWindow", 100);
+        put("PacketPlayInWindowClick", 70);
+        put("PacketPlayInSetCreativeSlot", 120);
+        put("PacketPlayInTransaction", 100);
+        put("PacketPlayInUpdateSign", 30);
+        put("PacketPlayInCustomPayload", 100);
+    }};
 }

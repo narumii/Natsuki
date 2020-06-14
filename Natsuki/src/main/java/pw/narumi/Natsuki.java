@@ -1,9 +1,10 @@
 package pw.narumi;
 
 import com.maxmind.geoip2.DatabaseReader;
+import pw.narumi.common.Utils;
 import pw.narumi.config.Config;
 import pw.narumi.config.ConfigReader;
-import pw.narumi.object.Holder;
+import pw.narumi.common.Holder;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.File;
@@ -14,23 +15,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class Natsuki {
 
-    /**
-     * @TA_WIEM_SYF_KOD_XD
-     * @PROSZE_MNIE_NIE_BIC_:(
-     */
-
-    private final List<String> whiteListedAddresses = new ArrayList<>();
-    private final Map<String, String> playerPrefixes = new HashMap<>();
-    private final List<String> blockedAddresses = new ArrayList<>();
     private final Logger logger = Logger.getLogger("Natsuki");
     private final String[] serverAddress = new String[2];
     private final String[] UID = new String[1];
-    private final String version = "0.9.9.5-Beta";
+    private final String version = "0.9.9.6-Beta";
     private DatabaseReader databaseReader;
     private ConfigReader configReader;
     private Config config;
@@ -46,16 +38,13 @@ public class Natsuki {
         loadFiles();
         loadGeoLite();
 
-        playerPrefixes.put("narumiiiii", "§dAnimu");
-        playerPrefixes.put("chybaty", "§dMei§5ster");
-        playerPrefixes.put("ha69", "§66§99");
-
-        Holder.runTasks();
-
+        Holder.startTask();
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
 
         System.out.println("Pomyslnie zaladowano Natsuki " + version + " [PaperSpigot 1.8.8]");
         System.out.println(" ");
+
+        Utils.getRuntime().gc();
     }
 
     public void reload() {
@@ -135,6 +124,7 @@ public class Natsuki {
             while (scanner.hasNext()) {
                 bool = scanner.next();
             }
+
             if (bool == null || !bool.equals("true")) {
                 System.err.println("Silnik zostal wylaczony. Wiecej informacji znajdziesz na discord: https://discord.gg/amutHux");
                 System.exit(0);
@@ -154,22 +144,18 @@ public class Natsuki {
             file.mkdirs();
 
         try {
-            if (configFile.exists()) {
-                System.out.println("Ladowanie konfiguracji silnika");
-                configReader.readConfig();
-            } else {
+            if (!configFile.exists()) {
                 System.err.println("Nie znaleziono pliku konfuguracji, tworzenie pliku");
                 configReader.createConfig();
-
-                System.out.println("Ladowanie konfiguracji silnika");
-                configReader.readConfig();
             }
+
+            System.out.println("Ladowanie konfiguracji silnika");
+            configReader.readConfig();
         } catch (final Exception e) {
-            e.printStackTrace();
             System.err.println("Wystapil blad podczas ladowania pliku konfiguracyjnego. Prawdopodonie uzywasz starego configu.");
             try {
                 configReader.createConfig();
-            } catch (IOException ioException) {
+            } catch (final IOException ioException) {
                 System.err.println("Wystapil blad podczas tworzenia nowego pliku konfigurycajnego");
             }
             System.exit(1);
@@ -202,22 +188,9 @@ public class Natsuki {
             final Scanner wh = new Scanner(whiteList);
             while (wh.hasNext()) {
                 final String address = wh.next().replace(" ", "");;
-                whiteListedAddresses.add(address.contains(":") ? address.split(":")[0] : address);
+                Holder.getWhitelist().add((address.contains(":") ? address.split(":")[0] : address));
             }
             wh.close();
-
-            final File blackList = new File("Natsuki/blacklist.txt");
-
-            if (!blackList.exists())
-                blackList.createNewFile();
-
-            final Scanner bl = new Scanner(blackList);
-            while (bl.hasNext()) {
-                final String address = bl.next().replace(" ", "");
-                blockedAddresses.add(address.contains(":") ? address.split(":")[0] : address);
-            }
-            bl.close();
-
         }catch (final Exception e){
             System.err.println("Nie mozna zaladowac plikow");
         }
@@ -226,11 +199,7 @@ public class Natsuki {
     public void saveFiles() throws IOException {
         final File whiteList = new File("Natsuki/whitelist.txt");
         final Path path = Paths.get(whiteList.getPath());
-        Files.write(path, whiteListedAddresses, StandardCharsets.UTF_8);
-
-        final File blackList = new File("Natsuki/blacklist.txt");
-        final Path path1 = Paths.get(blackList.getPath());
-        Files.write(path1, blockedAddresses, StandardCharsets.UTF_8);
+        Files.write(path, Holder.getWhitelist(), StandardCharsets.UTF_8);
     }
 
     private static Natsuki instance;
@@ -245,18 +214,6 @@ public class Natsuki {
             instance = new Natsuki();
 
         return instance;
-    }
-
-    public List<String> getWhiteListedAddresses() {
-        return this.whiteListedAddresses;
-    }
-
-    public Map<String, String> getPlayerPrefixes() {
-        return this.playerPrefixes;
-    }
-
-    public List<String> getBlockedAddresses() {
-        return this.blockedAddresses;
     }
 
     public Logger getLogger() {
@@ -279,27 +236,11 @@ public class Natsuki {
         return this.databaseReader;
     }
 
-    public void setDatabaseReader(final DatabaseReader databaseReader) {
-        this.databaseReader = databaseReader;
-    }
-
-    public ConfigReader getConfigReader() {
-        return this.configReader;
-    }
-
-    public void setConfigReader(final ConfigReader configReader) {
-        this.configReader = configReader;
-    }
-
     public Config getConfig() {
         return this.config;
     }
 
     public void setConfig(final Config config) {
         this.config = config;
-    }
-
-    public static void setInstance(final Natsuki instance) {
-        Natsuki.instance = instance;
     }
 }

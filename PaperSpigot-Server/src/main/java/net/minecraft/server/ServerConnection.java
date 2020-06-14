@@ -2,7 +2,6 @@ package net.minecraft.server;
 
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.maxmind.geoip2.record.Country;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.epoll.Epoll;
@@ -19,13 +18,9 @@ import org.apache.logging.log4j.Logger;
 import pw.narumi.Natsuki;
 import pw.narumi.holder.NatsukiPacketDecoder;
 import pw.narumi.holder.PacketDecoder;
-import pw.narumi.object.Holder;
-import pw.narumi.object.Timer;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;

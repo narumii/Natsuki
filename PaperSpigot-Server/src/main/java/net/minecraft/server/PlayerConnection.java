@@ -1,6 +1,8 @@
 package net.minecraft.server;
 
 import co.aikar.timings.SpigotTimings;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Floats;
@@ -33,14 +35,12 @@ import org.github.paperspigot.PaperSpigotConfig;
 import org.spigotmc.SpigotConfig;
 import pw.narumi.Natsuki;
 import pw.narumi.common.Utils;
-import pw.narumi.object.Holder;
-import pw.narumi.object.Timer;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 // CraftBukkit start
@@ -107,26 +107,40 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public final List<Object> keepAlive = new LinkedList<>();
     public long joinTime;
 
+    private static final Map<String, Integer> packetMap = new HashMap<>();
+
     public CraftPlayer getPlayer() {
         return (this.player == null) ? null : this.player.getBukkitEntity();
     }
     private final static HashSet<Integer> invalidItems = new HashSet<Integer>(java.util.Arrays.asList(8, 9, 10, 11, 26, 34, 36, 43, 51, 52, 55, 59, 60, 62, 63, 64, 68, 71, 74, 75, 83, 90, 92, 93, 94, 104, 105, 115, 117, 118, 119, 125, 127, 132, 140, 141, 142, 144)); // TODO: Check after every update.
     // CraftBukkit end
 
-    public void c() {
-        this.h = false;
-        ++this.e;
+    private void packetSpam(final String packet) {
+        final int delta = packetMap.getOrDefault(packet, 1);
 
-
-        if (packetTimer.hasTimeElapsed(1000)) {
-            packetSpam = 0;
+        if (!packetMap.containsKey(packet)) {
+            packetMap.put(packet, delta);
+        }else {
+            packetMap.put(packet, delta + 1);
         }
 
-        if (packetSpam > Natsuki.getInstance().getConfig().PACKET.maxPackets) {
+        final int max = Natsuki.getInstance().getConfig().PACKETS.getOrDefault(packet, -1);
+        if (delta > max && max != -1) {
             this.closeChannel(
                     Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
                             + "\n\n" +
                             Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick")));
+        }
+    }
+
+    private long delay = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(1);
+    public void c() {
+        this.h = false;
+        ++this.e;
+
+        if (System.currentTimeMillis() > delay) {
+            packetMap.clear();
+            delay = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(1);
         }
 
         this.minecraftServer.methodProfiler.a("keepAlive");
@@ -215,6 +229,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
     public void a(PacketPlayInSteerVehicle packetplayinsteervehicle) {
         PlayerConnectionUtils.ensureMainThread(packetplayinsteervehicle, this, this.player.u());
+        packetSpam(packetplayinsteervehicle.getClass().getSimpleName());
         this.player.a(packetplayinsteervehicle.a(), packetplayinsteervehicle.b(), packetplayinsteervehicle.c(), packetplayinsteervehicle.d());
     }
 
@@ -224,6 +239,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
     public void a(PacketPlayInFlying packetplayinflying) {
         PlayerConnectionUtils.ensureMainThread(packetplayinflying, this, this.player.u());
+        packetSpam(packetplayinflying.getClass().getSimpleName());
         if (this.b(packetplayinflying)) {
             this.disconnect("Invalid move packet received");
         } else {
@@ -590,9 +606,11 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
 
     public void a(PacketPlayInBlockDig packetplayinblockdig) {
-        ++packetSpam;
         PlayerConnectionUtils.ensureMainThread(packetplayinblockdig, this, this.player.u());
         if (this.player.dead) return; // CraftBukkit
+
+        packetSpam(packetplayinblockdig.getClass().getSimpleName());
+
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
         BlockPosition blockposition = packetplayinblockdig.a();
 
@@ -685,8 +703,10 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     private int packets = 0;
 
     public void a(PacketPlayInBlockPlace packetplayinblockplace) {
-        ++packetSpam;
         PlayerConnectionUtils.ensureMainThread(packetplayinblockplace, this, this.player.u());
+
+        packetSpam(packetplayinblockplace.getClass().getSimpleName());
+
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
         boolean throttled = false;
         // PaperSpigot - Allow disabling the player interaction limiter
@@ -820,6 +840,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public void a(PacketPlayInSpectate packetplayinspectate) {
         PlayerConnectionUtils.ensureMainThread(packetplayinspectate, this, this.player.u());
         if (this.player.isSpectator()) {
+
+            packetSpam(packetplayinspectate.getClass().getSimpleName());
+
             Entity entity = null;
             WorldServer[] aworldserver = this.minecraftServer.worldServer;
             int i = aworldserver.length;
@@ -952,6 +975,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         // CraftBukkit start
         if (this.player.dead) return;
         PlayerConnectionUtils.ensureMainThread(packetplayinhelditemslot, this, this.player.u());
+
+        packetSpam(packetplayinhelditemslot.getClass().getSimpleName());
+
         if (packetplayinhelditemslot.a() >= 0 && packetplayinhelditemslot.a() < PlayerInventory.getHotbarSize()) {
             PlayerItemHeldEvent event = new PlayerItemHeldEvent(this.getPlayer(), this.player.inventory.itemInHandIndex, packetplayinhelditemslot.a());
             this.server.getPluginManager().callEvent(event);
@@ -973,6 +999,8 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         if (Natsuki.getInstance().getConfig().UTILS.antiBot && (!sendSettings || !sendKeepAlive))
             return;
         // CraftBukkit start - async chat
+
+        packetSpam(packetplayinchat.getClass().getSimpleName());
 
         boolean isSync = packetplayinchat.a().startsWith("/");
         if (packetplayinchat.a().startsWith("/")) {
@@ -1150,10 +1178,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
                         String message = String.format(queueEvent.getFormat(), queueEvent.getPlayer().getDisplayName(), queueEvent.getMessage());
 
-                        if (!SpigotConfig.bungee && Natsuki.getInstance().getPlayerPrefixes().containsKey(queueEvent.getPlayer().getName())) {
-                            message = " " + Natsuki.getInstance().getPlayerPrefixes().get(queueEvent.getPlayer().getName()) + " §7" + queueEvent.getPlayer().getName() + " §8» §7" + queueEvent.getMessage();
-                        }
-
                         PlayerConnection.this.minecraftServer.console.sendMessage(message);
                         if (((LazyPlayerSet) queueEvent.getRecipients()).isLazy()) {
                             for (Object player : PlayerConnection.this.minecraftServer.getPlayerList().players) {
@@ -1184,10 +1208,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                 }
 
                 s = String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage());
-
-                if (!SpigotConfig.bungee && Natsuki.getInstance().getPlayerPrefixes().containsKey(event.getPlayer().getName())) {
-                    s = " " + Natsuki.getInstance().getPlayerPrefixes().get(event.getPlayer().getName()) + " §7" + event.getPlayer().getName() + " §8» §7" + event.getMessage();
-                }
 
                 minecraftServer.console.sendMessage(s);
                 if (((LazyPlayerSet) event.getRecipients()).isLazy()) {
@@ -1237,9 +1257,11 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInArmAnimation packetplayinarmanimation) {
-        ++packetSpam;
         if (this.player.dead) return; // CraftBukkit
         PlayerConnectionUtils.ensureMainThread(packetplayinarmanimation, this, this.player.u());
+
+        packetSpam(packetplayinarmanimation.getClass().getSimpleName());
+
         this.player.resetIdleTimer();
         // CraftBukkit start - Raytrace to look for 'rogue armswings'
         float f1 = this.player.pitch;
@@ -1273,10 +1295,12 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInEntityAction packetplayinentityaction) {
-        ++packetSpam;
         PlayerConnectionUtils.ensureMainThread(packetplayinentityaction, this, this.player.u());
         // CraftBukkit start
         if (this.player.dead) return;
+
+        packetSpam(packetplayinentityaction.getClass().getSimpleName());
+
         switch (packetplayinentityaction.b()) {
             case START_SNEAKING:
             case STOP_SNEAKING:
@@ -1340,9 +1364,11 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInUseEntity packetplayinuseentity) {
-        ++packetSpam;
         if (this.player.dead) return; // CraftBukkit
         PlayerConnectionUtils.ensureMainThread(packetplayinuseentity, this, this.player.u());
+
+        packetSpam(packetplayinuseentity.getClass().getSimpleName());
+
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
         Entity entity = packetplayinuseentity.a(worldserver);
         // Spigot Start
@@ -1432,6 +1458,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
     public void a(PacketPlayInClientCommand packetplayinclientcommand) {
         PlayerConnectionUtils.ensureMainThread(packetplayinclientcommand, this, this.player.u());
+
+        packetSpam(packetplayinclientcommand.getClass().getSimpleName());
+
         this.player.resetIdleTimer();
         PacketPlayInClientCommand.EnumClientCommand packetplayinclientcommand_enumclientcommand = packetplayinclientcommand.a();
 
@@ -1470,9 +1499,10 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInCloseWindow packetplayinclosewindow) {
-        ++packetSpam;
         if (this.player.dead) return; // CraftBukkit
         PlayerConnectionUtils.ensureMainThread(packetplayinclosewindow, this, this.player.u());
+
+        packetSpam(packetplayinclosewindow.getClass().getSimpleName());
 
         CraftEventFactory.handleInventoryCloseEvent(this.player); // CraftBukkit
 
@@ -1480,10 +1510,10 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInWindowClick packetplayinwindowclick) {
-        ++packetSpam;
-
         if (this.player.dead) return; // CraftBukkit
         PlayerConnectionUtils.ensureMainThread(packetplayinwindowclick, this, this.player.u());
+
+        packetSpam(packetplayinwindowclick.getClass().getSimpleName());
 
         this.player.resetIdleTimer();
 
@@ -1802,8 +1832,10 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInEnchantItem packetplayinenchantitem) {
-        ++packetSpam;
         PlayerConnectionUtils.ensureMainThread(packetplayinenchantitem, this, this.player.u());
+
+        packetSpam(packetplayinenchantitem.getClass().getSimpleName());
+
         this.player.resetIdleTimer();
         if (this.player.activeContainer.windowId == packetplayinenchantitem.a() && this.player.activeContainer.c(this.player) && !this.player.isSpectator()) {
             this.player.activeContainer.a(this.player, packetplayinenchantitem.b());
@@ -1816,9 +1848,11 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         if (this.getPlayer().getGameMode() != GameMode.CREATIVE) {
             return;
         }
-        ++packetSpam;
 
         PlayerConnectionUtils.ensureMainThread(packetplayinsetcreativeslot, this, this.player.u());
+
+        packetSpam(packetplayinsetcreativeslot.getClass().getSimpleName());
+
         if (this.player.playerInteractManager.isCreative()) {
             boolean flag = packetplayinsetcreativeslot.a() < 0;
             ItemStack itemstack = packetplayinsetcreativeslot.getItemStack();
@@ -1907,9 +1941,11 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInTransaction packetplayintransaction) {
-        ++packetSpam;
         if (this.player.dead) return; // CraftBukkit
         PlayerConnectionUtils.ensureMainThread(packetplayintransaction, this, this.player.u());
+
+        packetSpam(packetplayintransaction.getClass().getSimpleName());
+
         Short oshort = this.n.get(this.player.activeContainer.windowId);
 
         if (oshort != null && packetplayintransaction.b() == oshort.shortValue() && this.player.activeContainer.windowId == packetplayintransaction.a() && !this.player.activeContainer.c(this.player) && !this.player.isSpectator()) {
@@ -1919,9 +1955,11 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInUpdateSign packetplayinupdatesign) {
-        ++packetSpam;
         if (this.player.dead) return; // CraftBukkit
         PlayerConnectionUtils.ensureMainThread(packetplayinupdatesign, this, this.player.u());
+
+        packetSpam(packetplayinupdatesign.getClass().getSimpleName());
+
         this.player.resetIdleTimer();
         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
         BlockPosition blockposition = packetplayinupdatesign.a();
@@ -1977,6 +2015,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInKeepAlive packetplayinkeepalive) {
+
+        packetSpam(packetplayinkeepalive.getClass().getSimpleName());
+
         if (packetplayinkeepalive.a() == this.i) {
             int i = (int) (this.d() - this.j);
 
@@ -2003,8 +2044,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInAbilities packetplayinabilities) {
-        ++packetSpam;
         PlayerConnectionUtils.ensureMainThread(packetplayinabilities, this, this.player.u());
+
+        packetSpam(packetplayinabilities.getClass().getSimpleName());
         // CraftBukkit start
         if (this.player.abilities.canFly && this.player.abilities.isFlying != packetplayinabilities.isFlying()) {
             PlayerToggleFlightEvent event = new PlayerToggleFlightEvent(this.server.getPlayer(this.player), packetplayinabilities.isFlying());
@@ -2020,6 +2062,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
     public void a(PacketPlayInTabComplete packetplayintabcomplete) {
         PlayerConnectionUtils.ensureMainThread(packetplayintabcomplete, this, this.player.u());
+
+        packetSpam(packetplayintabcomplete.getClass().getSimpleName());
+
         // CraftBukkit start
         if (chatSpamField.addAndGet(this, 10) > 500 && !this.minecraftServer.getPlayerList().isOp(this.player.getProfile())) {
             this.disconnect("disconnect.spam");
@@ -2040,6 +2085,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
     public void a(PacketPlayInSettings packetplayinsettings) {
         PlayerConnectionUtils.ensureMainThread(packetplayinsettings, this, this.player.u());
+
+        packetSpam(packetplayinsettings.getClass().getSimpleName());
+
         this.player.a(packetplayinsettings);
 
         if (!sendSettings)
@@ -2047,10 +2095,8 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInCustomPayload packetplayincustompayload) {
-        if (!Natsuki.getInstance().getConfig().PACKET.PAYLOAD.skipPayload)
+        if (Natsuki.getInstance().getConfig().PACKET.PAYLOAD.skipPayload)
             return;
-
-        ++packetSpam;
 
         if (Natsuki.getInstance().getConfig().PACKET.PAYLOAD.blockChannels && Natsuki.getInstance().getConfig().PACKET.PAYLOAD.blockedChannels.contains(packetplayincustompayload.a().toLowerCase())) {
             this.closeChannel(
@@ -2079,6 +2125,8 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         }
 
         PlayerConnectionUtils.ensureMainThread(packetplayincustompayload, this, this.player.u());
+
+        packetSpam(packetplayincustompayload.getClass().getSimpleName());
 
         PacketDataSerializer packetdataserializer;
         ItemStack itemstack;

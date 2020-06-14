@@ -6,8 +6,10 @@ package net.minecraft.server;
 import json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import pw.narumi.Natsuki;
+import pw.narumi.common.Holder;
 import pw.narumi.common.Utils;
 
 import java.net.*;
@@ -89,7 +91,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
                     }
                 }
 
-                if (!Natsuki.getInstance().getWhiteListedAddresses().contains(address.getHostAddress()) && Natsuki.getInstance().getConfig().CONNECTION.addressCheck) {
+                if (!Holder.getWhitelist().contains(address.getHostAddress()) && Natsuki.getInstance().getConfig().CONNECTION.addressCheck) {
                     if (isProxy(address)) {
                         final ChatComponentText message = new ChatComponentText(Utils.fixString(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("ProxyOrVpnKick")));
                         this.b.handle(new PacketLoginOutDisconnect(message));
@@ -169,8 +171,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
             break;
 
         default:
-            if (!Natsuki.getInstance().getBlockedAddresses().contains(((java.net.InetSocketAddress) b.getSocketAddress()).getAddress().getHostAddress()))
-                Natsuki.getInstance().getBlockedAddresses().add(((java.net.InetSocketAddress) b.getSocketAddress()).getAddress().getHostAddress());
+            Holder.getBlacklist().add(((java.net.InetSocketAddress) b.getSocketAddress()).getAddress().getHostAddress());
             this.b.channel.close();
             throw new UnsupportedOperationException("Invalid intention " + packethandshakinginsetprotocol.a());
         }
