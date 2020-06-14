@@ -116,6 +116,13 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
 
         final InetAddress address = ((InetSocketAddress) channel.remoteAddress()).getAddress();
 
+        if (Natsuki.getInstance().getConfig().CONNECTION.REGION.check && canCheck(address.getHostAddress().toLowerCase())) {
+            final Country country = Natsuki.getInstance().getDatabaseReader().country(address).getCountry();
+            if (!Natsuki.getInstance().getConfig().CONNECTION.REGION.allowedRegions.contains(country.getIsoCode().toUpperCase())) {
+                channel.close();
+            }
+        }
+
         if (Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress != -1) {
 
             if (!Holder.getChannelMap().containsKey(address.getHostAddress()))
@@ -125,14 +132,6 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
 
             if (Holder.getChannelMap().getOrDefault(address.getHostAddress(), 1) > Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress) {
                 Holder.getBlacklist().add(address.getHostAddress());
-                channel.close();
-            }
-        }
-
-
-        if (Natsuki.getInstance().getConfig().CONNECTION.REGION.check && canCheck(address.getHostAddress().toLowerCase())) {
-            final Country country = Natsuki.getInstance().getDatabaseReader().country(address).getCountry();
-            if (!Natsuki.getInstance().getConfig().CONNECTION.REGION.allowedRegions.contains(country.getIsoCode().toUpperCase())) {
                 channel.close();
             }
         }
