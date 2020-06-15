@@ -15,7 +15,7 @@ public class AddressCommand extends Command {
     //TAKIE TROCHE ROZJEBANE XD
     @Override
     public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
-        if (!testPermission(sender)) {
+        if (!sender.isOp()) {
             return true;
         }
 

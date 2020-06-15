@@ -116,6 +116,11 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     // CraftBukkit end
 
     private void packetSpam(final String packet) {
+        if (System.currentTimeMillis() > delay) {
+            packetMap.clear();
+            delay = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(1);
+        }
+
         final int delta = packetMap.getOrDefault(packet, 1);
 
         if (!packetMap.containsKey(packet)) {
@@ -137,11 +142,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public void c() {
         this.h = false;
         ++this.e;
-
-        if (System.currentTimeMillis() > delay) {
-            packetMap.clear();
-            delay = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(1);
-        }
 
         this.minecraftServer.methodProfiler.a("keepAlive");
         if ((long) this.e - this.k > 40L) {
