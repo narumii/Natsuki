@@ -9,6 +9,7 @@ import io.netty.util.concurrent.GenericFutureListener;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.Waitable;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -188,6 +189,20 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
                     disconnect(Utils.fixString(config.PREFIX
                             + "\n\n" +
                             config.MESSAGES.get("DoubleJoin")));
+                    return;
+                }
+            }
+
+            if (Natsuki.getInstance().getConfig().CONNECTION.maxConnections != -1) {
+                final long limit = Bukkit.getServer().getOnlinePlayers()
+                        .stream()
+                        .filter(player -> player.getAddress().getAddress().equals(inetAddress))
+                        .count();
+
+                if (limit > Natsuki.getInstance().getConfig().CONNECTION.maxConnections) {
+                    final ChatComponentText message = new ChatComponentText(Utils.fixString(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("MaxConnectionsPerIp")));
+                    this.networkManager.handle(new PacketLoginOutDisconnect(message));
+                    this.networkManager.close(message);
                     return;
                 }
             }

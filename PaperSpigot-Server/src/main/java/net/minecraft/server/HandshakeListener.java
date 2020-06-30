@@ -78,27 +78,6 @@ public class HandshakeListener implements PacketHandshakingInListener {
 
             // CraftBukkit start - Connection throttle
             try {
-                if (Natsuki.getInstance().getConfig().CONNECTION.maxConnections != -1) {
-                    final long limit = Bukkit.getServer().getOnlinePlayers()
-                            .stream()
-                            .filter(player -> player.getAddress().getAddress().equals(address))
-                            .count();
-
-                    if (limit > Natsuki.getInstance().getConfig().CONNECTION.maxConnections) {
-                        final ChatComponentText message = new ChatComponentText(Utils.fixString(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("MaxConnectionsPerIp")));
-                        this.b.handle(new PacketLoginOutDisconnect(message));
-                        this.b.close(message);
-                    }
-                }
-
-                if (!Holder.getWhitelist().contains(address.getHostAddress()) && Natsuki.getInstance().getConfig().CONNECTION.addressCheck) {
-                    if (isProxy(address)) {
-                        final ChatComponentText message = new ChatComponentText(Utils.fixString(Natsuki.getInstance().getConfig().PREFIX + "\n\n" + Natsuki.getInstance().getConfig().MESSAGES.get("ProxyOrVpnKick")));
-                        this.b.handle(new PacketLoginOutDisconnect(message));
-                        this.b.close(message);
-                    }
-                }
-
                 long currentTime = System.currentTimeMillis();
                 long connectionThrottle = MinecraftServer.getServer().server.getConnectionThrottle();
 

@@ -7,7 +7,9 @@ import org.bukkit.craftbukkit.util.CraftIconCache;
 import org.bukkit.entity.Player;
 import pw.narumi.Natsuki;
 import pw.narumi.common.Holder;
+import pw.narumi.common.Utils;
 
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.Iterator;
 
@@ -36,6 +38,11 @@ public class PacketStatusListener implements PacketStatusInListener {
         }
         this.d = true;
         // this.networkManager.handle(new PacketStatusOutServerInfo(this.minecraftServer.aG()));
+
+        final InetAddress inetAddress = ((InetSocketAddress) networkManager.channel.remoteAddress()).getAddress();
+        if (Natsuki.getInstance().getConfig().ANTIBOT.pingCheck) {
+            Holder.getPing().add(inetAddress.getHostAddress());
+        }
 
         final Object[] players = minecraftServer.getPlayerList().players.toArray();
         class ServerListPingEvent extends org.bukkit.event.server.ServerListPingEvent {

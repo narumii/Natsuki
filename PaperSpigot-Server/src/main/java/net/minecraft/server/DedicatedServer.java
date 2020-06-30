@@ -274,7 +274,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 if (SpigotConfig.bungee) {
                     Natsuki.getInstance().getConfig().PACKET.customDecoder = false;
                     Natsuki.getInstance().getConfig().ANTIBOT.pingCheck = false;
-                    Natsuki.getInstance().getConfig().ANTIBOT.doubleJoin = false;
+                    Natsuki.getInstance().getConfig().CONNECTION.maxConnections = -1;
                 }
 
                 long i1 = System.nanoTime() - j;

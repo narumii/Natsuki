@@ -89,17 +89,17 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
 
         Holder.getChannels().incrementAndGet();
 
-        if (Holder.getBlacklist().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress()))
-            channel.close();
-
-        if (Natsuki.getInstance().getConfig().UTILS.debug)
-            System.out.println("Channel open: " + channel.remoteAddress());
-
         this.channel = channelhandlercontext.channel();
         this.l = this.channel.remoteAddress();
         // Spigot Start
         this.preparing = false;
         // Spigot End
+
+        if (Holder.getBlacklist().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress()))
+            channel.close();
+
+        if (Natsuki.getInstance().getConfig().UTILS.debug)
+            System.out.println("Channel open: " + channel.remoteAddress());
 
         try {
             this.a(EnumProtocol.HANDSHAKING);
@@ -122,7 +122,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
         ChatMessage chatmessage;
 
         if (throwable instanceof NatsukiException || throwable.getCause() instanceof NatsukiException || throwable.getCause().getCause() instanceof NatsukiException) {
-            Holder.getBlacklist().add(((InetSocketAddress)l).getAddress().getHostAddress());
+            Holder.getBlacklist().add(((InetSocketAddress) l).getAddress().getHostAddress());
             chatmessage = new ChatMessage(throwable.getMessage());
             this.close(chatmessage);
             return;
@@ -130,7 +130,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
 
         if (throwable instanceof TimeoutException) {
             chatmessage = new ChatMessage("disconnect.timeout", new Object[0]);
-        }else {
+        } else {
             chatmessage = new ChatMessage("disconnect.genericReason", new Object[]{"Internal Exception: " + throwable});
         }
 
