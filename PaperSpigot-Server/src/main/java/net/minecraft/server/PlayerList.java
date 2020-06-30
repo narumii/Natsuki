@@ -145,7 +145,6 @@ public abstract class PlayerList {
         playerconnection.sendPacket(new PacketPlayOutLogin(entityplayer.getId(), entityplayer.playerInteractManager.getGameMode(), worlddata.isHardcore(), worldserver.worldProvider.getDimension(), worldserver.getDifficulty(), Math.min(this.getMaxPlayers(), 60), worlddata.getType(), worldserver.getGameRules().getBoolean("reducedDebugInfo"))); // CraftBukkit - cap player list to 60
         entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
         playerconnection.sendPacket(new PacketPlayOutCustomPayload("MC|Brand", (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
-        playerconnection.sendPacket(new PacketPlayOutCustomPayload("N|Server", (new PacketDataSerializer(Unpooled.buffer())).a(Natsuki.getInstance().getUID()[0])));
         playerconnection.sendPacket(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
         playerconnection.sendPacket(new PacketPlayOutSpawnPosition(blockposition));
         playerconnection.sendPacket(new PacketPlayOutAbilities(entityplayer.abilities));
@@ -155,8 +154,7 @@ public abstract class PlayerList {
         this.sendScoreboard((ScoreboardServer) worldserver.getScoreboard(), entityplayer);
         this.server.aH();
 
-        if (Natsuki.getInstance().getConfig().UTILS.antiBot)
-            playerconnection.sendPacket(new PacketPlayOutWindowData(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE));
+        playerconnection.sendPacket(new PacketPlayOutWindowData(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE));
         // CraftBukkit start - login message is handled in the event
         // ChatMessage chatmessage;
 

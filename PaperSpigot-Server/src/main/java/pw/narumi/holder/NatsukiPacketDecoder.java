@@ -14,10 +14,7 @@ import pw.narumi.Natsuki;
 import pw.narumi.common.PacketUtil;
 import pw.narumi.exception.NatsukiException;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
@@ -79,7 +76,7 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
                 throw new NatsukiException("Invalid packet data");
             }
 
-            final int packetId = serializer.readVarInt();
+            final int packetId = serializer.e();
             if (packetState == 2 && packetId != 1 && handshakeIntent == 1) {
                 channel.pipeline().remove(this);
                 throw new NatsukiException("Invalid packet");
@@ -87,18 +84,19 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
 
             final Packet<?> packet = channel.channel().attr(NetworkManager.c).get().a(this.direction, packetId);
             if (packet == null) {
-                channel.pipeline().remove(this);
-                throw new NatsukiException("Null packtet");
-            }
+                buf.skipBytes(buf.readableBytes());
+                serializer.skipBytes(serializer.readableBytes());
+            }else {
 
-            packet.a(serializer);
-            if (serializer.isReadable()) {
-                channel.pipeline().remove(this);
-                throw new NatsukiException("Packet is too big");
-            }
+                packet.a(serializer);
+                if (serializer.isReadable()) {
+                    channel.pipeline().remove(this);
+                    throw new NatsukiException("Packet is too big");
+                }
 
-            objects.add(packet);
-            ++packetState;
+                objects.add(packet);
+                ++packetState;
+            }
         }catch (final IndexOutOfBoundsException e) {
             channel.pipeline().remove(this);
             throw new NatsukiException("Invalid data");

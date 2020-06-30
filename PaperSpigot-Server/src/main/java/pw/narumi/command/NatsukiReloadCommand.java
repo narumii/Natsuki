@@ -15,7 +15,7 @@ public class NatsukiReloadCommand extends Command {
     public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
         if (sender instanceof ConsoleCommandSender) {
             Natsuki.getInstance().reload();
-            sender.sendMessage(" §8» §7Reloaded natsuki");
+            sender.sendMessage(" §8» §7Reloaded Natsuki");
             return false;
         }else {
             sender.sendMessage(" §8» §7Command only for console");

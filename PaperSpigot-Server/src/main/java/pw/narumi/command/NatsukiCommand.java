@@ -18,8 +18,6 @@ public class NatsukiCommand extends Command {
         sender.sendMessage(" §8» §7Developer: §dなるみ#4977");
         sender.sendMessage(" §8» §7Discord: §dhttps://discord.gg/amutHux");
         sender.sendMessage(" ");
-        sender.sendMessage(" §8» §7Server UID: §d" + Natsuki.getInstance().getUID()[0]);
-        sender.sendMessage(" ");
 
         return false;
     }

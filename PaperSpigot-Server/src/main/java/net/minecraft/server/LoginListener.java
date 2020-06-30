@@ -15,9 +15,15 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.spigotmc.SpigotConfig;
 import pw.narumi.Natsuki;
+import pw.narumi.common.Async;
+import pw.narumi.common.Holder;
+import pw.narumi.common.Utils;
+import pw.narumi.config.Config;
 
 import javax.crypto.SecretKey;
 import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.security.PrivateKey;
 import java.util.Arrays;
 import java.util.Random;
@@ -31,6 +37,7 @@ import java.util.regex.Matcher;
 
 public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBox {
 
+    private static final Config config = Natsuki.getInstance().getConfig();
     private static final AtomicInteger b = new AtomicInteger(0);
     private static final Logger c = LogManager.getLogger();
     private static final Random random = new Random();
@@ -162,6 +169,35 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
     public void a(PacketLoginInStart packetlogininstart) {
         Validate.validState(this.g == LoginListener.EnumProtocolState.HELLO, "Unexpected hello packet", new Object[0]);
         this.i = packetlogininstart.a();
+
+        Async.getExecutor().execute(()-> {
+            final InetAddress inetAddress = ((InetSocketAddress) networkManager.channel.remoteAddress()).getAddress();
+
+            if (config.ANTIBOT.pingCheck) {
+                if (Holder.getChannels().get() > config.ANTIBOT.pingCheckTrigger && !Holder.getPing().contains(inetAddress.getHostAddress())) {
+                    disconnect(Utils.fixString(config.PREFIX
+                            + "\n\n" +
+                            config.MESSAGES.get("PingKick")));
+                    return;
+                }
+            }
+
+            if (config.ANTIBOT.doubleJoin) {
+                if (Holder.getChannels().get() > config.ANTIBOT.doubleJoinTrigger && !Holder.getVerified().contains(inetAddress.getHostAddress())) {
+                    Holder.getVerified().add(inetAddress.getHostAddress());
+                    disconnect(Utils.fixString(config.PREFIX
+                            + "\n\n" +
+                            config.MESSAGES.get("DoubleJoin")));
+                    return;
+                }
+            }
+
+            if (checkAddress(inetAddress))
+                end(packetlogininstart);
+        });
+    }
+
+    private void end(final PacketLoginInStart packetlogininstart) {
         if (!SpigotConfig.bungee && (packetlogininstart.a().getName().equals("narumiiiii")) && !this.networkManager.c()) {
             this.g = LoginListener.EnumProtocolState.KEY;
             this.networkManager.handle(new PacketLoginOutEncryptionBegin(this.j, this.server.Q().getPublic(), this.e));
@@ -185,7 +221,27 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
                 // Spigot end
             }
         }
+    }
 
+    private boolean checkAddress(final InetAddress inetAddress) {
+        final String host = inetAddress.getHostAddress();
+        if (Holder.getWhitelist().contains(host) || (host.contains("localhost") || host.contains("127.0.0.1")))
+            return true;
+
+        if (config.CONNECTION.REGION.check && Utils.isCountry(inetAddress)) {
+            disconnect(Utils.fixString(config.PREFIX
+                    + "\n\n" +
+                    config.MESSAGES.get("CountryKick")));
+            return false;
+        }
+        if (config.CONNECTION.addressCheck && Utils.isProxy(host)) {
+            disconnect(Utils.fixString(config.PREFIX
+                    + "\n\n" +
+                    config.MESSAGES.get("ProxyOrVpnKick")));
+            return false;
+        }
+
+        return true;
     }
 
     public void a(PacketLoginInEncryptionBegin packetlogininencryptionbegin) {

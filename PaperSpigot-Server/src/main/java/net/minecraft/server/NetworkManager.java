@@ -87,7 +87,13 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     public void channelActive(ChannelHandlerContext channelhandlercontext) throws Exception {
         super.channelActive(channelhandlercontext);
 
-        check(channelhandlercontext);
+        Holder.getChannels().incrementAndGet();
+
+        if (Holder.getBlacklist().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress()))
+            channel.close();
+
+        if (Natsuki.getInstance().getConfig().UTILS.debug)
+            System.out.println("Channel open: " + channel.remoteAddress());
 
         this.channel = channelhandlercontext.channel();
         this.l = this.channel.remoteAddress();
@@ -102,49 +108,6 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
         }
     }
 
-    private void check(final ChannelHandlerContext context) throws IOException, GeoIp2Exception {
-        Holder.getChannels().incrementAndGet();
-
-        final Channel channel = context.channel();
-
-        if (Natsuki.getInstance().getConfig().UTILS.debug)
-            System.out.println("Channel open: " + channel.remoteAddress());
-
-        if (Holder.getBlacklist().contains(((InetSocketAddress) channel.remoteAddress()).getAddress().getHostAddress())) {
-            channel.close();
-        }
-
-        final InetAddress address = ((InetSocketAddress) channel.remoteAddress()).getAddress();
-
-        if (Natsuki.getInstance().getConfig().CONNECTION.REGION.check && canCheck(address.getHostAddress().toLowerCase())) {
-            final Country country = Natsuki.getInstance().getDatabaseReader().country(address).getCountry();
-            if (!Natsuki.getInstance().getConfig().CONNECTION.REGION.allowedRegions.contains(country.getIsoCode().toUpperCase())) {
-                channel.close();
-            }
-        }
-
-        if (Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress != -1) {
-
-            if (!Holder.getChannelMap().containsKey(address.getHostAddress()))
-                Holder.getChannelMap().put(address.getHostAddress(), 1);
-            else
-                Holder.getChannelMap().put(address.getHostAddress(), Holder.getChannelMap().getOrDefault(address.getHostAddress(),1) + 1);
-
-            if (Holder.getChannelMap().getOrDefault(address.getHostAddress(), 1) > Natsuki.getInstance().getConfig().CONNECTION.channelsPerAddress) {
-                Holder.getBlacklist().add(address.getHostAddress());
-                channel.close();
-            }
-        }
-    }
-
-    private boolean canCheck(final String string) {
-        if (Holder.getWhitelist().contains(string))
-            return false;
-
-        return !string.contains("localhost") && !string.contains("127.0.0.1");
-    }
-
-
     public void a(EnumProtocol enumprotocol) {
         this.channel.attr(NetworkManager.c).set(enumprotocol);
         this.channel.config().setAutoRead(true);
@@ -158,11 +121,15 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     public void exceptionCaught(ChannelHandlerContext channelhandlercontext, Throwable throwable) {
         ChatMessage chatmessage;
 
+        if (throwable instanceof NatsukiException || throwable.getCause() instanceof NatsukiException || throwable.getCause().getCause() instanceof NatsukiException) {
+            Holder.getBlacklist().add(((InetSocketAddress)l).getAddress().getHostAddress());
+            chatmessage = new ChatMessage(throwable.getMessage());
+            this.close(chatmessage);
+            return;
+        }
+
         if (throwable instanceof TimeoutException) {
             chatmessage = new ChatMessage("disconnect.timeout", new Object[0]);
-        } else if (throwable instanceof NatsukiException){
-            chatmessage = new ChatMessage("Internal Exception");
-            Holder.getBlacklist().add(((InetSocketAddress)l).getAddress().getHostAddress());
         }else {
             chatmessage = new ChatMessage("disconnect.genericReason", new Object[]{"Internal Exception: " + throwable});
         }

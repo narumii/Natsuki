@@ -1,15 +1,17 @@
 package pw.narumi.common;
 
+import com.maxmind.geoip2.record.Country;
 import com.sun.management.OperatingSystemMXBean;
 import oshi.SystemInfo;
 import pw.narumi.Natsuki;
+import json.JSONObject;
+import org.apache.commons.io.IOUtils;
 
 import java.lang.management.ManagementFactory;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
@@ -52,55 +54,48 @@ public class Utils {
         return String.format("%.1f %sB", bytes / Math.pow(1000, exp), pre);
     }
 
-    public static String humanReadableByteCountInternet(final long bytes) {
-        if (bytes < 1000)
-            return bytes + " B";
-
-        final int exp = (int) (Math.log(bytes) / Math.log(1000));
-        final String pre = ("kMGTPE").charAt(exp-1) + ("");
-        return String.format("%.1f %sB/s", bytes / Math.pow(1000, exp), pre);
-    }
-
-    //YYY ZAJEBANE
-    public static String generateUUID() {
-        MessageDigest hash = null;
-        try {
-            hash = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        final String input = systemInfo.getOperatingSystem().getFamily() +
-                systemInfo.getOperatingSystem().getManufacturer() +
-                systemInfo.getOperatingSystem().getVersionInfo().getCodeName() +
-                systemInfo.getHardware().getComputerSystem() +
-                System.getProperty("os.name") +
-                System.getProperty("os.arch") +
-                System.getProperty("os.version") +
-                systemInfo.getHardware().getProcessor().getProcessorIdentifier().getFamily() +
-                osBean.getName() +
-                systemInfo.getHardware().getNetworkIFs()[0].getMacaddr() +
-                Arrays.toString(Natsuki.getInstance().getServerAddress());
-        return bytesToHex(hash.digest(Base64.getEncoder().encode(input.getBytes())));
-    }
-
-    //YYY ZAJEBANE
-    private static String bytesToHex(final byte[] bytes) {
-        final char[] hexChars = new char[bytes.length * 2];
-        for (int j = 0; j < bytes.length; j++) {
-            int v = bytes[j] & 0xFF;
-            hexChars[j * 2] = hexArray[v >>> 4];
-            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-        }
-        return new String(hexChars);
-    }
-
-    //YYY ZAJEBANE
-    private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
-
     public static String fixString(final String string) {
         return string
                 .replace("&", "§")
                 .replace("(o)", "●")
                 .replace("(*)", "•");
+    }
+
+    public static boolean isProxy(final String address) {
+        try {
+            String url;
+
+            if (Natsuki.getInstance().getConfig().API.proxyCheckKey.equalsIgnoreCase("Your Key") || Natsuki.getInstance().getConfig().API.proxyCheckKey.equalsIgnoreCase("none")) {
+                url = "http://api.stopforumspam.org/api?ip=%address%&json".replace("%address%", address);
+            } else {
+                url = "http://proxycheck.io/v2/%address%?&vpn=1&asn=1&risk=1&key=%key%".replace("%address%", address).replace("%key%", Natsuki.getInstance().getConfig().API.proxyCheckKey);
+            }
+
+            final HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setConnectTimeout(3000);
+            connection.setReadTimeout(4000);
+
+            final String json = new String(IOUtils.toByteArray(connection));
+            final JSONObject object = new JSONObject(json).getJSONObject(address);
+
+            if (Natsuki.getInstance().getConfig().API.proxyCheckKey.equalsIgnoreCase("Your Key") || Natsuki.getInstance().getConfig().API.proxyCheckKey.equalsIgnoreCase("none"))
+                return object.getInt("appears") == 1;
+            else
+                return object.getString("proxy").equalsIgnoreCase("yes") || object.getInt("risk") > 40;
+
+        } catch (final Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean isCountry(final InetAddress inetAddress) {
+        try {
+            final Country country = Natsuki.getInstance().getDatabaseReader().country(inetAddress).getCountry();
+            if (Natsuki.getInstance().getConfig().CONNECTION.REGION.allowedRegions.contains(country.getIsoCode().toUpperCase()))
+                return true;
+        }catch (final Exception e){
+            return false;
+        }
+        return false;
     }
 }

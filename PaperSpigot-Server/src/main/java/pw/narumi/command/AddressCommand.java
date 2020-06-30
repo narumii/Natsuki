@@ -15,12 +15,12 @@ public class AddressCommand extends Command {
     //TAKIE TROCHE ROZJEBANE XD
     @Override
     public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
-        if (!sender.isOp()) {
+        if (!sender.hasPermission("natsuki.address")) {
             return true;
         }
 
         if (args.length < 1) {
-            sender.sendMessage(" §8» §7Usage: §d/address <whitelist/blacklist/info>");
+            sender.sendMessage(" §8» §7Usage: §d/address <whitelist/info>");
             return false;
         }
 
@@ -39,27 +39,11 @@ public class AddressCommand extends Command {
                 Holder.getWhitelist().add(address);
                 sender.sendMessage(" §8» §7Added §d" + address + "§7 ip to whitelist");
             }
-        }else if (args[0].equalsIgnoreCase("blacklist")) {
-            if (args.length < 2) {
-                sender.sendMessage(" §8» §7Usage: §d/address blacklist <address>");
-                return false;
-            }
-
-            final String address = args[1].contains(":") ? args[1].split(":")[0] : args[1];
-
-            if (Holder.getBlacklist().contains(address)) {
-                Holder.getBlacklist().remove(address);
-                sender.sendMessage(" §8» §7Removed §d" + address + "§7 ip from blacklist");
-            }else {
-                Holder.getBlacklist().add(address);
-                sender.sendMessage(" §8» §7Added §d" + address + "§7 ip to blacklist");
-            }
-        }else if (args[0].equalsIgnoreCase("info")) {
-            sender.sendMessage(" §8» §7Blocked addresses: §d" + Holder.getBlacklist().size());
-            sender.sendMessage(" §8» §7WhiteListed addresses: §d" + Holder.getWhitelist());
         }else {
-            sender.sendMessage(" §8» §7Usage: §d/address <whitelist/blacklist/info>");
+            sender.sendMessage(" §8» §7Blocked addresses: §d" + Holder.getBlacklist().size());
+            sender.sendMessage(" §8» §7WhiteListed addresses: §d" + Holder.getWhitelist().size());
         }
+
         return false;
     }
 }

@@ -1,8 +1,6 @@
 package pw.narumi.config;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,6 +20,9 @@ public class Config {
     @SerializedName(value = "PacketSettings")
     public final PacketSettings PACKET = new PacketSettings();
 
+    @SerializedName(value = "AntiBot")
+    public final AntiBot ANTIBOT = new AntiBot();
+
     @SerializedName(value = "Utils")
     public final Utils UTILS = new Utils();
 
@@ -33,6 +34,8 @@ public class Config {
         put("ProxyOrVpnKick", "\u0026cWykrylismy ze uzywasz VPN lub proxy\n\u00267Jesli to blad zrestartuj router lub zglos to administarcji");
         put("RegionKick", "\u0026cPrzyjmujemy polaczenia tylko z Polski\n\u00267Jesli mieszkasz za granica zglos to administracji");
         put("MaxConnectionsPerIp", "\u0026cPrzekroczyles limit polaczen z 1 ip");
+        put("PingKick", "\u0026cYou must first ping the server, after that join again.");
+        put("DoubleJoin", "\u0026cJoin again to the server.");
     }};
 
     public class Api {
@@ -46,9 +49,6 @@ public class Config {
     public class Connection {
         @SerializedName(value = "MaxConnectionsPerAddress")
         public int maxConnections = 2;
-
-        @SerializedName(value = "MaxChannelsPerAddressPerSecond")
-        public int channelsPerAddress = 10;
 
         @SerializedName(value = "CheckPlayerAddress")
         public boolean addressCheck = true;
@@ -67,9 +67,6 @@ public class Config {
 
 
     public class PacketSettings {
-        @SerializedName(value = "MaxPacketsPerSecond")
-        public int maxPackets = 400;
-
         @SerializedName(value = "CustomPacketDecoder")
         public boolean customDecoder = true;
 
@@ -108,15 +105,26 @@ public class Config {
         }
     }
 
+    public class AntiBot {
+        @SerializedName(value = "PingCheck")
+        public boolean pingCheck = true;
+
+        @SerializedName(value = "PingCpsTrigger")
+        public int pingCheckTrigger = 15;
+
+        @SerializedName(value = "DoubleJoin")
+        public boolean doubleJoin = true;
+
+        @SerializedName(value = "DoubleJoinCpsTrigger")
+        public int doubleJoinTrigger = 15;
+    }
+
     public class Utils {
         @SerializedName(value = "TickPerSecondCommandPermissionCheck")
         public boolean tpsCommandPermission;
 
         @SerializedName(value = "AntiRedStoneLagger")
         public boolean antiRedStone = true;
-
-        @SerializedName(value = "AntiBot")
-        public boolean antiBot = true;
 
         @SerializedName(value = "PacketDebugger")
         public boolean packetDebugger;

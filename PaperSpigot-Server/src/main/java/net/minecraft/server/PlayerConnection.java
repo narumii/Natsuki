@@ -1,8 +1,6 @@
 package net.minecraft.server;
 
 import co.aikar.timings.SpigotTimings;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Floats;
@@ -32,7 +30,6 @@ import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.util.NumberConversions;
 import org.github.paperspigot.PaperSpigotConfig;
-import org.spigotmc.SpigotConfig;
 import pw.narumi.Natsuki;
 import pw.narumi.common.Utils;
 
@@ -71,10 +68,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     private double q;
     private boolean checkMovement = true;
     private boolean processedDisconnect; // CraftBukkit - added
-
-    //private final AtomicInteger packetSpam = new AtomicInteger();
-    private int packetSpam = 0;
-    private final Timer packetTimer = new Timer();
     public boolean sendKeepAlive;
     public boolean sendSettings;
 
@@ -107,7 +100,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public final List<Object> keepAlive = new LinkedList<>();
     public long joinTime;
 
-    private static final Map<String, Integer> packetMap = new HashMap<>();
+    private final Map<String, Integer> packetMap = new HashMap<>();
 
     public CraftPlayer getPlayer() {
         return (this.player == null) ? null : this.player.getBukkitEntity();
@@ -120,6 +113,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             packetMap.clear();
             delay = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(1);
         }
+
 
         final int delta = packetMap.getOrDefault(packet, 1);
 
@@ -148,9 +142,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             this.k = this.e;
             this.j = this.d();
             this.i = (int) this.j;
-            if (Natsuki.getInstance().getConfig().UTILS.antiBot) {
-                this.keepAlive.add((Object) this.i);
-            }
+            this.keepAlive.add((Object) this.i);
             this.sendPacket(new PacketPlayOutKeepAlive(this.i));
         }
 
@@ -171,15 +163,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         if (this.player.D() > 0L && this.minecraftServer.getIdleTimeout() > 0 && MinecraftServer.az() - this.player.D() > (long) (this.minecraftServer.getIdleTimeout() * 1000 * 60)) {
             this.player.resetIdleTimer(); // CraftBukkit - SPIGOT-854
             this.disconnect("You have been idle for too long!");
-        }
-
-        if (System.currentTimeMillis() - joinTime > 7000) {
-            if (Natsuki.getInstance().getConfig().UTILS.antiBot && (!sendSettings || !sendKeepAlive)) {
-                closeChannel(
-                        Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
-                                + "\n\n" +
-                                Natsuki.getInstance().getConfig().MESSAGES.get("AntiBotKick")));
-            }
         }
     }
 
@@ -500,7 +483,9 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
 
         }
     }
-    public void a(PacketPlayInResourcePackStatus packetplayinresourcepackstatus) { ++packetSpam;this.server.getPluginManager().callEvent(new PlayerResourcePackStatusEvent(getPlayer(), PlayerResourcePackStatusEvent.Status.values()[packetplayinresourcepackstatus.b.ordinal()])); }
+    public void a(PacketPlayInResourcePackStatus packetplayinresourcepackstatus) {
+        packetSpam(packetplayinresourcepackstatus.getClass().getSimpleName());
+        ;this.server.getPluginManager().callEvent(new PlayerResourcePackStatusEvent(getPlayer(), PlayerResourcePackStatusEvent.Status.values()[packetplayinresourcepackstatus.b.ordinal()])); }
     public void a(double d0, double d1, double d2, float f, float f1) {
         this.a(d0, d1, d2, f, f1, Collections.emptySet()); // CraftBukkit fix decompile errors
     }
@@ -742,7 +727,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
             // CraftBukkit start
             int itemstackAmount = itemstack.count;
             // Spigot start - skip the event if throttled
-            if (!throttled) {            
+            if (!throttled) {
             // Raytrace to look for 'rogue armswings'
             float f1 = this.player.pitch;
             float f2 = this.player.yaw;
@@ -996,7 +981,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     }
 
     public void a(PacketPlayInChat packetplayinchat) {
-        if (Natsuki.getInstance().getConfig().UTILS.antiBot && (!sendSettings || !sendKeepAlive))
+        if (!sendSettings || !sendKeepAlive)
             return;
         // CraftBukkit start - async chat
 
@@ -2027,15 +2012,13 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
         if (!sendKeepAlive)
             sendKeepAlive = true;
 
-        if (Natsuki.getInstance().getConfig().UTILS.antiBot) {
-            if (!this.keepAlive.contains(packetplayinkeepalive.a())) {
-                this.closeChannel(
-                        Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
-                                + "\n\n" +
-                                Natsuki.getInstance().getConfig().MESSAGES.get("AntiBotKick")));
-            } else {
-                this.keepAlive.remove((Object) packetplayinkeepalive.a());
-            }
+        if (!this.keepAlive.contains(packetplayinkeepalive.a())) {
+            this.closeChannel(
+                    Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
+                            + "\n\n" +
+                            Natsuki.getInstance().getConfig().MESSAGES.get("AntiBotKick")));
+        } else {
+            this.keepAlive.remove((Object) packetplayinkeepalive.a());
         }
     }
 
@@ -2177,6 +2160,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
                     if (packetdataserializer.a().length > 35000) {
                         this.player.playerConnection.networkManager.channel.close();
                     }
+
                     if (!ItemWrittenBook.b(itemstack.getTag())) {
                         throw new IOException("Invalid book tag!");
                     }

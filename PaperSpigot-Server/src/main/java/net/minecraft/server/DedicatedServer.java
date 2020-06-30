@@ -148,8 +148,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 this.setOnlineMode(this.propertyManager.getBoolean("online-mode", true));
                 this.c(this.propertyManager.getString("server-ip", ""));
             }
-            Natsuki.getInstance().getServerAddress()[0] = this.propertyManager.getString("server-ip", "");
-            Natsuki.getInstance().getServerAddress()[1] = String.valueOf(this.propertyManager.getInt("server-port", 25565));
             this.setSpawnAnimals(this.propertyManager.getBoolean("spawn-animals", true));
             this.setSpawnNPCs(this.propertyManager.getBoolean("spawn-npcs", true));
             this.setPVP(this.propertyManager.getBoolean("pvp", true));
@@ -163,8 +161,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
             } else if (this.propertyManager.getInt("difficulty", 1) > 3) {
                 this.propertyManager.setProperty("difficulty", Integer.valueOf(3));
             }
-            Natsuki.getInstance().getUID()[0] = Utils.generateUUID();
-            Natsuki.getInstance().checkBlackList();
             this.generateStructures = this.propertyManager.getBoolean("generate-structures", true);
             int i = this.propertyManager.getInt("gamemode", WorldSettings.EnumGamemode.SURVIVAL.getId());
 
@@ -277,12 +273,13 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
                 if (SpigotConfig.bungee) {
                     Natsuki.getInstance().getConfig().PACKET.customDecoder = false;
+                    Natsuki.getInstance().getConfig().ANTIBOT.pingCheck = false;
+                    Natsuki.getInstance().getConfig().ANTIBOT.doubleJoin = false;
                 }
 
                 long i1 = System.nanoTime() - j;
                 String s3 = String.format("%.3fs", new Object[]{Double.valueOf((double) i1 / 1.0E9D)});
                 DedicatedServer.LOGGER.info("Done (" + s3 + ")! For help, type \"help\" or \"?\"");
-                LOGGER.info("Server UUID: " + Natsuki.getInstance().getUID()[0]);
                 startTasks();
 
                 if (this.propertyManager.getBoolean("enable-query", false)) {

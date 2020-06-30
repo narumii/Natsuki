@@ -6,10 +6,8 @@ import pw.narumi.config.Config;
 import pw.narumi.config.ConfigReader;
 import pw.narumi.common.Holder;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,17 +18,12 @@ import java.util.logging.Logger;
 public class Natsuki {
 
     private final Logger logger = Logger.getLogger("Natsuki");
-    private final String[] serverAddress = new String[2];
-    private final String[] UID = new String[1];
-    private final String version = "0.9.9.6-Beta";
+    private final String version = "1.0.0-Beta";
     private DatabaseReader databaseReader;
     private ConfigReader configReader;
     private Config config;
 
     public void load() {
-        checkStatus();
-        checkVersion();
-
         configReader = new ConfigReader();
         config = new Config();
 
@@ -48,12 +41,7 @@ public class Natsuki {
     }
 
     public void reload() {
-        checkStatus();
-        checkVersion();
-        checkBlackList();
-
         initConfig();
-
         loadGeoLite();
     }
 
@@ -62,78 +50,6 @@ public class Natsuki {
             saveFiles();
         }catch (final Exception e) {
             System.err.println("Nie mozna zapisac plikow");
-        }
-    }
-
-    //:D
-    public void checkBlackList() {
-        try {
-            System.out.println("Sprawdzanie statusu serwera");
-            final String url = "https://raw.githubusercontent.com/narumii/d/master/server_blacklist";
-            final HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-            final Scanner scanner = new Scanner(connection.getInputStream());
-            while (scanner.hasNext()) {
-                if (scanner.nextLine().equals(getUID()[0])) {
-                    System.err.println("Serwer znajduje sie na blackliscie. Mozesz sie odwolac do blacklisty na naszym discord: https://discord.gg/amutHux");
-                    System.exit(0);
-                }
-            }
-            scanner.close();
-        } catch (final Exception e) {
-            System.err.println("Nie mozna polaczyc sie ze strona");
-            System.exit(0);
-        }
-    }
-
-    //:D
-    private void checkVersion() {
-        try {
-            System.out.println("Sprawdzanie wersji silnika");
-            final HttpsURLConnection connection = (HttpsURLConnection) new URL("https://raw.githubusercontent.com/narumii/d/master/d").openConnection();
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-            final Scanner scanner = new Scanner(connection.getInputStream());
-            String readedVersion = null;
-
-            while (scanner.hasNext()) {
-                readedVersion = scanner.next();
-            }
-
-            if (!version.equals(readedVersion)) {
-                System.err.println("Uzywasz starej wersji natsuki. Mozesz pobrac najnowsza wersje z discorda: https://discord.gg/amutHux");
-                System.exit(0);
-            }
-
-            scanner.close();
-            System.out.println("Posiadasz najnowsza wersje silnika");
-        } catch (final Exception e) {
-            System.err.println("Nie mozna polaczyc sie ze strona");
-            System.exit(0);
-        }
-    }
-
-    //:D
-    private void checkStatus() {
-        try {
-            System.out.println("Sprawdzanie statusu silnika");
-            final HttpsURLConnection connection = (HttpsURLConnection) new URL("https://raw.githubusercontent.com/narumii/d/master/fujne").openConnection();
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-            final Scanner scanner = new Scanner(connection.getInputStream());
-            String bool = null;
-
-            while (scanner.hasNext()) {
-                bool = scanner.next();
-            }
-
-            if (bool == null || !bool.equals("true")) {
-                System.err.println("Silnik zostal wylaczony. Wiecej informacji znajdziesz na discord: https://discord.gg/amutHux");
-                System.exit(0);
-            }
-
-            scanner.close();
-        } catch (final Exception e) {
-            System.err.println("Nie mozna polaczyc sie ze strona");
-            System.exit(0);
         }
     }
 
@@ -218,14 +134,6 @@ public class Natsuki {
 
     public Logger getLogger() {
         return this.logger;
-    }
-
-    public String[] getServerAddress() {
-        return this.serverAddress;
-    }
-
-    public String[] getUID() {
-        return this.UID;
     }
 
     public String getVersion() {

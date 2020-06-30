@@ -37,9 +37,6 @@ public class TicksPerSecondCommand extends Command
             sender.sendMessage(" §8» §7System: §d" + Utils.getSystemInfo().getOperatingSystem().getFamily() + Utils.getSystemInfo().getOperatingSystem().getVersionInfo());
             sender.sendMessage(" §8» §7Processor: §d" + Utils.getSystemInfo().getHardware().getProcessor().getName());
             sender.sendMessage(" §8» §7Available processors: §d" + runtime.availableProcessors());
-            for (final NetworkIF networkIF : Utils.getSystemInfo().getHardware().getNetworkIFs()) {
-                sender.sendMessage(" §8» §7Network (" + networkIF.getDisplayName() + ")§8 -> §7speed: §d" + Utils.humanReadableByteCountInternet(networkIF.getSpeed()) + " §8| §7bytes sent: §d" + Utils.humanReadableByteCount(networkIF.getBytesSent()) + " §8| §7bytes received: §d" + Utils.humanReadableByteCount(networkIF.getBytesRecv()));
-            }
             return true;
         }
 

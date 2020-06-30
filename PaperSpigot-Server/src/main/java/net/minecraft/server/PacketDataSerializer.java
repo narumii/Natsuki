@@ -95,7 +95,7 @@ public class PacketDataSerializer extends ByteBuf {
         return i;
     }
 
-    public int readVarInt() {
+    public int readVarInt2() {
         int out = 0;
         int bytes = 0;
         byte in;
