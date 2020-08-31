@@ -24,6 +24,7 @@ PaperSpigot 1.8.8 with patched exploits.
 
 #### TODO
 › Optimization.
+› Patch move/fly crashers.
 
 
 ### PaperMC
