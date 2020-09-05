@@ -44,21 +44,21 @@ public class PlaySoundCommand extends VanillaCommand {
         double minimumVolume = 0.0D;
 
         switch (args.length) {
-        default:
-        case 8:
-            minimumVolume = getDouble(sender, args[7], 0.0D, 1.0D);
-        case 7:
-            pitch = getDouble(sender, args[6], 0.0D, 2.0D);
-        case 6:
-            volume = getDouble(sender, args[5], 0.0D, Float.MAX_VALUE);
-        case 5:
-            z = getRelativeDouble(z, sender, args[4]);
-        case 4:
-            y = getRelativeDouble(y, sender, args[3]);
-        case 3:
-            x = getRelativeDouble(x, sender, args[2]);
-        case 2:
-            // Noop
+            default:
+            case 8:
+                minimumVolume = getDouble(sender, args[7], 0.0D, 1.0D);
+            case 7:
+                pitch = getDouble(sender, args[6], 0.0D, 2.0D);
+            case 6:
+                volume = getDouble(sender, args[5], 0.0D, Float.MAX_VALUE);
+            case 5:
+                z = getRelativeDouble(z, sender, args[4]);
+            case 4:
+                y = getRelativeDouble(y, sender, args[3]);
+            case 3:
+                x = getRelativeDouble(x, sender, args[2]);
+            case 2:
+                // Noop
         }
 
         final double fixedVolume = volume > 1.0D ? volume * 16.0D : 16.0D;

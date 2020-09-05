@@ -172,7 +172,7 @@ public class VersionCommand extends BukkitCommand {
     }
 
     private void obtainVersion() {
-       //TODO
+        //TODO
         setVersionMessage("You are running the latest version of Natsuki");
     }
 

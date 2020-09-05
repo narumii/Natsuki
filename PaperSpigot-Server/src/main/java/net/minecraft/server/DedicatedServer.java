@@ -2,7 +2,7 @@ package net.minecraft.server;
 
 import co.aikar.timings.SpigotTimings;
 import com.google.common.collect.Lists;
-import org.AntiRedStone;
+import org.pw.narumi.redstone.AntiRedStone;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +13,6 @@ import org.bukkit.event.server.RemoteServerCommandEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.spigotmc.SpigotConfig;
 import pw.narumi.Natsuki;
-import pw.narumi.common.Utils;
 import pw.narumi.common.Holder;
 
 import java.io.File;
@@ -35,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class DedicatedServer extends MinecraftServer implements IMinecraftServer {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private final List<ServerCommand> l = Collections.synchronizedList(Lists.<ServerCommand>newArrayList()); // CraftBukkit - fix decompile error
+    private final List<ServerCommand> l = Collections.synchronizedList(Lists.newArrayList()); // CraftBukkit - fix decompile error
     private RemoteStatusListener m;
     private RemoteControlListener n;
     public PropertyManager propertyManager;
@@ -59,7 +58,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                     try {
                         Thread.sleep(2147483647L);
                     } catch (InterruptedException interruptedexception) {
-                        ;
                     }
                 }
             }
@@ -176,7 +174,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 this.setPort(this.propertyManager.getInt("server-port", 25565));
             }
             // Spigot start
-            this.a((PlayerList) (new DedicatedPlayerList(this)));
+            this.a(new DedicatedPlayerList(this));
             org.spigotmc.SpigotConfig.init((File) options.valueOf("spigot-settings"));
             org.spigotmc.SpigotConfig.registerCommands();
             // Spigot end
@@ -194,7 +192,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                     this.aq().a(inetaddress, this.R());
                 } catch (IOException ioexception) {
                     DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
-                    DedicatedServer.LOGGER.warn("The exception was: {}", new Object[]{ioexception.toString()});
+                    DedicatedServer.LOGGER.warn("The exception was: {}", ioexception.toString());
                     DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
                     return false;
                 }
@@ -274,11 +272,15 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 if (SpigotConfig.bungee) {
                     Natsuki.getInstance().getConfig().PACKET.customDecoder = false;
                     Natsuki.getInstance().getConfig().ANTIBOT.pingCheck = false;
+                    Natsuki.getInstance().getConfig().ANTIBOT.doubleJoin = false;
                     Natsuki.getInstance().getConfig().CONNECTION.maxConnections = -1;
+                    Natsuki.getInstance().getConfig().CONNECTION.REGION.check = false;
+                    Natsuki.getInstance().getConfig().CONNECTION.addressCheck = false;
+                    Natsuki.getInstance().getConfig().PACKET.PAYLOAD.skipPayload = false;
                 }
 
                 long i1 = System.nanoTime() - j;
-                String s3 = String.format("%.3fs", new Object[]{Double.valueOf((double) i1 / 1.0E9D)});
+                String s3 = String.format("%.3fs", Double.valueOf((double) i1 / 1.0E9D));
                 DedicatedServer.LOGGER.info("Done (" + s3 + ")! For help, type \"help\" or \"?\"");
                 startTasks();
 
@@ -310,7 +312,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                         this.aq().a(inetaddress, this.R());
                     } catch (IOException ioexception) {
                         DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
-                        DedicatedServer.LOGGER.warn("The exception was: {}", new Object[]{ioexception.toString()});
+                        DedicatedServer.LOGGER.warn("The exception was: {}", ioexception.toString());
                         DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
                         return false;
                     }
@@ -330,13 +332,14 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
     }
 
     private void startTasks() {
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(()-> Bukkit.getServer().getOnlinePlayers().forEach(player -> {
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> Bukkit.getServer().getOnlinePlayers().forEach(player -> {
             if (player.connectionsVisible())
                 player.sendActionBar("§8» §7Connections per second: §d" + Holder.getChannels().get());
-        }),0,100,TimeUnit.MILLISECONDS);
+        }), 0, 100, TimeUnit.MILLISECONDS);
     }
 
     public static String[] ga = new String[2];
+
     // CraftBukkit start
     public PropertyManager getPropertyManager() {
         return this.propertyManager;
@@ -364,8 +367,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
         return this.propertyManager.getBoolean("hardcore", false);
     }
 
-    protected void a(CrashReport crashreport) {}
+    protected void a(CrashReport crashreport) {
+    }
+
     public static final String ca = new String(Base64.getDecoder().decode("bmFydQ=="));
+
     public CrashReport b(CrashReport crashreport) {
         crashreport = super.b(crashreport);
         crashreport.g().a("Is Modded", new Callable() {
@@ -425,7 +431,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
     public void aO() {
         SpigotTimings.serverCommandTimer.startTiming(); // Spigot
         while (!this.l.isEmpty()) {
-            ServerCommand servercommand = (ServerCommand) this.l.remove(0);
+            ServerCommand servercommand = this.l.remove(0);
 
             // CraftBukkit start - ServerCommand for preprocessing
             ServerCommandEvent event = new ServerCommandEvent(console, servercommand.command);
@@ -558,7 +564,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
     }
 
     protected boolean aR() {
-        server.getLogger().info( "**** Beginning UUID conversion, this may take A LONG time ****"); // Spigot, let the user know whats up!
+        server.getLogger().info("**** Beginning UUID conversion, this may take A LONG time ****"); // Spigot, let the user know whats up!
         boolean flag = false;
 
         int i;
@@ -569,7 +575,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 this.aU();
             }
 
-            flag = NameReferencingFileConverter.a((MinecraftServer) this);
+            flag = NameReferencingFileConverter.a(this);
         }
 
         boolean flag1 = false;
@@ -580,7 +586,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 this.aU();
             }
 
-            flag1 = NameReferencingFileConverter.b((MinecraftServer) this);
+            flag1 = NameReferencingFileConverter.b(this);
         }
 
         boolean flag2 = false;
@@ -591,7 +597,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 this.aU();
             }
 
-            flag2 = NameReferencingFileConverter.c((MinecraftServer) this);
+            flag2 = NameReferencingFileConverter.c(this);
         }
 
         boolean flag3 = false;
@@ -602,7 +608,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                 this.aU();
             }
 
-            flag3 = NameReferencingFileConverter.d((MinecraftServer) this);
+            flag3 = NameReferencingFileConverter.d(this);
         }
 
         boolean flag4 = false;
@@ -623,7 +629,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
         try {
             Thread.sleep(5000L);
         } catch (InterruptedException interruptedexception) {
-            ;
         }
     }
 

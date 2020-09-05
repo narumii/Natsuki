@@ -230,7 +230,7 @@ public class BlockPosition extends BaseBlockPosition {
         */
 
         public void setX(int x) {
-            ((BaseBlockPosition) this).a = x;
+            this.a = x;
         }
 
         public void setY(int y) {

@@ -36,11 +36,11 @@ import java.util.logging.Level;
 
 /**
  * This is here for legacy purposes incase any plugin used it.
- *
+ * <p>
  * If you use this, migrate ASAP as this will be removed in the future!
  *
- * @deprecated
  * @see co.aikar.timings.Timings#of
+ * @deprecated
  */
 @Deprecated
 public final class CustomTimingsHandler {
@@ -51,8 +51,9 @@ public final class CustomTimingsHandler {
 
         Plugin plugin = null;
         try {
-             plugin = TimingsManager.getPluginByClassloader(Reflection.getCallerClass(2));
-        } catch (Exception ignored) {}
+            plugin = TimingsManager.getPluginByClassloader(Reflection.getCallerClass(2));
+        } catch (Exception ignored) {
+        }
 
         new AuthorNagException("Deprecated use of CustomTimingsHandler. Please Switch to Timings.of ASAP").printStackTrace();
         if (plugin != null) {
@@ -69,7 +70,12 @@ public final class CustomTimingsHandler {
         handler = timing;
     }
 
-    public void startTiming() { handler.startTiming(); }
-    public void stopTiming() { handler.stopTiming(); }
+    public void startTiming() {
+        handler.startTiming();
+    }
+
+    public void stopTiming() {
+        handler.stopTiming();
+    }
 
 }

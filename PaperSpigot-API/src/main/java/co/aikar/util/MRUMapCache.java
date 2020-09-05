@@ -30,6 +30,7 @@ import java.util.Set;
 
 /**
  * Implements a Most Recently Used cache in front of a backing map, to quickly access the last accessed result.
+ *
  * @param <K>
  * @param <V>
  */
@@ -37,13 +38,18 @@ public class MRUMapCache<K, V> extends AbstractMap<K, V> {
     final Map<K, V> backingMap;
     Object cacheKey;
     V cacheValue;
+
     public MRUMapCache(final Map<K, V> backingMap) {
         this.backingMap = backingMap;
     }
 
-    public int size() {return backingMap.size();}
+    public int size() {
+        return backingMap.size();
+    }
 
-    public boolean isEmpty() {return backingMap.isEmpty();}
+    public boolean isEmpty() {
+        return backingMap.isEmpty();
+    }
 
     public boolean containsKey(Object key) {
         return key != null && key.equals(cacheKey) || backingMap.containsKey(key);
@@ -73,7 +79,9 @@ public class MRUMapCache<K, V> extends AbstractMap<K, V> {
         return backingMap.remove(key);
     }
 
-    public void putAll(Map<? extends K, ? extends V> m) {backingMap.putAll(m);}
+    public void putAll(Map<? extends K, ? extends V> m) {
+        backingMap.putAll(m);
+    }
 
     public void clear() {
         cacheKey = null;
@@ -81,14 +89,21 @@ public class MRUMapCache<K, V> extends AbstractMap<K, V> {
         backingMap.clear();
     }
 
-    public Set<K> keySet() {return backingMap.keySet();}
+    public Set<K> keySet() {
+        return backingMap.keySet();
+    }
 
-    public Collection<V> values() {return backingMap.values();}
+    public Collection<V> values() {
+        return backingMap.values();
+    }
 
-    public Set<Map.Entry<K, V>> entrySet() {return backingMap.entrySet();}
+    public Set<Map.Entry<K, V>> entrySet() {
+        return backingMap.entrySet();
+    }
 
     /**
      * Wraps the specified map with a most recently used cache
+     *
      * @param map
      * @param <K>
      * @param <V>

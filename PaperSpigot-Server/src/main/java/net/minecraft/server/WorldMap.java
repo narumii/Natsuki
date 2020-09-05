@@ -42,8 +42,8 @@ public class WorldMap extends PersistentBase {
 
     public void a(double d0, double d1, int i) {
         int j = 128 * (1 << i);
-        int k =(int) Math.floor((d0 + 64.0D) / (double) j);
-        int l =(int) Math.floor((d1 + 64.0D) / (double) j);
+        int k = (int) Math.floor((d0 + 64.0D) / (double) j);
+        int l = (int) Math.floor((d1 + 64.0D) / (double) j);
 
         this.centerX = k * j + j / 2 - 64;
         this.centerZ = l * j + j / 2 - 64;
@@ -178,7 +178,7 @@ public class WorldMap extends PersistentBase {
                 UUID uuid = UUID.nameUUIDFromBytes(nbttagcompound.getString("id").getBytes(Charsets.US_ASCII));
                 if (!this.decorations.containsKey(uuid)) {
                     this.a(nbttagcompound.getByte("type"), entityhuman.world, uuid, nbttagcompound.getDouble("x"), nbttagcompound.getDouble("z"), nbttagcompound.getDouble("rot"));
-                // Spigot - end
+                    // Spigot - end
                 }
             }
         }
@@ -281,7 +281,7 @@ public class WorldMap extends PersistentBase {
 
             java.util.Collection<MapIcon> icons = new java.util.ArrayList<MapIcon>();
 
-            for ( org.bukkit.map.MapCursor cursor : render.cursors) {
+            for (org.bukkit.map.MapCursor cursor : render.cursors) {
 
                 if (cursor.isVisible()) {
                     icons.add(new MapIcon(cursor.getRawType(), cursor.getX(), cursor.getY(), cursor.getDirection()));

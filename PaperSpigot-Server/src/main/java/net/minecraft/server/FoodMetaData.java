@@ -9,7 +9,9 @@ public class FoodMetaData {
     private EntityHuman entityhuman; // CraftBukkit
     private int e = 20;
 
-    public FoodMetaData() { throw new AssertionError("Whoopsie, we missed the bukkit."); } // CraftBukkit start - throw an error
+    public FoodMetaData() {
+        throw new AssertionError("Whoopsie, we missed the bukkit.");
+    } // CraftBukkit start - throw an error
 
     // CraftBukkit start - added EntityHuman constructor
     public FoodMetaData(EntityHuman entityhuman) {

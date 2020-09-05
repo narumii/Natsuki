@@ -12,12 +12,13 @@ public class ServerExceptionEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private ServerException exception;
 
-    public ServerExceptionEvent (ServerException exception) {
+    public ServerExceptionEvent(ServerException exception) {
         this.exception = Preconditions.checkNotNull(exception, "exception");
     }
 
     /**
      * Gets the wrapped exception that was thrown.
+     *
      * @return Exception thrown
      */
     public ServerException getException() {

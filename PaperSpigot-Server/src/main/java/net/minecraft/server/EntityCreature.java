@@ -40,7 +40,7 @@ public abstract class EntityCreature extends EntityInsentient {
     }
 
     public boolean e(BlockPosition blockposition) {
-        return this.b == -1.0F ? true : this.a.i(blockposition) < (double) (this.b * this.b);
+        return this.b == -1.0F || this.a.i(blockposition) < (double) (this.b * this.b);
     }
 
     public void a(BlockPosition blockposition, int i) {
@@ -121,5 +121,6 @@ public abstract class EntityCreature extends EntityInsentient {
 
     }
 
-    protected void o(float f) {}
+    protected void o(float f) {
+    }
 }

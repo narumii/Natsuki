@@ -46,7 +46,7 @@ public class NameReferencingFileConverter {
     }
 
     private static void a(MinecraftServer minecraftserver, Collection<String> collection, ProfileLookupCallback profilelookupcallback) {
-        String[] astring = (String[]) Iterators.toArray(Iterators.filter(collection.iterator(), new Predicate() {
+        String[] astring = Iterators.toArray(Iterators.filter(collection.iterator(), new Predicate() {
             public boolean a(String s) {
                 return !UtilColor.b(s);
             }
@@ -64,7 +64,7 @@ public class NameReferencingFileConverter {
 
             for (int j = 0; j < i; ++j) {
                 String s = astring1[j];
-                UUID uuid = EntityHuman.a(new GameProfile((UUID) null, s));
+                UUID uuid = EntityHuman.a(new GameProfile(null, s));
                 GameProfile gameprofile = new GameProfile(uuid, s);
 
                 profilelookupcallback.onProfileLookupSucceeded(gameprofile);
@@ -80,7 +80,7 @@ public class NameReferencingFileConverter {
             if (gameprofilebanlist.c().exists()) {
                 try {
                     gameprofilebanlist.load();
-                // CraftBukkit start - FileNotFoundException -> IOException, don't print stacetrace
+                    // CraftBukkit start - FileNotFoundException -> IOException, don't print stacetrace
                 } catch (IOException filenotfoundexception) {
                     NameReferencingFileConverter.e.warn("Could not load existing file " + gameprofilebanlist.c().getName());
                 }
@@ -89,7 +89,7 @@ public class NameReferencingFileConverter {
             try {
                 final HashMap hashmap = Maps.newHashMap();
 
-                a(NameReferencingFileConverter.b, (Map) hashmap);
+                a(NameReferencingFileConverter.b, hashmap);
                 ProfileLookupCallback profilelookupcallback = new ProfileLookupCallback() {
                     public void onProfileLookupSucceeded(GameProfile gameprofile) {
                         minecraftserver.getUserCache().a(gameprofile);
@@ -99,9 +99,9 @@ public class NameReferencingFileConverter {
                             NameReferencingFileConverter.e.warn("Could not convert user banlist entry for " + gameprofile.getName());
                             throw new NameReferencingFileConverter.FileConversionException("Profile not in the conversionlist", null);
                         } else {
-                            Date date = astring.length > 1 ? NameReferencingFileConverter.b(astring[1], (Date) null) : null;
+                            Date date = astring.length > 1 ? NameReferencingFileConverter.b(astring[1], null) : null;
                             String s = astring.length > 2 ? astring[2] : null;
-                            Date date1 = astring.length > 3 ? NameReferencingFileConverter.b(astring[3], (Date) null) : null;
+                            Date date1 = astring.length > 3 ? NameReferencingFileConverter.b(astring[3], null) : null;
                             String s1 = astring.length > 4 ? astring[4] : null;
 
                             gameprofilebanlist.add(new GameProfileBanEntry(gameprofile, date, s, date1, s1));
@@ -139,7 +139,7 @@ public class NameReferencingFileConverter {
             if (ipbanlist.c().exists()) {
                 try {
                     ipbanlist.load();
-                // CraftBukkit start - FileNotFoundException -> IOException, don't print stacetrace
+                    // CraftBukkit start - FileNotFoundException -> IOException, don't print stacetrace
                 } catch (IOException filenotfoundexception) {
                     NameReferencingFileConverter.e.warn("Could not load existing file " + ipbanlist.c().getName());
                 }
@@ -148,15 +148,15 @@ public class NameReferencingFileConverter {
             try {
                 HashMap hashmap = Maps.newHashMap();
 
-                a(NameReferencingFileConverter.a, (Map) hashmap);
+                a(NameReferencingFileConverter.a, hashmap);
                 Iterator iterator = hashmap.keySet().iterator();
 
                 while (iterator.hasNext()) {
                     String s = (String) iterator.next();
                     String[] astring = (String[]) hashmap.get(s);
-                    Date date = astring.length > 1 ? b(astring[1], (Date) null) : null;
+                    Date date = astring.length > 1 ? b(astring[1], null) : null;
                     String s1 = astring.length > 2 ? astring[2] : null;
-                    Date date1 = astring.length > 3 ? b(astring[3], (Date) null) : null;
+                    Date date1 = astring.length > 3 ? b(astring[3], null) : null;
                     String s2 = astring.length > 4 ? astring[4] : null;
 
                     ipbanlist.add(new IpBanEntry(s, date, s1, date1, s2));
@@ -181,7 +181,7 @@ public class NameReferencingFileConverter {
             if (oplist.c().exists()) {
                 try {
                     oplist.load();
-                // CraftBukkit start - FileNotFoundException -> IOException, don't print stacetrace
+                    // CraftBukkit start - FileNotFoundException -> IOException, don't print stacetrace
                 } catch (IOException filenotfoundexception) {
                     NameReferencingFileConverter.e.warn("Could not load existing file " + oplist.c().getName());
                 }
@@ -226,7 +226,7 @@ public class NameReferencingFileConverter {
             if (whitelist.c().exists()) {
                 try {
                     whitelist.load();
-                // CraftBukkit start - FileNotFoundException -> IOException, don't print stacetrace
+                    // CraftBukkit start - FileNotFoundException -> IOException, don't print stacetrace
                 } catch (IOException filenotfoundexception) {
                     NameReferencingFileConverter.e.warn("Could not load existing file " + whitelist.c().getName());
                 }
@@ -284,10 +284,10 @@ public class NameReferencingFileConverter {
                     }
                 };
 
-                a(minecraftserver, Lists.newArrayList(new String[] { s}), profilelookupcallback);
+                a(minecraftserver, Lists.newArrayList(s), profilelookupcallback);
                 return arraylist.size() > 0 && ((GameProfile) arraylist.get(0)).getId() != null ? ((GameProfile) arraylist.get(0)).getId().toString() : "";
             } else {
-                return EntityHuman.a(new GameProfile((UUID) null, s)).toString();
+                return EntityHuman.a(new GameProfile(null, s)).toString();
             }
         } else {
             return s;
@@ -481,7 +481,7 @@ public class NameReferencingFileConverter {
         if (file.exists() && file.isDirectory() && (file.list().length > 0 || !file.delete())) {
             NameReferencingFileConverter.e.warn("**** DETECTED OLD PLAYER DIRECTORY IN THE WORLD SAVE");
             NameReferencingFileConverter.e.warn("**** THIS USUALLY HAPPENS WHEN THE AUTOMATIC CONVERSION FAILED IN SOME WAY");
-            NameReferencingFileConverter.e.warn("** please restart the server and if the problem persists, remove the directory \'{}\'", new Object[] { file.getPath()});
+            NameReferencingFileConverter.e.warn("** please restart the server and if the problem persists, remove the directory \'{}\'", file.getPath());
             return false;
         } else {
             return true;

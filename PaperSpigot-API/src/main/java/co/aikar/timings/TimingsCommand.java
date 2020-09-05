@@ -81,13 +81,13 @@ public class TimingsCommand extends BukkitCommand {
             sender.sendMessage("Timings reset");
         } else if ("cost".equals(arg)) {
             sender.sendMessage("Timings cost: " + TimingsExport.getCost());
-        } else  if (
-            "paste".equalsIgnoreCase(arg) ||
-                "report".equalsIgnoreCase(arg) ||
-                "get".equalsIgnoreCase(arg) ||
-                "merged".equalsIgnoreCase(arg) ||
-                "separate".equalsIgnoreCase(arg)
-            ) {
+        } else if (
+                "paste".equalsIgnoreCase(arg) ||
+                        "report".equalsIgnoreCase(arg) ||
+                        "get".equalsIgnoreCase(arg) ||
+                        "merged".equalsIgnoreCase(arg) ||
+                        "separate".equalsIgnoreCase(arg)
+        ) {
             TimingsExport.reportTimings(sender);
         } else {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
@@ -103,7 +103,7 @@ public class TimingsCommand extends BukkitCommand {
 
         if (args.length == 1) {
             return StringUtil.copyPartialMatches(args[0], TIMINGS_SUBCOMMANDS,
-                new ArrayList<String>(TIMINGS_SUBCOMMANDS.size()));
+                    new ArrayList<String>(TIMINGS_SUBCOMMANDS.size()));
         }
         return ImmutableList.of();
     }

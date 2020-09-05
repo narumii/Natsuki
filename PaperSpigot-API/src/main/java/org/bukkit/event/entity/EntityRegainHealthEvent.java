@@ -38,7 +38,7 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable 
      * This method exists for legacy reasons to provide backwards
      * compatibility. It will not exist at runtime and should not be used
      * under any circumstances.
-     * 
+     *
      * @return the (rounded) amount regained
      */
     @Deprecated
@@ -59,7 +59,7 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable 
      * This method exists for legacy reasons to provide backwards
      * compatibility. It will not exist at runtime and should not be used
      * under any circumstances.
-     * 
+     *
      * @param amount the amount that will be regained
      */
     @Deprecated
@@ -81,7 +81,7 @@ public class EntityRegainHealthEvent extends EntityEvent implements Cancellable 
      * Gets the reason for why the entity is regaining health
      *
      * @return A RegainReason detailing the reason for the entity regaining
-     *     health
+     * health
      */
     public RegainReason getRegainReason() {
         return regainReason;

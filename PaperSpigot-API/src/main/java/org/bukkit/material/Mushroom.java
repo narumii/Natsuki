@@ -28,7 +28,7 @@ public class Mushroom extends MaterialData {
 
     /**
      * @param shroom the type
-     * @param data the raw data value
+     * @param data   the raw data value
      * @deprecated Magic value
      */
     @Deprecated
@@ -43,7 +43,7 @@ public class Mushroom extends MaterialData {
      * @deprecated Magic value
      */
     @Deprecated
-    public Mushroom(int type, byte data){
+    public Mushroom(int type, byte data) {
         super(type, data);
         Validate.isTrue(type == Material.HUGE_MUSHROOM_1.getId() || type == Material.HUGE_MUSHROOM_2.getId(), "Not a mushroom!");
     }
@@ -96,9 +96,9 @@ public class Mushroom extends MaterialData {
      * nature of how the data is stored, setting a face painted or not is not
      * guaranteed to leave the other faces unchanged.
      *
-     * @param face The face to paint or unpaint.
+     * @param face    The face to paint or unpaint.
      * @param painted True if you want to paint it, false if you want the
-     *     pores to show.
+     *                pores to show.
      */
     public void setFacePainted(BlockFace face, boolean painted) {
         if (painted == isFacePainted(face)) {
@@ -159,7 +159,7 @@ public class Mushroom extends MaterialData {
 
     /**
      * @return A set of all faces that are currently painted (an empty set if
-     *     it is a stem)
+     * it is a stem)
      */
     public Set<BlockFace> getPaintedFaces() {
         EnumSet<BlockFace> faces = EnumSet.noneOf(BlockFace.class);

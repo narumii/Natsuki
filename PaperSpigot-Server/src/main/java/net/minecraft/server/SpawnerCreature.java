@@ -17,21 +17,19 @@ public final class SpawnerCreature {
     private static final int a = (int) Math.pow(17.0D, 2.0D);
     private final LongHashSet b = new LongHashSet(); // CraftBukkit
 
-    public SpawnerCreature() {}
+    public SpawnerCreature() {
+    }
 
     // Spigot start - get entity count only from chunks being processed in b
-    private int getEntityCount(WorldServer server, Class oClass)
-    {
+    private int getEntityCount(WorldServer server, Class oClass) {
         int i = 0;
         Iterator<Long> it = this.b.iterator();
-        while ( it.hasNext() )
-        {
+        while (it.hasNext()) {
             Long coord = it.next();
-            int x = LongHash.msw( coord );
-            int z = LongHash.lsw( coord );
-            if ( !server.chunkProviderServer.unloadQueue.contains( coord ) && server.isChunkLoaded( x, z, true ) )
-            {
-                i += server.getChunkAt( x, z ).entityCount.get( oClass );
+            int x = LongHash.msw(coord);
+            int z = LongHash.lsw(coord);
+            if (!server.chunkProviderServer.unloadQueue.contains(coord) && server.isChunkLoaded(x, z, true)) {
+                i += server.getChunkAt(x, z).entityCount.get(oClass);
             }
         }
         return i;
@@ -53,14 +51,14 @@ public final class SpawnerCreature {
                 EntityHuman entityhuman = (EntityHuman) iterator.next();
 
                 if (!entityhuman.isSpectator() || !entityhuman.affectsSpawning) { // PaperSpigot
-                    int l =(int) Math.floor(entityhuman.locX / 16.0D);
+                    int l = (int) Math.floor(entityhuman.locX / 16.0D);
 
-                    j =(int) Math.floor(entityhuman.locZ / 16.0D);
+                    j = (int) Math.floor(entityhuman.locZ / 16.0D);
                     byte b0 = 8;
                     // Spigot Start
                     b0 = worldserver.spigotConfig.mobSpawnRange;
-                    b0 = ( b0 > worldserver.spigotConfig.viewDistance ) ? (byte) worldserver.spigotConfig.viewDistance : b0;
-                    b0 = ( b0 > 8 ) ? 8 : b0;
+                    b0 = (b0 > worldserver.spigotConfig.viewDistance) ? (byte) worldserver.spigotConfig.viewDistance : b0;
+                    b0 = (b0 > 8) ? 8 : b0;
                     // Spigot End
 
                     for (int i1 = -b0; i1 <= b0; ++i1) {
@@ -91,7 +89,7 @@ public final class SpawnerCreature {
             for (int k1 = 0; k1 < j; ++k1) {
                 EnumCreatureType enumcreaturetype = aenumcreaturetype[k1];
 
-               // CraftBukkit start - Use per-world spawn limits
+                // CraftBukkit start - Use per-world spawn limits
                 int limit = enumcreaturetype.b();
                 switch (enumcreaturetype) {
                     case MONSTER:
@@ -111,7 +109,7 @@ public final class SpawnerCreature {
                 if (limit == 0) {
                     continue;
                 }
-				int mobcnt = 0; // Spigot
+                int mobcnt = 0; // Spigot
                 // CraftBukkit end
 
                 if ((!enumcreaturetype.d() || flag1) && (enumcreaturetype.d() || flag) && (!enumcreaturetype.e() || flag2)) {
@@ -148,7 +146,8 @@ public final class SpawnerCreature {
 
                                     while (true) {
                                         if (i4 < 4) {
-                                            label108: {
+                                            label108:
+                                            {
                                                 j3 += worldserver.random.nextInt(b1) - worldserver.random.nextInt(b1);
                                                 k3 += worldserver.random.nextInt(1) - worldserver.random.nextInt(1);
                                                 l3 += worldserver.random.nextInt(b1) - worldserver.random.nextInt(b1);
@@ -168,7 +167,7 @@ public final class SpawnerCreature {
                                                         EntityInsentient entityinsentient;
 
                                                         try {
-                                                            entityinsentient = biomebase_biomemeta.b.getConstructor(new Class[] { World.class}).newInstance(worldserver);
+                                                            entityinsentient = biomebase_biomemeta.b.getConstructor(new Class[]{World.class}).newInstance(worldserver);
                                                         } catch (Exception exception) {
                                                             exception.printStackTrace();
                                                             ServerInternalException.reportInternalException(exception); // Paper
@@ -184,8 +183,7 @@ public final class SpawnerCreature {
                                                             }
 
                                                             // Spigot start
-                                                            if ( --moblimit <= 0 )
-                                                            {
+                                                            if (--moblimit <= 0) {
                                                                 // If we're past limit, stop spawn
                                                                 continue label115;
                                                             }
@@ -274,7 +272,7 @@ public final class SpawnerCreature {
                             EntityInsentient entityinsentient;
 
                             try {
-                                entityinsentient = biomebase_biomemeta.b.getConstructor(new Class[] { World.class}).newInstance(world);
+                                entityinsentient = biomebase_biomemeta.b.getConstructor(new Class[]{World.class}).newInstance(world);
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                                 ServerInternalException.reportInternalException(exception); // Paper

@@ -227,5 +227,6 @@ public class CraftSound {
         return sounds[sound.ordinal()];
     }
 
-    private CraftSound() {}
+    private CraftSound() {
+    }
 }

@@ -14,7 +14,7 @@ public class EntityLightning extends EntityWeather {
     public boolean isEffect = false;
 
     public boolean isSilent = false; // Spigot
-    
+
     public EntityLightning(World world, double d0, double d1, double d2) {
         this(world, d0, d1, d2, false);
     }
@@ -57,9 +57,8 @@ public class EntityLightning extends EntityWeather {
     }
 
     // Spigot start
-    public EntityLightning(World world, double d0, double d1, double d2, boolean isEffect, boolean isSilent)
-    {
-        this( world, d0, d1, d2, isEffect );
+    public EntityLightning(World world, double d0, double d1, double d2, boolean isEffect, boolean isSilent) {
+        this(world, d0, d1, d2, isEffect);
         this.isSilent = isSilent;
     }
     // Spigot end
@@ -70,7 +69,7 @@ public class EntityLightning extends EntityWeather {
             // CraftBukkit start - Use relative location for far away sounds
             //this.world.makeSound(this.locX, this.locY, this.locZ, "ambient.weather.thunder", 10000.0F, 0.8F + this.random.nextFloat() * 0.2F);
             float pitch = 0.8F + this.random.nextFloat() * 0.2F;
-            int viewDistance = ((WorldServer) this.world).getServer().getViewDistance() * 16;
+            int viewDistance = this.world.getServer().getViewDistance() * 16;
             for (EntityPlayer player : (List<EntityPlayer>) (List) this.world.players) {
                 double deltaX = this.locX - player.locX;
                 double deltaZ = this.locZ - player.locZ;
@@ -126,9 +125,12 @@ public class EntityLightning extends EntityWeather {
 
     }
 
-    protected void h() {}
+    protected void h() {
+    }
 
-    protected void a(NBTTagCompound nbttagcompound) {}
+    protected void a(NBTTagCompound nbttagcompound) {
+    }
 
-    protected void b(NBTTagCompound nbttagcompound) {}
+    protected void b(NBTTagCompound nbttagcompound) {
+    }
 }

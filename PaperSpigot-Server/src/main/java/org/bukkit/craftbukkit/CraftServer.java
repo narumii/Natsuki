@@ -297,7 +297,7 @@ public final class CraftServer implements Server {
         for (ICommand cmd : commands.values()) {
             // Spigot start
             VanillaCommandWrapper wrapper = new VanillaCommandWrapper((CommandAbstract) cmd, LocaleI18n.get(cmd.getUsage(null)));
-            if (org.spigotmc.SpigotConfig.replaceCommands.contains( wrapper.getName() ) ) {
+            if (org.spigotmc.SpigotConfig.replaceCommands.contains(wrapper.getName())) {
                 if (first) {
                     commandMap.register("minecraft", wrapper);
                 }
@@ -571,7 +571,7 @@ public final class CraftServer implements Server {
     // NOTE: Should only be called from DedicatedServer.ah()
     public boolean dispatchServerCommand(CommandSender sender, ServerCommand serverCommand) {
         if (sender instanceof Conversable) {
-            Conversable conversable = (Conversable)sender;
+            Conversable conversable = (Conversable) sender;
 
             if (conversable.isConversing()) {
                 conversable.acceptConversationInput(serverCommand.command);
@@ -700,7 +700,8 @@ public final class CraftServer implements Server {
         while (pollCount < 50 && getScheduler().getActiveWorkers().size() > 0) {
             try {
                 Thread.sleep(50);
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+            }
             pollCount++;
         }
 
@@ -712,10 +713,10 @@ public final class CraftServer implements Server {
                 author = plugin.getDescription().getAuthors().get(0);
             }
             getLogger().log(Level.SEVERE, String.format(
-                "Nag author: '%s' of '%s' about the following: %s",
-                author,
-                plugin.getDescription().getName(),
-                "This plugin is not properly shutting down its async tasks when it is being reloaded.  This may cause conflicts with the newly loaded version of the plugin"
+                    "Nag author: '%s' of '%s' about the following: %s",
+                    author,
+                    plugin.getDescription().getName(),
+                    "This plugin is not properly shutting down its async tasks when it is being reloaded.  This may cause conflicts with the newly loaded version of the plugin"
             ));
         }
         loadPlugins();
@@ -735,7 +736,7 @@ public final class CraftServer implements Server {
         }
     }
 
-    @SuppressWarnings({ "unchecked", "finally" })
+    @SuppressWarnings({"unchecked", "finally"})
     private void loadCustomPermissions() {
         File file = new File(configuration.getString("settings.permissions-file"));
         FileInputStream stream;
@@ -763,7 +764,8 @@ public final class CraftServer implements Server {
         } finally {
             try {
                 stream.close();
-            } catch (IOException ex) {}
+            } catch (IOException ex) {
+            }
         }
 
         if (perms == null) {
@@ -832,7 +834,8 @@ public final class CraftServer implements Server {
             converter.convert(name, new IProgressUpdate() {
                 private long b = System.currentTimeMillis();
 
-                public void a(String s) {}
+                public void a(String s) {
+                }
 
                 public void a(int i) {
                     if (System.currentTimeMillis() - this.b >= 1000L) {
@@ -842,7 +845,8 @@ public final class CraftServer implements Server {
 
                 }
 
-                public void c(String s) {}
+                public void c(String s) {
+                }
             });
         }
 
@@ -856,7 +860,7 @@ public final class CraftServer implements Server {
                     break;
                 }
             }
-        } while(used);
+        } while (used);
         boolean hardcore = false;
 
         IDataManager sdm = new ServerNBTManager(getWorldContainer(), name, true);
@@ -958,7 +962,7 @@ public final class CraftServer implements Server {
         }
 
         worlds.remove(world.getName().toLowerCase());
-        console.worlds.remove(console.worlds.indexOf(handle));
+        console.worlds.remove(handle);
 
         File parentFolder = world.getWorldFolder().getAbsoluteFile();
 
@@ -966,7 +970,7 @@ public final class CraftServer implements Server {
         synchronized (RegionFileCache.class) {
             // RegionFileCache.a should be RegionFileCache.cache
             Iterator<Map.Entry<File, RegionFile>> i = RegionFileCache.a.entrySet().iterator();
-            while(i.hasNext()) {
+            while (i.hasNext()) {
                 Map.Entry<File, RegionFile> entry = i.next();
                 File child = entry.getKey().getAbsoluteFile();
                 while (child != null) {
@@ -1285,16 +1289,15 @@ public final class CraftServer implements Server {
     @Deprecated
     public OfflinePlayer getOfflinePlayer(String name) {
         Validate.notNull(name, "Name cannot be null");
-        com.google.common.base.Preconditions.checkArgument( !org.apache.commons.lang.StringUtils.isBlank( name ), "Name cannot be blank" ); // Spigot
+        com.google.common.base.Preconditions.checkArgument(!org.apache.commons.lang.StringUtils.isBlank(name), "Name cannot be blank"); // Spigot
 
         OfflinePlayer result = getPlayerExact(name);
         if (result == null) {
             // Spigot Start
             GameProfile profile = null;
             // Only fetch an online UUID in online mode
-            if ( MinecraftServer.getServer().getOnlineMode() || org.spigotmc.SpigotConfig.bungee )
-            {
-                profile = MinecraftServer.getServer().getUserCache().getProfile( name );
+            if (MinecraftServer.getServer().getOnlineMode() || org.spigotmc.SpigotConfig.bungee) {
+                profile = MinecraftServer.getServer().getUserCache().getProfile(name);
             }
             // Spigot end
             if (profile == null) {
@@ -1361,7 +1364,7 @@ public final class CraftServer implements Server {
 
         for (JsonListEntry entry : playerList.getProfileBans().getValues()) {
             result.add(getOfflinePlayer((GameProfile) entry.getKey()));
-        }        
+        }
 
         return result;
     }
@@ -1370,12 +1373,12 @@ public final class CraftServer implements Server {
     public BanList getBanList(BanList.Type type) {
         Validate.notNull(type, "Type cannot be null");
 
-        switch(type){
-        case IP:
-            return new CraftIpBanList(playerList.getIPBans());
-        case NAME:
-        default:
-            return new CraftProfileBanList(playerList.getProfileBans());
+        switch (type) {
+            case IP:
+                return new CraftIpBanList(playerList.getIPBans());
+            case NAME:
+            default:
+                return new CraftProfileBanList(playerList.getProfileBans());
         }
     }
 
@@ -1600,8 +1603,7 @@ public final class CraftServer implements Server {
      */
     public List<String> tabCompleteCommand(Player player, String message, BlockPosition blockPosition) {
         // Spigot Start
-        if ( (org.spigotmc.SpigotConfig.tabComplete < 0 || message.length() <= org.spigotmc.SpigotConfig.tabComplete) && !message.contains( " " ) )
-        {
+        if ((org.spigotmc.SpigotConfig.tabComplete < 0 || message.length() <= org.spigotmc.SpigotConfig.tabComplete) && !message.contains(" ")) {
             return ImmutableList.of();
         }
         // Spigot End
@@ -1620,7 +1622,7 @@ public final class CraftServer implements Server {
             getLogger().log(Level.SEVERE, "Exception when " + player.getName() + " attempted to tab complete " + message, ex);
         }
 
-        return completions == null ? ImmutableList.<String>of() : completions;
+        return completions == null ? ImmutableList.of() : completions;
     }
     // PaperSpigot end
 
@@ -1721,13 +1723,12 @@ public final class CraftServer implements Server {
         return CraftMagicNumbers.INSTANCE;
     }
 
-    private final Spigot spigot = new Spigot()
-    {
+    private final Spigot spigot = new Spigot() {
 
         // PaperSpigot start - Add getTPS (Further improve tick loop)
         @Override
         public double[] getTPS() {
-            return new double[] {
+            return new double[]{
                     MinecraftServer.getServer().tps1.getAverage(),
                     MinecraftServer.getServer().tps5.getAverage(),
                     MinecraftServer.getServer().tps15.getAverage()
@@ -1737,26 +1738,22 @@ public final class CraftServer implements Server {
 
         @Deprecated
         @Override
-        public YamlConfiguration getConfig()
-        {
+        public YamlConfiguration getConfig() {
             return getBukkitConfig();
         }
 
         @Override
-        public YamlConfiguration getBukkitConfig()
-        {
+        public YamlConfiguration getBukkitConfig() {
             return configuration;
         }
 
         @Override
-        public YamlConfiguration getSpigotConfig()
-        {
+        public YamlConfiguration getSpigotConfig() {
             return org.spigotmc.SpigotConfig.config;
         }
 
         @Override
-        public YamlConfiguration getPaperSpigotConfig()
-        {
+        public YamlConfiguration getPaperSpigotConfig() {
             return org.github.paperspigot.PaperSpigotConfig.config;
         }
 
@@ -1780,8 +1777,7 @@ public final class CraftServer implements Server {
         }
     };
 
-    public Spigot spigot()
-    {
+    public Spigot spigot() {
         return spigot;
     }
 }

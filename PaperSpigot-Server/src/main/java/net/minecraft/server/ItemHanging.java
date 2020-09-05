@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.painting.PaintingPlaceEvent;
@@ -62,6 +63,6 @@ public class ItemHanging extends Item {
     }
 
     private EntityHanging a(World world, BlockPosition blockposition, EnumDirection enumdirection) {
-        return (EntityHanging) (this.a == EntityPainting.class ? new EntityPainting(world, blockposition, enumdirection) : (this.a == EntityItemFrame.class ? new EntityItemFrame(world, blockposition, enumdirection) : null));
+        return this.a == EntityPainting.class ? new EntityPainting(world, blockposition, enumdirection) : (this.a == EntityItemFrame.class ? new EntityItemFrame(world, blockposition, enumdirection) : null);
     }
 }

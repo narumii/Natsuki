@@ -12,7 +12,7 @@ public class ItemMapEmpty extends ItemWorldMapBase {
         String s = "map_" + itemstack1.getData();
         WorldMap worldmap = new WorldMap(s);
 
-        worldMain.a(s, (PersistentBase) worldmap); // CraftBukkit
+        worldMain.a(s, worldmap); // CraftBukkit
         worldmap.scale = 0;
         worldmap.a(entityhuman.locX, entityhuman.locZ, worldmap.scale);
         worldmap.map = (byte) ((WorldServer) world).dimension; // CraftBukkit - use bukkit dimension

@@ -83,7 +83,7 @@ public class CraftBlockProjectileSource implements BlockProjectileSource {
                 ((EntityFireball) launch).dirY = d4 / d6 * 0.1D;
                 ((EntityFireball) launch).dirZ = d5 / d6 * 0.1D;
             }
-            
+
             ((EntityFireball) launch).projectileSource = this;
         }
 

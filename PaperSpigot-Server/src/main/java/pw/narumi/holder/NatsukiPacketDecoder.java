@@ -1,11 +1,12 @@
 package pw.narumi.holder;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import io.netty.handler.codec.DecoderException;
-import net.minecraft.server.*;
+import net.minecraft.server.EnumProtocolDirection;
+import net.minecraft.server.NetworkManager;
+import net.minecraft.server.Packet;
+import net.minecraft.server.PacketDataSerializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -14,7 +15,6 @@ import pw.narumi.Natsuki;
 import pw.narumi.common.PacketUtil;
 import pw.narumi.exception.NatsukiException;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,7 +29,9 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
     private int packetState = 0;
     private int handshakeIntent = 0;
 
-    public NatsukiPacketDecoder(final EnumProtocolDirection direction) { this.direction = direction; }
+    public NatsukiPacketDecoder(final EnumProtocolDirection direction) {
+        this.direction = direction;
+    }
 
     protected void decode(final ChannelHandlerContext channel, final ByteBuf buf, final List<Object> objects) throws Exception {
         if (Natsuki.getInstance().getConfig().UTILS.debug && Natsuki.getInstance().getConfig().UTILS.packetDebugger)
@@ -54,7 +56,7 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
                     if (packetState == 1 && handshakeIntent == 2) {
                         PacketUtil.checkLogin(buffer);
                     }
-                }catch (final NatsukiException e) {
+                } catch (final NatsukiException e) {
                     channel.pipeline().remove(this);
                     throw new NatsukiException("Decoder exception");
                 }
@@ -86,7 +88,7 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
             if (packet == null) {
                 buf.skipBytes(buf.readableBytes());
                 serializer.skipBytes(serializer.readableBytes());
-            }else {
+            } else {
 
                 packet.a(serializer);
                 if (serializer.isReadable()) {
@@ -97,7 +99,7 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
                 objects.add(packet);
                 ++packetState;
             }
-        }catch (final IndexOutOfBoundsException e) {
+        } catch (final IndexOutOfBoundsException e) {
             channel.pipeline().remove(this);
             throw new NatsukiException("Invalid data");
         }

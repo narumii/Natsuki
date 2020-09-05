@@ -11,7 +11,7 @@ import org.bukkit.event.HandlerList;
  * @deprecated Use {@link org.bukkit.event.hanging.HangingBreakEvent} instead.
  */
 @Deprecated
-@Warning(reason="This event has been replaced by HangingBreakEvent")
+@Warning(reason = "This event has been replaced by HangingBreakEvent")
 public class PaintingBreakEvent extends PaintingEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;

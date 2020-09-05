@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.inventory.CraftInventoryBrewer;
 import org.bukkit.craftbukkit.inventory.CraftInventoryView;
 // CraftBukkit end
@@ -19,10 +20,10 @@ public class ContainerBrewingStand extends Container {
     public ContainerBrewingStand(PlayerInventory playerinventory, IInventory iinventory) {
         player = playerinventory; // CraftBukkit
         this.brewingStand = iinventory;
-        this.a((Slot) (new ContainerBrewingStand.SlotPotionBottle(playerinventory.player, iinventory, 0, 56, 46)));
-        this.a((Slot) (new ContainerBrewingStand.SlotPotionBottle(playerinventory.player, iinventory, 1, 79, 53)));
-        this.a((Slot) (new ContainerBrewingStand.SlotPotionBottle(playerinventory.player, iinventory, 2, 102, 46)));
-        this.f = this.a((Slot) (new ContainerBrewingStand.SlotBrewing(iinventory, 3, 79, 17)));
+        this.a(new SlotPotionBottle(playerinventory.player, iinventory, 0, 56, 46));
+        this.a(new SlotPotionBottle(playerinventory.player, iinventory, 1, 79, 53));
+        this.a(new SlotPotionBottle(playerinventory.player, iinventory, 2, 102, 46));
+        this.f = this.a(new SlotBrewing(iinventory, 3, 79, 17));
 
         int i;
 
@@ -47,7 +48,7 @@ public class ContainerBrewingStand extends Container {
         super.b();
 
         for (int i = 0; i < this.listeners.size(); ++i) {
-            ICrafting icrafting = (ICrafting) this.listeners.get(i);
+            ICrafting icrafting = this.listeners.get(i);
 
             if (this.g != this.brewingStand.getProperty(0)) {
                 icrafting.setContainerData(this, 0, this.brewingStand.getProperty(0));
@@ -64,7 +65,7 @@ public class ContainerBrewingStand extends Container {
 
     public ItemStack b(EntityHuman entityhuman, int i) {
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.c.get(i);
+        Slot slot = this.c.get(i);
 
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
@@ -99,7 +100,7 @@ public class ContainerBrewingStand extends Container {
             }
 
             if (itemstack1.count == 0) {
-                slot.set((ItemStack) null);
+                slot.set(null);
             } else {
                 slot.f();
             }
@@ -121,7 +122,7 @@ public class ContainerBrewingStand extends Container {
         }
 
         public boolean isAllowed(ItemStack itemstack) {
-            return itemstack != null ? itemstack.getItem().l(itemstack) : false;
+            return itemstack != null && itemstack.getItem().l(itemstack);
         }
 
         public int getMaxStackSize() {
@@ -148,7 +149,7 @@ public class ContainerBrewingStand extends Container {
 
         public void a(EntityHuman entityhuman, ItemStack itemstack) {
             if (itemstack.getItem() == Items.POTION && itemstack.getData() > 0) {
-                this.a.b((Statistic) AchievementList.B);
+                this.a.b(AchievementList.B);
             }
 
             super.a(entityhuman, itemstack);

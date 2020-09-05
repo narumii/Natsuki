@@ -127,7 +127,8 @@ public abstract class EntityInsentient extends EntityLiving {
         return oclass != EntityGhast.class;
     }
 
-    public void v() {}
+    public void v() {
+    }
 
     protected void h() {
         super.h();
@@ -213,6 +214,7 @@ public abstract class EntityInsentient extends EntityLiving {
     }
 
     protected ItemStack headDrop = null; // CraftBukkit
+
     protected void dropDeathLoot(boolean flag, int i) {
         Item item = this.getLoot();
 
@@ -286,7 +288,7 @@ public abstract class EntityInsentient extends EntityLiving {
 
     public void a(NBTTagCompound nbttagcompound) {
         super.a(nbttagcompound);
-        
+
         // CraftBukkit start - If looting or persistence is false only use it if it was set after we started using it
         if (nbttagcompound.hasKeyOfType("CanPickUpLoot", 1)) {
             boolean data = nbttagcompound.getBoolean("CanPickUpLoot");
@@ -460,8 +462,7 @@ public abstract class EntityInsentient extends EntityLiving {
         this.D();
         this.world.methodProfiler.b();
         // Spigot Start
-        if ( this.fromMobSpawner )
-        {
+        if (this.fromMobSpawner) {
             // PaperSpigot start - Allow nerfed mobs to jump
             if (goalFloat != null) {
                 if (goalFloat.a()) goalFloat.e();
@@ -497,7 +498,8 @@ public abstract class EntityInsentient extends EntityLiving {
         this.world.methodProfiler.b();
     }
 
-    protected void E() {}
+    protected void E() {
+    }
 
     public int bQ() {
         return 40;
@@ -652,17 +654,17 @@ public abstract class EntityInsentient extends EntityLiving {
         if (itemstack.getItem() != Item.getItemOf(Blocks.PUMPKIN) && itemstack.getItem() != Items.SKULL) {
             if (itemstack.getItem() instanceof ItemArmor) {
                 switch (((ItemArmor) itemstack.getItem()).b) {
-                case 0:
-                    return 4;
+                    case 0:
+                        return 4;
 
-                case 1:
-                    return 3;
+                    case 1:
+                        return 3;
 
-                case 2:
-                    return 2;
+                    case 2:
+                        return 2;
 
-                case 3:
-                    return 1;
+                    case 3:
+                        return 1;
                 }
             }
 
@@ -674,60 +676,60 @@ public abstract class EntityInsentient extends EntityLiving {
 
     public static Item a(int i, int j) {
         switch (i) {
-        case 4:
-            if (j == 0) {
-                return Items.LEATHER_HELMET;
-            } else if (j == 1) {
-                return Items.GOLDEN_HELMET;
-            } else if (j == 2) {
-                return Items.CHAINMAIL_HELMET;
-            } else if (j == 3) {
-                return Items.IRON_HELMET;
-            } else if (j == 4) {
-                return Items.DIAMOND_HELMET;
-            }
+            case 4:
+                if (j == 0) {
+                    return Items.LEATHER_HELMET;
+                } else if (j == 1) {
+                    return Items.GOLDEN_HELMET;
+                } else if (j == 2) {
+                    return Items.CHAINMAIL_HELMET;
+                } else if (j == 3) {
+                    return Items.IRON_HELMET;
+                } else if (j == 4) {
+                    return Items.DIAMOND_HELMET;
+                }
 
-        case 3:
-            if (j == 0) {
-                return Items.LEATHER_CHESTPLATE;
-            } else if (j == 1) {
-                return Items.GOLDEN_CHESTPLATE;
-            } else if (j == 2) {
-                return Items.CHAINMAIL_CHESTPLATE;
-            } else if (j == 3) {
-                return Items.IRON_CHESTPLATE;
-            } else if (j == 4) {
-                return Items.DIAMOND_CHESTPLATE;
-            }
+            case 3:
+                if (j == 0) {
+                    return Items.LEATHER_CHESTPLATE;
+                } else if (j == 1) {
+                    return Items.GOLDEN_CHESTPLATE;
+                } else if (j == 2) {
+                    return Items.CHAINMAIL_CHESTPLATE;
+                } else if (j == 3) {
+                    return Items.IRON_CHESTPLATE;
+                } else if (j == 4) {
+                    return Items.DIAMOND_CHESTPLATE;
+                }
 
-        case 2:
-            if (j == 0) {
-                return Items.LEATHER_LEGGINGS;
-            } else if (j == 1) {
-                return Items.GOLDEN_LEGGINGS;
-            } else if (j == 2) {
-                return Items.CHAINMAIL_LEGGINGS;
-            } else if (j == 3) {
-                return Items.IRON_LEGGINGS;
-            } else if (j == 4) {
-                return Items.DIAMOND_LEGGINGS;
-            }
+            case 2:
+                if (j == 0) {
+                    return Items.LEATHER_LEGGINGS;
+                } else if (j == 1) {
+                    return Items.GOLDEN_LEGGINGS;
+                } else if (j == 2) {
+                    return Items.CHAINMAIL_LEGGINGS;
+                } else if (j == 3) {
+                    return Items.IRON_LEGGINGS;
+                } else if (j == 4) {
+                    return Items.DIAMOND_LEGGINGS;
+                }
 
-        case 1:
-            if (j == 0) {
-                return Items.LEATHER_BOOTS;
-            } else if (j == 1) {
-                return Items.GOLDEN_BOOTS;
-            } else if (j == 2) {
-                return Items.CHAINMAIL_BOOTS;
-            } else if (j == 3) {
-                return Items.IRON_BOOTS;
-            } else if (j == 4) {
-                return Items.DIAMOND_BOOTS;
-            }
+            case 1:
+                if (j == 0) {
+                    return Items.LEATHER_BOOTS;
+                } else if (j == 1) {
+                    return Items.GOLDEN_BOOTS;
+                } else if (j == 2) {
+                    return Items.CHAINMAIL_BOOTS;
+                } else if (j == 3) {
+                    return Items.IRON_BOOTS;
+                } else if (j == 4) {
+                    return Items.DIAMOND_BOOTS;
+                }
 
-        default:
-            return null;
+            default:
+                return null;
         }
     }
 
@@ -947,6 +949,7 @@ public abstract class EntityInsentient extends EntityLiving {
 
         ON_GROUND, IN_AIR, IN_WATER;
 
-        EnumEntityPositionType() {}
+        EnumEntityPositionType() {
+        }
     }
 }

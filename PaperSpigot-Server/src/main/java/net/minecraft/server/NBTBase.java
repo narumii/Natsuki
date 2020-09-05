@@ -8,7 +8,7 @@ public abstract class NBTBase {
 
     public DataInput dataInput = null;
 
-    public static final String[] a = new String[] { "END", "BYTE", "SHORT", "INT", "LONG", "FLOAT", "DOUBLE", "BYTE[]", "STRING", "LIST", "COMPOUND", "INT[]"};
+    public static final String[] a = new String[]{"END", "BYTE", "SHORT", "INT", "LONG", "FLOAT", "DOUBLE", "BYTE[]", "STRING", "LIST", "COMPOUND", "INT[]"};
 
     abstract void write(DataOutput dataoutput) throws IOException;
 
@@ -22,48 +22,49 @@ public abstract class NBTBase {
 
     public abstract byte getTypeId();
 
-    protected NBTBase() {}
+    protected NBTBase() {
+    }
 
     protected static NBTBase createTag(byte b0) {
         switch (b0) {
-        case 0:
-            return new NBTTagEnd();
+            case 0:
+                return new NBTTagEnd();
 
-        case 1:
-            return new NBTTagByte();
+            case 1:
+                return new NBTTagByte();
 
-        case 2:
-            return new NBTTagShort();
+            case 2:
+                return new NBTTagShort();
 
-        case 3:
-            return new NBTTagInt();
+            case 3:
+                return new NBTTagInt();
 
-        case 4:
-            return new NBTTagLong();
+            case 4:
+                return new NBTTagLong();
 
-        case 5:
-            return new NBTTagFloat();
+            case 5:
+                return new NBTTagFloat();
 
-        case 6:
-            return new NBTTagDouble();
+            case 6:
+                return new NBTTagDouble();
 
-        case 7:
-            return new NBTTagByteArray();
+            case 7:
+                return new NBTTagByteArray();
 
-        case 8:
-            return new NBTTagString();
+            case 8:
+                return new NBTTagString();
 
-        case 9:
-            return new NBTTagList();
+            case 9:
+                return new NBTTagList();
 
-        case 10:
-            return new NBTTagCompound();
+            case 10:
+                return new NBTTagCompound();
 
-        case 11:
-            return new NBTTagIntArray();
+            case 11:
+                return new NBTTagIntArray();
 
-        default:
-            return null;
+            default:
+                return null;
         }
     }
 
@@ -93,7 +94,8 @@ public abstract class NBTBase {
 
     public abstract static class NBTNumber extends NBTBase {
 
-        protected NBTNumber() {}
+        protected NBTNumber() {
+        }
 
         public abstract long c();
 

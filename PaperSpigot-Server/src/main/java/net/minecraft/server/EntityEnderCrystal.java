@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 // CraftBukkit end
@@ -32,9 +33,9 @@ public class EntityEnderCrystal extends Entity {
         this.lastZ = this.locZ;
         ++this.a;
         this.datawatcher.watch(8, Integer.valueOf(this.b));
-        int i =(int) Math.floor(this.locX);
-        int j =(int) Math.floor(this.locY);
-        int k =(int) Math.floor(this.locZ);
+        int i = (int) Math.floor(this.locX);
+        int j = (int) Math.floor(this.locY);
+        int k = (int) Math.floor(this.locZ);
 
         if (this.world.worldProvider instanceof WorldProviderTheEnd && this.world.getType(new BlockPosition(i, j, k)).getBlock() != Blocks.FIRE) {
             // CraftBukkit start
@@ -46,9 +47,11 @@ public class EntityEnderCrystal extends Entity {
 
     }
 
-    protected void b(NBTTagCompound nbttagcompound) {}
+    protected void b(NBTTagCompound nbttagcompound) {
+    }
 
-    protected void a(NBTTagCompound nbttagcompound) {}
+    protected void a(NBTTagCompound nbttagcompound) {
+    }
 
     public boolean ad() {
         return true;

@@ -94,12 +94,12 @@ public class Explosion {
         this.blocks.addAll(hashset);
         float f3 = this.size * 2.0F;
 
-        i =(int) Math.floor(this.posX - (double) f3 - 1.0D);
-        j =(int) Math.floor(this.posX + (double) f3 + 1.0D);
-        int l =(int) Math.floor(this.posY - (double) f3 - 1.0D);
-        int i1 =(int) Math.floor(this.posY + (double) f3 + 1.0D);
-        int j1 =(int) Math.floor(this.posZ - (double) f3 - 1.0D);
-        int k1 =(int) Math.floor(this.posZ + (double) f3 + 1.0D);
+        i = (int) Math.floor(this.posX - (double) f3 - 1.0D);
+        j = (int) Math.floor(this.posX + (double) f3 + 1.0D);
+        int l = (int) Math.floor(this.posY - (double) f3 - 1.0D);
+        int i1 = (int) Math.floor(this.posY + (double) f3 + 1.0D);
+        int j1 = (int) Math.floor(this.posZ - (double) f3 - 1.0D);
+        int k1 = (int) Math.floor(this.posZ + (double) f3 + 1.0D);
         // PaperSpigot start - Fix lag from explosions processing dead entities
         List list = this.world.a(this.source, new AxisAlignedBB(i, l, j1, j, i1, k1), new com.google.common.base.Predicate<Entity>() {
             @Override

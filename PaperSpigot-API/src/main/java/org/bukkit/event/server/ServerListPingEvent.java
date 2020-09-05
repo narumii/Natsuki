@@ -33,9 +33,9 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
      * This constructor is intended for implementations that provide the
      * {@link #iterator()} method, thus provided the {@link #getNumPlayers()}
      * count.
-     * 
-     * @param address the address of the pinger
-     * @param motd the message of the day
+     *
+     * @param address    the address of the pinger
+     * @param motd       the message of the day
      * @param maxPlayers the max number of players
      */
     protected ServerListPingEvent(final InetAddress address, final String motd, final int maxPlayers) {
@@ -111,11 +111,11 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
      * Sets the server-icon sent to the client.
      *
      * @param icon the icon to send to the client
-     * @throws IllegalArgumentException if the {@link CachedServerIcon} is not
-     *     created by the caller of this event; null may be accepted for some
-     *     implementations
+     * @throws IllegalArgumentException      if the {@link CachedServerIcon} is not
+     *                                       created by the caller of this event; null may be accepted for some
+     *                                       implementations
      * @throws UnsupportedOperationException if the caller of this event does
-     *     not support setting the server icon
+     *                                       not support setting the server icon
      */
     public void setServerIcon(CachedServerIcon icon) throws IllegalArgumentException, UnsupportedOperationException {
         throw new UnsupportedOperationException();
@@ -139,7 +139,7 @@ public class ServerListPingEvent extends ServerEvent implements Iterable<Player>
      * any new iterator.
      *
      * @throws UnsupportedOperationException if the caller of this event does
-     *     not support removing players
+     *                                       not support removing players
      */
     @Override
     public Iterator<Player> iterator() throws UnsupportedOperationException {

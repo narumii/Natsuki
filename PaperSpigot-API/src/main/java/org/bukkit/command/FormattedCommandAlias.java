@@ -115,7 +115,9 @@ public class FormattedCommandAlias extends Command {
     }
 
     @Override // Spigot
-    public String getTimingName() {return "Command Forwarder - " + super.getTimingName();} // Spigot
+    public String getTimingName() {
+        return "Command Forwarder - " + super.getTimingName();
+    } // Spigot
 
     private static boolean inRange(int i, int j, int k) {
         return i >= j && i <= k;

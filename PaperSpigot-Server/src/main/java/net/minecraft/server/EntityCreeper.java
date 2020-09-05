@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 // CraftBukkit end
@@ -24,7 +25,7 @@ public class EntityCreeper extends EntityMonster {
         this.goalSelector.a(6, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
         this.goalSelector.a(6, new PathfinderGoalRandomLookaround(this));
         this.targetSelector.a(1, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, true));
-        this.targetSelector.a(2, new PathfinderGoalHurtByTarget(this, false, new Class[0]));
+        this.targetSelector.a(2, new PathfinderGoalHurtByTarget(this, false));
     }
 
     protected void initAttributes() {
@@ -133,7 +134,7 @@ public class EntityCreeper extends EntityMonster {
             headDrop = new ItemStack(Items.SKULL, 1, 4);
             // CraftBukkit end
         }
-        
+
         super.die(damagesource); // CraftBukkit - Moved from above
     }
 

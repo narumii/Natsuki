@@ -15,7 +15,7 @@ public class TestForCommand extends VanillaCommand {
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
-        if (args.length < 1)  {
+        if (args.length < 1) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
@@ -26,11 +26,9 @@ public class TestForCommand extends VanillaCommand {
 
     // Spigot Start
     @Override
-    public java.util.List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException
-    {
-        if ( args.length == 0 )
-        {
-            return super.tabComplete( sender, alias, args );
+    public java.util.List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+        if (args.length == 0) {
+            return super.tabComplete(sender, alias, args);
         }
         return java.util.Collections.emptyList();
     }

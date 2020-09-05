@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class BlockBrewingStand extends BlockContainer {
 
-    public static final BlockStateBoolean[] HAS_BOTTLE = new BlockStateBoolean[] { BlockStateBoolean.of("has_bottle_0"), BlockStateBoolean.of("has_bottle_1"), BlockStateBoolean.of("has_bottle_2")};
+    public static final BlockStateBoolean[] HAS_BOTTLE = new BlockStateBoolean[]{BlockStateBoolean.of("has_bottle_0"), BlockStateBoolean.of("has_bottle_1"), BlockStateBoolean.of("has_bottle_2")};
 
     public BlockBrewingStand() {
         super(Material.ORE);
@@ -105,7 +105,7 @@ public class BlockBrewingStand extends BlockContainer {
         int i = 0;
 
         for (int j = 0; j < 3; ++j) {
-            if (((Boolean) iblockdata.get(BlockBrewingStand.HAS_BOTTLE[j])).booleanValue()) {
+            if (iblockdata.get(BlockBrewingStand.HAS_BOTTLE[j]).booleanValue()) {
                 i |= 1 << j;
             }
         }
@@ -114,6 +114,6 @@ public class BlockBrewingStand extends BlockContainer {
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockBrewingStand.HAS_BOTTLE[0], BlockBrewingStand.HAS_BOTTLE[1], BlockBrewingStand.HAS_BOTTLE[2]});
+        return new BlockStateList(this, BlockBrewingStand.HAS_BOTTLE[0], BlockBrewingStand.HAS_BOTTLE[1], BlockBrewingStand.HAS_BOTTLE[2]);
     }
 }

@@ -4,7 +4,7 @@ import org.bukkit.event.entity.EntityCombustEvent;
 
 public class ItemBow extends Item {
 
-    public static final String[] a = new String[] { "pulling_0", "pulling_1", "pulling_2"};
+    public static final String[] a = new String[]{"pulling_0", "pulling_1", "pulling_2"};
 
     public ItemBow() {
         this.maxStackSize = 1;

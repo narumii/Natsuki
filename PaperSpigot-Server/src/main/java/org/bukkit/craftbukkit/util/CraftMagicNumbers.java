@@ -22,7 +22,8 @@ import java.util.logging.Logger;
 public final class CraftMagicNumbers implements UnsafeValues {
     public static final UnsafeValues INSTANCE = new CraftMagicNumbers();
 
-    private CraftMagicNumbers() {}
+    private CraftMagicNumbers() {
+    }
 
     public static Block getBlock(org.bukkit.block.Block block) {
         return getBlock(block.getType());
@@ -86,13 +87,13 @@ public final class CraftMagicNumbers implements UnsafeValues {
 
     @Override
     public Material getMaterialFromInternalName(String name) {
-        return getMaterial((Item) Item.REGISTRY.get(new MinecraftKey(name)));
+        return getMaterial(Item.REGISTRY.get(new MinecraftKey(name)));
     }
 
     @Override
     public List<String> tabCompleteInternalMaterialName(String token, List<String> completions) {
         ArrayList<String> results = Lists.newArrayList();
-        for (MinecraftKey key : (Set<MinecraftKey>)Item.REGISTRY.keySet()) {
+        for (MinecraftKey key : Item.REGISTRY.keySet()) {
             results.add(key.toString());
         }
         return StringUtil.copyPartialMatches(token, results, completions);
@@ -103,7 +104,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
         net.minecraft.server.ItemStack nmsStack = CraftItemStack.asNMSCopy(stack);
 
         try {
-            nmsStack.setTag((NBTTagCompound) MojangsonParser.parse(arguments));
+            nmsStack.setTag(MojangsonParser.parse(arguments));
         } catch (MojangsonParseException ex) {
             Logger.getLogger(CraftMagicNumbers.class.getName()).log(Level.SEVERE, null, ex);
         }

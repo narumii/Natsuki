@@ -32,12 +32,11 @@ public class PluginsCommand extends BukkitCommand {
             if (p.isEnabled()) {
                 Bukkit.getServer().getPluginManager().disablePlugin(p);
                 sender.sendMessage(" §8» §7Disabled plugin: §d" + plugin);
-            }
-            else {
+            } else {
                 Bukkit.getServer().getPluginManager().enablePlugin(p);
                 sender.sendMessage(" §8» §7Enabled plugin: §d" + plugin);
             }
-        }else {
+        } else {
             if (sender instanceof ConsoleCommandSender)
                 sender.sendMessage(getConsolePluginList());
             else
@@ -51,7 +50,8 @@ public class PluginsCommand extends BukkitCommand {
         int enabled = 0, disbaled = 0, offset = 1;
         final TextComponent[] textComponents = new TextComponent[plugins.length + 1];
         for (final Plugin plugin : plugins) {
-            if (plugin.isEnabled()) enabled++; else disbaled++;
+            if (plugin.isEnabled()) enabled++;
+            else disbaled++;
             final ChatColor color = plugin.isEnabled() ? ChatColor.GREEN : ChatColor.RED;
             textComponents[offset] = new TextComponent(color + plugin.getDescription().getName() + ChatColor.WHITE + ", ");
             textComponents[offset].setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GRAY + plugin.getDescription().getDescription()).create()));
@@ -62,7 +62,8 @@ public class PluginsCommand extends BukkitCommand {
             textComponents[plugins.length].setText(textComponents[plugins.length].getText().replace(",", ""));
             textComponents[0] = new TextComponent(" §8» §7Plugins: §8(§a" + enabled + "§8/§c" + disbaled + "§8/§7" + plugins.length + "§8)§7: ");
         }
-        if (plugins.length == 0) return new TextComponent[]{new TextComponent(" §8» §7Server doesn't contains any plugins.")};
+        if (plugins.length == 0)
+            return new TextComponent[]{new TextComponent(" §8» §7Server doesn't contains any plugins.")};
         else return textComponents;
     }
 
@@ -72,7 +73,8 @@ public class PluginsCommand extends BukkitCommand {
         int enabled = 0, disbaled = 0;
 
         for (final Plugin plugin : plugins) {
-            if (plugin.isEnabled()) enabled++; else disbaled++;
+            if (plugin.isEnabled()) enabled++;
+            else disbaled++;
 
             if (stringBuilder.length() > 0) {
                 stringBuilder.append(ChatColor.WHITE);
@@ -84,7 +86,8 @@ public class PluginsCommand extends BukkitCommand {
         }
 
         if (plugins.length == 0) return " §8» §7Server doesn't contains any plugins.";
-        else return " §8» §7Plugins: §8(§a" + enabled + "§8/§c" + disbaled + "§8/§7" + plugins.length + "§8)§7: " + stringBuilder.toString();
+        else
+            return " §8» §7Plugins: §8(§a" + enabled + "§8/§c" + disbaled + "§8/§7" + plugins.length + "§8)§7: " + stringBuilder.toString();
     }
 
     /*private String getPluginList() {
@@ -106,8 +109,7 @@ public class PluginsCommand extends BukkitCommand {
 
     // Spigot Start
     @Override
-    public java.util.List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException
-    {
+    public java.util.List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
         return java.util.Collections.emptyList();
     }
     // Spigot End

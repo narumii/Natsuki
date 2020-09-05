@@ -317,7 +317,7 @@ public abstract class EntityHuman extends EntityLiving {
                 return;
             }
             // CraftBukkit end
-            
+
             ItemStack itemstack = this.g.b(this.world, this);
 
             if (itemstack != this.g || itemstack != null && itemstack.count != i) {
@@ -402,7 +402,7 @@ public abstract class EntityHuman extends EntityLiving {
 
         this.k((float) attributeinstance.getValue());
         float f = (float) Math.sqrt(this.motX * this.motX + this.motZ * this.motZ);
-        float f1 = (float) ( org.bukkit.craftbukkit.TrigMath.atan(-this.motY * 0.20000000298023224D) * 15.0D); // CraftBukkit
+        float f1 = (float) (org.bukkit.craftbukkit.TrigMath.atan(-this.motY * 0.20000000298023224D) * 15.0D); // CraftBukkit
 
         if (f > 0.1F) {
             f = 0.1F;
@@ -430,13 +430,13 @@ public abstract class EntityHuman extends EntityLiving {
             List list = this.world.getEntities(this, axisalignedbb);
 
             if (this.ae()) { // Spigot: Add this.ae() condition (second !this.isDead near bottom of EntityLiving)
-            for (int i = 0; i < list.size(); ++i) {
-                Entity entity = (Entity) list.get(i);
+                for (int i = 0; i < list.size(); ++i) {
+                    Entity entity = (Entity) list.get(i);
 
-                if (!entity.dead) {
-                    this.d(entity);
+                    if (!entity.dead) {
+                        this.d(entity);
+                    }
                 }
-            }
             } // Spigot 
         }
 
@@ -648,21 +648,21 @@ public abstract class EntityHuman extends EntityLiving {
             float f1 = 1.0F;
 
             switch (this.getEffect(MobEffectList.SLOWER_DIG).getAmplifier()) {
-            case 0:
-                f1 = 0.3F;
-                break;
+                case 0:
+                    f1 = 0.3F;
+                    break;
 
-            case 1:
-                f1 = 0.09F;
-                break;
+                case 1:
+                    f1 = 0.09F;
+                    break;
 
-            case 2:
-                f1 = 0.0027F;
-                break;
+                case 2:
+                    f1 = 0.0027F;
+                    break;
 
-            case 3:
-            default:
-                f1 = 8.1E-4F;
+                case 3:
+                default:
+                    f1 = 8.1E-4F;
             }
 
             f *= f1;
@@ -883,19 +883,26 @@ public abstract class EntityHuman extends EntityLiving {
         return false; // CraftBukkit
     }
 
-    public void openSign(TileEntitySign tileentitysign) {}
+    public void openSign(TileEntitySign tileentitysign) {
+    }
 
-    public void a(CommandBlockListenerAbstract commandblocklistenerabstract) {}
+    public void a(CommandBlockListenerAbstract commandblocklistenerabstract) {
+    }
 
-    public void openTrade(IMerchant imerchant) {}
+    public void openTrade(IMerchant imerchant) {
+    }
 
-    public void openContainer(IInventory iinventory) {}
+    public void openContainer(IInventory iinventory) {
+    }
 
-    public void openHorseInventory(EntityHorse entityhorse, IInventory iinventory) {}
+    public void openHorseInventory(EntityHorse entityhorse, IInventory iinventory) {
+    }
 
-    public void openTileEntity(ITileEntityContainer itileentitycontainer) {}
+    public void openTileEntity(ITileEntityContainer itileentitycontainer) {
+    }
 
-    public void openBook(ItemStack itemstack) {}
+    public void openBook(ItemStack itemstack) {
+    }
 
     public boolean u(Entity entity) {
         if (this.isSpectator()) {
@@ -1010,7 +1017,7 @@ public abstract class EntityHuman extends EntityLiving {
                             // CraftBukkit start - Add Velocity Event
                             boolean cancelled = false;
                             Player player = (Player) entity.getBukkitEntity();
-                            org.bukkit.util.Vector velocity = new Vector( d0, d1, d2 );
+                            org.bukkit.util.Vector velocity = new Vector(d0, d1, d2);
 
                             PlayerVelocityEvent event = new PlayerVelocityEvent(player, velocity.clone());
                             world.getServer().getPluginManager().callEvent(event);
@@ -1022,7 +1029,7 @@ public abstract class EntityHuman extends EntityLiving {
                             }
 
                             if (!cancelled) {
-                                ( (EntityPlayer) entity ).playerConnection.sendPacket( new PacketPlayOutEntityVelocity( entity ) );
+                                ((EntityPlayer) entity).playerConnection.sendPacket(new PacketPlayOutEntityVelocity(entity));
                                 entity.velocityChanged = false;
                                 entity.motX = d0;
                                 entity.motY = d1;
@@ -1092,9 +1099,11 @@ public abstract class EntityHuman extends EntityLiving {
         }
     }
 
-    public void b(Entity entity) {}
+    public void b(Entity entity) {
+    }
 
-    public void c(Entity entity) {}
+    public void c(Entity entity) {
+    }
 
     public void die() {
         super.die();
@@ -1165,20 +1174,20 @@ public abstract class EntityHuman extends EntityLiving {
             float f1 = 0.5F;
 
             switch (EntityHuman.SyntheticClass_1.a[enumdirection.ordinal()]) {
-            case 1:
-                f1 = 0.9F;
-                break;
+                case 1:
+                    f1 = 0.9F;
+                    break;
 
-            case 2:
-                f1 = 0.1F;
-                break;
+                case 2:
+                    f1 = 0.1F;
+                    break;
 
-            case 3:
-                f = 0.1F;
-                break;
+                case 3:
+                    f = 0.1F;
+                    break;
 
-            case 4:
-                f = 0.9F;
+                case 4:
+                    f = 0.9F;
             }
 
             this.a(enumdirection);
@@ -1202,20 +1211,20 @@ public abstract class EntityHuman extends EntityLiving {
         this.by = 0.0F;
         this.bz = 0.0F;
         switch (EntityHuman.SyntheticClass_1.a[enumdirection.ordinal()]) {
-        case 1:
-            this.bz = -1.8F;
-            break;
+            case 1:
+                this.bz = -1.8F;
+                break;
 
-        case 2:
-            this.bz = 1.8F;
-            break;
+            case 2:
+                this.bz = 1.8F;
+                break;
 
-        case 3:
-            this.by = 1.8F;
-            break;
+            case 3:
+                this.by = 1.8F;
+                break;
 
-        case 4:
-            this.by = -1.8F;
+            case 4:
+                this.by = -1.8F;
         }
 
     }
@@ -1304,7 +1313,8 @@ public abstract class EntityHuman extends EntityLiving {
         return this.sleeping && this.sleepTicks >= 100;
     }
 
-    public void b(IChatBaseComponent ichatbasecomponent) {}
+    public void b(IChatBaseComponent ichatbasecomponent) {
+    }
 
     public BlockPosition getBed() {
         return this.c;
@@ -1331,9 +1341,11 @@ public abstract class EntityHuman extends EntityLiving {
         this.a(statistic, 1);
     }
 
-    public void a(Statistic statistic, int i) {}
+    public void a(Statistic statistic, int i) {
+    }
 
-    public void a(Statistic statistic) {}
+    public void a(Statistic statistic) {
+    }
 
     public void bF() {
         super.bF();
@@ -1402,7 +1414,7 @@ public abstract class EntityHuman extends EntityLiving {
                             if (this.isSneaking()) {
                                 this.a(StatisticList.j, i);
                             }
-    
+
                             this.applyExhaustion(0.01F * (float) i * 0.01F);
                         }
                     }
@@ -1426,7 +1438,7 @@ public abstract class EntityHuman extends EntityLiving {
                     this.a(StatisticList.q, i);
                     if (this.e == null) {
                         this.e = new BlockPosition(this);
-                    } else if (this.e.c(MathHelper.floor(this.locX),(int) Math.floor(this.locY),(int) Math.floor(this.locZ)) >= 1000000.0D) {
+                    } else if (this.e.c(MathHelper.floor(this.locX), (int) Math.floor(this.locY), (int) Math.floor(this.locZ)) >= 1000000.0D) {
                         this.b(AchievementList.q);
                     }
                 } else if (this.vehicle instanceof EntityBoat) {
@@ -1631,9 +1643,11 @@ public abstract class EntityHuman extends EntityLiving {
         return !this.abilities.isFlying;
     }
 
-    public void updateAbilities() {}
+    public void updateAbilities() {
+    }
 
-    public void a(WorldSettings.EnumGamemode worldsettings_enumgamemode) {}
+    public void a(WorldSettings.EnumGamemode worldsettings_enumgamemode) {
+    }
 
     public String getName() {
         return this.bH.getName();
@@ -1803,7 +1817,8 @@ public abstract class EntityHuman extends EntityLiving {
 
         OK, NOT_POSSIBLE_HERE, NOT_POSSIBLE_NOW, TOO_FAR_AWAY, OTHER_PROBLEM, NOT_SAFE;
 
-        EnumBedResult() {}
+        EnumBedResult() {
+        }
     }
 
     public enum EnumChatVisibility {

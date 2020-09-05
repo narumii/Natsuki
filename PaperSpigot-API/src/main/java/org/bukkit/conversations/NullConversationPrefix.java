@@ -4,7 +4,7 @@ package org.bukkit.conversations;
  * NullConversationPrefix is a {@link ConversationPrefix} implementation that
  * displays nothing in front of conversation output.
  */
-public class NullConversationPrefix implements ConversationPrefix{
+public class NullConversationPrefix implements ConversationPrefix {
 
     /**
      * Prepends each conversation message with an empty string.

@@ -52,7 +52,7 @@ public class InventorySubcontainer implements IInventory {
 
     public InventorySubcontainer(String s, boolean flag, int i, org.bukkit.inventory.InventoryHolder owner) { // Added argument
         this.bukkitOwner = owner;
-    // CraftBukkit end
+        // CraftBukkit end
         this.a = s;
         this.e = flag;
         this.b = i;
@@ -170,7 +170,7 @@ public class InventorySubcontainer implements IInventory {
     }
 
     public IChatBaseComponent getScoreboardDisplayName() {
-        return (IChatBaseComponent) (this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatMessage(this.getName(), new Object[0]));
+        return this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatMessage(this.getName(), new Object[0]);
     }
 
     public int getMaxStackSize() {
@@ -180,7 +180,7 @@ public class InventorySubcontainer implements IInventory {
     public void update() {
         if (this.d != null) {
             for (int i = 0; i < this.d.size(); ++i) {
-                ((IInventoryListener) this.d.get(i)).a(this);
+                this.d.get(i).a(this);
             }
         }
 
@@ -190,9 +190,11 @@ public class InventorySubcontainer implements IInventory {
         return true;
     }
 
-    public void startOpen(EntityHuman entityhuman) {}
+    public void startOpen(EntityHuman entityhuman) {
+    }
 
-    public void closeContainer(EntityHuman entityhuman) {}
+    public void closeContainer(EntityHuman entityhuman) {
+    }
 
     public boolean b(int i, ItemStack itemstack) {
         return true;
@@ -202,7 +204,8 @@ public class InventorySubcontainer implements IInventory {
         return 0;
     }
 
-    public void b(int i, int j) {}
+    public void b(int i, int j) {
+    }
 
     public int g() {
         return 0;

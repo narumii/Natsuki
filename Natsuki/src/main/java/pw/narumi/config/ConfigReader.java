@@ -1,12 +1,10 @@
 package pw.narumi.config;
 
-import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import pw.narumi.Natsuki;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class ConfigReader {
 

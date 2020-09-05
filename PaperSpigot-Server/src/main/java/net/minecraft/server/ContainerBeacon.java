@@ -14,7 +14,7 @@ public class ContainerBeacon extends Container {
     public ContainerBeacon(IInventory iinventory, IInventory iinventory1) {
         player = (PlayerInventory) iinventory; // CraftBukkit - TODO: check this
         this.beacon = iinventory1;
-        this.a((Slot) (this.f = new ContainerBeacon.SlotBeacon(iinventory1, 0, 136, 110)));
+        this.a(this.f = new SlotBeacon(iinventory1, 0, 136, 110));
         byte b0 = 36;
         short short0 = 137;
 
@@ -60,7 +60,7 @@ public class ContainerBeacon extends Container {
 
     public ItemStack b(EntityHuman entityhuman, int i) {
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.c.get(i);
+        Slot slot = this.c.get(i);
 
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
@@ -89,7 +89,7 @@ public class ContainerBeacon extends Container {
             }
 
             if (itemstack1.count == 0) {
-                slot.set((ItemStack) null);
+                slot.set(null);
             } else {
                 slot.f();
             }
@@ -111,7 +111,7 @@ public class ContainerBeacon extends Container {
         }
 
         public boolean isAllowed(ItemStack itemstack) {
-            return itemstack == null ? false : itemstack.getItem() == Items.EMERALD || itemstack.getItem() == Items.DIAMOND || itemstack.getItem() == Items.GOLD_INGOT || itemstack.getItem() == Items.IRON_INGOT;
+            return itemstack != null && (itemstack.getItem() == Items.EMERALD || itemstack.getItem() == Items.DIAMOND || itemstack.getItem() == Items.GOLD_INGOT || itemstack.getItem() == Items.IRON_INGOT);
         }
 
         public int getMaxStackSize() {

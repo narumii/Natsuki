@@ -9,7 +9,8 @@ public class NBTTagByteArray extends NBTBase {
 
     private byte[] data;
 
-    NBTTagByteArray() {}
+    NBTTagByteArray() {
+    }
 
     public NBTTagByteArray(byte[] abyte) {
         this.data = abyte;
@@ -23,7 +24,7 @@ public class NBTTagByteArray extends NBTBase {
     void load(DataInput datainput, int i, NBTReadLimiter nbtreadlimiter) throws IOException {
         nbtreadlimiter.a(192L);
         int j = datainput.readInt();
-       com.google.common.base.Preconditions.checkArgument( j < 1 << 24);
+        com.google.common.base.Preconditions.checkArgument(j < 1 << 24);
 
         nbtreadlimiter.a((long) (8 * j));
         this.data = new byte[j];
@@ -46,7 +47,7 @@ public class NBTTagByteArray extends NBTBase {
     }
 
     public boolean equals(Object object) {
-        return super.equals(object) ? Arrays.equals(this.data, ((NBTTagByteArray) object).data) : false;
+        return super.equals(object) && Arrays.equals(this.data, ((NBTTagByteArray) object).data);
     }
 
     public int hashCode() {

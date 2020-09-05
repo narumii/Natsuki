@@ -92,7 +92,8 @@ final class CraftObjective extends CraftScoreboardComponent implements Objective
 
     public Score getScore(String entry) throws IllegalArgumentException, IllegalStateException {
         Validate.notNull(entry, "Entry cannot be null");
-        if (entry.length() > 40) throw new IllegalArgumentException("Entry cannot be longer than 40 characters!"); // Spigot
+        if (entry.length() > 40)
+            throw new IllegalArgumentException("Entry cannot be longer than 40 characters!"); // Spigot
         CraftScoreboard scoreboard = checkState();
 
         return new CraftScore(this, entry);
@@ -110,7 +111,7 @@ final class CraftObjective extends CraftScoreboardComponent implements Objective
         if (getScoreboard().board.getObjective(objective.getName()) == null) {
             throw new IllegalStateException("Unregistered scoreboard component");
         }
-        
+
         return getScoreboard();
     }
 

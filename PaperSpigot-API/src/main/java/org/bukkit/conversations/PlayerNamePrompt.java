@@ -7,7 +7,7 @@ import org.bukkit.plugin.Plugin;
  * PlayerNamePrompt is the base class for any prompt that requires the player
  * to enter another player's name.
  */
-public abstract class PlayerNamePrompt extends ValidatingPrompt{
+public abstract class PlayerNamePrompt extends ValidatingPrompt {
     private Plugin plugin;
 
     public PlayerNamePrompt(Plugin plugin) {
@@ -18,7 +18,7 @@ public abstract class PlayerNamePrompt extends ValidatingPrompt{
     @Override
     protected boolean isInputValid(ConversationContext context, String input) {
         return plugin.getServer().getPlayer(input) != null;
-        
+
     }
 
     @Override
@@ -31,7 +31,7 @@ public abstract class PlayerNamePrompt extends ValidatingPrompt{
      * response.
      *
      * @param context Context information about the conversation.
-     * @param input The user's player name response.
+     * @param input   The user's player name response.
      * @return The next {@link Prompt} in the prompt graph.
      */
     protected abstract Prompt acceptValidatedInput(ConversationContext context, Player input);

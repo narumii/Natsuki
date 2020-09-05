@@ -14,7 +14,7 @@ public class BlockCake extends Block {
 
     public void updateShape(IBlockAccess iblockaccess, BlockPosition blockposition) {
         float f = 0.0625F;
-        float f1 = (float) (1 + ((Integer) iblockaccess.getType(blockposition).get(BlockCake.BITES)).intValue() * 2) / 16.0F;
+        float f1 = (float) (1 + iblockaccess.getType(blockposition).get(BlockCake.BITES).intValue() * 2) / 16.0F;
         float f2 = 0.5F;
 
         this.a(f1, 0.0F, f, 1.0F - f, f2, 1.0F - f);
@@ -29,7 +29,7 @@ public class BlockCake extends Block {
 
     public AxisAlignedBB a(World world, BlockPosition blockposition, IBlockData iblockdata) {
         float f = 0.0625F;
-        float f1 = (float) (1 + ((Integer) iblockdata.get(BlockCake.BITES)).intValue() * 2) / 16.0F;
+        float f1 = (float) (1 + iblockdata.get(BlockCake.BITES).intValue() * 2) / 16.0F;
         float f2 = 0.5F;
 
         return new AxisAlignedBB((double) ((float) blockposition.getX() + f1), (double) blockposition.getY(), (double) ((float) blockposition.getZ() + f), (double) ((float) (blockposition.getX() + 1) - f), (double) ((float) blockposition.getY() + f2), (double) ((float) (blockposition.getZ() + 1) - f));
@@ -67,7 +67,7 @@ public class BlockCake extends Block {
 
             ((EntityPlayer) entityhuman).playerConnection.sendPacket(new PacketPlayOutUpdateHealth(((EntityPlayer) entityhuman).getBukkitEntity().getScaledHealth(), entityhuman.getFoodData().foodLevel, entityhuman.getFoodData().saturationLevel));
             // CraftBukkit end
-            int i = ((Integer) iblockdata.get(BlockCake.BITES)).intValue();
+            int i = iblockdata.get(BlockCake.BITES).intValue();
 
             if (i < 6) {
                 world.setTypeAndData(blockposition, iblockdata.set(BlockCake.BITES, Integer.valueOf(i + 1)), 3);
@@ -79,7 +79,7 @@ public class BlockCake extends Block {
     }
 
     public boolean canPlace(World world, BlockPosition blockposition) {
-        return super.canPlace(world, blockposition) ? this.e(world, blockposition) : false;
+        return super.canPlace(world, blockposition) && this.e(world, blockposition);
     }
 
     public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {
@@ -106,15 +106,15 @@ public class BlockCake extends Block {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockCake.BITES)).intValue();
+        return iblockdata.get(BlockCake.BITES).intValue();
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockCake.BITES});
+        return new BlockStateList(this, BlockCake.BITES);
     }
 
     public int l(World world, BlockPosition blockposition) {
-        return (7 - ((Integer) world.getType(blockposition).get(BlockCake.BITES)).intValue()) * 2;
+        return (7 - world.getType(blockposition).get(BlockCake.BITES).intValue()) * 2;
     }
 
     public boolean isComplexRedstone() {

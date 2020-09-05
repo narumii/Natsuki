@@ -35,8 +35,9 @@ import java.nio.charset.Charset;
  * ConsoleAppender appends log events to <code>System.out</code> or
  * <code>System.err</code> using a layout specified by the user. The
  * default target is <code>System.out</code>.
+ *
  * @doubt accessing System.out or .err as a byte stream instead of a writer
- *    bypasses the JVM's knowledge of the proper encoding. (RG) Encoding
+ * bypasses the JVM's knowledge of the proper encoding. (RG) Encoding
  * is handled within the Layout. Typically, a Layout will generate a String
  * and then call getBytes which may use a configured encoding or the system
  * default. OTOH, a Writer cannot print byte streams.
@@ -51,9 +52,13 @@ public final class ConsoleAppender extends AbstractOutputStreamAppender {
      * Enumeration of console destinations.
      */
     public enum Target {
-        /** Standard output. */
+        /**
+         * Standard output.
+         */
         SYSTEM_OUT,
-        /** Standard error output. */
+        /**
+         * Standard error output.
+         */
         SYSTEM_ERR
     }
 
@@ -65,11 +70,12 @@ public final class ConsoleAppender extends AbstractOutputStreamAppender {
 
     /**
      * Create a Console Appender.
+     *
      * @param layout The layout to use (required).
      * @param filter The Filter or null.
-     * @param t The target ("SYSTEM_OUT" or "SYSTEM_ERR"). The default is "SYSTEM_OUT".
+     * @param t      The target ("SYSTEM_OUT" or "SYSTEM_ERR"). The default is "SYSTEM_OUT".
      * @param follow If true will follow changes to the underlying output stream.
-     * @param name The name of the Appender (required).
+     * @param name   The name of the Appender (required).
      * @param ignore If {@code "true"} (default) exceptions encountered when appending events are logged; otherwise
      *               they are propagated to the caller.
      * @return The ConsoleAppender.
@@ -210,8 +216,9 @@ public final class ConsoleAppender extends AbstractOutputStreamAppender {
 
         /**
          * Constructor.
-         * @param os The OutputStream.
-         * @param type The name of the target.
+         *
+         * @param os     The OutputStream.
+         * @param type   The name of the target.
          * @param layout A Serializable layout
          */
         public FactoryData(final OutputStream os, final String type, final Layout<? extends Serializable> layout) {
@@ -228,6 +235,7 @@ public final class ConsoleAppender extends AbstractOutputStreamAppender {
 
         /**
          * Create an OutputStreamManager.
+         *
          * @param name The name of the entity to manage.
          * @param data The data required to create the entity.
          * @return The OutputStreamManager

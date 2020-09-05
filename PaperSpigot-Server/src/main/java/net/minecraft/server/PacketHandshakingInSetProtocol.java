@@ -9,7 +9,8 @@ public class PacketHandshakingInSetProtocol implements Packet<PacketHandshakingI
     public int port;
     private EnumProtocol d;
 
-    public PacketHandshakingInSetProtocol() {}
+    public PacketHandshakingInSetProtocol() {
+    }
 
     public void a(PacketDataSerializer packetdataserializer) throws IOException {
         this.a = packetdataserializer.e();

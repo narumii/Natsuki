@@ -31,13 +31,11 @@ public class TileEntitySkull extends TileEntity {
                     .build()
     );
     public static final LoadingCache<String, GameProfile> skinCache = CacheBuilder.newBuilder()
-            .maximumSize( 5000 )
-            .expireAfterAccess( 60, TimeUnit.MINUTES )
-            .build( new CacheLoader<String, GameProfile>()
-            {
+            .maximumSize(5000)
+            .expireAfterAccess(60, TimeUnit.MINUTES)
+            .build(new CacheLoader<String, GameProfile>() {
                 @Override
-                public GameProfile load(String key) throws Exception
-                {
+                public GameProfile load(String key) throws Exception {
                     final GameProfile[] profiles = new GameProfile[1];
                     ProfileLookupCallback gameProfileLookup = new ProfileLookupCallback() {
 
@@ -52,33 +50,32 @@ public class TileEntitySkull extends TileEntity {
                         }
                     };
 
-                    MinecraftServer.getServer().getGameProfileRepository().findProfilesByNames(new String[] { key }, Agent.MINECRAFT, gameProfileLookup);
+                    MinecraftServer.getServer().getGameProfileRepository().findProfilesByNames(new String[]{key}, Agent.MINECRAFT, gameProfileLookup);
 
-                    GameProfile profile = profiles[ 0 ];
+                    GameProfile profile = profiles[0];
                     if (profile == null) {
                         UUID uuid = EntityHuman.a(new GameProfile(null, key));
                         profile = new GameProfile(uuid, key);
 
                         gameProfileLookup.onProfileLookupSucceeded(profile);
-                    } else
-                    {
+                    } else {
 
-                        Property property = Iterables.getFirst( profile.getProperties().get( "textures" ), null );
+                        Property property = Iterables.getFirst(profile.getProperties().get("textures"), null);
 
-                        if ( property == null )
-                        {
-                            profile = MinecraftServer.getServer().aD().fillProfileProperties( profile, true );
+                        if (property == null) {
+                            profile = MinecraftServer.getServer().aD().fillProfileProperties(profile, true);
                         }
                     }
 
 
                     return profile;
                 }
-            } );
-    
+            });
+
     // Spigot end
 
-    public TileEntitySkull() {}
+    public TileEntitySkull() {
+    }
 
     public void b(NBTTagCompound nbttagcompound) {
         super.b(nbttagcompound);
@@ -104,7 +101,7 @@ public class TileEntitySkull extends TileEntity {
                 String s = nbttagcompound.getString("ExtraType");
 
                 if (!UtilColor.b(s)) {
-                    this.g = new GameProfile((UUID) null, s);
+                    this.g = new GameProfile(null, s);
                     this.e();
                 }
             }
@@ -137,7 +134,7 @@ public class TileEntitySkull extends TileEntity {
     private void e() {
         // Spigot start
         GameProfile profile = this.g;
-        setSkullType( 0 ); // Work around client bug
+        setSkullType(0); // Work around client bug
         b(profile, new Predicate<GameProfile>() {
 
             @Override
@@ -150,7 +147,7 @@ public class TileEntitySkull extends TileEntity {
                 }
                 return false;
             }
-        }); 
+        });
         // Spigot end
     }
 
@@ -169,7 +166,7 @@ public class TileEntitySkull extends TileEntity {
                     executor.execute(new Runnable() {
                         @Override
                         public void run() {
-                            final GameProfile profile = skinCache.getUnchecked(gameprofile.getName().toLowerCase());                            
+                            final GameProfile profile = skinCache.getUnchecked(gameprofile.getName().toLowerCase());
                             MinecraftServer.getServer().processQueue.add(new Runnable() {
                                 @Override
                                 public void run() {

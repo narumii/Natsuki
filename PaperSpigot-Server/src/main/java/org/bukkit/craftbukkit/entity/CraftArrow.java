@@ -32,7 +32,7 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
     }
 
     public ProjectileSource getShooter() {
-        return getHandle().projectileSource;   
+        return getHandle().projectileSource;
     }
 
     public void setShooter(ProjectileSource shooter) {
@@ -72,23 +72,19 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
     }
 
     // Spigot start
-    private final Arrow.Spigot spigot = new Arrow.Spigot()
-    {
+    private final Arrow.Spigot spigot = new Arrow.Spigot() {
         @Override
-        public double getDamage()
-        {
+        public double getDamage() {
             return getHandle().j();
         }
 
         @Override
-        public void setDamage(double damage)
-        {
-            getHandle().b( damage );
+        public void setDamage(double damage) {
+            getHandle().b(damage);
         }
     };
 
-    public Arrow.Spigot spigot()
-    {
+    public Arrow.Spigot spigot() {
         return spigot;
     }
     // Spigot end

@@ -63,7 +63,7 @@ public class ScoreboardServer extends Scoreboard {
         if (super.addPlayerToTeam(s, s1)) {
             ScoreboardTeam scoreboardteam = this.getTeam(s1);
 
-            this.sendAll(new PacketPlayOutScoreboardTeam(scoreboardteam, Arrays.asList(new String[] { s}), 3));
+            this.sendAll(new PacketPlayOutScoreboardTeam(scoreboardteam, Arrays.asList(s), 3));
             this.b();
             return true;
         } else {
@@ -73,7 +73,7 @@ public class ScoreboardServer extends Scoreboard {
 
     public void removePlayerFromTeam(String s, ScoreboardTeam scoreboardteam) {
         super.removePlayerFromTeam(s, scoreboardteam);
-        this.sendAll(new PacketPlayOutScoreboardTeam(scoreboardteam, Arrays.asList(new String[] { s}), 4));
+        this.sendAll(new PacketPlayOutScoreboardTeam(scoreboardteam, Arrays.asList(s), 4));
         this.b();
     }
 
@@ -157,7 +157,8 @@ public class ScoreboardServer extends Scoreboard {
 
         while (iterator.hasNext()) {
             EntityPlayer entityplayer = (EntityPlayer) iterator.next();
-            if (entityplayer.getBukkitEntity().getScoreboard().getHandle() != this) continue; // CraftBukkit - Only players on this board
+            if (entityplayer.getBukkitEntity().getScoreboard().getHandle() != this)
+                continue; // CraftBukkit - Only players on this board
             Iterator iterator1 = list.iterator();
 
             while (iterator1.hasNext()) {
@@ -190,7 +191,8 @@ public class ScoreboardServer extends Scoreboard {
 
         while (iterator.hasNext()) {
             EntityPlayer entityplayer = (EntityPlayer) iterator.next();
-            if (entityplayer.getBukkitEntity().getScoreboard().getHandle() != this) continue; // CraftBukkit - Only players on this board
+            if (entityplayer.getBukkitEntity().getScoreboard().getHandle() != this)
+                continue; // CraftBukkit - Only players on this board
             Iterator iterator1 = list.iterator();
 
             while (iterator1.hasNext()) {
@@ -217,7 +219,7 @@ public class ScoreboardServer extends Scoreboard {
 
     // CraftBukkit start - Send to players
     private void sendAll(Packet packet) {
-        for (EntityPlayer entityplayer : (List<EntityPlayer>) this.a.getPlayerList().players) {
+        for (EntityPlayer entityplayer : this.a.getPlayerList().players) {
             if (entityplayer.getBukkitEntity().getScoreboard().getHandle() == this) {
                 entityplayer.playerConnection.sendPacket(packet);
             }

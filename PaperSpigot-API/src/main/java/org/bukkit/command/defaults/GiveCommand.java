@@ -20,6 +20,7 @@ import java.util.List;
 @Deprecated
 public class GiveCommand extends VanillaCommand {
     private static List<String> materials;
+
     static {
         ArrayList<String> materialList = new ArrayList<String>();
         for (Material material : Material.values()) {
@@ -63,7 +64,8 @@ public class GiveCommand extends VanillaCommand {
                     if (args.length >= 4) {
                         try {
                             data = Short.parseShort(args[3]);
-                        } catch (NumberFormatException ex) {}
+                        } catch (NumberFormatException ex) {
+                        }
                     }
                 }
 
@@ -113,7 +115,7 @@ public class GiveCommand extends VanillaCommand {
                 i = -1 - i;
             }
 
-            for ( ; i < size; i++) {
+            for (; i < size; i++) {
                 String material = materials.get(i);
                 if (StringUtil.startsWithIgnoreCase(material, arg)) {
                     completion.add(material);

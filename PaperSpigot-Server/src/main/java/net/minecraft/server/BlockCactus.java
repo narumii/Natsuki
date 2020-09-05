@@ -23,11 +23,10 @@ public class BlockCactus extends Block {
             int i;
 
             for (i = 1; world.getType(blockposition.down(i)).getBlock() == this; ++i) {
-                ;
             }
 
             if (i < world.paperSpigotConfig.cactusMaxHeight) { // PaperSpigot - Configurable max growth height for cactus blocks) {
-                int j = ((Integer) iblockdata.get(BlockCactus.AGE)).intValue();
+                int j = iblockdata.get(BlockCactus.AGE).intValue();
 
                 if (j >= (byte) range(3, (world.growthOdds / world.spigotConfig.cactusModifier * 15) + 0.5F, 15)) { // Spigot
                     // world.setTypeUpdate(blockposition1, this.getBlockData()); // CraftBukkit
@@ -59,7 +58,7 @@ public class BlockCactus extends Block {
     }
 
     public boolean canPlace(World world, BlockPosition blockposition) {
-        return super.canPlace(world, blockposition) ? this.e(world, blockposition) : false;
+        return super.canPlace(world, blockposition) && this.e(world, blockposition);
     }
 
     public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {
@@ -96,10 +95,10 @@ public class BlockCactus extends Block {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockCactus.AGE)).intValue();
+        return iblockdata.get(BlockCactus.AGE).intValue();
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockCactus.AGE});
+        return new BlockStateList(this, BlockCactus.AGE);
     }
 }

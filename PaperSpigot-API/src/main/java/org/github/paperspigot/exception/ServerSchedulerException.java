@@ -28,6 +28,7 @@ public class ServerSchedulerException extends ServerPluginException {
 
     /**
      * Gets the task which threw the exception
+     *
      * @return exception throwing task
      */
     public BukkitTask getTask() {

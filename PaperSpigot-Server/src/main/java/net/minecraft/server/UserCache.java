@@ -29,7 +29,7 @@ public class UserCache {
     private final File g;
     private static final ParameterizedType h = new ParameterizedType() {
         public Type[] getActualTypeArguments() {
-            return new Type[] { UserCache.UserCacheEntry.class};
+            return new Type[]{UserCache.UserCacheEntry.class};
         }
 
         public Type getRawType() {
@@ -63,9 +63,9 @@ public class UserCache {
             }
         };
 
-        minecraftserver.getGameProfileRepository().findProfilesByNames(new String[] { s}, Agent.MINECRAFT, profilelookupcallback);
+        minecraftserver.getGameProfileRepository().findProfilesByNames(new String[]{s}, Agent.MINECRAFT, profilelookupcallback);
         if (!minecraftserver.getOnlineMode() && agameprofile[0] == null) {
-            UUID uuid = EntityHuman.a(new GameProfile((UUID) null, s));
+            UUID uuid = EntityHuman.a(new GameProfile(null, s));
             GameProfile gameprofile = new GameProfile(uuid, s);
 
             profilelookupcallback.onProfileLookupSucceeded(gameprofile);
@@ -75,7 +75,7 @@ public class UserCache {
     }
 
     public void a(GameProfile gameprofile) {
-        this.a(gameprofile, (Date) null);
+        this.a(gameprofile, null);
     }
 
     private void a(GameProfile gameprofile, Date date) {
@@ -93,7 +93,7 @@ public class UserCache {
         UserCache.UserCacheEntry usercache_usercacheentry = new UserCache.UserCacheEntry(gameprofile, date, null);
 
         if (this.d.containsKey(uuid)) {
-            UserCache.UserCacheEntry usercache_usercacheentry1 = (UserCache.UserCacheEntry) this.d.get(uuid);
+            UserCache.UserCacheEntry usercache_usercacheentry1 = this.d.get(uuid);
 
             this.c.remove(usercache_usercacheentry1.a().getName().toLowerCase(Locale.ROOT));
             this.e.remove(gameprofile);
@@ -102,12 +102,12 @@ public class UserCache {
         this.c.put(gameprofile.getName().toLowerCase(Locale.ROOT), usercache_usercacheentry);
         this.d.put(uuid, usercache_usercacheentry);
         this.e.addFirst(gameprofile);
-        if( !org.spigotmc.SpigotConfig.saveUserCacheOnStopOnly ) this.c(); // Spigot - skip saving if disabled
+        if (!org.spigotmc.SpigotConfig.saveUserCacheOnStopOnly) this.c(); // Spigot - skip saving if disabled
     }
 
     public GameProfile getProfile(String s) {
         String s1 = s.toLowerCase(Locale.ROOT);
-        UserCache.UserCacheEntry usercache_usercacheentry = (UserCache.UserCacheEntry) this.c.get(s1);
+        UserCache.UserCacheEntry usercache_usercacheentry = this.c.get(s1);
 
         if (usercache_usercacheentry != null && (new Date()).getTime() >= usercache_usercacheentry.c.getTime()) {
             this.d.remove(usercache_usercacheentry.a().getId());
@@ -126,11 +126,11 @@ public class UserCache {
             gameprofile = a(this.f, s); // Spigot - use correct case for offline players
             if (gameprofile != null) {
                 this.a(gameprofile);
-                usercache_usercacheentry = (UserCache.UserCacheEntry) this.c.get(s1);
+                usercache_usercacheentry = this.c.get(s1);
             }
         }
 
-        if( !org.spigotmc.SpigotConfig.saveUserCacheOnStopOnly ) this.c(); // Spigot - skip saving if disabled
+        if (!org.spigotmc.SpigotConfig.saveUserCacheOnStopOnly) this.c(); // Spigot - skip saving if disabled
         return usercache_usercacheentry == null ? null : usercache_usercacheentry.a();
     }
 
@@ -141,13 +141,13 @@ public class UserCache {
     }
 
     public GameProfile a(UUID uuid) {
-        UserCache.UserCacheEntry usercache_usercacheentry = (UserCache.UserCacheEntry) this.d.get(uuid);
+        UserCache.UserCacheEntry usercache_usercacheentry = this.d.get(uuid);
 
         return usercache_usercacheentry == null ? null : usercache_usercacheentry.a();
     }
 
     private UserCache.UserCacheEntry b(UUID uuid) {
-        UserCache.UserCacheEntry usercache_usercacheentry = (UserCache.UserCacheEntry) this.d.get(uuid);
+        UserCache.UserCacheEntry usercache_usercacheentry = this.d.get(uuid);
 
         if (usercache_usercacheentry != null) {
             GameProfile gameprofile = usercache_usercacheentry.a();
@@ -164,7 +164,7 @@ public class UserCache {
 
         try {
             bufferedreader = Files.newReader(this.g, Charsets.UTF_8);
-            List list = (List) this.b.fromJson(bufferedreader, UserCache.h);
+            List list = this.b.fromJson(bufferedreader, UserCache.h);
 
             this.c.clear();
             this.d.clear();
@@ -179,14 +179,12 @@ public class UserCache {
                 }
             }
         } catch (FileNotFoundException filenotfoundexception) {
-            ;
-        // Spigot Start
+            // Spigot Start
         } catch (com.google.gson.JsonSyntaxException ex) {
-            JsonList.a.warn( "Usercache.json is corrupted or has bad formatting. Deleting it to prevent further issues." );
+            JsonList.a.warn("Usercache.json is corrupted or has bad formatting. Deleting it to prevent further issues.");
             this.g.delete();
-        // Spigot End
+            // Spigot End
         } catch (JsonParseException jsonparseexception) {
-            ;
         } finally {
             IOUtils.closeQuietly(bufferedreader);
         }
@@ -204,7 +202,6 @@ public class UserCache {
         } catch (FileNotFoundException filenotfoundexception) {
             return;
         } catch (IOException ioexception) {
-            ;
         } finally {
             IOUtils.closeQuietly(bufferedwriter);
         }
@@ -253,7 +250,8 @@ public class UserCache {
 
     class BanEntrySerializer implements JsonDeserializer<UserCache.UserCacheEntry>, JsonSerializer<UserCache.UserCacheEntry> {
 
-        private BanEntrySerializer() {}
+        private BanEntrySerializer() {
+        }
 
         public JsonElement a(UserCache.UserCacheEntry usercache_usercacheentry, Type type, JsonSerializationContext jsonserializationcontext) {
             JsonObject jsonobject = new JsonObject();
@@ -310,7 +308,7 @@ public class UserCache {
         }
 
         public JsonElement serialize(UserCacheEntry object, Type type, JsonSerializationContext jsonserializationcontext) { // CraftBukkit - decompile error
-            return this.a((UserCache.UserCacheEntry) object, type, jsonserializationcontext);
+            return this.a(object, type, jsonserializationcontext);
         }
 
         public UserCacheEntry deserialize(JsonElement jsonelement, Type type, JsonDeserializationContext jsondeserializationcontext) throws JsonParseException { // CraftBukkit - decompile error

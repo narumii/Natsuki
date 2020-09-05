@@ -18,7 +18,7 @@ import java.util.logging.Level;
 public class CraftProfileBanList implements org.bukkit.BanList {
     private final GameProfileBanList list;
 
-    public CraftProfileBanList(GameProfileBanList list){
+    public CraftProfileBanList(GameProfileBanList list) {
         this.list = list;
     }
 
@@ -31,7 +31,7 @@ public class CraftProfileBanList implements org.bukkit.BanList {
             return null;
         }
 
-        GameProfileBanEntry entry = (GameProfileBanEntry) list.get(profile);
+        GameProfileBanEntry entry = list.get(profile);
         if (entry == null) {
             return null;
         }
@@ -66,7 +66,7 @@ public class CraftProfileBanList implements org.bukkit.BanList {
     @Override
     public Set<org.bukkit.BanEntry> getBanEntries() {
         ImmutableSet.Builder<org.bukkit.BanEntry> builder = ImmutableSet.builder();
-        
+
         for (JsonListEntry entry : list.getValues()) {
             GameProfile profile = (GameProfile) entry.getKey();
             builder.add(new CraftProfileBanEntry(profile, (GameProfileBanEntry) entry, list));

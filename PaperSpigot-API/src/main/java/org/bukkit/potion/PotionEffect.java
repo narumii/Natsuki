@@ -30,14 +30,15 @@ public class PotionEffect implements ConfigurationSerializable {
 
     /**
      * Creates a potion effect.
-     * @param type effect type
-     * @param duration measured in ticks, see {@link
-     *     PotionEffect#getDuration()}
+     *
+     * @param type      effect type
+     * @param duration  measured in ticks, see {@link
+     *                  PotionEffect#getDuration()}
      * @param amplifier the amplifier, see {@link PotionEffect#getAmplifier()}
-     * @param ambient the ambient status, see {@link PotionEffect#isAmbient()}
+     * @param ambient   the ambient status, see {@link PotionEffect#isAmbient()}
      * @param particles the particle status, see {@link PotionEffect#hasParticles()}
      */
-    public PotionEffect(PotionEffectType type, int duration, int amplifier, boolean ambient, boolean particles){
+    public PotionEffect(PotionEffectType type, int duration, int amplifier, boolean ambient, boolean particles) {
         Validate.notNull(type, "effect type cannot be null");
         this.type = type;
         this.duration = duration;
@@ -49,11 +50,11 @@ public class PotionEffect implements ConfigurationSerializable {
     /**
      * Creates a potion effect. Assumes that particles are visible
      *
-     * @param type effect type
-     * @param duration measured in ticks, see {@link
-     *     PotionEffect#getDuration()}
+     * @param type      effect type
+     * @param duration  measured in ticks, see {@link
+     *                  PotionEffect#getDuration()}
      * @param amplifier the amplifier, see {@link PotionEffect#getAmplifier()}
-     * @param ambient the ambient status, see {@link PotionEffect#isAmbient()}
+     * @param ambient   the ambient status, see {@link PotionEffect#isAmbient()}
      */
     public PotionEffect(PotionEffectType type, int duration, int amplifier, boolean ambient) {
         this(type, duration, amplifier, ambient, true);
@@ -62,8 +63,8 @@ public class PotionEffect implements ConfigurationSerializable {
     /**
      * Creates a potion effect. Assumes ambient is true.
      *
-     * @param type Effect type
-     * @param duration measured in ticks
+     * @param type      Effect type
+     * @param duration  measured in ticks
      * @param amplifier the amplifier for the effect
      * @see PotionEffect#PotionEffect(PotionEffectType, int, int, boolean)
      */
@@ -80,7 +81,7 @@ public class PotionEffect implements ConfigurationSerializable {
         this(getEffectType(map), getInt(map, DURATION), getInt(map, AMPLIFIER), getBool(map, AMBIENT, false), getBool(map, PARTICLES, true));
     }
 
-    private static PotionEffectType getEffectType(Map<?,?> map) {
+    private static PotionEffectType getEffectType(Map<?, ?> map) {
         int type = getInt(map, TYPE);
         PotionEffectType effect = PotionEffectType.getById(type);
         if (effect != null) {
@@ -89,7 +90,7 @@ public class PotionEffect implements ConfigurationSerializable {
         throw new NoSuchElementException(map + " does not contain " + TYPE);
     }
 
-    private static int getInt(Map<?,?> map, Object key) {
+    private static int getInt(Map<?, ?> map, Object key) {
         Object num = map.get(key);
         if (num instanceof Integer) {
             return (Integer) num;
@@ -97,7 +98,7 @@ public class PotionEffect implements ConfigurationSerializable {
         throw new NoSuchElementException(map + " does not contain " + key);
     }
 
-    private static boolean getBool(Map<?,?> map, Object key, boolean def) {
+    private static boolean getBool(Map<?, ?> map, Object key, boolean def) {
         Object bool = map.get(key);
         if (bool instanceof Boolean) {
             return (Boolean) bool;
@@ -106,12 +107,12 @@ public class PotionEffect implements ConfigurationSerializable {
     }
 
     public Map<String, Object> serialize() {
-        return ImmutableMap.<String, Object>of(
-            TYPE, type.getId(),
-            DURATION, duration,
-            AMPLIFIER, amplifier,
-            AMBIENT, ambient,
-            PARTICLES, particles
+        return ImmutableMap.of(
+                TYPE, type.getId(),
+                DURATION, duration,
+                AMPLIFIER, amplifier,
+                AMBIENT, ambient,
+                PARTICLES, particles
         );
     }
 
@@ -119,9 +120,9 @@ public class PotionEffect implements ConfigurationSerializable {
      * Attempts to add the effect represented by this object to the given
      * {@link LivingEntity}.
      *
-     * @see LivingEntity#addPotionEffect(PotionEffect)
      * @param entity The entity to add this effect to
      * @return Whether the effect could be added
+     * @see LivingEntity#addPotionEffect(PotionEffect)
      */
     public boolean apply(LivingEntity entity) {
         return entity.addPotionEffect(this);
@@ -181,7 +182,7 @@ public class PotionEffect implements ConfigurationSerializable {
     /**
      * @return whether this effect has particles or not
      */
-    public boolean hasParticles(){
+    public boolean hasParticles() {
         return particles;
     }
 

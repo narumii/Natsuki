@@ -16,11 +16,11 @@ public class BlockSnow extends Block {
     }
 
     public boolean b(IBlockAccess iblockaccess, BlockPosition blockposition) {
-        return ((Integer) iblockaccess.getType(blockposition).get(BlockSnow.LAYERS)).intValue() < 5;
+        return iblockaccess.getType(blockposition).get(BlockSnow.LAYERS).intValue() < 5;
     }
 
     public AxisAlignedBB a(World world, BlockPosition blockposition, IBlockData iblockdata) {
-        int i = ((Integer) iblockdata.get(BlockSnow.LAYERS)).intValue() - 1;
+        int i = iblockdata.get(BlockSnow.LAYERS).intValue() - 1;
         float f = 0.125F;
 
         return new AxisAlignedBB((double) blockposition.getX() + this.minX, (double) blockposition.getY() + this.minY, (double) blockposition.getZ() + this.minZ, (double) blockposition.getX() + this.maxX, (double) ((float) blockposition.getY() + (float) i * f), (double) blockposition.getZ() + this.maxZ);
@@ -41,7 +41,7 @@ public class BlockSnow extends Block {
     public void updateShape(IBlockAccess iblockaccess, BlockPosition blockposition) {
         IBlockData iblockdata = iblockaccess.getType(blockposition);
 
-        this.b(((Integer) iblockdata.get(BlockSnow.LAYERS)).intValue());
+        this.b(iblockdata.get(BlockSnow.LAYERS).intValue());
     }
 
     protected void b(int i) {
@@ -52,7 +52,7 @@ public class BlockSnow extends Block {
         IBlockData iblockdata = world.getType(blockposition.down());
         Block block = iblockdata.getBlock();
 
-        return block != Blocks.ICE && block != Blocks.PACKED_ICE ? (block.getMaterial() == Material.LEAVES ? true : (block == this && ((Integer) iblockdata.get(BlockSnow.LAYERS)).intValue() >= 7 ? true : block.c() && block.material.isSolid())) : false;
+        return (block != Blocks.ICE && block != Blocks.PACKED_ICE) && (block.getMaterial() == Material.LEAVES || (block == this && iblockdata.get(BlockSnow.LAYERS).intValue() >= 7 || block.c() && block.material.isSolid()));
     }
 
     public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {
@@ -70,7 +70,7 @@ public class BlockSnow extends Block {
     }
 
     public void a(World world, EntityHuman entityhuman, BlockPosition blockposition, IBlockData iblockdata, TileEntity tileentity) {
-        a(world, blockposition, new ItemStack(Items.SNOWBALL, ((Integer) iblockdata.get(BlockSnow.LAYERS)).intValue() + 1, 0));
+        a(world, blockposition, new ItemStack(Items.SNOWBALL, iblockdata.get(BlockSnow.LAYERS).intValue() + 1, 0));
         world.setAir(blockposition);
         entityhuman.b(StatisticList.MINE_BLOCK_COUNT[Block.getId(this)]);
     }
@@ -101,14 +101,14 @@ public class BlockSnow extends Block {
     }
 
     public boolean a(World world, BlockPosition blockposition) {
-        return ((Integer) world.getType(blockposition).get(BlockSnow.LAYERS)).intValue() == 1;
+        return world.getType(blockposition).get(BlockSnow.LAYERS).intValue() == 1;
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockSnow.LAYERS)).intValue() - 1;
+        return iblockdata.get(BlockSnow.LAYERS).intValue() - 1;
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockSnow.LAYERS});
+        return new BlockStateList(this, BlockSnow.LAYERS);
     }
 }

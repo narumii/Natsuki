@@ -31,7 +31,6 @@ public enum PotionType {
     }
 
     /**
-     *
      * @return the damage value
      * @deprecated Magic value
      */
@@ -45,11 +44,10 @@ public enum PotionType {
     }
 
     public boolean isInstant() {
-        return effect == null ? true : effect.isInstant();
+        return effect == null || effect.isInstant();
     }
 
     /**
-     *
      * @param damage the damage value
      * @return the matching potion type or null
      * @deprecated Magic value

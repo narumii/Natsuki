@@ -8,7 +8,8 @@ import java.util.*;
 
 public class CommandSpreadPlayers extends CommandAbstract {
 
-    public CommandSpreadPlayers() {}
+    public CommandSpreadPlayers() {
+    }
 
     public String getCommand() {
         return "spreadplayers";
@@ -198,7 +199,7 @@ public class CommandSpreadPlayers extends CommandAbstract {
                 commandspreadplayers_location2d = acommandspreadplayers_location2d[i++];
             }
 
-            entity.enderTeleportTo((float)(int) Math.floor(commandspreadplayers_location2d.a) + 0.5F, commandspreadplayers_location2d.a(world), (double)(int) Math.floor(commandspreadplayers_location2d.b) + 0.5D);
+            entity.enderTeleportTo((float) (int) Math.floor(commandspreadplayers_location2d.a) + 0.5F, commandspreadplayers_location2d.a(world), (double) (int) Math.floor(commandspreadplayers_location2d.b) + 0.5D);
             double d1 = Double.MAX_VALUE;
 
             for (int k = 0; k < acommandspreadplayers_location2d.length; ++k) {
@@ -245,7 +246,8 @@ public class CommandSpreadPlayers extends CommandAbstract {
         double a;
         double b;
 
-        Location2D() {}
+        Location2D() {
+        }
 
         Location2D(double d0, double d1) {
             this.a = d0;

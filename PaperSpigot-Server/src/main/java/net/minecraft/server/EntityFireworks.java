@@ -7,8 +7,7 @@ public class EntityFireworks extends Entity {
 
     // Spigot Start
     @Override
-    public void inactiveTick()
-    {
+    public void inactiveTick() {
         this.ticksFlown += 1;
         super.inactiveTick();
     }
@@ -86,7 +85,8 @@ public class EntityFireworks extends Entity {
         }
 
         if (!this.world.isClientSide && this.ticksFlown > this.expectedLifespan) {
-            if (!org.bukkit.craftbukkit.event.CraftEventFactory.callFireworkExplodeEvent(this).isCancelled()) this.world.broadcastEntityEffect(this, (byte) 17);
+            if (!org.bukkit.craftbukkit.event.CraftEventFactory.callFireworkExplodeEvent(this).isCancelled())
+                this.world.broadcastEntityEffect(this, (byte) 17);
             this.die();
         }
 

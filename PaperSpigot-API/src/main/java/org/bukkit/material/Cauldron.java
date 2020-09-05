@@ -14,18 +14,16 @@ public class Cauldron extends MaterialData {
     }
 
     /**
-     *
      * @param type the raw type id
      * @param data the raw data value
      * @deprecated Magic value
      */
     @Deprecated
-    public Cauldron(int type, byte data){
+    public Cauldron(int type, byte data) {
         super(type, data);
     }
 
     /**
-     *
      * @param data the raw data value
      * @deprecated Magic value
      */

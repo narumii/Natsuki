@@ -1,13 +1,15 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.event.block.BlockDispenseEvent;
 // CraftBukkit end
 
 public abstract class DispenseBehaviorProjectile extends DispenseBehaviorItem {
 
-    public DispenseBehaviorProjectile() {}
+    public DispenseBehaviorProjectile() {
+    }
 
     public ItemStack b(ISourceBlock isourceblock, ItemStack itemstack) {
         World world = isourceblock.getWorld();
@@ -35,7 +37,7 @@ public abstract class DispenseBehaviorProjectile extends DispenseBehaviorItem {
             itemstack.count++;
             // Chain to handler for new item
             ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-            IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+            IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
             if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                 idispensebehavior.a(isourceblock, eventStack);
                 return itemstack;
@@ -43,7 +45,7 @@ public abstract class DispenseBehaviorProjectile extends DispenseBehaviorItem {
         }
 
         iprojectile.shoot(event.getVelocity().getX(), event.getVelocity().getY(), event.getVelocity().getZ(), this.getPower(), this.a());
-        ((Entity) iprojectile).projectileSource = new org.bukkit.craftbukkit.projectiles.CraftBlockProjectileSource((TileEntityDispenser) isourceblock.getTileEntity());
+        ((Entity) iprojectile).projectileSource = new org.bukkit.craftbukkit.projectiles.CraftBlockProjectileSource(isourceblock.getTileEntity());
         // CraftBukkit end
         world.addEntity((Entity) iprojectile);
         // itemstack.a(1); // CraftBukkit - Handled during event processing

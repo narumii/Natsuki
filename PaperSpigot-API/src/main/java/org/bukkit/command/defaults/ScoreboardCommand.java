@@ -32,7 +32,7 @@ public class ScoreboardCommand extends VanillaCommand {
             .put("bold", ChatColor.BOLD)
             .put("dark_aqua", ChatColor.DARK_AQUA)
             .put("dark_blue", ChatColor.DARK_BLUE)
-            .put("dark_gray",  ChatColor.DARK_GRAY)
+            .put("dark_gray", ChatColor.DARK_GRAY)
             .put("dark_green", ChatColor.DARK_GREEN)
             .put("dark_purple", ChatColor.DARK_PURPLE)
             .put("dark_red", ChatColor.DARK_RED)

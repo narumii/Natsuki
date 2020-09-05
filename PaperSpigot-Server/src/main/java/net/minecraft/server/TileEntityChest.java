@@ -23,7 +23,8 @@ public class TileEntityChest extends TileEntityContainer implements IInventory {
     private int o = -1;
     private String p;
 
-    public TileEntityChest() {}
+    public TileEntityChest() {
+    }
 
     // CraftBukkit start - add fields and methods
     public List<HumanEntity> transaction = new java.util.ArrayList<HumanEntity>();
@@ -160,7 +161,7 @@ public class TileEntityChest extends TileEntityContainer implements IInventory {
 
     public boolean a(EntityHuman entityhuman) {
         if (this.world == null) return true; // CraftBukkit
-        return this.world.getTileEntity(this.position) != this ? false : entityhuman.e((double) this.position.getX() + 0.5D, (double) this.position.getY() + 0.5D, (double) this.position.getZ() + 0.5D) <= 64.0D;
+        return this.world.getTileEntity(this.position) == this && entityhuman.e((double) this.position.getX() + 0.5D, (double) this.position.getY() + 0.5D, (double) this.position.getZ() + 0.5D) <= 64.0D;
     }
 
     public void E() {
@@ -173,28 +174,28 @@ public class TileEntityChest extends TileEntityContainer implements IInventory {
             this.a = false;
         } else if (this.a) {
             switch (TileEntityChest.SyntheticClass_1.a[enumdirection.ordinal()]) {
-            case 1:
-                if (this.f != tileentitychest) {
-                    this.a = false;
-                }
-                break;
+                case 1:
+                    if (this.f != tileentitychest) {
+                        this.a = false;
+                    }
+                    break;
 
-            case 2:
-                if (this.i != tileentitychest) {
-                    this.a = false;
-                }
-                break;
+                case 2:
+                    if (this.i != tileentitychest) {
+                        this.a = false;
+                    }
+                    break;
 
-            case 3:
-                if (this.g != tileentitychest) {
-                    this.a = false;
-                }
-                break;
+                case 3:
+                    if (this.g != tileentitychest) {
+                        this.a = false;
+                    }
+                    break;
 
-            case 4:
-                if (this.h != tileentitychest) {
-                    this.a = false;
-                }
+                case 4:
+                    if (this.h != tileentitychest) {
+                        this.a = false;
+                    }
             }
         }
 
@@ -464,7 +465,8 @@ public class TileEntityChest extends TileEntityContainer implements IInventory {
         return 0;
     }
 
-    public void b(int i, int j) {}
+    public void b(int i, int j) {
+    }
 
     public int g() {
         return 0;
@@ -493,25 +495,21 @@ public class TileEntityChest extends TileEntityContainer implements IInventory {
             try {
                 TileEntityChest.SyntheticClass_1.a[EnumDirection.NORTH.ordinal()] = 1;
             } catch (NoSuchFieldError nosuchfielderror) {
-                ;
             }
 
             try {
                 TileEntityChest.SyntheticClass_1.a[EnumDirection.SOUTH.ordinal()] = 2;
             } catch (NoSuchFieldError nosuchfielderror1) {
-                ;
             }
 
             try {
                 TileEntityChest.SyntheticClass_1.a[EnumDirection.EAST.ordinal()] = 3;
             } catch (NoSuchFieldError nosuchfielderror2) {
-                ;
             }
 
             try {
                 TileEntityChest.SyntheticClass_1.a[EnumDirection.WEST.ordinal()] = 4;
             } catch (NoSuchFieldError nosuchfielderror3) {
-                ;
             }
 
         }

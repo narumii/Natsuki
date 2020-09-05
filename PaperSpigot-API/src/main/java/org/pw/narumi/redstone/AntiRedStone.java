@@ -1,6 +1,8 @@
-package org;
+package org.pw.narumi.redstone;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
@@ -14,7 +16,7 @@ public class AntiRedStone {
     private static boolean check;
 
     public static void startTask(final boolean c) {
-        Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(chunkRedstoneUpdates::clear, 0,1, TimeUnit.SECONDS);
+        Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(chunkRedstoneUpdates::clear, 0, 1, TimeUnit.SECONDS);
         check = c;
     }
 
@@ -22,19 +24,17 @@ public class AntiRedStone {
         if (!check)
             return;
 
-        if (event != null && event instanceof BlockRedstoneEvent) {
+        if (event instanceof BlockRedstoneEvent) {
             final BlockRedstoneEvent blockEvent = (BlockRedstoneEvent) event;
 
-            if (blockEvent.getBlock() == null && blockEvent.getBlock().getType() == null) {
+            if (blockEvent.getBlock() == null)
                 return;
-            }
 
-            final String name = blockEvent.getBlock().getType().name().toLowerCase();
+            final Material material = blockEvent.getBlock().getType();
             final org.bukkit.Chunk chunk = blockEvent.getBlock().getChunk();
 
             if (chunk != null) {
-
-                if (name.contains("redstone") || name.contains("piston") || name.contains("button")) {
+                if (material == Material.REDSTONE || material == Material.PISTON_BASE) {
                     if (!chunkRedstoneUpdates.containsKey(chunk)) {
                         chunkRedstoneUpdates.put(chunk, 1);
                     } else {
@@ -55,19 +55,17 @@ public class AntiRedStone {
         if (!check)
             return;
 
-        if (event != null && event instanceof BlockRedstoneEvent) {
+        if (event instanceof BlockRedstoneEvent) {
             final BlockRedstoneEvent blockEvent = (BlockRedstoneEvent) event;
 
-            if (blockEvent.getBlock() == null && blockEvent.getBlock().getType() == null) {
+            if (blockEvent.getBlock() == null)
                 return;
-            }
 
-            final String name = blockEvent.getBlock().getType().name().toLowerCase();
+            final Material material = blockEvent.getBlock().getType();
             final org.bukkit.Chunk chunk = blockEvent.getBlock().getChunk();
 
             if (chunk != null) {
-
-                if (name.contains("redstone") || name.contains("piston") || name.contains("button")) {
+                if (material == Material.REDSTONE || material == Material.PISTON_BASE) {
                     if (!chunkRedstoneUpdates.containsKey(chunk)) {
                         chunkRedstoneUpdates.put(chunk, 1);
                     } else {
@@ -85,5 +83,4 @@ public class AntiRedStone {
     }
 
     private static final Map<Chunk, Integer> chunkRedstoneUpdates = new ConcurrentHashMap<>();
-
 }

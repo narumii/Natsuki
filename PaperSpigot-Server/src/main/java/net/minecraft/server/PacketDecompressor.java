@@ -9,12 +9,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import io.netty.handler.codec.DecoderException;
-import pw.narumi.Natsuki;
 import pw.narumi.exception.NatsukiException;
 
-import java.net.InetSocketAddress;
-import java.util.Arrays;
 import java.util.List;
 import java.util.zip.Inflater;
 

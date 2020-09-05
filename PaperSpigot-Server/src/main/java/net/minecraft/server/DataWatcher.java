@@ -16,11 +16,11 @@ public class DataWatcher {
     private final Entity a;
     private boolean b = true;
     // Spigot Start
-    private static final gnu.trove.map.TObjectIntMap classToId = new gnu.trove.map.hash.TObjectIntHashMap( 10, 0.5f, -1 );
-    private final gnu.trove.map.TIntObjectMap dataValues = new gnu.trove.map.hash.TIntObjectHashMap( 10, 0.5f, -1 );
+    private static final gnu.trove.map.TObjectIntMap classToId = new gnu.trove.map.hash.TObjectIntHashMap(10, 0.5f, -1);
+    private final gnu.trove.map.TIntObjectMap dataValues = new gnu.trove.map.hash.TIntObjectHashMap(10, 0.5f, -1);
     // These exist as an attempt at backwards compatability for (broken) NMS plugins
-    private static final Map<Class<?>, Integer> c = gnu.trove.TDecorators.wrap( classToId );
-    private final Map<Integer, DataWatcher.WatchableObject> d = gnu.trove.TDecorators.wrap( dataValues );
+    private static final Map<Class<?>, Integer> c = gnu.trove.TDecorators.wrap(classToId);
+    private final Map<Integer, DataWatcher.WatchableObject> d = gnu.trove.TDecorators.wrap(dataValues);
     // Spigot End
     private boolean e;
     private ReadWriteLock f = new ReentrantReadWriteLock();
@@ -49,7 +49,7 @@ public class DataWatcher {
     }
 
     public void add(int i, int j) {
-        DataWatcher.WatchableObject datawatcher_watchableobject = new DataWatcher.WatchableObject(j, i, (Object) null);
+        DataWatcher.WatchableObject datawatcher_watchableobject = new DataWatcher.WatchableObject(j, i, null);
 
         this.f.writeLock().lock();
         this.dataValues.put(i, datawatcher_watchableobject); // Spigot
@@ -92,7 +92,7 @@ public class DataWatcher {
             CrashReport crashreport = CrashReport.a(throwable, "Getting synched entity data");
             CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Synched entity data");
 
-            crashreportsystemdetails.a("Data ID", (Object) Integer.valueOf(i));
+            crashreportsystemdetails.a("Data ID", Integer.valueOf(i));
             throw new ReportedException(crashreport);
         }
 
@@ -155,13 +155,12 @@ public class DataWatcher {
                         arraylist = Lists.newArrayList();
                     }
 
-                   // Spigot start - copy ItemStacks to prevent ConcurrentModificationExceptions
-                    if ( datawatcher_watchableobject.b() instanceof ItemStack )
-                    {
+                    // Spigot start - copy ItemStacks to prevent ConcurrentModificationExceptions
+                    if (datawatcher_watchableobject.b() instanceof ItemStack) {
                         datawatcher_watchableobject = new WatchableObject(
                                 datawatcher_watchableobject.c(),
                                 datawatcher_watchableobject.a(),
-                                ( (ItemStack) datawatcher_watchableobject.b() ).cloneItemStack()
+                                ((ItemStack) datawatcher_watchableobject.b()).cloneItemStack()
                         );
                     }
                     // Spigot end
@@ -198,17 +197,15 @@ public class DataWatcher {
 
         arraylist.addAll(this.dataValues.valueCollection()); // Spigot
         // Spigot start - copy ItemStacks to prevent ConcurrentModificationExceptions
-        for ( int i = 0; i < arraylist.size(); i++ )
-        {
-            WatchableObject watchableobject = (WatchableObject) arraylist.get( i );
-            if ( watchableobject.b() instanceof ItemStack )
-            {
+        for (int i = 0; i < arraylist.size(); i++) {
+            WatchableObject watchableobject = (WatchableObject) arraylist.get(i);
+            if (watchableobject.b() instanceof ItemStack) {
                 watchableobject = new WatchableObject(
                         watchableobject.c(),
                         watchableobject.a(),
-                        ( (ItemStack) watchableobject.b() ).cloneItemStack()
+                        ((ItemStack) watchableobject.b()).cloneItemStack()
                 );
-                arraylist.set( i, watchableobject );
+                arraylist.set(i, watchableobject);
             }
         }
         // Spigot end
@@ -222,46 +219,46 @@ public class DataWatcher {
 
         packetdataserializer.writeByte(i);
         switch (datawatcher_watchableobject.c()) {
-        case 0:
-            packetdataserializer.writeByte(((Byte) datawatcher_watchableobject.b()).byteValue());
-            break;
+            case 0:
+                packetdataserializer.writeByte(((Byte) datawatcher_watchableobject.b()).byteValue());
+                break;
 
-        case 1:
-            packetdataserializer.writeShort(((Short) datawatcher_watchableobject.b()).shortValue());
-            break;
+            case 1:
+                packetdataserializer.writeShort(((Short) datawatcher_watchableobject.b()).shortValue());
+                break;
 
-        case 2:
-            packetdataserializer.writeInt(((Integer) datawatcher_watchableobject.b()).intValue());
-            break;
+            case 2:
+                packetdataserializer.writeInt(((Integer) datawatcher_watchableobject.b()).intValue());
+                break;
 
-        case 3:
-            packetdataserializer.writeFloat(((Float) datawatcher_watchableobject.b()).floatValue());
-            break;
+            case 3:
+                packetdataserializer.writeFloat(((Float) datawatcher_watchableobject.b()).floatValue());
+                break;
 
-        case 4:
-            packetdataserializer.a((String) datawatcher_watchableobject.b());
-            break;
+            case 4:
+                packetdataserializer.a((String) datawatcher_watchableobject.b());
+                break;
 
-        case 5:
-            ItemStack itemstack = (ItemStack) datawatcher_watchableobject.b();
+            case 5:
+                ItemStack itemstack = (ItemStack) datawatcher_watchableobject.b();
 
-            packetdataserializer.a(itemstack);
-            break;
+                packetdataserializer.a(itemstack);
+                break;
 
-        case 6:
-            BlockPosition blockposition = (BlockPosition) datawatcher_watchableobject.b();
+            case 6:
+                BlockPosition blockposition = (BlockPosition) datawatcher_watchableobject.b();
 
-            packetdataserializer.writeInt(blockposition.getX());
-            packetdataserializer.writeInt(blockposition.getY());
-            packetdataserializer.writeInt(blockposition.getZ());
-            break;
+                packetdataserializer.writeInt(blockposition.getX());
+                packetdataserializer.writeInt(blockposition.getY());
+                packetdataserializer.writeInt(blockposition.getZ());
+                break;
 
-        case 7:
-            Vector3f vector3f = (Vector3f) datawatcher_watchableobject.b();
+            case 7:
+                Vector3f vector3f = (Vector3f) datawatcher_watchableobject.b();
 
-            packetdataserializer.writeFloat(vector3f.getX());
-            packetdataserializer.writeFloat(vector3f.getY());
-            packetdataserializer.writeFloat(vector3f.getZ());
+                packetdataserializer.writeFloat(vector3f.getX());
+                packetdataserializer.writeFloat(vector3f.getY());
+                packetdataserializer.writeFloat(vector3f.getZ());
         }
 
     }
@@ -279,44 +276,44 @@ public class DataWatcher {
             DataWatcher.WatchableObject datawatcher_watchableobject = null;
 
             switch (i) {
-            case 0:
-                datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, Byte.valueOf(packetdataserializer.readByte()));
-                break;
+                case 0:
+                    datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, Byte.valueOf(packetdataserializer.readByte()));
+                    break;
 
-            case 1:
-                datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, Short.valueOf(packetdataserializer.readShort()));
-                break;
+                case 1:
+                    datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, Short.valueOf(packetdataserializer.readShort()));
+                    break;
 
-            case 2:
-                datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, Integer.valueOf(packetdataserializer.readInt()));
-                break;
+                case 2:
+                    datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, Integer.valueOf(packetdataserializer.readInt()));
+                    break;
 
-            case 3:
-                datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, Float.valueOf(packetdataserializer.readFloat()));
-                break;
+                case 3:
+                    datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, Float.valueOf(packetdataserializer.readFloat()));
+                    break;
 
-            case 4:
-                datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, packetdataserializer.c(32767));
-                break;
+                case 4:
+                    datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, packetdataserializer.c(32767));
+                    break;
 
-            case 5:
-                datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, packetdataserializer.i());
-                break;
+                case 5:
+                    datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, packetdataserializer.i());
+                    break;
 
-            case 6:
-                int k = packetdataserializer.readInt();
-                int l = packetdataserializer.readInt();
-                int i1 = packetdataserializer.readInt();
+                case 6:
+                    int k = packetdataserializer.readInt();
+                    int l = packetdataserializer.readInt();
+                    int i1 = packetdataserializer.readInt();
 
-                datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, new BlockPosition(k, l, i1));
-                break;
+                    datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, new BlockPosition(k, l, i1));
+                    break;
 
-            case 7:
-                float f = packetdataserializer.readFloat();
-                float f1 = packetdataserializer.readFloat();
-                float f2 = packetdataserializer.readFloat();
+                case 7:
+                    float f = packetdataserializer.readFloat();
+                    float f1 = packetdataserializer.readFloat();
+                    float f2 = packetdataserializer.readFloat();
 
-                datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, new Vector3f(f, f1, f2));
+                    datawatcher_watchableobject = new DataWatcher.WatchableObject(i, j, new Vector3f(f, f1, f2));
             }
 
             arraylist.add(datawatcher_watchableobject);

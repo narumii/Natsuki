@@ -5,7 +5,8 @@ public class Path {
     private PathPoint[] a = new PathPoint[128]; // CraftBukkit - reduce default size
     private int b;
 
-    public Path() {}
+    public Path() {
+    }
 
     public PathPoint a(PathPoint pathpoint) {
         if (pathpoint.d >= 0) {

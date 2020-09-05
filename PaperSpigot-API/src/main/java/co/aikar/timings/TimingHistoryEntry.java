@@ -46,12 +46,12 @@ class TimingHistoryEntry {
         List result = data.export();
         if (children.length > 0) {
             result.add(
-                toArrayMapper(children, new Function<TimingData, Object>() {
-                    @Override
-                    public Object apply(TimingData child) {
-                        return child.export();
-                    }
-                })
+                    toArrayMapper(children, new Function<TimingData, Object>() {
+                        @Override
+                        public Object apply(TimingData child) {
+                            return child.export();
+                        }
+                    })
             );
         }
         return result;

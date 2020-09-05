@@ -28,7 +28,9 @@ public abstract class Container {
 
     // CraftBukkit start
     public boolean checkReachable = true;
+
     public abstract InventoryView getBukkitView();
+
     public void transferTo(Container other, org.bukkit.craftbukkit.entity.CraftHumanEntity player) {
         InventoryView source = this.getBukkitView(), destination = other.getBukkitView();
         ((CraftInventory) source.getTopInventory()).getInventory().onClose(player);
@@ -38,7 +40,8 @@ public abstract class Container {
     }
     // CraftBukkit end
 
-    public Container() {}
+    public Container() {
+    }
 
     protected Slot a(Slot slot) {
         slot.rawSlotIndex = this.c.size();
@@ -104,7 +107,7 @@ public abstract class Container {
     public Slot getSlot(int i) {
         try {
             return this.c.get(i);
-        }catch (final IndexOutOfBoundsException e) {
+        } catch (final IndexOutOfBoundsException e) {
             return null;
         }
     }
@@ -286,7 +289,7 @@ public abstract class Container {
 
                                 if (itemstack4.count == 0) {
                                     playerinventory.setCarried(null);
-                                // CraftBukkit start - Update client cursor if we didn't empty it
+                                    // CraftBukkit start - Update client cursor if we didn't empty it
                                 } else if (entityhuman instanceof EntityPlayer) {
                                     ((EntityPlayer) entityhuman).playerConnection.sendPacket(new PacketPlayOutSetSlot(-1, -1, entityhuman.inventory.getCarried()));
                                 }
@@ -316,7 +319,7 @@ public abstract class Container {
                                     itemstack4.cloneAndSubtract(k1);
                                     if (itemstack4.count == 0) {
                                         playerinventory.setCarried(null);
-                                    // CraftBukkit start - Update client cursor if we didn't empty it
+                                        // CraftBukkit start - Update client cursor if we didn't empty it
                                     } else if (entityhuman instanceof EntityPlayer) {
                                         ((EntityPlayer) entityhuman).playerConnection.sendPacket(new PacketPlayOutSetSlot(-1, -1, entityhuman.inventory.getCarried()));
                                     }
@@ -339,7 +342,7 @@ public abstract class Container {
                                     }
 
                                     slot2.a(entityhuman, playerinventory.getCarried());
-                                // CraftBukkit start - Update client cursor if we didn't empty it
+                                    // CraftBukkit start - Update client cursor if we didn't empty it
                                 } else if (entityhuman instanceof EntityPlayer) {
                                     ((EntityPlayer) entityhuman).playerConnection.sendPacket(new PacketPlayOutSetSlot(-1, -1, entityhuman.inventory.getCarried()));
                                 }
@@ -579,16 +582,16 @@ public abstract class Container {
 
     public static void a(Set<Slot> set, int i, ItemStack itemstack, int j) {
         switch (i) {
-        case 0:
-            itemstack.count = MathHelper.d((float) itemstack.count / (float) set.size());
-            break;
+            case 0:
+                itemstack.count = MathHelper.d((float) itemstack.count / (float) set.size());
+                break;
 
-        case 1:
-            itemstack.count = 1;
-            break;
+            case 1:
+                itemstack.count = 1;
+                break;
 
-        case 2:
-            itemstack.count = itemstack.getItem().getMaxStackSize();
+            case 2:
+                itemstack.count = itemstack.getItem().getMaxStackSize();
         }
 
         itemstack.count += j;

@@ -20,14 +20,14 @@ public final class CraftItemFactory implements ItemFactory {
         instance = new CraftItemFactory();
         ConfigurationSerialization.registerClass(CraftMetaItem.SerializableMeta.class);
         KNOWN_NBT_ATTRIBUTE_NAMES = ImmutableSet.<String>builder()
-            .add("generic.attackDamage")
-            .add("generic.followRange")
-            .add("generic.knockbackResistance")
-            .add("generic.maxHealth")
-            .add("generic.movementSpeed")
-            .add("horse.jumpStrength")
-            .add("zombie.spawnReinforcements")
-            .build();
+                .add("generic.attackDamage")
+                .add("generic.followRange")
+                .add("generic.knockbackResistance")
+                .add("generic.maxHealth")
+                .add("generic.movementSpeed")
+                .add("horse.jumpStrength")
+                .add("zombie.spawnReinforcements")
+                .build();
     }
 
     private CraftItemFactory() {
@@ -58,53 +58,53 @@ public final class CraftItemFactory implements ItemFactory {
 
     private ItemMeta getItemMeta(Material material, CraftMetaItem meta) {
         switch (material) {
-        case AIR:
-            return null;
-        case WRITTEN_BOOK:
-            return meta instanceof CraftMetaBookSigned ? meta : new CraftMetaBookSigned(meta);
-        case BOOK_AND_QUILL:
-            return meta != null && meta.getClass().equals(CraftMetaBook.class) ? meta : new CraftMetaBook(meta);
-        case SKULL_ITEM:
-            return meta instanceof CraftMetaSkull ? meta : new CraftMetaSkull(meta);
-        case LEATHER_HELMET:
-        case LEATHER_CHESTPLATE:
-        case LEATHER_LEGGINGS:
-        case LEATHER_BOOTS:
-            return meta instanceof CraftMetaLeatherArmor ? meta : new CraftMetaLeatherArmor(meta);
-        case POTION:
-            return meta instanceof CraftMetaPotion ? meta : new CraftMetaPotion(meta);
-        case MAP:
-            return meta instanceof CraftMetaMap ? meta : new CraftMetaMap(meta);
-        case FIREWORK:
-            return meta instanceof CraftMetaFirework ? meta : new CraftMetaFirework(meta);
-        case FIREWORK_CHARGE:
-            return meta instanceof CraftMetaCharge ? meta : new CraftMetaCharge(meta);
-        case ENCHANTED_BOOK:
-            return meta instanceof CraftMetaEnchantedBook ? meta : new CraftMetaEnchantedBook(meta);
-        case BANNER:
-            return meta instanceof CraftMetaBanner ? meta : new CraftMetaBanner(meta);
-        case FURNACE:
-        case CHEST:
-        case TRAPPED_CHEST:
-        case JUKEBOX:
-        case DISPENSER:
-        case DROPPER:
-        case SIGN:
-        case MOB_SPAWNER:
-        case NOTE_BLOCK:
-        case PISTON_BASE:
-        case BREWING_STAND_ITEM:
-        case ENCHANTMENT_TABLE:
-        case COMMAND:
-        case BEACON:
-        case DAYLIGHT_DETECTOR:
-        case DAYLIGHT_DETECTOR_INVERTED:
-        case HOPPER:
-        case REDSTONE_COMPARATOR:
-        case FLOWER_POT_ITEM:
-            return new CraftMetaBlockState(meta, material);
-        default:
-            return new CraftMetaItem(meta);
+            case AIR:
+                return null;
+            case WRITTEN_BOOK:
+                return meta instanceof CraftMetaBookSigned ? meta : new CraftMetaBookSigned(meta);
+            case BOOK_AND_QUILL:
+                return meta != null && meta.getClass().equals(CraftMetaBook.class) ? meta : new CraftMetaBook(meta);
+            case SKULL_ITEM:
+                return meta instanceof CraftMetaSkull ? meta : new CraftMetaSkull(meta);
+            case LEATHER_HELMET:
+            case LEATHER_CHESTPLATE:
+            case LEATHER_LEGGINGS:
+            case LEATHER_BOOTS:
+                return meta instanceof CraftMetaLeatherArmor ? meta : new CraftMetaLeatherArmor(meta);
+            case POTION:
+                return meta instanceof CraftMetaPotion ? meta : new CraftMetaPotion(meta);
+            case MAP:
+                return meta instanceof CraftMetaMap ? meta : new CraftMetaMap(meta);
+            case FIREWORK:
+                return meta instanceof CraftMetaFirework ? meta : new CraftMetaFirework(meta);
+            case FIREWORK_CHARGE:
+                return meta instanceof CraftMetaCharge ? meta : new CraftMetaCharge(meta);
+            case ENCHANTED_BOOK:
+                return meta instanceof CraftMetaEnchantedBook ? meta : new CraftMetaEnchantedBook(meta);
+            case BANNER:
+                return meta instanceof CraftMetaBanner ? meta : new CraftMetaBanner(meta);
+            case FURNACE:
+            case CHEST:
+            case TRAPPED_CHEST:
+            case JUKEBOX:
+            case DISPENSER:
+            case DROPPER:
+            case SIGN:
+            case MOB_SPAWNER:
+            case NOTE_BLOCK:
+            case PISTON_BASE:
+            case BREWING_STAND_ITEM:
+            case ENCHANTMENT_TABLE:
+            case COMMAND:
+            case BEACON:
+            case DAYLIGHT_DETECTOR:
+            case DAYLIGHT_DETECTOR_INVERTED:
+            case HOPPER:
+            case REDSTONE_COMPARATOR:
+            case FLOWER_POT_ITEM:
+                return new CraftMetaBlockState(meta, material);
+            default:
+                return new CraftMetaItem(meta);
         }
     }
 

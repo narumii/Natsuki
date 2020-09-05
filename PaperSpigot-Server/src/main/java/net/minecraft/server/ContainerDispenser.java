@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.inventory.CraftInventory;
 import org.bukkit.craftbukkit.inventory.CraftInventoryView;
 // CraftBukkit end
@@ -17,7 +18,7 @@ public class ContainerDispenser extends Container {
         this.items = iinventory1;
         // CraftBukkit start - Save player
         // TODO: Should we check to make sure it really is an InventoryPlayer?
-        this.player = (PlayerInventory)iinventory;
+        this.player = (PlayerInventory) iinventory;
         // CraftBukkit end
 
         int i;
@@ -48,7 +49,7 @@ public class ContainerDispenser extends Container {
 
     public ItemStack b(EntityHuman entityhuman, int i) {
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.c.get(i);
+        Slot slot = this.c.get(i);
 
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
@@ -63,7 +64,7 @@ public class ContainerDispenser extends Container {
             }
 
             if (itemstack1.count == 0) {
-                slot.set((ItemStack) null);
+                slot.set(null);
             } else {
                 slot.f();
             }

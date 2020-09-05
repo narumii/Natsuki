@@ -110,7 +110,8 @@ public class CraftInventoryCustom extends CraftInventory {
             maxStack = size;
         }
 
-        public void update() {}
+        public void update() {
+        }
 
         public boolean a(EntityHuman entityhuman) {
             return true;
@@ -135,7 +136,7 @@ public class CraftInventoryCustom extends CraftInventory {
         public InventoryType getType() {
             return type;
         }
-        
+
         public InventoryHolder getOwner() {
             return owner;
         }

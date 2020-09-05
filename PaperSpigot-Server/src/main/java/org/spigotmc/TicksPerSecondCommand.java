@@ -4,24 +4,20 @@ import net.minecraft.server.DedicatedServer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import oshi.hardware.NetworkIF;
 import pw.narumi.Natsuki;
 import pw.narumi.common.Utils;
 
 import java.lang.management.ManagementFactory;
-import java.lang.management.ThreadMXBean;
 import java.util.Collections;
 
-public class TicksPerSecondCommand extends Command
-{
+public class TicksPerSecondCommand extends Command {
 
-    public TicksPerSecondCommand(String name)
-    {
-        super( name );
+    public TicksPerSecondCommand(String name) {
+        super(name);
         this.description = "Gets the current ticks per second for the server / [] = optional (can be null/empty)";
         this.usageMessage = "/gc [info/can be empty]";
         this.setAliases(Collections.singletonList("gc"));
-        this.setPermission( "bukkit.command.tps" );
+        this.setPermission("bukkit.command.tps");
     }
 
     @Override
@@ -51,7 +47,7 @@ public class TicksPerSecondCommand extends Command
         sender.sendMessage(" §8» §7Loaded chunks: §d" + Bukkit.getServer().getWorlds().get(0).getLoadedChunks().length);
         sender.sendMessage(" §8» §7Loaded entities: §d" + Bukkit.getServer().getWorlds().get(0).getLivingEntities().size());
         sender.sendMessage("\n                    §d* §fSystem §d*                    ");
-        sender.sendMessage(" §8» §7RAM usage: §d" + Utils.humanReadableByteCount(Utils.getSystemInfo().getHardware().getMemory().getTotal() -  Utils.getSystemInfo().getHardware().getMemory().getAvailable()) + "§7/§5" + Utils.humanReadableByteCount(Utils.getSystemInfo().getHardware().getMemory().getTotal()));
+        sender.sendMessage(" §8» §7RAM usage: §d" + Utils.humanReadableByteCount(Utils.getSystemInfo().getHardware().getMemory().getTotal() - Utils.getSystemInfo().getHardware().getMemory().getAvailable()) + "§7/§5" + Utils.humanReadableByteCount(Utils.getSystemInfo().getHardware().getMemory().getTotal()));
         sender.sendMessage(" §8» §7CPU usage: §d" + Utils.getFormat().format(Utils.getOsBean().getSystemCpuLoad() * 100) + "§d%");
         return true;
     }

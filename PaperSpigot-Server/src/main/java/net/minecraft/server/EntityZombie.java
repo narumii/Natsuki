@@ -38,12 +38,14 @@ public class EntityZombie extends EntityMonster {
     }
 
     protected void n() {
-        if ( world.spigotConfig.zombieAggressiveTowardsVillager ) this.goalSelector.a(4, new PathfinderGoalMeleeAttack(this, EntityVillager.class, 1.0D, true)); // Spigot
+        if (world.spigotConfig.zombieAggressiveTowardsVillager)
+            this.goalSelector.a(4, new PathfinderGoalMeleeAttack(this, EntityVillager.class, 1.0D, true)); // Spigot
         this.goalSelector.a(4, new PathfinderGoalMeleeAttack(this, EntityIronGolem.class, 1.0D, true));
         this.goalSelector.a(6, new PathfinderGoalMoveThroughVillage(this, 1.0D, false));
         this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, true, EntityPigZombie.class));
         this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, true));
-        if ( world.spigotConfig.zombieAggressiveTowardsVillager ) this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityVillager.class, false)); // Spigot
+        if (world.spigotConfig.zombieAggressiveTowardsVillager)
+            this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityVillager.class, false)); // Spigot
         this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityIronGolem.class, true));
     }
 
@@ -172,9 +174,9 @@ public class EntityZombie extends EntityMonster {
             }
 
             if (entityliving != null && this.world.getDifficulty() == EnumDifficulty.HARD && (double) this.random.nextFloat() < this.getAttributeInstance(EntityZombie.a).getValue()) {
-                int i =(int) Math.floor(this.locX);
-                int j =(int) Math.floor(this.locY);
-                int k =(int) Math.floor(this.locZ);
+                int i = (int) Math.floor(this.locX);
+                int j = (int) Math.floor(this.locY);
+                int k = (int) Math.floor(this.locZ);
                 EntityZombie entityzombie = new EntityZombie(this.world);
 
                 for (int l = 0; l < 50; ++l) {
@@ -268,16 +270,16 @@ public class EntityZombie extends EntityMonster {
 
     protected void getRareDrop() {
         switch (this.random.nextInt(3)) {
-        case 0:
-            this.a(Items.IRON_INGOT, 1);
-            break;
+            case 0:
+                this.a(Items.IRON_INGOT, 1);
+                break;
 
-        case 1:
-            this.a(Items.CARROT, 1);
-            break;
+            case 1:
+                this.a(Items.CARROT, 1);
+                break;
 
-        case 2:
-            this.a(Items.POTATO, 1);
+            case 2:
+                this.a(Items.POTATO, 1);
         }
 
     }
@@ -561,7 +563,8 @@ public class EntityZombie extends EntityMonster {
         super.die(damagesource); // CraftBukkit - moved from above
     }
 
-    static class SyntheticClass_1 {    }
+    static class SyntheticClass_1 {
+    }
 
     class GroupDataZombie implements GroupDataEntity {
 

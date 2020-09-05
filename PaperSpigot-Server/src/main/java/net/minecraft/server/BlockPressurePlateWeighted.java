@@ -54,7 +54,7 @@ public class BlockPressurePlateWeighted extends BlockPressurePlateAbstract {
     }
 
     protected int e(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockPressurePlateWeighted.POWER)).intValue();
+        return iblockdata.get(BlockPressurePlateWeighted.POWER).intValue();
     }
 
     protected IBlockData a(IBlockData iblockdata, int i) {
@@ -70,10 +70,10 @@ public class BlockPressurePlateWeighted extends BlockPressurePlateAbstract {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockPressurePlateWeighted.POWER)).intValue();
+        return iblockdata.get(BlockPressurePlateWeighted.POWER).intValue();
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockPressurePlateWeighted.POWER});
+        return new BlockStateList(this, BlockPressurePlateWeighted.POWER);
     }
 }

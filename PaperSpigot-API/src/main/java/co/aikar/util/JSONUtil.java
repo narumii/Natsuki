@@ -13,10 +13,12 @@ import java.util.Map;
  */
 @SuppressWarnings({"rawtypes", "SuppressionAnnotation"})
 public final class JSONUtil {
-    private JSONUtil() {}
+    private JSONUtil() {
+    }
 
     /**
      * Creates a key/value "JSONPair" object
+     *
      * @param key
      * @param obj
      * @return
@@ -31,6 +33,7 @@ public final class JSONUtil {
 
     /**
      * Creates a new JSON object from multiple JsonPair key/value pairs
+     *
      * @param data
      * @return
      */
@@ -40,6 +43,7 @@ public final class JSONUtil {
 
     /**
      * This appends multiple key/value Obj pairs into a JSON Object
+     *
      * @param parent
      * @param data
      * @return
@@ -53,6 +57,7 @@ public final class JSONUtil {
 
     /**
      * This builds a JSON array from a set of data
+     *
      * @param data
      * @return
      */
@@ -62,6 +67,7 @@ public final class JSONUtil {
 
     /**
      * These help build a single JSON array using a mapper function
+     *
      * @param collection
      * @param mapper
      * @param <E>
@@ -84,6 +90,7 @@ public final class JSONUtil {
 
     /**
      * These help build a single JSON Object from a collection, using a mapper function
+     *
      * @param collection
      * @param mapper
      * @param <E>

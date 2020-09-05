@@ -192,7 +192,8 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
                     double deltaX = this.locX - player.locX;
                     double deltaZ = this.locZ - player.locZ;
                     double distanceSquared = deltaX * deltaX + deltaZ * deltaZ;
-                    if ( world.spigotConfig.witherSpawnSoundRadius > 0 && distanceSquared > world.spigotConfig.witherSpawnSoundRadius * world.spigotConfig.witherSpawnSoundRadius ) continue; // Spigot
+                    if (world.spigotConfig.witherSpawnSoundRadius > 0 && distanceSquared > world.spigotConfig.witherSpawnSoundRadius * world.spigotConfig.witherSpawnSoundRadius)
+                        continue; // Spigot
                     if (distanceSquared > viewDistance * viewDistance) {
                         double deltaLength = Math.sqrt(distanceSquared);
                         double relativeX = player.locX + (deltaX / deltaLength) * viewDistance;
@@ -282,9 +283,9 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
             if (this.bp > 0) {
                 --this.bp;
                 if (this.bp == 0 && this.world.getGameRules().getBoolean("mobGriefing")) {
-                    i =(int) Math.floor(this.locY);
-                    j =(int) Math.floor(this.locX);
-                    int j1 =(int) Math.floor(this.locZ);
+                    i = (int) Math.floor(this.locY);
+                    j = (int) Math.floor(this.locX);
+                    int j1 = (int) Math.floor(this.locZ);
                     boolean flag = false;
 
                     for (int k1 = -1; k1 <= 1; ++k1) {
@@ -330,7 +331,8 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
         this.setHealth(this.getMaxHealth() / 3.0F);
     }
 
-    public void aA() {}
+    public void aA() {
+    }
 
     public int br() {
         return 4;
@@ -463,9 +465,11 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
         this.ticksFarFromPlayer = 0;
     }
 
-    public void e(float f, float f1) {}
+    public void e(float f, float f1) {
+    }
 
-    public void addEffect(MobEffect mobeffect) {}
+    public void addEffect(MobEffect mobeffect) {
+    }
 
     protected void initAttributes() {
         super.initAttributes();

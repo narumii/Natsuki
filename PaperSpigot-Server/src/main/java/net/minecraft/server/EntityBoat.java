@@ -296,12 +296,12 @@ public class EntityBoat extends Entity {
             int k;
 
             for (k = 0; k < 4; ++k) {
-                int l =(int) Math.floor(this.locX + ((double) (k % 2) - 0.5D) * 0.8D);
+                int l = (int) Math.floor(this.locX + ((double) (k % 2) - 0.5D) * 0.8D);
 
-                j =(int) Math.floor(this.locZ + ((double) (k / 2) - 0.5D) * 0.8D);
+                j = (int) Math.floor(this.locZ + ((double) (k / 2) - 0.5D) * 0.8D);
 
                 for (int i1 = 0; i1 < 2; ++i1) {
-                    int j1 =(int) Math.floor(this.locY) + i1;
+                    int j1 = (int) Math.floor(this.locY) + i1;
                     BlockPosition blockposition = new BlockPosition(l, j1, j);
                     Block block = this.world.getType(blockposition).getBlock();
 
@@ -339,10 +339,10 @@ public class EntityBoat extends Entity {
                     VehicleDestroyEvent destroyEvent = new VehicleDestroyEvent(vehicle, null);
                     this.world.getServer().getPluginManager().callEvent(destroyEvent);
                     if (!destroyEvent.isCancelled()) {
-                    this.die();
-                    if (this.world.getGameRules().getBoolean("doEntityDrops")) {
-                        breakNaturally(); // PaperSpigot
-                    }
+                        this.die();
+                        if (this.world.getGameRules().getBoolean("doEntityDrops")) {
+                            breakNaturally(); // PaperSpigot
+                        }
                     } // CraftBukkit end
                 }
             } else {
@@ -418,9 +418,11 @@ public class EntityBoat extends Entity {
         }
     }
 
-    protected void b(NBTTagCompound nbttagcompound) {}
+    protected void b(NBTTagCompound nbttagcompound) {
+    }
 
-    protected void a(NBTTagCompound nbttagcompound) {}
+    protected void a(NBTTagCompound nbttagcompound) {
+    }
 
     public boolean e(EntityHuman entityhuman) {
         if (this.passenger != null && this.passenger instanceof EntityHuman && this.passenger != entityhuman) {
@@ -444,10 +446,10 @@ public class EntityBoat extends Entity {
                     VehicleDestroyEvent destroyEvent = new VehicleDestroyEvent(vehicle, null);
                     this.world.getServer().getPluginManager().callEvent(destroyEvent);
                     if (!destroyEvent.isCancelled()) {
-                    this.die();
-                    if (this.world.getGameRules().getBoolean("doEntityDrops")) {
-                        breakNaturally(); // PaperSpigot
-                    }
+                        this.die();
+                        if (this.world.getGameRules().getBoolean("doEntityDrops")) {
+                            breakNaturally(); // PaperSpigot
+                        }
                     } // CraftBukkit end
                 }
 

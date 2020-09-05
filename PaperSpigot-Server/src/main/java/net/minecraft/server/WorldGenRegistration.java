@@ -22,13 +22,11 @@ public class WorldGenRegistration {
             try {
                 WorldGenRegistration.SyntheticClass_1.a[EnumDirection.NORTH.ordinal()] = 1;
             } catch (NoSuchFieldError nosuchfielderror) {
-                ;
             }
 
             try {
                 WorldGenRegistration.SyntheticClass_1.a[EnumDirection.SOUTH.ordinal()] = 2;
             } catch (NoSuchFieldError nosuchfielderror1) {
-                ;
             }
 
         }
@@ -38,7 +36,8 @@ public class WorldGenRegistration {
 
         private boolean e;
 
-        public WorldGenWitchHut() {}
+        public WorldGenWitchHut() {
+        }
 
         public WorldGenWitchHut(Random random, int i, int j) {
             super(random, i, 64, j, 7, 7, 9);
@@ -103,12 +102,12 @@ public class WorldGenRegistration {
                     j1 = this.d(2);
                     int k1 = this.b(2, 5);
 
-                    if (structureboundingbox.b((BaseBlockPosition) (new BlockPosition(i1, j1, k1)))) {
+                    if (structureboundingbox.b(new BlockPosition(i1, j1, k1))) {
                         this.e = true;
                         EntityWitch entitywitch = new EntityWitch(world);
 
                         entitywitch.setPositionRotation((double) i1 + 0.5D, (double) j1, (double) k1 + 0.5D, 0.0F, 0.0F);
-                        entitywitch.prepare(world.E(new BlockPosition(i1, j1, k1)), (GroupDataEntity) null);
+                        entitywitch.prepare(world.E(new BlockPosition(i1, j1, k1)), null);
                         world.addEntity(entitywitch, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.CHUNK_GEN); // CraftBukkit - add SpawnReason
                     }
                 }
@@ -124,11 +123,12 @@ public class WorldGenRegistration {
         private boolean f;
         private boolean g;
         private boolean h;
-        private static final List<StructurePieceTreasure> i = Lists.newArrayList(new StructurePieceTreasure[] { new StructurePieceTreasure(Items.DIAMOND, 0, 1, 3, 3), new StructurePieceTreasure(Items.IRON_INGOT, 0, 1, 5, 10), new StructurePieceTreasure(Items.GOLD_INGOT, 0, 2, 7, 15), new StructurePieceTreasure(Items.EMERALD, 0, 1, 3, 2), new StructurePieceTreasure(Items.BONE, 0, 4, 6, 20), new StructurePieceTreasure(Items.ROTTEN_FLESH, 0, 3, 7, 16), new StructurePieceTreasure(Items.SADDLE, 0, 1, 1, 3), new StructurePieceTreasure(Items.IRON_HORSE_ARMOR, 0, 1, 1, 1), new StructurePieceTreasure(Items.GOLDEN_HORSE_ARMOR, 0, 1, 1, 1), new StructurePieceTreasure(Items.DIAMOND_HORSE_ARMOR, 0, 1, 1, 1)});
-        private static final List<StructurePieceTreasure> j = Lists.newArrayList(new StructurePieceTreasure[] { new StructurePieceTreasure(Items.ARROW, 0, 2, 7, 30)});
-        private static WorldGenRegistration.WorldGenJungleTemple.WorldGenJungleTemple$WorldGenJungleTemplePiece k = new WorldGenRegistration.WorldGenJungleTemple.WorldGenJungleTemple$WorldGenJungleTemplePiece((WorldGenRegistration.SyntheticClass_1) null);
+        private static final List<StructurePieceTreasure> i = Lists.newArrayList(new StructurePieceTreasure(Items.DIAMOND, 0, 1, 3, 3), new StructurePieceTreasure(Items.IRON_INGOT, 0, 1, 5, 10), new StructurePieceTreasure(Items.GOLD_INGOT, 0, 2, 7, 15), new StructurePieceTreasure(Items.EMERALD, 0, 1, 3, 2), new StructurePieceTreasure(Items.BONE, 0, 4, 6, 20), new StructurePieceTreasure(Items.ROTTEN_FLESH, 0, 3, 7, 16), new StructurePieceTreasure(Items.SADDLE, 0, 1, 1, 3), new StructurePieceTreasure(Items.IRON_HORSE_ARMOR, 0, 1, 1, 1), new StructurePieceTreasure(Items.GOLDEN_HORSE_ARMOR, 0, 1, 1, 1), new StructurePieceTreasure(Items.DIAMOND_HORSE_ARMOR, 0, 1, 1, 1));
+        private static final List<StructurePieceTreasure> j = Lists.newArrayList(new StructurePieceTreasure(Items.ARROW, 0, 2, 7, 30));
+        private static WorldGenRegistration.WorldGenJungleTemple.WorldGenJungleTemple$WorldGenJungleTemplePiece k = new WorldGenRegistration.WorldGenJungleTemple.WorldGenJungleTemple$WorldGenJungleTemplePiece(null);
 
-        public WorldGenJungleTemple() {}
+        public WorldGenJungleTemple() {
+        }
 
         public WorldGenJungleTemple(Random random, int i, int j) {
             super(random, i, 64, j, 12, 10, 15);
@@ -293,7 +293,7 @@ public class WorldGenRegistration {
                 this.a(world, Blocks.VINE.fromLegacyData(15), 8, -1, 3, structureboundingbox);
                 this.a(world, Blocks.VINE.fromLegacyData(15), 8, -2, 3, structureboundingbox);
                 if (!this.e) {
-                    this.e = this.a(world, structureboundingbox, random, 8, -3, 3, StructurePieceTreasure.a(WorldGenRegistration.WorldGenJungleTemple.i, new StructurePieceTreasure[] { Items.ENCHANTED_BOOK.b(random)}), 2 + random.nextInt(5));
+                    this.e = this.a(world, structureboundingbox, random, 8, -3, 3, StructurePieceTreasure.a(WorldGenRegistration.WorldGenJungleTemple.i, Items.ENCHANTED_BOOK.b(random)), 2 + random.nextInt(5));
                 }
 
                 this.a(world, Blocks.MOSSY_COBBLESTONE.getBlockData(), 9, -3, 2, structureboundingbox);
@@ -324,7 +324,7 @@ public class WorldGenRegistration {
                 this.a(world, Blocks.STICKY_PISTON.fromLegacyData(this.a(Blocks.STICKY_PISTON, EnumDirection.WEST.a())), 10, -1, 8, structureboundingbox);
                 this.a(world, Blocks.UNPOWERED_REPEATER.fromLegacyData(this.a(Blocks.UNPOWERED_REPEATER, EnumDirection.NORTH.b())), 10, -2, 10, structureboundingbox);
                 if (!this.f) {
-                    this.f = this.a(world, structureboundingbox, random, 9, -3, 10, StructurePieceTreasure.a(WorldGenRegistration.WorldGenJungleTemple.i, new StructurePieceTreasure[] { Items.ENCHANTED_BOOK.b(random)}), 2 + random.nextInt(5));
+                    this.f = this.a(world, structureboundingbox, random, 9, -3, 10, StructurePieceTreasure.a(WorldGenRegistration.WorldGenJungleTemple.i, Items.ENCHANTED_BOOK.b(random)), 2 + random.nextInt(5));
                 }
 
                 return true;
@@ -333,7 +333,8 @@ public class WorldGenRegistration {
 
         static class WorldGenJungleTemple$WorldGenJungleTemplePiece extends StructurePiece.StructurePieceBlockSelector {
 
-            private WorldGenJungleTemple$WorldGenJungleTemplePiece() {}
+            private WorldGenJungleTemple$WorldGenJungleTemplePiece() {
+            }
 
             public void a(Random random, int i, int j, int k, boolean flag) {
                 if (random.nextFloat() < 0.4F) {
@@ -353,9 +354,10 @@ public class WorldGenRegistration {
     public static class WorldGenPyramidPiece extends WorldGenRegistration.WorldGenScatteredPiece {
 
         private boolean[] e = new boolean[4];
-        private static final List<StructurePieceTreasure> f = Lists.newArrayList(new StructurePieceTreasure[] { new StructurePieceTreasure(Items.DIAMOND, 0, 1, 3, 3), new StructurePieceTreasure(Items.IRON_INGOT, 0, 1, 5, 10), new StructurePieceTreasure(Items.GOLD_INGOT, 0, 2, 7, 15), new StructurePieceTreasure(Items.EMERALD, 0, 1, 3, 2), new StructurePieceTreasure(Items.BONE, 0, 4, 6, 20), new StructurePieceTreasure(Items.ROTTEN_FLESH, 0, 3, 7, 16), new StructurePieceTreasure(Items.SADDLE, 0, 1, 1, 3), new StructurePieceTreasure(Items.IRON_HORSE_ARMOR, 0, 1, 1, 1), new StructurePieceTreasure(Items.GOLDEN_HORSE_ARMOR, 0, 1, 1, 1), new StructurePieceTreasure(Items.DIAMOND_HORSE_ARMOR, 0, 1, 1, 1)});
+        private static final List<StructurePieceTreasure> f = Lists.newArrayList(new StructurePieceTreasure(Items.DIAMOND, 0, 1, 3, 3), new StructurePieceTreasure(Items.IRON_INGOT, 0, 1, 5, 10), new StructurePieceTreasure(Items.GOLD_INGOT, 0, 2, 7, 15), new StructurePieceTreasure(Items.EMERALD, 0, 1, 3, 2), new StructurePieceTreasure(Items.BONE, 0, 4, 6, 20), new StructurePieceTreasure(Items.ROTTEN_FLESH, 0, 3, 7, 16), new StructurePieceTreasure(Items.SADDLE, 0, 1, 1, 3), new StructurePieceTreasure(Items.IRON_HORSE_ARMOR, 0, 1, 1, 1), new StructurePieceTreasure(Items.GOLDEN_HORSE_ARMOR, 0, 1, 1, 1), new StructurePieceTreasure(Items.DIAMOND_HORSE_ARMOR, 0, 1, 1, 1));
 
-        public WorldGenPyramidPiece() {}
+        public WorldGenPyramidPiece() {
+        }
 
         public WorldGenPyramidPiece(Random random, int i, int j) {
             super(random, i, 64, j, 21, 15, 21);
@@ -575,7 +577,7 @@ public class WorldGenRegistration {
                     int l1 = enumdirection.getAdjacentX() * 2;
                     int i2 = enumdirection.getAdjacentZ() * 2;
 
-                    this.e[enumdirection.b()] = this.a(world, structureboundingbox, random, 10 + l1, -11, 10 + i2, StructurePieceTreasure.a(WorldGenRegistration.WorldGenPyramidPiece.f, new StructurePieceTreasure[] { Items.ENCHANTED_BOOK.b(random)}), 2 + random.nextInt(5));
+                    this.e[enumdirection.b()] = this.a(world, structureboundingbox, random, 10 + l1, -11, 10 + i2, StructurePieceTreasure.a(WorldGenRegistration.WorldGenPyramidPiece.f, Items.ENCHANTED_BOOK.b(random)), 2 + random.nextInt(5));
                 }
             }
 
@@ -590,7 +592,8 @@ public class WorldGenRegistration {
         protected int c;
         protected int d = -1;
 
-        public WorldGenScatteredPiece() {}
+        public WorldGenScatteredPiece() {
+        }
 
         protected WorldGenScatteredPiece(Random random, int i, int j, int k, int l, int i1, int j1) {
             super(0);
@@ -599,13 +602,13 @@ public class WorldGenRegistration {
             this.c = j1;
             this.m = EnumDirection.EnumDirectionLimit.HORIZONTAL.a(random);
             switch (WorldGenRegistration.SyntheticClass_1.a[this.m.ordinal()]) {
-            case 1:
-            case 2:
-                this.l = new StructureBoundingBox(i, j, k, i + l - 1, j + i1 - 1, k + j1 - 1);
-                break;
+                case 1:
+                case 2:
+                    this.l = new StructureBoundingBox(i, j, k, i + l - 1, j + i1 - 1, k + j1 - 1);
+                    break;
 
-            default:
-                this.l = new StructureBoundingBox(i, j, k, i + j1 - 1, j + i1 - 1, k + l - 1);
+                default:
+                    this.l = new StructureBoundingBox(i, j, k, i + j1 - 1, j + i1 - 1, k + l - 1);
             }
 
         }
@@ -635,7 +638,7 @@ public class WorldGenRegistration {
                 for (int l = this.l.c; l <= this.l.f; ++l) {
                     for (int i1 = this.l.a; i1 <= this.l.d; ++i1) {
                         blockposition_mutableblockposition.c(i1, 64, l);
-                        if (structureboundingbox.b((BaseBlockPosition) blockposition_mutableblockposition)) {
+                        if (structureboundingbox.b(blockposition_mutableblockposition)) {
                             j += Math.max(world.r(blockposition_mutableblockposition).getY(), world.worldProvider.getSeaLevel());
                             ++k;
                         }

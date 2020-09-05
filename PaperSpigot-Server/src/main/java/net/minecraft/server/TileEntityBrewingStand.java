@@ -12,8 +12,8 @@ import java.util.List;
 
 public class TileEntityBrewingStand extends TileEntityContainer implements IUpdatePlayerListBox, IWorldInventory {
 
-    private static final int[] a = new int[] { 3};
-    private static final int[] f = new int[] { 0, 1, 2};
+    private static final int[] a = new int[]{3};
+    private static final int[] f = new int[]{0, 1, 2};
     private ItemStack[] items = new ItemStack[4];
     public int brewTime;
     private boolean[] i;
@@ -21,7 +21,8 @@ public class TileEntityBrewingStand extends TileEntityContainer implements IUpda
     private String k;
     private int lastTick = MinecraftServer.currentTick; // CraftBukkit - add field
 
-    public TileEntityBrewingStand() {}
+    public TileEntityBrewingStand() {
+    }
 
     // CraftBukkit start - add fields and methods
     public List<HumanEntity> transaction = new java.util.ArrayList<HumanEntity>();
@@ -273,12 +274,14 @@ public class TileEntityBrewingStand extends TileEntityContainer implements IUpda
     }
 
     public boolean a(EntityHuman entityhuman) {
-        return this.world.getTileEntity(this.position) != this ? false : entityhuman.e((double) this.position.getX() + 0.5D, (double) this.position.getY() + 0.5D, (double) this.position.getZ() + 0.5D) <= 64.0D;
+        return this.world.getTileEntity(this.position) == this && entityhuman.e((double) this.position.getX() + 0.5D, (double) this.position.getY() + 0.5D, (double) this.position.getZ() + 0.5D) <= 64.0D;
     }
 
-    public void startOpen(EntityHuman entityhuman) {}
+    public void startOpen(EntityHuman entityhuman) {
+    }
 
-    public void closeContainer(EntityHuman entityhuman) {}
+    public void closeContainer(EntityHuman entityhuman) {
+    }
 
     public boolean b(int i, ItemStack itemstack) {
         return i == 3 ? itemstack.getItem().l(itemstack) : itemstack.getItem() == Items.POTION || itemstack.getItem() == Items.GLASS_BOTTLE;
@@ -318,20 +321,20 @@ public class TileEntityBrewingStand extends TileEntityContainer implements IUpda
 
     public int getProperty(int i) {
         switch (i) {
-        case 0:
-            return this.brewTime;
+            case 0:
+                return this.brewTime;
 
-        default:
-            return 0;
+            default:
+                return 0;
         }
     }
 
     public void b(int i, int j) {
         switch (i) {
-        case 0:
-            this.brewTime = j;
+            case 0:
+                this.brewTime = j;
 
-        default:
+            default:
         }
     }
 

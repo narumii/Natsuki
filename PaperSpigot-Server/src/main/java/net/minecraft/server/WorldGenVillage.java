@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 public class WorldGenVillage extends StructureGenerator {
 
-    public static final List<BiomeBase> d = Arrays.asList(new BiomeBase[] { BiomeBase.PLAINS, BiomeBase.DESERT, BiomeBase.SAVANNA});
+    public static final List<BiomeBase> d = Arrays.asList(BiomeBase.PLAINS, BiomeBase.DESERT, BiomeBase.SAVANNA);
     private int f;
     private int g;
     private int h;
@@ -22,9 +22,9 @@ public class WorldGenVillage extends StructureGenerator {
         while (iterator.hasNext()) {
             Entry entry = (Entry) iterator.next();
 
-            if (((String) entry.getKey()).equals("size")) {
+            if (entry.getKey().equals("size")) {
                 this.f = MathHelper.a((String) entry.getValue(), this.f, 0);
-            } else if (((String) entry.getKey()).equals("distance")) {
+            } else if (entry.getKey().equals("distance")) {
                 this.g = MathHelper.a((String) entry.getValue(), this.g, this.h + 1);
             }
         }
@@ -58,9 +58,7 @@ public class WorldGenVillage extends StructureGenerator {
         if (k == i1 && l == j1) {
             boolean flag = this.c.getWorldChunkManager().a(k * 16 + 8, l * 16 + 8, 0, WorldGenVillage.d);
 
-            if (flag) {
-                return true;
-            }
+            return flag;
         }
 
         return false;
@@ -74,7 +72,8 @@ public class WorldGenVillage extends StructureGenerator {
 
         private boolean c;
 
-        public WorldGenVillageStart() {}
+        public WorldGenVillageStart() {
+        }
 
         public WorldGenVillageStart(World world, Random random, int i, int j, int k) {
             super(i, j);
@@ -82,7 +81,7 @@ public class WorldGenVillage extends StructureGenerator {
             WorldGenVillagePieces.WorldGenVillageStartPiece worldgenvillagepieces_worldgenvillagestartpiece = new WorldGenVillagePieces.WorldGenVillageStartPiece(world.getWorldChunkManager(), 0, random, (i << 4) + 2, (j << 4) + 2, list, k);
 
             this.a.add(worldgenvillagepieces_worldgenvillagestartpiece);
-            worldgenvillagepieces_worldgenvillagestartpiece.a((StructurePiece) worldgenvillagepieces_worldgenvillagestartpiece, (List) this.a, random);
+            worldgenvillagepieces_worldgenvillagestartpiece.a(worldgenvillagepieces_worldgenvillagestartpiece, this.a, random);
             List list1 = worldgenvillagepieces_worldgenvillagestartpiece.g;
             List list2 = worldgenvillagepieces_worldgenvillagestartpiece.f;
 
@@ -94,11 +93,11 @@ public class WorldGenVillage extends StructureGenerator {
                 if (list1.isEmpty()) {
                     l = random.nextInt(list2.size());
                     structurepiece = (StructurePiece) list2.remove(l);
-                    structurepiece.a((StructurePiece) worldgenvillagepieces_worldgenvillagestartpiece, (List) this.a, random);
+                    structurepiece.a(worldgenvillagepieces_worldgenvillagestartpiece, this.a, random);
                 } else {
                     l = random.nextInt(list1.size());
                     structurepiece = (StructurePiece) list1.remove(l);
-                    structurepiece.a((StructurePiece) worldgenvillagepieces_worldgenvillagestartpiece, (List) this.a, random);
+                    structurepiece.a(worldgenvillagepieces_worldgenvillagestartpiece, this.a, random);
                 }
             }
 

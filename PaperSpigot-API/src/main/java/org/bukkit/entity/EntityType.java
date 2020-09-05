@@ -189,11 +189,11 @@ public enum EntityType {
         }
     }
 
-    private EntityType(String name, Class<? extends Entity> clazz, int typeId) {
+    EntityType(String name, Class<? extends Entity> clazz, int typeId) {
         this(name, clazz, typeId, true);
     }
 
-    private EntityType(String name, Class<? extends Entity> clazz, int typeId, boolean independent) {
+    EntityType(String name, Class<? extends Entity> clazz, int typeId, boolean independent) {
         this.name = name;
         this.clazz = clazz;
         this.typeId = (short) typeId;
@@ -204,7 +204,6 @@ public enum EntityType {
     }
 
     /**
-     *
      * @return the entity type's name
      * @deprecated Magic value
      */
@@ -218,8 +217,7 @@ public enum EntityType {
     }
 
     /**
-     *
-     * @return the raw type id 
+     * @return the raw type id
      * @deprecated Magic value
      */
     @Deprecated
@@ -228,7 +226,6 @@ public enum EntityType {
     }
 
     /**
-     *
      * @param name the entity type's name
      * @return the matching entity type or null
      * @deprecated Magic value
@@ -242,7 +239,6 @@ public enum EntityType {
     }
 
     /**
-     *
      * @param id the raw type id
      * @return the matching entity type or null
      * @deprecated Magic value

@@ -4,13 +4,14 @@ import com.google.gson.JsonParseException;
 
 public class TileEntitySign extends TileEntity {
 
-    public final IChatBaseComponent[] lines = new IChatBaseComponent[] { new ChatComponentText(""), new ChatComponentText(""), new ChatComponentText(""), new ChatComponentText("")};
+    public final IChatBaseComponent[] lines = new IChatBaseComponent[]{new ChatComponentText(""), new ChatComponentText(""), new ChatComponentText(""), new ChatComponentText("")};
     public int f = -1;
     public boolean isEditable = true;
     private EntityHuman h;
     private final CommandObjectiveExecutor i = new CommandObjectiveExecutor();
 
-    public TileEntitySign() {}
+    public TileEntitySign() {
+    }
 
     public void b(NBTTagCompound nbttagcompound) {
         super.b(nbttagcompound);
@@ -42,7 +43,8 @@ public class TileEntitySign extends TileEntity {
                 return new ChatComponentText(this.getName());
             }
 
-            public void sendMessage(IChatBaseComponent ichatbasecomponent) {}
+            public void sendMessage(IChatBaseComponent ichatbasecomponent) {
+            }
 
             public boolean a(int i, String s) {
                 return true;
@@ -68,7 +70,8 @@ public class TileEntitySign extends TileEntity {
                 return false;
             }
 
-            public void a(CommandObjectiveExecutor.EnumCommandResult commandobjectiveexecutor_enumcommandresult, int i) {}
+            public void a(CommandObjectiveExecutor.EnumCommandResult commandobjectiveexecutor_enumcommandresult, int i) {
+            }
         };
 
         // CraftBukkit start - Add an option to convert signs correctly
@@ -93,7 +96,7 @@ public class TileEntitySign extends TileEntity {
                 // CraftBukkit end
 
                 try {
-                    this.lines[i] = ChatComponentUtils.filterForDisplay(icommandlistener, ichatbasecomponent, (Entity) null);
+                    this.lines[i] = ChatComponentUtils.filterForDisplay(icommandlistener, ichatbasecomponent, null);
                 } catch (CommandException commandexception) {
                     this.lines[i] = ichatbasecomponent;
                 }
@@ -138,7 +141,8 @@ public class TileEntitySign extends TileEntity {
                 return entityhuman.getScoreboardDisplayName();
             }
 
-            public void sendMessage(IChatBaseComponent ichatbasecomponent) {}
+            public void sendMessage(IChatBaseComponent ichatbasecomponent) {
+            }
 
             public boolean a(int i, String s) {
                 return i <= 2;
@@ -178,7 +182,7 @@ public class TileEntitySign extends TileEntity {
                 if (chatclickable.a() == ChatClickable.EnumClickAction.RUN_COMMAND) {
                     // CraftBukkit start
                     // MinecraftServer.getServer().getCommandHandler().a(tileentitysignplayerwrapper, chatclickable.b());
-                    CommandBlockListenerAbstract.executeCommand(entityhuman, (org.bukkit.entity.Player) entityhuman.getBukkitEntity(), chatclickable.b());
+                    CommandBlockListenerAbstract.executeCommand(entityhuman, entityhuman.getBukkitEntity(), chatclickable.b());
                     // CraftBukkit end
                 }
             }

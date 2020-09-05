@@ -286,8 +286,8 @@ public class PlayerInventory implements IInventory {
                 CrashReport crashreport = CrashReport.a(throwable, "Adding item to inventory");
                 CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Item being added");
 
-                crashreportsystemdetails.a("Item ID", (Object) Integer.valueOf(Item.getId(itemstack.getItem())));
-                crashreportsystemdetails.a("Item data", (Object) Integer.valueOf(itemstack.getData()));
+                crashreportsystemdetails.a("Item ID", Integer.valueOf(Item.getId(itemstack.getItem())));
+                crashreportsystemdetails.a("Item data", Integer.valueOf(itemstack.getData()));
                 crashreportsystemdetails.a("Item name", new Callable() {
                     public String a() throws Exception {
                         return itemstack.getName();
@@ -442,7 +442,7 @@ public class PlayerInventory implements IInventory {
     }
 
     public IChatBaseComponent getScoreboardDisplayName() {
-        return (IChatBaseComponent) (this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatMessage(this.getName(), new Object[0]));
+        return this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatMessage(this.getName(), new Object[0]);
     }
 
     public int getMaxStackSize() {
@@ -455,7 +455,7 @@ public class PlayerInventory implements IInventory {
         } else {
             ItemStack itemstack = this.getItem(this.itemInHandIndex);
 
-            return itemstack != null ? itemstack.b(block) : false;
+            return itemstack != null && itemstack.b(block);
         }
     }
 
@@ -531,7 +531,7 @@ public class PlayerInventory implements IInventory {
     }
 
     public boolean a(EntityHuman entityhuman) {
-        return this.player.dead ? false : entityhuman.h(this.player) <= 64.0D;
+        return !this.player.dead && entityhuman.h(this.player) <= 64.0D;
     }
 
     public boolean c(ItemStack itemstack) {
@@ -552,9 +552,11 @@ public class PlayerInventory implements IInventory {
         return false;
     }
 
-    public void startOpen(EntityHuman entityhuman) {}
+    public void startOpen(EntityHuman entityhuman) {
+    }
 
-    public void closeContainer(EntityHuman entityhuman) {}
+    public void closeContainer(EntityHuman entityhuman) {
+    }
 
     public boolean b(int i, ItemStack itemstack) {
         return true;
@@ -578,7 +580,8 @@ public class PlayerInventory implements IInventory {
         return 0;
     }
 
-    public void b(int i, int j) {}
+    public void b(int i, int j) {
+    }
 
     public int g() {
         return 0;

@@ -7,7 +7,6 @@ import org.bukkit.craftbukkit.util.CraftIconCache;
 import org.bukkit.entity.Player;
 import pw.narumi.Natsuki;
 import pw.narumi.common.Holder;
-import pw.narumi.common.Utils;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -27,10 +26,11 @@ public class PacketStatusListener implements PacketStatusInListener {
         this.networkManager = networkmanager;
     }
 
-    public void a(IChatBaseComponent ichatbasecomponent) {}
+    public void a(IChatBaseComponent ichatbasecomponent) {
+    }
 
     public void a(PacketStatusInStart packetstatusinstart) {
-        
+
         if (this.d) {
             this.networkManager.close(PacketStatusListener.a);
             // CraftBukkit start - fire ping event
@@ -120,10 +120,9 @@ public class PacketStatusListener implements PacketStatusInListener {
 
         ServerPing.ServerPingPlayerSample playerSample = new ServerPing.ServerPingPlayerSample(event.getMaxPlayers(), profiles.size());
         // Spigot Start
-        if ( !profiles.isEmpty() )
-        {
-            java.util.Collections.shuffle( profiles ); // This sucks, its inefficient but we have no simple way of doing it differently
-            profiles = profiles.subList( 0, Math.min( profiles.size(), org.spigotmc.SpigotConfig.playerSample ) ); // Cap the sample to n (or less) displayed players, ie: Vanilla behaviour
+        if (!profiles.isEmpty()) {
+            java.util.Collections.shuffle(profiles); // This sucks, its inefficient but we have no simple way of doing it differently
+            profiles = profiles.subList(0, Math.min(profiles.size(), org.spigotmc.SpigotConfig.playerSample)); // Cap the sample to n (or less) displayed players, ie: Vanilla behaviour
         }
         // Spigot End
         playerSample.a(profiles.toArray(new GameProfile[profiles.size()]));

@@ -46,9 +46,9 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * Gets the current result of the login, as an enum
      *
      * @return Current Result of the login
-     * @deprecated This method uses a deprecated enum from {@link
-     *     PlayerPreLoginEvent}
      * @see #getLoginResult()
+     * @deprecated This method uses a deprecated enum from {@link
+     * PlayerPreLoginEvent}
      */
     @Deprecated
     public PlayerPreLoginEvent.Result getResult() {
@@ -68,9 +68,9 @@ public class AsyncPlayerPreLoginEvent extends Event {
      * Sets the new result of the login, as an enum
      *
      * @param result New result to set
-     * @deprecated This method uses a deprecated enum from {@link
-     *     PlayerPreLoginEvent}
      * @see #setLoginResult(Result)
+     * @deprecated This method uses a deprecated enum from {@link
+     * PlayerPreLoginEvent}
      */
     @Deprecated
     public void setResult(final PlayerPreLoginEvent.Result result) {
@@ -107,7 +107,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     /**
      * Disallows the player from logging in, with the given reason
      *
-     * @param result New result for disallowing the player
+     * @param result  New result for disallowing the player
      * @param message Kick message to display to the user
      */
     public void disallow(final Result result, final String message) {
@@ -118,11 +118,11 @@ public class AsyncPlayerPreLoginEvent extends Event {
     /**
      * Disallows the player from logging in, with the given reason
      *
-     * @param result New result for disallowing the player
+     * @param result  New result for disallowing the player
      * @param message Kick message to display to the user
-     * @deprecated This method uses a deprecated enum from {@link
-     *     PlayerPreLoginEvent}
      * @see #disallow(Result, String)
+     * @deprecated This method uses a deprecated enum from {@link
+     * PlayerPreLoginEvent}
      */
     @Deprecated
     public void disallow(final PlayerPreLoginEvent.Result result, final String message) {

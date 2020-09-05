@@ -60,18 +60,18 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
         super(tag);
 
         if (tag.hasKey(BOOK_TITLE.NBT)) {
-            this.title = limit( tag.getString(BOOK_TITLE.NBT), 1024 ); // Spigot
+            this.title = limit(tag.getString(BOOK_TITLE.NBT), 1024); // Spigot
         }
 
         if (tag.hasKey(BOOK_AUTHOR.NBT)) {
-            this.author = limit( tag.getString(BOOK_AUTHOR.NBT), 1024 ); // Spigot
+            this.author = limit(tag.getString(BOOK_AUTHOR.NBT), 1024); // Spigot
         }
 
         boolean resolved = false;
         if (tag.hasKey(RESOLVED.NBT)) {
             resolved = tag.getBoolean(RESOLVED.NBT);
         }
-        
+
         if (tag.hasKey(GENERATION.NBT)) {
             generation = tag.getInt(GENERATION.NBT);
         }
@@ -89,7 +89,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
                         // Ignore and treat as an old book
                     }
                 }
-                addPage( limit( page, 2048 ) ); // Spigot
+                addPage(limit(page, 2048)); // Spigot
             }
         }
     }
@@ -102,14 +102,14 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
         setTitle(SerializableMeta.getString(map, BOOK_TITLE.BUKKIT, true));
 
         Iterable<?> pages = SerializableMeta.getObject(Iterable.class, map, BOOK_PAGES.BUKKIT, true);
-        if(pages != null) {
+        if (pages != null) {
             for (Object page : pages) {
                 if (page instanceof String) {
                     addPage((String) page);
                 }
             }
         }
-        
+
         generation = SerializableMeta.getObject(Integer.class, map, GENERATION.BUKKIT, true);
     }
 
@@ -158,11 +158,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
     @Override
     boolean applicableTo(Material type) {
         switch (type) {
-        case WRITTEN_BOOK:
-        case BOOK_AND_QUILL:
-            return true;
-        default:
-            return false;
+            case WRITTEN_BOOK:
+            case BOOK_AND_QUILL:
+                return true;
+            default:
+                return false;
         }
     }
 
@@ -327,7 +327,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
             }
             builder.put(BOOK_PAGES.BUKKIT, pagesString);
         }
-        
+
         if (generation != null) {
             builder.put(GENERATION.BUKKIT, generation);
         }

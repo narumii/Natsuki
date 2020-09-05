@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.inventory.CraftShapedRecipe;
 // CraftBukkit end
@@ -25,45 +26,45 @@ public class ShapedRecipes implements IRecipe {
         CraftItemStack result = CraftItemStack.asCraftMirror(this.result);
         CraftShapedRecipe recipe = new CraftShapedRecipe(result, this);
         switch (this.height) {
-        case 1:
-            switch (this.width) {
             case 1:
-                recipe.shape("a");
+                switch (this.width) {
+                    case 1:
+                        recipe.shape("a");
+                        break;
+                    case 2:
+                        recipe.shape("ab");
+                        break;
+                    case 3:
+                        recipe.shape("abc");
+                        break;
+                }
                 break;
             case 2:
-                recipe.shape("ab");
+                switch (this.width) {
+                    case 1:
+                        recipe.shape("a", "b");
+                        break;
+                    case 2:
+                        recipe.shape("ab", "cd");
+                        break;
+                    case 3:
+                        recipe.shape("abc", "def");
+                        break;
+                }
                 break;
             case 3:
-                recipe.shape("abc");
+                switch (this.width) {
+                    case 1:
+                        recipe.shape("a", "b", "c");
+                        break;
+                    case 2:
+                        recipe.shape("ab", "cd", "ef");
+                        break;
+                    case 3:
+                        recipe.shape("abc", "def", "ghi");
+                        break;
+                }
                 break;
-            }
-            break;
-        case 2:
-            switch (this.width) {
-            case 1:
-                recipe.shape("a","b");
-                break;
-            case 2:
-                recipe.shape("ab","cd");
-                break;
-            case 3:
-                recipe.shape("abc","def");
-                break;
-            }
-            break;
-        case 3:
-            switch (this.width) {
-            case 1:
-                recipe.shape("a","b","c");
-                break;
-            case 2:
-                recipe.shape("ab","cd","ef");
-                break;
-            case 3:
-                recipe.shape("abc","def","ghi");
-                break;
-            }
-            break;
         }
         char c = 'a';
         for (ItemStack stack : this.items) {
@@ -167,9 +168,8 @@ public class ShapedRecipes implements IRecipe {
     }
 
     // Spigot start
-    public java.util.List<ItemStack> getIngredients()
-    {
-        return java.util.Arrays.asList( items );
+    public java.util.List<ItemStack> getIngredients() {
+        return java.util.Arrays.asList(items);
     }
     // Spigot end
 }

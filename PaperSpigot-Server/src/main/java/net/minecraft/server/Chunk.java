@@ -104,9 +104,9 @@ public class Chunk {
             case 1:
                 final int mask =
                         //       x        z   offset          x        z   offset          x         z   offset
-                        (0x1 << (1 * 5 +  1 + 12)) | (0x1 << (0 * 5 +  1 + 12)) | (0x1 << (-1 * 5 +  1 + 12)) |
-                        (0x1 << (1 * 5 +  0 + 12)) | (0x1 << (0 * 5 +  0 + 12)) | (0x1 << (-1 * 5 +  0 + 12)) |
-                        (0x1 << (1 * 5 + -1 + 12)) | (0x1 << (0 * 5 + -1 + 12)) | (0x1 << (-1 * 5 + -1 + 12));
+                        (0x1 << (1 * 5 + 1 + 12)) | (0x1 << (0 * 5 + 1 + 12)) | (0x1 << (-1 * 5 + 1 + 12)) |
+                                (0x1 << (1 * 5 + 0 + 12)) | (0x1 << (0 * 5 + 0 + 12)) | (0x1 << (-1 * 5 + 0 + 12)) |
+                                (0x1 << (1 * 5 + -1 + 12)) | (0x1 << (0 * 5 + -1 + 12)) | (0x1 << (-1 * 5 + -1 + 12));
                 return (this.neighbors & mask) == mask;
             default:
                 throw new UnsupportedOperationException(String.valueOf(radius));
@@ -500,6 +500,7 @@ public class Chunk {
         }
         return Blocks.AIR.getBlockData();
     }
+
     public IBlockData getBlockDataSlow(final BlockPosition blockposition) {
         // PaperSpigot end
         if (this.world.G() == WorldType.DEBUG_ALL_BLOCK_STATES) {
@@ -632,7 +633,7 @@ public class Chunk {
                 }
 
                 // CraftBukkit - Don't place while processing the BlockPlaceEvent, unless it's a BlockContainer. Prevents blocks such as TNT from activating when cancelled.
-                if (!this.world.isClientSide && block1 != block  && (!this.world.captureBlockStates || block instanceof BlockContainer)) {
+                if (!this.world.isClientSide && block1 != block && (!this.world.captureBlockStates || block instanceof BlockContainer)) {
                     block.onPlace(this.world, blockposition, iblockdata);
                 }
 
@@ -709,8 +710,8 @@ public class Chunk {
 
     public void a(Entity entity) {
         this.r = true;
-        int i =(int) Math.floor(entity.locX / 16.0D);
-        int j =(int) Math.floor(entity.locZ / 16.0D);
+        int i = (int) Math.floor(entity.locX / 16.0D);
+        int j = (int) Math.floor(entity.locZ / 16.0D);
 
         if (i != this.locX || j != this.locZ) {
             // CraftBukkit start
@@ -721,7 +722,7 @@ public class Chunk {
             entity.die();
         }
 
-        int k =(int) Math.floor(entity.locY / 16.0D);
+        int k = (int) Math.floor(entity.locY / 16.0D);
 
         if (k < 0) {
             k = 0;
@@ -751,11 +752,9 @@ public class Chunk {
                 return;
             }
         }
-        for ( EnumCreatureType creatureType : EnumCreatureType.values() )
-        {
-            if ( creatureType.a().isAssignableFrom( entity.getClass() ) )
-            {
-                this.entityCount.adjustOrPutValue( creatureType.a(), 1, 1 );
+        for (EnumCreatureType creatureType : EnumCreatureType.values()) {
+            if (creatureType.a().isAssignableFrom(entity.getClass())) {
+                this.entityCount.adjustOrPutValue(creatureType.a(), 1, 1);
             }
         }
         // Spigot end
@@ -790,11 +789,9 @@ public class Chunk {
                 return;
             }
         }
-        for ( EnumCreatureType creatureType : EnumCreatureType.values() )
-        {
-            if ( creatureType.a().isAssignableFrom( entity.getClass() ) )
-            {
-                this.entityCount.adjustValue( creatureType.a(), -1 );
+        for (EnumCreatureType creatureType : EnumCreatureType.values()) {
+            if (creatureType.a().isAssignableFrom(entity.getClass())) {
+                this.entityCount.adjustValue(creatureType.a(), -1);
             }
         }
         // Spigot end
@@ -868,9 +865,9 @@ public class Chunk {
             // Paper start
             ServerInternalException e = new ServerInternalException(
                     "Attempted to place a tile entity (" + tileentity + ") at " + tileentity.position.getX() + ","
-                    + tileentity.position.getY() + "," + tileentity.position.getZ()
-                    + " (" + CraftMagicNumbers.getMaterial(getType(blockposition)) + ") where there was no entity tile!\n" +
-                    "Chunk coordinates: " + (this.locX * 16) + "," + (this.locZ * 16));
+                            + tileentity.position.getY() + "," + tileentity.position.getZ()
+                            + " (" + CraftMagicNumbers.getMaterial(getType(blockposition)) + ") where there was no entity tile!\n" +
+                            "Chunk coordinates: " + (this.locX * 16) + "," + (this.locZ * 16));
             e.printStackTrace();
             ServerInternalException.reportInternalException(e);
             // Paper end
@@ -914,13 +911,10 @@ public class Chunk {
         while (iterator.hasNext()) {
             TileEntity tileentity = (TileEntity) iterator.next();
             // Spigot Start
-            if ( tileentity instanceof IInventory )
-            {
-                for ( org.bukkit.entity.HumanEntity h : Lists.newArrayList(( (IInventory) tileentity ).getViewers()) )
-                {
-                    if ( h instanceof org.bukkit.craftbukkit.entity.CraftHumanEntity )
-                    {
-                       ( (org.bukkit.craftbukkit.entity.CraftHumanEntity) h).getHandle().closeInventory();
+            if (tileentity instanceof IInventory) {
+                for (org.bukkit.entity.HumanEntity h : Lists.newArrayList(((IInventory) tileentity).getViewers())) {
+                    if (h instanceof org.bukkit.craftbukkit.entity.CraftHumanEntity) {
+                        ((org.bukkit.craftbukkit.entity.CraftHumanEntity) h).getHandle().closeInventory();
                     }
                 }
             }
@@ -936,13 +930,10 @@ public class Chunk {
             while (iter.hasNext()) {
                 Entity entity = iter.next();
                 // Spigot Start
-                if ( entity instanceof IInventory )
-                {
-                    for ( org.bukkit.entity.HumanEntity h : Lists.newArrayList(( (IInventory) entity ).getViewers()) )
-                    {
-                        if ( h instanceof org.bukkit.craftbukkit.entity.CraftHumanEntity )
-                        {
-                           ( (org.bukkit.craftbukkit.entity.CraftHumanEntity) h).getHandle().closeInventory();
+                if (entity instanceof IInventory) {
+                    for (org.bukkit.entity.HumanEntity h : Lists.newArrayList(((IInventory) entity).getViewers())) {
+                        if (h instanceof org.bukkit.craftbukkit.entity.CraftHumanEntity) {
+                            ((org.bukkit.craftbukkit.entity.CraftHumanEntity) h).getHandle().closeInventory();
                         }
                     }
                 }
@@ -966,8 +957,8 @@ public class Chunk {
     }
 
     public void a(Entity entity, AxisAlignedBB axisalignedbb, List<Entity> list, Predicate<? super Entity> predicate) {
-        int i =(int) Math.floor((axisalignedbb.b - 2.0D) / 16.0D);
-        int j =(int) Math.floor((axisalignedbb.e + 2.0D) / 16.0D);
+        int i = (int) Math.floor((axisalignedbb.b - 2.0D) / 16.0D);
+        int j = (int) Math.floor((axisalignedbb.e + 2.0D) / 16.0D);
 
         i = MathHelper.clamp(i, 0, this.entitySlices.length - 1);
         j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
@@ -1010,8 +1001,8 @@ public class Chunk {
     }
 
     public <T extends Entity> void a(Class<? extends T> oclass, AxisAlignedBB axisalignedbb, List<T> list, Predicate<? super T> predicate) {
-        int i =(int) Math.floor((axisalignedbb.b - 2.0D) / 16.0D);
-        int j =(int) Math.floor((axisalignedbb.e + 2.0D) / 16.0D);
+        int i = (int) Math.floor((axisalignedbb.b - 2.0D) / 16.0D);
+        int j = (int) Math.floor((axisalignedbb.e + 2.0D) / 16.0D);
 
         i = MathHelper.clamp(i, 0, this.entitySlices.length - 1);
         j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
@@ -1027,7 +1018,8 @@ public class Chunk {
         }
         // PaperSpigot end
         for (int k = i; k <= j; ++k) {
-            if (counts != null && counts[k] <= 0) continue; // PaperSpigot - Don't check a chunk if it doesn't have the type we are looking for
+            if (counts != null && counts[k] <= 0)
+                continue; // PaperSpigot - Don't check a chunk if it doesn't have the type we are looking for
             Iterator iterator = this.entitySlices[k].iterator(); // Spigot
 
             while (iterator.hasNext()) {
@@ -1478,6 +1470,7 @@ public class Chunk {
 
         IMMEDIATE, QUEUED, CHECK;
 
-        EnumTileEntityState() {}
+        EnumTileEntityState() {
+        }
     }
 }

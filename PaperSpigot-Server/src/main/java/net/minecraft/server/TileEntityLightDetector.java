@@ -2,7 +2,8 @@ package net.minecraft.server;
 
 public class TileEntityLightDetector extends TileEntity implements IUpdatePlayerListBox {
 
-    public TileEntityLightDetector() {}
+    public TileEntityLightDetector() {
+    }
 
     public void c() {
         if (this.world != null && !this.world.isClientSide && this.world.getTime() % 20L == 0L) {

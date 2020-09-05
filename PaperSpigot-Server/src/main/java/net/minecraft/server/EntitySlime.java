@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.event.entity.SlimeSplitEvent;
 // CraftBukkit end
 
@@ -221,7 +222,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
     }
 
     public boolean bR() {
-        BlockPosition blockposition = new BlockPosition(MathHelper.floor(this.locX), 0,(int) Math.floor(this.locZ));
+        BlockPosition blockposition = new BlockPosition(MathHelper.floor(this.locX), 0, (int) Math.floor(this.locZ));
         Chunk chunk = this.world.getChunkAtWorldCoords(blockposition);
 
         if (this.world.getWorldData().getType() == WorldType.FLAT && this.random.nextInt(4) != 1) {

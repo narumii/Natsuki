@@ -11,8 +11,8 @@ import org.bukkit.inventory.Inventory;
  * actually did anything
  *
  * @deprecated Use {@link InventoryClickEvent} or {@link InventoryOpenEvent}
- *     instead, or one of the other inventory events in {@link
- *     org.bukkit.event.inventory}.
+ * instead, or one of the other inventory events in {@link
+ * org.bukkit.event.inventory}.
  */
 @Deprecated
 public class PlayerInventoryEvent extends PlayerEvent {

@@ -243,7 +243,8 @@ public class EntityArmorStand extends EntityLiving {
         return false;
     }
 
-    protected void s(Entity entity) {}
+    protected void s(Entity entity) {
+    }
 
     protected void bL() {
         List list = this.world.getEntities(this, this.getBoundingBox());
@@ -350,7 +351,7 @@ public class EntityArmorStand extends EntityLiving {
                 ArmorStand self = (ArmorStand) this.getBukkitEntity();
 
                 EquipmentSlot slot = CraftEquipmentSlot.getSlot(i);
-                PlayerArmorStandManipulateEvent armorStandManipulateEvent = new PlayerArmorStandManipulateEvent(player,self,playerHeldItem,armorStandItem,slot);
+                PlayerArmorStandManipulateEvent armorStandManipulateEvent = new PlayerArmorStandManipulateEvent(player, self, playerHeldItem, armorStandItem, slot);
                 this.world.getServer().getPluginManager().callEvent(armorStandManipulateEvent);
 
                 if (armorStandManipulateEvent.isCancelled()) {
@@ -443,7 +444,7 @@ public class EntityArmorStand extends EntityLiving {
 
     private void A() {
         if (this.world instanceof WorldServer) {
-            ((WorldServer) this.world).a(EnumParticle.BLOCK_DUST, this.locX, this.locY + (double) this.length / 1.5D, this.locZ, 10, (double) (this.width / 4.0F), (double) (this.length / 4.0F), (double) (this.width / 4.0F), 0.05D, new int[] { Block.getCombinedId(Blocks.PLANKS.getBlockData())});
+            ((WorldServer) this.world).a(EnumParticle.BLOCK_DUST, this.locX, this.locY + (double) this.length / 1.5D, this.locZ, 10, (double) (this.width / 4.0F), (double) (this.length / 4.0F), (double) (this.width / 4.0F), 0.05D, Block.getCombinedId(Blocks.PLANKS.getBlockData()));
         }
 
     }

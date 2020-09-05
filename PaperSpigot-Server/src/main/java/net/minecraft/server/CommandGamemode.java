@@ -4,7 +4,8 @@ import java.util.List;
 
 public class CommandGamemode extends CommandAbstract {
 
-    public CommandGamemode() {}
+    public CommandGamemode() {
+    }
 
     public String getCommand() {
         return "gamemode";
@@ -20,7 +21,7 @@ public class CommandGamemode extends CommandAbstract {
 
     public void execute(ICommandListener icommandlistener, String[] astring) throws CommandException {
         if (astring.length <= 0) {
-            throw new ExceptionUsage("commands.gamemode.usage", new Object[0]);
+            throw new ExceptionUsage("commands.gamemode.usage");
         } else {
             WorldSettings.EnumGamemode worldsettings_enumgamemode = this.h(icommandlistener, astring[0]);
             EntityPlayer entityplayer = astring.length >= 2 ? a(icommandlistener, astring[1]) : b(icommandlistener);
@@ -35,15 +36,15 @@ public class CommandGamemode extends CommandAbstract {
 
             entityplayer.fallDistance = 0.0F;
             if (icommandlistener.getWorld().getGameRules().getBoolean("sendCommandFeedback")) {
-                entityplayer.sendMessage(new ChatMessage("gameMode.changed", new Object[0]));
+                entityplayer.sendMessage(new ChatMessage("gameMode.changed"));
             }
 
-            ChatMessage chatmessage = new ChatMessage("gameMode." + worldsettings_enumgamemode.b(), new Object[0]);
+            ChatMessage chatmessage = new ChatMessage("gameMode." + worldsettings_enumgamemode.b());
 
             if (entityplayer != icommandlistener) {
-                a(icommandlistener, this, 1, "commands.gamemode.success.other", new Object[] { entityplayer.getName(), chatmessage});
+                a(icommandlistener, this, 1, "commands.gamemode.success.other", entityplayer.getName(), chatmessage);
             } else {
-                a(icommandlistener, this, 1, "commands.gamemode.success.self", new Object[] { chatmessage});
+                a(icommandlistener, this, 1, "commands.gamemode.success.self", chatmessage);
             }
 
         }
@@ -54,7 +55,7 @@ public class CommandGamemode extends CommandAbstract {
     }
 
     public List<String> tabComplete(ICommandListener icommandlistener, String[] astring, BlockPosition blockposition) {
-        return astring.length == 1 ? a(astring, new String[] { "survival", "creative", "adventure", "spectator"}) : (astring.length == 2 ? a(astring, this.d()) : null);
+        return astring.length == 1 ? a(astring, "survival", "creative", "adventure", "spectator") : (astring.length == 2 ? a(astring, this.d()) : null);
     }
 
     protected String[] d() {
@@ -68,7 +69,7 @@ public class CommandGamemode extends CommandAbstract {
     // CraftBukkit start - fix decompiler error
     @Override
     public int compareTo(ICommand o) {
-        return a((ICommand) o);
+        return a(o);
     }
     // CraftBukkit end
 }

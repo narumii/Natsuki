@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.inventory.CraftInventoryCrafting;
 import org.bukkit.craftbukkit.inventory.CraftInventoryView;
 // CraftBukkit end
@@ -23,7 +24,7 @@ public class ContainerPlayer extends Container {
         this.craftInventory = new InventoryCrafting(this, 2, 2, playerinventory.player); // CraftBukkit - pass player
         this.craftInventory.resultInventory = this.resultInventory; // CraftBukkit - let InventoryCrafting know about its result slot
         this.player = playerinventory; // CraftBukkit - save player
-        this.a((Slot) (new SlotResult(playerinventory.player, this.craftInventory, this.resultInventory, 0, 144, 36)));
+        this.a(new SlotResult(playerinventory.player, this.craftInventory, this.resultInventory, 0, 144, 36));
 
         // CraftBukkit - fixed multiple decompiler errors below, good luck
         int j;
@@ -42,7 +43,7 @@ public class ContainerPlayer extends Container {
                 }
 
                 public boolean isAllowed(ItemStack itemstack) {
-                    return itemstack == null ? false : (itemstack.getItem() instanceof ItemArmor ? ((ItemArmor) itemstack.getItem()).b == i : (itemstack.getItem() != Item.getItemOf(Blocks.PUMPKIN) && itemstack.getItem() != Items.SKULL ? false : i == 0));
+                    return itemstack != null && (itemstack.getItem() instanceof ItemArmor ? ((ItemArmor) itemstack.getItem()).b == i : ((itemstack.getItem() == Item.getItemOf(Blocks.PUMPKIN) || itemstack.getItem() == Items.SKULL) && i == 0));
                 }
             });
         }
@@ -86,7 +87,7 @@ public class ContainerPlayer extends Container {
             }
         }
 
-        this.resultInventory.setItem(0, (ItemStack) null);
+        this.resultInventory.setItem(0, null);
     }
 
     public boolean a(EntityHuman entityhuman) {
@@ -95,7 +96,7 @@ public class ContainerPlayer extends Container {
 
     public ItemStack b(EntityHuman entityhuman, int i) {
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.c.get(i);
+        Slot slot = this.c.get(i);
 
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
@@ -115,7 +116,7 @@ public class ContainerPlayer extends Container {
                 if (!this.a(itemstack1, 9, 45, false)) {
                     return null;
                 }
-            } else if (itemstack.getItem() instanceof ItemArmor && !((Slot) this.c.get(5 + ((ItemArmor) itemstack.getItem()).b)).hasItem()) {
+            } else if (itemstack.getItem() instanceof ItemArmor && !this.c.get(5 + ((ItemArmor) itemstack.getItem()).b).hasItem()) {
                 int j = 5 + ((ItemArmor) itemstack.getItem()).b;
 
                 if (!this.a(itemstack1, j, j + 1, false)) {
@@ -134,7 +135,7 @@ public class ContainerPlayer extends Container {
             }
 
             if (itemstack1.count == 0) {
-                slot.set((ItemStack) null);
+                slot.set(null);
             } else {
                 slot.f();
             }

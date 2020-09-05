@@ -45,7 +45,7 @@ public class CraftInventoryCrafting extends CraftInventory implements CraftingIn
         net.minecraft.server.ItemStack[] mcResultItems = getResultInventory().getContents();
 
         int i = 0;
-        for (i = 0; i < mcResultItems.length; i++ ) {
+        for (i = 0; i < mcResultItems.length; i++) {
             items[i] = CraftItemStack.asCraftMirror(mcResultItems[i]);
         }
 
@@ -54,7 +54,7 @@ public class CraftInventoryCrafting extends CraftInventory implements CraftingIn
         for (int j = 0; j < mcItems.length; j++) {
             items[i + j] = CraftItemStack.asCraftMirror(mcItems[j]);
         }
-        
+
         return items;
     }
 
@@ -87,7 +87,7 @@ public class CraftInventoryCrafting extends CraftInventory implements CraftingIn
         ItemStack[] items = new ItemStack[getSize()];
         net.minecraft.server.ItemStack[] matrix = getMatrixInventory().getContents();
 
-        for (int i = 0; i < matrix.length; i++ ) {
+        for (int i = 0; i < matrix.length; i++) {
             items[i] = CraftItemStack.asCraftMirror(matrix[i]);
         }
 
@@ -96,7 +96,7 @@ public class CraftInventoryCrafting extends CraftInventory implements CraftingIn
 
     public ItemStack getResult() {
         net.minecraft.server.ItemStack item = getResultInventory().getItem(0);
-        if(item != null) return CraftItemStack.asCraftMirror(item);
+        if (item != null) return CraftItemStack.asCraftMirror(item);
         return null;
     }
 
@@ -107,7 +107,7 @@ public class CraftInventoryCrafting extends CraftInventory implements CraftingIn
 
         net.minecraft.server.ItemStack[] mcItems = getMatrixInventory().getContents();
 
-        for (int i = 0; i < mcItems.length; i++ ) {
+        for (int i = 0; i < mcItems.length; i++) {
             if (i < contents.length) {
                 ItemStack item = contents[i];
                 if (item == null || item.getTypeId() <= 0) {
@@ -131,7 +131,7 @@ public class CraftInventoryCrafting extends CraftInventory implements CraftingIn
     }
 
     public Recipe getRecipe() {
-        IRecipe recipe = ((InventoryCrafting)getInventory()).currentRecipe;
+        IRecipe recipe = ((InventoryCrafting) getInventory()).currentRecipe;
         return recipe == null ? null : recipe.toBukkitRecipe();
     }
 }

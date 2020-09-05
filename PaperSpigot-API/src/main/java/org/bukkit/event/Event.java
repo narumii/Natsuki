@@ -4,11 +4,11 @@ import org.bukkit.plugin.PluginManager;
 
 /**
  * Represents an event.
- *
+ * <p>
  * All events require a static method named getHandlerList() which returns the same {@link HandlerList} as {@link #getHandlers()}.
  *
  * @see PluginManager#callEvent(Event)
- * @see PluginManager#registerEvents(Listener,Plugin)
+ * @see PluginManager#registerEvents(Listener, Plugin)
  */
 public abstract class Event {
     private String name;
@@ -27,7 +27,7 @@ public abstract class Event {
      * or asynchronous.
      *
      * @param isAsync true indicates the event will fire asynchronously, false
-     *     by default from default constructor
+     *                by default from default constructor
      */
     public Event(boolean isAsync) {
         this.async = isAsync;
@@ -55,17 +55,17 @@ public abstract class Event {
      * asynchronous event:
      * <ul>
      * <li>The event is never fired from inside code triggered by a
-     *     synchronous event. Attempting to do so results in an {@link
-     *     java.lang.IllegalStateException}.
+     * synchronous event. Attempting to do so results in an {@link
+     * java.lang.IllegalStateException}.
      * <li>However, asynchronous event handlers may fire synchronous or
-     *     asynchronous events
+     * asynchronous events
      * <li>The event may be fired multiple times simultaneously and in any
-     *     order.
+     * order.
      * <li>Any newly registered or unregistered handler is ignored after an
-     *     event starts execution.
+     * event starts execution.
      * <li>The handlers for this event may block for any length of time.
      * <li>Some implementations may selectively declare a specific event use
-     *     as asynchronous. This behavior should be clearly defined.
+     * as asynchronous. This behavior should be clearly defined.
      * <li>Asynchronous calls are not calculated in the plugin timing system.
      * </ul>
      *
@@ -93,6 +93,6 @@ public abstract class Event {
          * take place if possible, even if the server would not normally allow
          * the action. Some actions may not be allowed.
          */
-        ALLOW;
+        ALLOW
     }
 }

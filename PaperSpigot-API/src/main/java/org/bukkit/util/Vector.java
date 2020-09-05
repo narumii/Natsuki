@@ -599,7 +599,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * Gets a Location version of this vector.
      *
      * @param world The world to link the location to.
-     * @param yaw The desired yaw.
+     * @param yaw   The desired yaw.
      * @param pitch The desired pitch.
      * @return the location
      */

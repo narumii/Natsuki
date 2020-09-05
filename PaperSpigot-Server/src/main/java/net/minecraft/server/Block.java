@@ -67,6 +67,7 @@ public class Block {
     protected boolean isTileEntity;
     // Spigot start
     public co.aikar.timings.Timing timing;
+
     public co.aikar.timings.Timing getTiming() {
         if (timing == null) {
             timing = co.aikar.timings.SpigotTimings.getBlockTiming(this);
@@ -101,7 +102,7 @@ public class Block {
     }
 
     public static Block getById(int i) {
-        return (Block) Block.REGISTRY.a(i);
+        return Block.REGISTRY.a(i);
     }
 
     public static IBlockData getByCombinedId(int i) {
@@ -119,10 +120,10 @@ public class Block {
         MinecraftKey minecraftkey = new MinecraftKey(s);
 
         if (Block.REGISTRY.d(minecraftkey)) {
-            return (Block) Block.REGISTRY.get(minecraftkey);
+            return Block.REGISTRY.get(minecraftkey);
         } else {
             try {
-                return (Block) Block.REGISTRY.a(Integer.parseInt(s));
+                return Block.REGISTRY.a(Integer.parseInt(s));
             } catch (NumberFormatException numberformatexception) {
                 return null;
             }
@@ -309,22 +310,25 @@ public class Block {
         this.b(world, blockposition, iblockdata, random);
     }
 
-    public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {}
+    public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
+    }
 
-    public void postBreak(World world, BlockPosition blockposition, IBlockData iblockdata) {}
+    public void postBreak(World world, BlockPosition blockposition, IBlockData iblockdata) {
+    }
 
-    public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {}
+    public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {
+    }
 
     public int a(World world) {
         return 10;
     }
 
     public void onPlace(World world, BlockPosition blockposition, IBlockData iblockdata) {
-        org.spigotmc.AsyncCatcher.catchOp( "block onPlace"); // Spigot
+        org.spigotmc.AsyncCatcher.catchOp("block onPlace"); // Spigot
     }
 
     public void remove(World world, BlockPosition blockposition, IBlockData iblockdata) {
-        org.spigotmc.AsyncCatcher.catchOp( "block remove"); // Spigot
+        org.spigotmc.AsyncCatcher.catchOp("block remove"); // Spigot
     }
 
     public int a(Random random) {
@@ -491,18 +495,19 @@ public class Block {
     }
 
     private boolean a(Vec3D vec3d) {
-        return vec3d == null ? false : vec3d.b >= this.minY && vec3d.b <= this.maxY && vec3d.c >= this.minZ && vec3d.c <= this.maxZ;
+        return vec3d != null && (vec3d.b >= this.minY && vec3d.b <= this.maxY && vec3d.c >= this.minZ && vec3d.c <= this.maxZ);
     }
 
     private boolean b(Vec3D vec3d) {
-        return vec3d == null ? false : vec3d.a >= this.minX && vec3d.a <= this.maxX && vec3d.c >= this.minZ && vec3d.c <= this.maxZ;
+        return vec3d != null && (vec3d.a >= this.minX && vec3d.a <= this.maxX && vec3d.c >= this.minZ && vec3d.c <= this.maxZ);
     }
 
     private boolean c(Vec3D vec3d) {
-        return vec3d == null ? false : vec3d.a >= this.minX && vec3d.a <= this.maxX && vec3d.b >= this.minY && vec3d.b <= this.maxY;
+        return vec3d != null && (vec3d.a >= this.minX && vec3d.a <= this.maxX && vec3d.b >= this.minY && vec3d.b <= this.maxY);
     }
 
-    public void wasExploded(World world, BlockPosition blockposition, Explosion explosion) {}
+    public void wasExploded(World world, BlockPosition blockposition, Explosion explosion) {
+    }
 
     public boolean canPlace(World world, BlockPosition blockposition, EnumDirection enumdirection, ItemStack itemstack) {
         return this.canPlace(world, blockposition, enumdirection);
@@ -520,19 +525,22 @@ public class Block {
         return false;
     }
 
-    public void a(World world, BlockPosition blockposition, Entity entity) {}
+    public void a(World world, BlockPosition blockposition, Entity entity) {
+    }
 
     public IBlockData getPlacedState(World world, BlockPosition blockposition, EnumDirection enumdirection, float f, float f1, float f2, int i, EntityLiving entityliving) {
         return this.fromLegacyData(i);
     }
 
-    public void attack(World world, BlockPosition blockposition, EntityHuman entityhuman) {}
+    public void attack(World world, BlockPosition blockposition, EntityHuman entityhuman) {
+    }
 
     public Vec3D a(World world, BlockPosition blockposition, Entity entity, Vec3D vec3d) {
         return vec3d;
     }
 
-    public void updateShape(IBlockAccess iblockaccess, BlockPosition blockposition) {}
+    public void updateShape(IBlockAccess iblockaccess, BlockPosition blockposition) {
+    }
 
     public final double B() {
         return this.minX;
@@ -566,13 +574,15 @@ public class Block {
         return false;
     }
 
-    public void a(World world, BlockPosition blockposition, IBlockData iblockdata, Entity entity) {}
+    public void a(World world, BlockPosition blockposition, IBlockData iblockdata, Entity entity) {
+    }
 
     public int b(IBlockAccess iblockaccess, BlockPosition blockposition, IBlockData iblockdata, EnumDirection enumdirection) {
         return 0;
     }
 
-    public void j() {}
+    public void j() {
+    }
 
     public void a(World world, EntityHuman entityhuman, BlockPosition blockposition, IBlockData iblockdata, TileEntity tileentity) {
         entityhuman.b(StatisticList.MINE_BLOCK_COUNT[getId(this)]);
@@ -610,7 +620,8 @@ public class Block {
         return this.a(random);
     }
 
-    public void postPlace(World world, BlockPosition blockposition, IBlockData iblockdata, EntityLiving entityliving, ItemStack itemstack) {}
+    public void postPlace(World world, BlockPosition blockposition, IBlockData iblockdata, EntityLiving entityliving, ItemStack itemstack) {
+    }
 
     public boolean g() {
         return !this.material.isBuildable() && !this.material.isLiquid();
@@ -663,9 +674,11 @@ public class Block {
         return this;
     }
 
-    public void a(World world, BlockPosition blockposition, IBlockData iblockdata, EntityHuman entityhuman) {}
+    public void a(World world, BlockPosition blockposition, IBlockData iblockdata, EntityHuman entityhuman) {
+    }
 
-    public void k(World world, BlockPosition blockposition) {}
+    public void k(World world, BlockPosition blockposition) {
+    }
 
     public boolean N() {
         return true;
@@ -680,7 +693,7 @@ public class Block {
     }
 
     public static boolean a(Block block, Block block1) {
-        return block != null && block1 != null ? (block == block1 ? true : block.b(block1)) : false;
+        return (block != null && block1 != null) && (block == block1 || block.b(block1));
     }
 
     public boolean isComplexRedstone() {
@@ -692,7 +705,7 @@ public class Block {
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[0]);
+        return new BlockStateList(this);
     }
 
     public BlockStateList P() {

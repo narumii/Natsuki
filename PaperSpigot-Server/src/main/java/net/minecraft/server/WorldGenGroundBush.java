@@ -46,7 +46,7 @@ public class WorldGenGroundBush extends WorldGenTrees {
                     }
                 }
             }
-        // CraftBukkit start - Return false if gen was unsuccessful
+            // CraftBukkit start - Return false if gen was unsuccessful
         } else {
             return false;
         }

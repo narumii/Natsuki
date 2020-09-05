@@ -11,12 +11,12 @@ public interface PotionBrewer {
      * Creates a {@link PotionEffect} from the given {@link PotionEffectType},
      * applying duration modifiers and checks.
      *
-     * @param potion The type of potion
-     * @param duration The duration in ticks
+     * @param potion    The type of potion
+     * @param duration  The duration in ticks
      * @param amplifier The amplifier of the effect
      * @return The resulting potion effect
      */
-    public PotionEffect createEffect(PotionEffectType potion, int duration, int amplifier);
+    PotionEffect createEffect(PotionEffectType potion, int duration, int amplifier);
 
     /**
      * Returns a collection of {@link PotionEffect} that would be applied from
@@ -27,5 +27,5 @@ public interface PotionBrewer {
      * @deprecated Magic value
      */
     @Deprecated
-    public Collection<PotionEffect> getEffectsFromDamage(int damage);
+    Collection<PotionEffect> getEffectsFromDamage(int damage);
 }

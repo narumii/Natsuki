@@ -47,8 +47,8 @@ public class Conversation {
     /**
      * Initializes a new Conversation.
      *
-     * @param plugin The plugin that owns this conversation.
-     * @param forWhom The entity for whom this conversation is mediating.
+     * @param plugin      The plugin that owns this conversation.
+     * @param forWhom     The entity for whom this conversation is mediating.
      * @param firstPrompt The first prompt in the conversation graph.
      */
     public Conversation(Plugin plugin, Conversable forWhom, Prompt firstPrompt) {
@@ -58,11 +58,11 @@ public class Conversation {
     /**
      * Initializes a new Conversation.
      *
-     * @param plugin The plugin that owns this conversation.
-     * @param forWhom The entity for whom this conversation is mediating.
-     * @param firstPrompt The first prompt in the conversation graph.
+     * @param plugin             The plugin that owns this conversation.
+     * @param forWhom            The entity for whom this conversation is mediating.
+     * @param firstPrompt        The first prompt in the conversation graph.
      * @param initialSessionData Any initial values to put in the conversation
-     *     context sessionData map.
+     *                           context sessionData map.
      */
     public Conversation(Plugin plugin, Conversable forWhom, Prompt firstPrompt, Map<Object, Object> initialSessionData) {
         this.firstPrompt = firstPrompt;
@@ -210,29 +210,28 @@ public class Conversation {
      */
     public void acceptInput(String input) {
         try { // Spigot
-        if (currentPrompt != null) {
+            if (currentPrompt != null) {
 
-            // Echo the user's input
-            if (localEchoEnabled) {
-                context.getForWhom().sendRawMessage(prefix.getPrefix(context) + input);
-            }
-
-            // Test for conversation abandonment based on input
-            for(ConversationCanceller canceller : cancellers) {
-                if (canceller.cancelBasedOnInput(context, input)) {
-                    abandon(new ConversationAbandonedEvent(this, canceller));
-                    return;
+                // Echo the user's input
+                if (localEchoEnabled) {
+                    context.getForWhom().sendRawMessage(prefix.getPrefix(context) + input);
                 }
-            }
 
-            // Not abandoned, output the next prompt
-            currentPrompt = currentPrompt.acceptInput(context, input);
-            outputNextPrompt();
-        }
-        // Spigot Start
-        } catch ( Throwable t )
-        {
-            org.bukkit.Bukkit.getLogger().log( java.util.logging.Level.SEVERE, "Error handling conversation prompt", t );
+                // Test for conversation abandonment based on input
+                for (ConversationCanceller canceller : cancellers) {
+                    if (canceller.cancelBasedOnInput(context, input)) {
+                        abandon(new ConversationAbandonedEvent(this, canceller));
+                        return;
+                    }
+                }
+
+                // Not abandoned, output the next prompt
+                currentPrompt = currentPrompt.acceptInput(context, input);
+                outputNextPrompt();
+            }
+            // Spigot Start
+        } catch (Throwable t) {
+            org.bukkit.Bukkit.getLogger().log(java.util.logging.Level.SEVERE, "Error handling conversation prompt", t);
         }
         // Spigot End
     }

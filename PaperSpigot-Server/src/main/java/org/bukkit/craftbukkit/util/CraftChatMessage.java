@@ -12,11 +12,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class CraftChatMessage {
-    
-    private static final Pattern LINK_PATTERN = Pattern.compile("((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + " \\n]|$))))");
+
+    private static final Pattern LINK_PATTERN = Pattern.compile("((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + org.bukkit.ChatColor.COLOR_CHAR + " \\n]|$))))");
+
     private static class StringMessage {
         private static final Map<Character, EnumChatFormat> formatMap;
-        private static final Pattern INCREMENTAL_PATTERN = Pattern.compile("(" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + "[0-9a-fk-or])|(\\n)|((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + " \\n]|$))))", Pattern.CASE_INSENSITIVE);
+        private static final Pattern INCREMENTAL_PATTERN = Pattern.compile("(" + org.bukkit.ChatColor.COLOR_CHAR + "[0-9a-fk-or])|(\\n)|((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + org.bukkit.ChatColor.COLOR_CHAR + " \\n]|$))))", Pattern.CASE_INSENSITIVE);
 
         static {
             Builder<Character, EnumChatFormat> builder = ImmutableMap.builder();
@@ -33,10 +34,10 @@ public final class CraftChatMessage {
         private int currentIndex;
         private final String message;
 
-        private StringMessage(String message,  boolean keepNewlines) {
+        private StringMessage(String message, boolean keepNewlines) {
             this.message = message;
             if (message == null) {
-                output = new IChatBaseComponent[] { currentChatComponent };
+                output = new IChatBaseComponent[]{currentChatComponent};
                 return;
             }
             list.add(currentChatComponent);
@@ -50,48 +51,48 @@ public final class CraftChatMessage {
                 }
                 appendNewComponent(matcher.start(groupId));
                 switch (groupId) {
-                case 1:
-                    EnumChatFormat format = formatMap.get(match.toLowerCase().charAt(1));
-                    if (format == EnumChatFormat.RESET) {
-                        modifier = new ChatModifier();
-                    } else if (format.isFormat()) {
-                        switch (format) {
-                        case BOLD:
-                            modifier.setBold(Boolean.TRUE);
-                            break;
-                        case ITALIC:
-                            modifier.setItalic(Boolean.TRUE);
-                            break;
-                        case STRIKETHROUGH:
-                            modifier.setStrikethrough(Boolean.TRUE);
-                            break;
-                        case UNDERLINE:
-                            modifier.setUnderline(Boolean.TRUE);
-                            break;
-                        case OBFUSCATED:
-                            modifier.setRandom(Boolean.TRUE);
-                            break;
-                        default:
-                            throw new AssertionError("Unexpected message format");
+                    case 1:
+                        EnumChatFormat format = formatMap.get(match.toLowerCase().charAt(1));
+                        if (format == EnumChatFormat.RESET) {
+                            modifier = new ChatModifier();
+                        } else if (format.isFormat()) {
+                            switch (format) {
+                                case BOLD:
+                                    modifier.setBold(Boolean.TRUE);
+                                    break;
+                                case ITALIC:
+                                    modifier.setItalic(Boolean.TRUE);
+                                    break;
+                                case STRIKETHROUGH:
+                                    modifier.setStrikethrough(Boolean.TRUE);
+                                    break;
+                                case UNDERLINE:
+                                    modifier.setUnderline(Boolean.TRUE);
+                                    break;
+                                case OBFUSCATED:
+                                    modifier.setRandom(Boolean.TRUE);
+                                    break;
+                                default:
+                                    throw new AssertionError("Unexpected message format");
+                            }
+                        } else { // Color resets formatting
+                            modifier = new ChatModifier().setColor(format);
                         }
-                    } else { // Color resets formatting
-                        modifier = new ChatModifier().setColor(format);
-                    }
-                    break;
-                case 2:
-                    if (keepNewlines) {
-                        currentChatComponent.addSibling(new ChatComponentText("\n"));
-                    } else {
-                        currentChatComponent = null;
-                    }
-                    break;
-                case 3:
-                    if ( !( match.startsWith( "http://" ) || match.startsWith( "https://" ) ) ) {
-                        match = "http://" + match;
-                    }
-                    modifier.setChatClickable(new ChatClickable(EnumClickAction.OPEN_URL, match));
-                    appendNewComponent(matcher.end(groupId));
-                    modifier.setChatClickable((ChatClickable) null);
+                        break;
+                    case 2:
+                        if (keepNewlines) {
+                            currentChatComponent.addSibling(new ChatComponentText("\n"));
+                        } else {
+                            currentChatComponent = null;
+                        }
+                        break;
+                    case 3:
+                        if (!(match.startsWith("http://") || match.startsWith("https://"))) {
+                            match = "http://" + match;
+                        }
+                        modifier.setChatClickable(new ChatClickable(EnumClickAction.OPEN_URL, match));
+                        appendNewComponent(matcher.end(groupId));
+                        modifier.setChatClickable(null);
                 }
                 currentIndex = matcher.end(groupId);
             }
@@ -125,11 +126,11 @@ public final class CraftChatMessage {
     public static IChatBaseComponent[] fromString(String message) {
         return fromString(message, false);
     }
-    
+
     public static IChatBaseComponent[] fromString(String message, boolean keepNewlines) {
         return new StringMessage(message, keepNewlines).getOutput();
     }
-    
+
     public static String fromComponent(IChatBaseComponent component) {
         return fromComponent(component, EnumChatFormat.BLACK);
     }
@@ -137,8 +138,8 @@ public final class CraftChatMessage {
     public static String fromComponent(IChatBaseComponent component, EnumChatFormat defaultColor) {
         if (component == null) return "";
         StringBuilder out = new StringBuilder();
-        
-        for (IChatBaseComponent c : (Iterable<IChatBaseComponent>) component) {
+
+        for (IChatBaseComponent c : component) {
             ChatModifier modi = c.getChatModifier();
             out.append(modi.getColor() == null ? defaultColor : modi.getColor());
             if (modi.isBold()) {
@@ -183,7 +184,7 @@ public final class CraftChatMessage {
                 while (matcher.find()) {
                     String match = matcher.group();
 
-                    if ( !( match.startsWith( "http://" ) || match.startsWith( "https://" ) ) ) {
+                    if (!(match.startsWith("http://") || match.startsWith("https://"))) {
                         match = "http://" + match;
                     }
 
@@ -228,7 +229,7 @@ public final class CraftChatMessage {
                     if (c.getChatModifier() != null && c.getChatModifier().h() == null) {
                         subs[i] = fixComponent(c, matcher);
                     }
-                } else if (comp instanceof String && matcher.reset((String)comp).find()) {
+                } else if (comp instanceof String && matcher.reset((String) comp).find()) {
                     subs[i] = fixComponent(new ChatComponentText((String) comp), matcher);
                 }
             }

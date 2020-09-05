@@ -17,6 +17,7 @@ import java.util.List;
 @Deprecated
 public class ClearCommand extends VanillaCommand {
     private static List<String> materials;
+
     static {
         ArrayList<String> materialList = new ArrayList<String>();
         for (Material material : Material.values()) {
@@ -94,7 +95,7 @@ public class ClearCommand extends VanillaCommand {
                 i = -1 - i;
             }
 
-            for ( ; i < size; i++) {
+            for (; i < size; i++) {
                 String material = materials.get(i);
                 if (StringUtil.startsWithIgnoreCase(material, arg)) {
                     if (completion == null) {

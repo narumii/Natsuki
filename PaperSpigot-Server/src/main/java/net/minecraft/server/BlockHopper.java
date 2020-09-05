@@ -96,7 +96,7 @@ public class BlockHopper extends BlockContainer {
     private void e(World world, BlockPosition blockposition, IBlockData iblockdata) {
         boolean flag = !world.isBlockIndirectlyPowered(blockposition);
 
-        if (flag != ((Boolean) iblockdata.get(BlockHopper.ENABLED)).booleanValue()) {
+        if (flag != iblockdata.get(BlockHopper.ENABLED).booleanValue()) {
             world.setTypeAndData(blockposition, iblockdata.set(BlockHopper.ENABLED, Boolean.valueOf(flag)), 4);
         }
 
@@ -147,9 +147,9 @@ public class BlockHopper extends BlockContainer {
 
     public int toLegacyData(IBlockData iblockdata) {
         byte b0 = 0;
-        int i = b0 | ((EnumDirection) iblockdata.get(BlockHopper.FACING)).a();
+        int i = b0 | iblockdata.get(BlockHopper.FACING).a();
 
-        if (!((Boolean) iblockdata.get(BlockHopper.ENABLED)).booleanValue()) {
+        if (!iblockdata.get(BlockHopper.ENABLED).booleanValue()) {
             i |= 8;
         }
 
@@ -157,6 +157,6 @@ public class BlockHopper extends BlockContainer {
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockHopper.FACING, BlockHopper.ENABLED});
+        return new BlockStateList(this, BlockHopper.FACING, BlockHopper.ENABLED);
     }
 }

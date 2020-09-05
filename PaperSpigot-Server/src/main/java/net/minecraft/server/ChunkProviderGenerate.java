@@ -405,7 +405,8 @@ public class ChunkProviderGenerate implements IChunkProvider {
         return true;
     }
 
-    public void c() {}
+    public void c() {
+    }
 
     public boolean unloadChunks() {
         return false;
@@ -445,23 +446,23 @@ public class ChunkProviderGenerate implements IChunkProvider {
 
     public void recreateStructures(Chunk chunk, int i, int j) {
         if (this.r.w && this.n && this.m.paperSpigotConfig.generateMineshaft) { // PaperSpigot
-            this.x.a(this, this.m, i, j, (ChunkSnapshot) null);
+            this.x.a(this, this.m, i, j, null);
         }
 
         if (this.r.v && this.n && this.m.paperSpigotConfig.generateVillage) { // PaperSpigot
-            this.w.a(this, this.m, i, j, (ChunkSnapshot) null);
+            this.w.a(this, this.m, i, j, null);
         }
 
         if (this.r.u && this.n && this.m.paperSpigotConfig.generateStronghold) { // PaperSpigot
-            this.v.a(this, this.m, i, j, (ChunkSnapshot) null);
+            this.v.a(this, this.m, i, j, null);
         }
 
         if (this.r.x && this.n && this.m.paperSpigotConfig.generateTemple) { // PaperSpigot
-            this.y.a(this, this.m, i, j, (ChunkSnapshot) null);
+            this.y.a(this, this.m, i, j, null);
         }
 
         if (this.r.y && this.n && this.m.paperSpigotConfig.generateMonument) { // PaperSpigot
-            this.A.a(this, this.m, i, j, (ChunkSnapshot) null);
+            this.A.a(this, this.m, i, j, null);
         }
 
     }

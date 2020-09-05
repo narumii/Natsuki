@@ -56,7 +56,7 @@ public class BlockRedstoneWire extends Block {
     }
 
     public boolean canPlace(World world, BlockPosition blockposition) {
-        return World.a((IBlockAccess) world, blockposition.down()) || world.getType(blockposition.down()).getBlock() == Blocks.GLOWSTONE;
+        return World.a(world, blockposition.down()) || world.getType(blockposition.down()).getBlock() == Blocks.GLOWSTONE;
     }
 
     private IBlockData e(World world, BlockPosition blockposition, IBlockData iblockdata) {
@@ -77,7 +77,7 @@ public class BlockRedstoneWire extends Block {
 
     private IBlockData a(World world, BlockPosition blockposition, BlockPosition blockposition1, IBlockData iblockdata) {
         IBlockData iblockdata1 = iblockdata;
-        int i = ((Integer) iblockdata.get(BlockRedstoneWire.POWER)).intValue();
+        int i = iblockdata.get(BlockRedstoneWire.POWER).intValue();
         byte b0 = 0;
         int j = this.getPower(world, blockposition1, b0);
 
@@ -265,7 +265,7 @@ public class BlockRedstoneWire extends Block {
         if (world.getType(blockposition).getBlock() != this) {
             return i;
         } else {
-            int j = ((Integer) world.getType(blockposition).get(BlockRedstoneWire.POWER)).intValue();
+            int j = world.getType(blockposition).get(BlockRedstoneWire.POWER).intValue();
 
             return j > i ? j : i;
         }
@@ -295,7 +295,7 @@ public class BlockRedstoneWire extends Block {
         if (!this.Q) {
             return 0;
         } else {
-            int i = ((Integer) iblockdata.get(BlockRedstoneWire.POWER)).intValue();
+            int i = iblockdata.get(BlockRedstoneWire.POWER).intValue();
 
             if (i == 0) {
                 return 0;
@@ -331,7 +331,7 @@ public class BlockRedstoneWire extends Block {
         boolean flag = block.isOccluding();
         boolean flag1 = iblockaccess.getType(blockposition.up()).getBlock().isOccluding();
 
-        return !flag1 && flag && e(iblockaccess, blockposition1.up()) ? true : (a(iblockdata, enumdirection) ? true : (block == Blocks.POWERED_REPEATER && iblockdata.get(BlockDiodeAbstract.FACING) == enumdirection ? true : !flag && e(iblockaccess, blockposition1.down())));
+        return !flag1 && flag && e(iblockaccess, blockposition1.up()) || (a(iblockdata, enumdirection) || (block == Blocks.POWERED_REPEATER && iblockdata.get(BlockDiodeAbstract.FACING) == enumdirection || !flag && e(iblockaccess, blockposition1.down())));
     }
 
     protected static boolean e(IBlockAccess iblockaccess, BlockPosition blockposition) {
@@ -339,7 +339,7 @@ public class BlockRedstoneWire extends Block {
     }
 
     protected static boolean d(IBlockData iblockdata) {
-        return a(iblockdata, (EnumDirection) null);
+        return a(iblockdata, null);
     }
 
     protected static boolean a(IBlockData iblockdata, EnumDirection enumdirection) {
@@ -348,7 +348,7 @@ public class BlockRedstoneWire extends Block {
         if (block == Blocks.REDSTONE_WIRE) {
             return true;
         } else if (Blocks.UNPOWERED_REPEATER.e(block)) {
-            EnumDirection enumdirection1 = (EnumDirection) iblockdata.get(BlockRepeater.FACING);
+            EnumDirection enumdirection1 = iblockdata.get(BlockRepeater.FACING);
 
             return enumdirection1 == enumdirection || enumdirection1.opposite() == enumdirection;
         } else {
@@ -365,20 +365,20 @@ public class BlockRedstoneWire extends Block {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockRedstoneWire.POWER)).intValue();
+        return iblockdata.get(BlockRedstoneWire.POWER).intValue();
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockRedstoneWire.NORTH, BlockRedstoneWire.EAST, BlockRedstoneWire.SOUTH, BlockRedstoneWire.WEST, BlockRedstoneWire.POWER});
+        return new BlockStateList(this, BlockRedstoneWire.NORTH, BlockRedstoneWire.EAST, BlockRedstoneWire.SOUTH, BlockRedstoneWire.WEST, BlockRedstoneWire.POWER);
     }
 
-    static enum EnumRedstoneWireConnection implements INamable {
+    enum EnumRedstoneWireConnection implements INamable {
 
         UP("up"), SIDE("side"), NONE("none");
 
         private final String d;
 
-        private EnumRedstoneWireConnection(String s) {
+        EnumRedstoneWireConnection(String s) {
             this.d = s;
         }
 

@@ -85,10 +85,10 @@ public abstract class EntityLiving extends Entity {
     public int expToDrop;
     public int maxAirTicks = 300;
     ArrayList<org.bukkit.inventory.ItemStack> drops = null;
+
     // CraftBukkit end
     // Spigot start
-    public void inactiveTick()
-    {
+    public void inactiveTick() {
         super.inactiveTick();
         ++this.ticksFarFromPlayer; // Above all the floats
     }
@@ -174,7 +174,7 @@ public abstract class EntityLiving extends Entity {
                 double d0 = this.world.getWorldBorder().a(this) + this.world.getWorldBorder().getDamageBuffer();
 
                 if (d0 < 0.0D) {
-                    this.damageEntity(DamageSource.STUCK, (float) Math.max(1,(int) Math.floor(-d0 * this.world.getWorldBorder().getDamageAmount())));
+                    this.damageEntity(DamageSource.STUCK, (float) Math.max(1, (int) Math.floor(-d0 * this.world.getWorldBorder().getDamageAmount())));
                 }
             }
         }
@@ -576,7 +576,7 @@ public abstract class EntityLiving extends Entity {
     }
 
     public void addEffect(MobEffect mobeffect) {
-        org.spigotmc.AsyncCatcher.catchOp( "effect add"); // Spigot
+        org.spigotmc.AsyncCatcher.catchOp("effect add"); // Spigot
         // CraftBukkit start
         if (isTickingEffects) {
             effectsToProcess.add(mobeffect);
@@ -745,10 +745,10 @@ public abstract class EntityLiving extends Entity {
                 }
 
                 // CraftBukkit start
-                if(this instanceof EntityAnimal){
-                    ((EntityAnimal)this).cq();
-                    if(this instanceof EntityTameableAnimal){
-                        ((EntityTameableAnimal)this).getGoalSit().setSitting(false);
+                if (this instanceof EntityAnimal) {
+                    ((EntityAnimal) this).cq();
+                    if (this instanceof EntityTameableAnimal) {
+                        ((EntityTameableAnimal) this).getGoalSit().setSitting(false);
                     }
                 }
                 // CraftBukkit end
@@ -777,7 +777,7 @@ public abstract class EntityLiving extends Entity {
                 // PaperSpigot start - Disable explosion knockback
                 boolean knockbackCancelled = false;
                 if (flag && !(knockbackCancelled = world.paperSpigotConfig.disableExplosionKnockback && damagesource.isExplosion() && this instanceof EntityHuman)) {
-                // PaperSpigot end
+                    // PaperSpigot end
                     this.world.broadcastEntityEffect(this, (byte) 2);
                     if (damagesource != DamageSource.DROWN) {
                         this.ac();
@@ -864,7 +864,7 @@ public abstract class EntityLiving extends Entity {
 
             if (this.ba() && this.world.getGameRules().getBoolean("doMobLoot")) {
                 this.drops = new ArrayList<org.bukkit.inventory.ItemStack>(); // CraftBukkit - Setup drop capture
-                
+
                 this.dropDeathLoot(this.lastDamageByPlayerTime > 0, i);
                 this.dropEquipment(this.lastDamageByPlayerTime > 0, i);
                 if (this.lastDamageByPlayerTime > 0 && this.random.nextFloat() < 0.025F + (float) i * 0.01F) {
@@ -882,7 +882,8 @@ public abstract class EntityLiving extends Entity {
         this.world.broadcastEntityEffect(this, (byte) 3);
     }
 
-    protected void dropEquipment(boolean flag, int i) {}
+    protected void dropEquipment(boolean flag, int i) {
+    }
 
     public void a(Entity entity, float f, double d0, double d1) {
         if (this.random.nextDouble() >= this.getAttributeInstance(GenericAttributes.c).getValue()) {
@@ -911,14 +912,16 @@ public abstract class EntityLiving extends Entity {
         return "game.neutral.die";
     }
 
-    protected void getRareDrop() {}
+    protected void getRareDrop() {
+    }
 
-    protected void dropDeathLoot(boolean flag, int i) {}
+    protected void dropDeathLoot(boolean flag, int i) {
+    }
 
     public boolean k_() {
-        int i =(int) Math.floor(this.locX);
-        int j =(int) Math.floor(this.getBoundingBox().b);
-        int k =(int) Math.floor(this.locZ);
+        int i = (int) Math.floor(this.locX);
+        int j = (int) Math.floor(this.getBoundingBox().b);
+        int k = (int) Math.floor(this.locZ);
         Block block = this.world.getType(new BlockPosition(i, j, k)).getBlock();
 
         return (block == Blocks.LADDER || block == Blocks.VINE) && (!(this instanceof EntityHuman) || !((EntityHuman) this).isSpectator());
@@ -942,9 +945,9 @@ public abstract class EntityLiving extends Entity {
             // CraftBukkit end
             this.makeSound(this.n(i), 1.0F, 1.0F);
             // this.damageEntity(DamageSource.FALL, (float) i); // CraftBukkit - moved up
-            int j =(int) Math.floor(this.locX);
-            int k =(int) Math.floor(this.locY - 0.20000000298023224D);
-            int l =(int) Math.floor(this.locZ);
+            int j = (int) Math.floor(this.locX);
+            int k = (int) Math.floor(this.locY - 0.20000000298023224D);
+            int l = (int) Math.floor(this.locZ);
             Block block = this.world.getType(new BlockPosition(j, k, l)).getBlock();
 
             if (block.getMaterial() != Material.AIR) {
@@ -978,7 +981,8 @@ public abstract class EntityLiving extends Entity {
         return i;
     }
 
-    protected void damageArmor(float f) {}
+    protected void damageArmor(float f) {
+    }
 
     protected float applyArmorModifier(DamageSource damagesource, float f) {
         if (!damagesource.ignoresArmor()) {
@@ -999,7 +1003,7 @@ public abstract class EntityLiving extends Entity {
             int i;
             int j;
             float f1;
-            
+
             // CraftBukkit - Moved to d(DamageSource, float)
             if (false && this.hasEffect(MobEffectList.RESISTANCE) && damagesource != DamageSource.OUT_OF_WORLD) {
                 i = (this.getEffect(MobEffectList.RESISTANCE).getAmplifier() + 1) * 5;
@@ -1029,7 +1033,7 @@ public abstract class EntityLiving extends Entity {
 
     // CraftBukkit start
     protected boolean d(final DamageSource damagesource, float f) { // void -> boolean, add final
-       if (!this.isInvulnerable(damagesource)) {
+        if (!this.isInvulnerable(damagesource)) {
             final boolean human = this instanceof EntityHuman;
             float originalDamage = f;
             Function<Double, Double> hardHat = new Function<Double, Double>() {
@@ -1359,7 +1363,7 @@ public abstract class EntityLiving extends Entity {
                 float f5 = 0.91F;
 
                 if (this.onGround) {
-                    f5 = this.world.getType(new BlockPosition(MathHelper.floor(this.locX),(int) Math.floor(this.getBoundingBox().b) - 1,(int) Math.floor(this.locZ))).getBlock().frictionFactor * 0.91F;
+                    f5 = this.world.getType(new BlockPosition(MathHelper.floor(this.locX), (int) Math.floor(this.getBoundingBox().b) - 1, (int) Math.floor(this.locZ))).getBlock().frictionFactor * 0.91F;
                 }
 
                 float f6 = 0.16277136F / (f5 * f5 * f5);
@@ -1373,7 +1377,7 @@ public abstract class EntityLiving extends Entity {
                 this.a(f, f1, f3);
                 f5 = 0.91F;
                 if (this.onGround) {
-                    f5 = this.world.getType(new BlockPosition(MathHelper.floor(this.locX),(int) Math.floor(this.getBoundingBox().b) - 1,(int) Math.floor(this.locZ))).getBlock().frictionFactor * 0.91F;
+                    f5 = this.world.getType(new BlockPosition(MathHelper.floor(this.locX), (int) Math.floor(this.getBoundingBox().b) - 1, (int) Math.floor(this.locZ))).getBlock().frictionFactor * 0.91F;
                 }
 
                 if (this.k_()) {
@@ -1652,7 +1656,8 @@ public abstract class EntityLiving extends Entity {
         this.world.methodProfiler.b();
     }
 
-    protected void doTick() {}
+    protected void doTick() {
+    }
 
     protected void bL() {
         List list = this.world.a(this, this.getBoundingBox().grow(0.20000000298023224D, 0.0D, 0.20000000298023224D), Predicates.and(IEntitySelector.d, new Predicate() {
@@ -1668,7 +1673,9 @@ public abstract class EntityLiving extends Entity {
         if (this.ad() && !list.isEmpty()) { // Spigot: Add this.ad() condition
             numCollisions -= world.spigotConfig.maxCollisionsPerEntity; // Spigot
             for (int i = 0; i < list.size(); ++i) {
-                if (numCollisions > world.spigotConfig.maxCollisionsPerEntity) { break; } // Spigot
+                if (numCollisions > world.spigotConfig.maxCollisionsPerEntity) {
+                    break;
+                } // Spigot
                 Entity entity = (Entity) list.get(i);
 
                 // TODO better check now?
@@ -1825,9 +1832,11 @@ public abstract class EntityLiving extends Entity {
         return this.getScoreboardTeam() != null && this.getScoreboardTeam().isAlly(scoreboardteambase);
     }
 
-    public void enterCombat() {}
+    public void enterCombat() {
+    }
 
-    public void exitCombat() {}
+    public void exitCombat() {
+    }
 
     protected void bP() {
         this.updateEffects = true;

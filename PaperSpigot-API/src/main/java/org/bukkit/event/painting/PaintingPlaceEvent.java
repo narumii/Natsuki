@@ -14,7 +14,7 @@ import org.bukkit.event.HandlerList;
  * @deprecated Use {@link org.bukkit.event.hanging.HangingPlaceEvent} instead.
  */
 @Deprecated
-@Warning(reason="This event has been replaced by HangingPlaceEvent")
+@Warning(reason = "This event has been replaced by HangingPlaceEvent")
 public class PaintingPlaceEvent extends PaintingEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
     private boolean cancelled;
@@ -51,7 +51,7 @@ public class PaintingPlaceEvent extends PaintingEvent implements Cancellable {
      * Returns the face of the block that the painting was placed on
      *
      * @return BlockFace returns the face of the block the painting was placed
-     *     on
+     * on
      */
     public BlockFace getBlockFace() {
         return blockFace;

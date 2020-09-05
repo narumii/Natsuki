@@ -35,7 +35,8 @@ public class DefaultGameModeCommand extends VanillaCommand {
 
         try {
             value = Integer.parseInt(modeArg);
-        } catch (NumberFormatException ex) {}
+        } catch (NumberFormatException ex) {
+        }
 
         GameMode mode = GameMode.getByValue(value);
 

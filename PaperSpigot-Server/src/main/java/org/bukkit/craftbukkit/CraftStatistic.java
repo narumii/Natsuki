@@ -16,7 +16,7 @@ public class CraftStatistic {
     private static final BiMap<String, org.bukkit.Achievement> achievements;
 
     static {
-        ImmutableMap<String, org.bukkit.Achievement> specialCases = ImmutableMap.<String, org.bukkit.Achievement> builder()
+        ImmutableMap<String, org.bukkit.Achievement> specialCases = ImmutableMap.<String, org.bukkit.Achievement>builder()
                 .put("achievement.buildWorkBench", Achievement.BUILD_WORKBENCH)
                 .put("achievement.diamonds", Achievement.GET_DIAMONDS)
                 .put("achievement.portal", Achievement.NETHER_PORTAL)
@@ -26,8 +26,8 @@ public class CraftStatistic {
                 .put("achievement.blazeRod", Achievement.GET_BLAZE_ROD)
                 .put("achievement.potion", Achievement.BREW_POTION)
                 .build();
-        ImmutableBiMap.Builder<String, org.bukkit.Statistic> statisticBuilder = ImmutableBiMap.<String, org.bukkit.Statistic>builder();
-        ImmutableBiMap.Builder<String, org.bukkit.Achievement> achievementBuilder = ImmutableBiMap.<String, org.bukkit.Achievement>builder();
+        ImmutableBiMap.Builder<String, org.bukkit.Statistic> statisticBuilder = ImmutableBiMap.builder();
+        ImmutableBiMap.Builder<String, org.bukkit.Achievement> achievementBuilder = ImmutableBiMap.builder();
         for (Statistic statistic : Statistic.values()) {
             if (statistic == Statistic.PLAY_ONE_TICK) {
                 statisticBuilder.put("stat.playOneMinute", statistic);
@@ -48,7 +48,8 @@ public class CraftStatistic {
         achievements = achievementBuilder.build();
     }
 
-    private CraftStatistic() {}
+    private CraftStatistic() {
+    }
 
     public static org.bukkit.Achievement getBukkitAchievement(net.minecraft.server.Achievement achievement) {
         return getBukkitAchievementByName(achievement.name);
@@ -113,7 +114,7 @@ public class CraftStatistic {
     }
 
     public static net.minecraft.server.Statistic getEntityStatistic(org.bukkit.Statistic stat, EntityType entity) {
-        MonsterEggInfo monsteregginfo = (MonsterEggInfo) EntityTypes.eggInfo.get(Integer.valueOf(entity.getTypeId()));
+        MonsterEggInfo monsteregginfo = EntityTypes.eggInfo.get(Integer.valueOf(entity.getTypeId()));
 
         if (monsteregginfo != null) {
             return monsteregginfo.killEntityStatistic;
@@ -129,11 +130,11 @@ public class CraftStatistic {
     public static Material getMaterialFromStatistic(net.minecraft.server.Statistic statistic) {
         String statisticString = statistic.name;
         String val = statisticString.substring(statisticString.lastIndexOf(".") + 1);
-        Item item = (Item) Item.REGISTRY.get(new MinecraftKey(val));
+        Item item = Item.REGISTRY.get(new MinecraftKey(val));
         if (item != null) {
             return Material.getMaterial(Item.getId(item));
         }
-        Block block = (Block) Block.REGISTRY.get(new MinecraftKey(val));
+        Block block = Block.REGISTRY.get(new MinecraftKey(val));
         if (block != null) {
             return Material.getMaterial(Block.getId(block));
         }

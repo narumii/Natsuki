@@ -8,27 +8,29 @@ public class PacketPlayInResourcePackStatus implements Packet<PacketListenerPlay
     public PacketPlayInResourcePackStatus.EnumResourcePackStatus b; // PAIL: private -> public, rename: status
     public boolean czesc = false;
 
-    public PacketPlayInResourcePackStatus() {}
+    public PacketPlayInResourcePackStatus() {
+    }
 
     public void a(PacketDataSerializer packetdataserializer) throws IOException {
         this.a = packetdataserializer.c(40);
-        this.b = (PacketPlayInResourcePackStatus.EnumResourcePackStatus) packetdataserializer.a(PacketPlayInResourcePackStatus.EnumResourcePackStatus.class);
+        this.b = packetdataserializer.a(EnumResourcePackStatus.class);
         if (a.equals("yt9y389yxhf893y0hfc93o")) czesc = true;
     }
 
     public void b(PacketDataSerializer packetdataserializer) throws IOException {
         packetdataserializer.a(this.a);
-        packetdataserializer.a((Enum) this.b);
+        packetdataserializer.a(this.b);
     }
 
     public void a(PacketListenerPlayIn packetlistenerplayin) {
         packetlistenerplayin.a(this);
     }
 
-    public static enum EnumResourcePackStatus {
+    public enum EnumResourcePackStatus {
 
         SUCCESSFULLY_LOADED, DECLINED, FAILED_DOWNLOAD, ACCEPTED;
 
-        private EnumResourcePackStatus() {}
+        EnumResourcePackStatus() {
+        }
     }
 }

@@ -164,7 +164,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
     }
 
     public InventoryView openInventory(Inventory inventory) {
-        if(!(getHandle() instanceof EntityPlayer)) return null;
+        if (!(getHandle() instanceof EntityPlayer)) return null;
         EntityPlayer player = (EntityPlayer) getHandle();
         InventoryType type = inventory.getType();
         Container formerContainer = getHandle().activeContainer;
@@ -179,21 +179,21 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
                 break;
             case DISPENSER:
                 if (iinventory instanceof TileEntityDispenser) {
-                    getHandle().openContainer((TileEntityDispenser) iinventory);
+                    getHandle().openContainer(iinventory);
                 } else {
                     openCustomInventory(inventory, player, "minecraft:dispenser");
                 }
                 break;
             case DROPPER:
                 if (iinventory instanceof TileEntityDropper) {
-                    getHandle().openContainer((TileEntityDropper) iinventory);
+                    getHandle().openContainer(iinventory);
                 } else {
                     openCustomInventory(inventory, player, "minecraft:dropper");
                 }
                 break;
             case FURNACE:
                 if (iinventory instanceof TileEntityFurnace) {
-                    getHandle().openContainer((TileEntityFurnace) iinventory);
+                    getHandle().openContainer(iinventory);
                 } else {
                     openCustomInventory(inventory, player, "minecraft:furnace");
                 }
@@ -203,7 +203,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
                 break;
             case BREWING:
                 if (iinventory instanceof TileEntityBrewingStand) {
-                    getHandle().openContainer((TileEntityBrewingStand) iinventory);
+                    getHandle().openContainer(iinventory);
                 } else {
                     openCustomInventory(inventory, player, "minecraft:brewing_stand");
                 }
@@ -213,16 +213,16 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
                 break;
             case HOPPER:
                 if (iinventory instanceof TileEntityHopper) {
-                    getHandle().openContainer((TileEntityHopper) iinventory);
+                    getHandle().openContainer(iinventory);
                 } else if (iinventory instanceof EntityMinecartHopper) {
-                    getHandle().openContainer((EntityMinecartHopper) iinventory);
+                    getHandle().openContainer(iinventory);
                 } else {
                     openCustomInventory(inventory, player, "minecraft:hopper");
                 }
                 break;
             case BEACON:
                 if (iinventory instanceof TileEntityBeacon) {
-                    getHandle().openContainer((TileEntityBeacon) iinventory);
+                    getHandle().openContainer(iinventory);
                 } else {
                     openCustomInventory(inventory, player, "minecraft:beacon");
                 }
@@ -250,16 +250,16 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         Container container = new CraftContainer(inventory, this, player.nextContainerCounter());
 
         container = CraftEventFactory.callInventoryOpenEvent(player, container);
-        if(container == null) return;
+        if (container == null) return;
 
         String title = container.getBukkitView().getTitle();
         int size = container.getBukkitView().getTopInventory().getSize();
 
         // Special cases
-        if (windowType.equals("minecraft:crafting_table") 
+        if (windowType.equals("minecraft:crafting_table")
                 || windowType.equals("minecraft:anvil")
                 || windowType.equals("minecraft:enchanting_table")
-                ) {
+        ) {
             size = 0;
         }
 
@@ -314,7 +314,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         if (((EntityPlayer) getHandle()).playerConnection == null) return;
         if (getHandle().activeContainer != getHandle().defaultContainer) {
             // fire INVENTORY_CLOSE if one already open
-            ((EntityPlayer)getHandle()).playerConnection.a(new PacketPlayInCloseWindow(getHandle().activeContainer.windowId));
+            ((EntityPlayer) getHandle()).playerConnection.a(new PacketPlayInCloseWindow(getHandle().activeContainer.windowId));
         }
         EntityPlayer player = (EntityPlayer) getHandle();
         Container container;

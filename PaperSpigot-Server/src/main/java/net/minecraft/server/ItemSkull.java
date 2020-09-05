@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 
 public class ItemSkull extends Item {
 
-    private static final String[] a = new String[] { "skeleton", "wither", "zombie", "char", "creeper"};
+    private static final String[] a = new String[]{"skeleton", "wither", "zombie", "char", "creeper"};
 
     public ItemSkull() {
         this.a(CreativeModeTab.c);
@@ -35,8 +35,7 @@ public class ItemSkull extends Item {
             } else {
                 if (!world.isClientSide) {
                     // Spigot Start
-                    if ( !Blocks.SKULL.canPlace( world, blockposition ) )
-                    {
+                    if (!Blocks.SKULL.canPlace(world, blockposition)) {
                         return false;
                     }
                     // Spigot End
@@ -44,7 +43,7 @@ public class ItemSkull extends Item {
                     int i = 0;
 
                     if (enumdirection == EnumDirection.UP) {
-                        i =(int) Math.floor((double) (entityhuman.yaw * 16.0F / 360.0F) + 0.5D) & 15;
+                        i = (int) Math.floor((double) (entityhuman.yaw * 16.0F / 360.0F) + 0.5D) & 15;
                     }
 
                     TileEntity tileentity = world.getTileEntity(blockposition);
@@ -124,7 +123,7 @@ public class ItemSkull extends Item {
 
                 @Override
                 public boolean apply(GameProfile gameprofile) {
-                    nbttagcompound.set("SkullOwner", GameProfileSerializer.serialize(new NBTTagCompound(), gameprofile));                    
+                    nbttagcompound.set("SkullOwner", GameProfileSerializer.serialize(new NBTTagCompound(), gameprofile));
                     return false;
                 }
             });

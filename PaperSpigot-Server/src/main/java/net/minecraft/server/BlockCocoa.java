@@ -18,7 +18,7 @@ public class BlockCocoa extends BlockDirectional implements IBlockFragilePlantEl
         if (!this.e(world, blockposition, iblockdata)) {
             this.f(world, blockposition, iblockdata);
         } else if (world.random.nextInt(5) == 0) {
-            int i = ((Integer) iblockdata.get(BlockCocoa.AGE)).intValue();
+            int i = iblockdata.get(BlockCocoa.AGE).intValue();
 
             if (i < 2) {
                 // CraftBukkit start
@@ -31,7 +31,7 @@ public class BlockCocoa extends BlockDirectional implements IBlockFragilePlantEl
     }
 
     public boolean e(World world, BlockPosition blockposition, IBlockData iblockdata) {
-        blockposition = blockposition.shift((EnumDirection) iblockdata.get(BlockCocoa.FACING));
+        blockposition = blockposition.shift(iblockdata.get(BlockCocoa.FACING));
         IBlockData iblockdata1 = world.getType(blockposition);
 
         return iblockdata1.getBlock() == Blocks.LOG && iblockdata1.get(BlockWood.VARIANT) == BlockWood.EnumLogVariant.JUNGLE;
@@ -52,27 +52,27 @@ public class BlockCocoa extends BlockDirectional implements IBlockFragilePlantEl
 
     public void updateShape(IBlockAccess iblockaccess, BlockPosition blockposition) {
         IBlockData iblockdata = iblockaccess.getType(blockposition);
-        EnumDirection enumdirection = (EnumDirection) iblockdata.get(BlockCocoa.FACING);
-        int i = ((Integer) iblockdata.get(BlockCocoa.AGE)).intValue();
+        EnumDirection enumdirection = iblockdata.get(BlockCocoa.FACING);
+        int i = iblockdata.get(BlockCocoa.AGE).intValue();
         int j = 4 + i * 2;
         int k = 5 + i * 2;
         float f = (float) j / 2.0F;
 
         switch (BlockCocoa.SyntheticClass_1.a[enumdirection.ordinal()]) {
-        case 1:
-            this.a((8.0F - f) / 16.0F, (12.0F - (float) k) / 16.0F, (15.0F - (float) j) / 16.0F, (8.0F + f) / 16.0F, 0.75F, 0.9375F);
-            break;
+            case 1:
+                this.a((8.0F - f) / 16.0F, (12.0F - (float) k) / 16.0F, (15.0F - (float) j) / 16.0F, (8.0F + f) / 16.0F, 0.75F, 0.9375F);
+                break;
 
-        case 2:
-            this.a((8.0F - f) / 16.0F, (12.0F - (float) k) / 16.0F, 0.0625F, (8.0F + f) / 16.0F, 0.75F, (1.0F + (float) j) / 16.0F);
-            break;
+            case 2:
+                this.a((8.0F - f) / 16.0F, (12.0F - (float) k) / 16.0F, 0.0625F, (8.0F + f) / 16.0F, 0.75F, (1.0F + (float) j) / 16.0F);
+                break;
 
-        case 3:
-            this.a(0.0625F, (12.0F - (float) k) / 16.0F, (8.0F - f) / 16.0F, (1.0F + (float) j) / 16.0F, 0.75F, (8.0F + f) / 16.0F);
-            break;
+            case 3:
+                this.a(0.0625F, (12.0F - (float) k) / 16.0F, (8.0F - f) / 16.0F, (1.0F + (float) j) / 16.0F, 0.75F, (8.0F + f) / 16.0F);
+                break;
 
-        case 4:
-            this.a((15.0F - (float) j) / 16.0F, (12.0F - (float) k) / 16.0F, (8.0F - f) / 16.0F, 0.9375F, 0.75F, (8.0F + f) / 16.0F);
+            case 4:
+                this.a((15.0F - (float) j) / 16.0F, (12.0F - (float) k) / 16.0F, (8.0F - f) / 16.0F, 0.9375F, 0.75F, (8.0F + f) / 16.0F);
         }
 
     }
@@ -104,7 +104,7 @@ public class BlockCocoa extends BlockDirectional implements IBlockFragilePlantEl
     }
 
     public void dropNaturally(World world, BlockPosition blockposition, IBlockData iblockdata, float f, int i) {
-        int j = ((Integer) iblockdata.get(BlockCocoa.AGE)).intValue();
+        int j = iblockdata.get(BlockCocoa.AGE).intValue();
         byte b0 = 1;
 
         if (j >= 2) {
@@ -122,7 +122,7 @@ public class BlockCocoa extends BlockDirectional implements IBlockFragilePlantEl
     }
 
     public boolean a(World world, BlockPosition blockposition, IBlockData iblockdata, boolean flag) {
-        return ((Integer) iblockdata.get(BlockCocoa.AGE)).intValue() < 2;
+        return iblockdata.get(BlockCocoa.AGE).intValue() < 2;
     }
 
     public boolean a(World world, Random random, BlockPosition blockposition, IBlockData iblockdata) {
@@ -131,7 +131,7 @@ public class BlockCocoa extends BlockDirectional implements IBlockFragilePlantEl
 
     public void b(World world, Random random, BlockPosition blockposition, IBlockData iblockdata) {
         // CraftBukkit start
-        IBlockData data = iblockdata.set(AGE, Integer.valueOf(((Integer) iblockdata.get(AGE)).intValue() + 1));
+        IBlockData data = iblockdata.set(AGE, Integer.valueOf(iblockdata.get(AGE).intValue() + 1));
         CraftEventFactory.handleBlockGrowEvent(world, blockposition.getX(), blockposition.getY(), blockposition.getZ(), this, toLegacyData(data));
         // CraftBukkit end
     }
@@ -142,14 +142,14 @@ public class BlockCocoa extends BlockDirectional implements IBlockFragilePlantEl
 
     public int toLegacyData(IBlockData iblockdata) {
         byte b0 = 0;
-        int i = b0 | ((EnumDirection) iblockdata.get(BlockCocoa.FACING)).b();
+        int i = b0 | iblockdata.get(BlockCocoa.FACING).b();
 
-        i |= ((Integer) iblockdata.get(BlockCocoa.AGE)).intValue() << 2;
+        i |= iblockdata.get(BlockCocoa.AGE).intValue() << 2;
         return i;
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockCocoa.FACING, BlockCocoa.AGE});
+        return new BlockStateList(this, BlockCocoa.FACING, BlockCocoa.AGE);
     }
 
     static class SyntheticClass_1 {
@@ -160,25 +160,21 @@ public class BlockCocoa extends BlockDirectional implements IBlockFragilePlantEl
             try {
                 BlockCocoa.SyntheticClass_1.a[EnumDirection.SOUTH.ordinal()] = 1;
             } catch (NoSuchFieldError nosuchfielderror) {
-                ;
             }
 
             try {
                 BlockCocoa.SyntheticClass_1.a[EnumDirection.NORTH.ordinal()] = 2;
             } catch (NoSuchFieldError nosuchfielderror1) {
-                ;
             }
 
             try {
                 BlockCocoa.SyntheticClass_1.a[EnumDirection.WEST.ordinal()] = 3;
             } catch (NoSuchFieldError nosuchfielderror2) {
-                ;
             }
 
             try {
                 BlockCocoa.SyntheticClass_1.a[EnumDirection.EAST.ordinal()] = 4;
             } catch (NoSuchFieldError nosuchfielderror3) {
-                ;
             }
 
         }

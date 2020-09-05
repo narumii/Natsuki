@@ -49,6 +49,7 @@ import java.lang.management.RuntimeMXBean;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -80,19 +81,19 @@ class TimingsExport extends Thread {
      */
     static void reportTimings(CommandSender sender) {
         Map parent = createObject(
-            // Get some basic system details about the server
-            pair("version", Bukkit.getVersion()),
-            pair("maxplayers", Bukkit.getMaxPlayers()),
-            pair("start", TimingsManager.timingStart / 1000),
-            pair("end", System.currentTimeMillis() / 1000),
-            pair("sampletime", (System.currentTimeMillis() - TimingsManager.timingStart) / 1000)
+                // Get some basic system details about the server
+                pair("version", Bukkit.getVersion()),
+                pair("maxplayers", Bukkit.getMaxPlayers()),
+                pair("start", TimingsManager.timingStart / 1000),
+                pair("end", System.currentTimeMillis() / 1000),
+                pair("sampletime", (System.currentTimeMillis() - TimingsManager.timingStart) / 1000)
         );
         if (!TimingsManager.privacy) {
             appendObjectData(parent,
-                pair("server", Bukkit.getServerName()),
-                pair("motd", Bukkit.getServer().getMotd()),
-                pair("online-mode", Bukkit.getServer().getOnlineMode()),
-                pair("icon", Bukkit.getServer().getServerIcon().getData())
+                    pair("server", Bukkit.getServerName()),
+                    pair("motd", Bukkit.getServer().getMotd()),
+                    pair("online-mode", Bukkit.getServer().getOnlineMode()),
+                    pair("icon", Bukkit.getServer().getServerIcon().getData())
             );
         }
 
@@ -115,7 +116,7 @@ class TimingsExport extends Thread {
                         return pair(input.getName(), toArray(input.getCollectionCount(), input.getCollectionTime()));
                     }
                 }))
-            )
+                )
         );
 
         Set<Material> tileEntityTypeSet = Sets.newHashSet();
@@ -142,67 +143,66 @@ class TimingsExport extends Thread {
                     continue;
                 }
                 handlers.put(id.id, toArray(
-                    group.id,
-                    id.name
+                        group.id,
+                        id.name
                 ));
             }
         }
 
         parent.put("idmap", createObject(
-            pair("groups", toObjectMapper(
-                TimingIdentifier.GROUP_MAP.values(), new Function<TimingIdentifier.TimingGroup, JSONPair>() {
-                @Override
-                public JSONPair apply(TimingIdentifier.TimingGroup group) {
-                    return pair(group.id, group.name);
-                }
-            })),
-            pair("handlers", handlers),
-            pair("worlds", toObjectMapper(TimingHistory.worldMap.entrySet(), new Function<Map.Entry<String, Integer>, JSONPair>() {
+                pair("groups", toObjectMapper(
+                        TimingIdentifier.GROUP_MAP.values(), new Function<TimingIdentifier.TimingGroup, JSONPair>() {
+                            @Override
+                            public JSONPair apply(TimingIdentifier.TimingGroup group) {
+                                return pair(group.id, group.name);
+                            }
+                        })),
+                pair("handlers", handlers),
+                pair("worlds", toObjectMapper(TimingHistory.worldMap.entrySet(), new Function<Map.Entry<String, Integer>, JSONPair>() {
                     @Override
                     public JSONPair apply(Map.Entry<String, Integer> input) {
                         return pair(input.getValue(), input.getKey());
                     }
                 })),
-            pair("tileentity",
-                toObjectMapper(tileEntityTypeSet, new Function<Material, JSONPair>() {
-                    @Override
-                    public JSONPair apply(Material input) {
-                        return pair(input.getId(), input.name());
-                    }
-                })),
-            pair("entity",
-                toObjectMapper(entityTypeSet, new Function<EntityType, JSONPair>() {
-                    @Override
-                    public JSONPair apply(EntityType input) {
-                        return pair(input.getTypeId(), input.name());
-                    }
-                }))
+                pair("tileentity",
+                        toObjectMapper(tileEntityTypeSet, new Function<Material, JSONPair>() {
+                            @Override
+                            public JSONPair apply(Material input) {
+                                return pair(input.getId(), input.name());
+                            }
+                        })),
+                pair("entity",
+                        toObjectMapper(entityTypeSet, new Function<EntityType, JSONPair>() {
+                            @Override
+                            public JSONPair apply(EntityType input) {
+                                return pair(input.getTypeId(), input.name());
+                            }
+                        }))
         ));
 
         // Information about loaded plugins
 
         parent.put("plugins", toObjectMapper(Bukkit.getPluginManager().getPlugins(),
-            new Function<Plugin, JSONPair>() {
-                @Override
-                public JSONPair apply(Plugin plugin) {
-                    return pair(plugin.getName(), createObject(
-                        pair("version", plugin.getDescription().getVersion()),
-                        pair("description", String.valueOf(plugin.getDescription().getDescription()).trim()),
-                        pair("website", plugin.getDescription().getWebsite()),
-                        pair("authors", StringUtils.join(plugin.getDescription().getAuthors(), ", "))
-                    ));
-                }
-            }));
-
+                new Function<Plugin, JSONPair>() {
+                    @Override
+                    public JSONPair apply(Plugin plugin) {
+                        return pair(plugin.getName(), createObject(
+                                pair("version", plugin.getDescription().getVersion()),
+                                pair("description", String.valueOf(plugin.getDescription().getDescription()).trim()),
+                                pair("website", plugin.getDescription().getWebsite()),
+                                pair("authors", StringUtils.join(plugin.getDescription().getAuthors(), ", "))
+                        ));
+                    }
+                }));
 
 
         // Information on the users Config
 
         parent.put("config", createObject(
                 pair("natsuki", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
-            pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
-            pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
-            pair("paperspigot", mapAsJSON(Bukkit.spigot().getPaperSpigotConfig(), null))
+                pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
+                pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
+                pair("paperspigot", mapAsJSON(Bukkit.spigot().getPaperSpigotConfig(), null))
         ));
 
         new TimingsExport(sender, parent, history).start();
@@ -282,7 +282,7 @@ class TimingsExport extends Thread {
         if (sender instanceof RemoteConsoleCommandSender) {
             sender.sendMessage(ChatColor.RED + "Warning: Timings report done over RCON will cause lag spikes.");
             sender.sendMessage(ChatColor.RED + "You should use " + ChatColor.YELLOW +
-                "/timings report" + ChatColor.RED + " in game or console.");
+                    "/timings report" + ChatColor.RED + " in game or console.");
             run();
         } else {
             super.start();
@@ -314,14 +314,14 @@ class TimingsExport extends Thread {
                 this.def.setLevel(7);
             }};
 
-            request.write(JSONValue.toJSONString(out).getBytes("UTF-8"));
+            request.write(JSONValue.toJSONString(out).getBytes(StandardCharsets.UTF_8));
             request.close();
 
             response = getResponse(con);
 
             if (con.getResponseCode() != 302) {
                 sender.sendMessage(
-                    ChatColor.RED + "Upload Error: " + con.getResponseCode() + ": " + con.getResponseMessage());
+                        ChatColor.RED + "Upload Error: " + con.getResponseCode() + ": " + con.getResponseMessage());
                 sender.sendMessage(ChatColor.RED + "Check your logs for more information");
                 if (response != null) {
                     Bukkit.getLogger().log(Level.SEVERE, response);

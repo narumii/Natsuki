@@ -83,7 +83,7 @@ public class Village {
     }
 
     private boolean a(BlockPosition blockposition, BlockPosition blockposition1) {
-        if (!World.a((IBlockAccess) this.a, blockposition1.down())) {
+        if (!World.a(this.a, blockposition1.down())) {
             return false;
         } else {
             int i = blockposition1.getX() - blockposition.getX() / 2;
@@ -242,7 +242,7 @@ public class Village {
         Village.Aggressor village_aggressor = null;
 
         for (int i = 0; i < this.k.size(); ++i) {
-            Village.Aggressor village_aggressor1 = (Village.Aggressor) this.k.get(i);
+            Village.Aggressor village_aggressor1 = this.k.get(i);
             double d1 = village_aggressor1.a.h(entityliving);
 
             if (d1 <= d0) {
@@ -321,7 +321,7 @@ public class Village {
     private boolean f(BlockPosition blockposition) {
         Block block = this.a.getType(blockposition).getBlock();
 
-        return block instanceof BlockDoor ? block.getMaterial() == Material.WOOD : false;
+        return block instanceof BlockDoor && block.getMaterial() == Material.WOOD;
     }
 
     private void n() {
@@ -345,7 +345,7 @@ public class Village {
     }
 
     public int a(String s) {
-        Integer integer = (Integer) this.j.get(s);
+        Integer integer = this.j.get(s);
 
         return integer != null ? integer.intValue() : 0;
     }
@@ -440,7 +440,7 @@ public class Village {
 
             if (gameprofile != null) {
                 nbttagcompound2.setString("UUID", gameprofile.getId().toString());
-                nbttagcompound2.setInt("S", ((Integer) this.j.get(s)).intValue());
+                nbttagcompound2.setInt("S", this.j.get(s).intValue());
                 nbttaglist1.add(nbttagcompound2);
             }
         }

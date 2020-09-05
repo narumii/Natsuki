@@ -6,7 +6,9 @@ import java.util.List;
 public class MethodProfiler {
 
     public boolean a;
-    public MethodProfiler() {}
+
+    public MethodProfiler() {
+    }
 
     public void a() {
     }
@@ -45,7 +47,7 @@ public class MethodProfiler {
         }
 
         public int compareTo(MethodProfiler.ProfilerInfo object) {
-            return this.a((MethodProfiler.ProfilerInfo) object);
+            return this.a(object);
         }
     }
 }

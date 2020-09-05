@@ -69,10 +69,11 @@ public abstract class BlockPressurePlateAbstract extends Block {
     }
 
     private boolean m(World world, BlockPosition blockposition) {
-        return World.a((IBlockAccess) world, blockposition) || world.getType(blockposition).getBlock() instanceof BlockFence;
+        return World.a(world, blockposition) || world.getType(blockposition).getBlock() instanceof BlockFence;
     }
 
-    public void a(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {}
+    public void a(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
+    }
 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
         if (!world.isClientSide) {
@@ -128,7 +129,7 @@ public abstract class BlockPressurePlateAbstract extends Block {
         }
 
         if (flag1) {
-            world.a(blockposition, (Block) this, this.a(world));
+            world.a(blockposition, this, this.a(world));
         }
 
     }

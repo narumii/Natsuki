@@ -110,7 +110,8 @@ public class EntityPotion extends EntityProjectile {
                                 // CraftBukkit start - Abide by PVP settings - for players only!
                                 if (!this.world.pvpMode && this.getShooter() instanceof EntityPlayer && entityliving instanceof EntityPlayer && entityliving != this.getShooter()) {
                                     // Block SLOWER_MOVEMENT, SLOWER_DIG, HARM, BLINDNESS, HUNGER, WEAKNESS and POISON potions
-                                    if (i == 2 || i == 4 || i == 7 || i == 15 || i == 17 || i == 18 || i == 19) continue;
+                                    if (i == 2 || i == 4 || i == 7 || i == 15 || i == 17 || i == 18 || i == 19)
+                                        continue;
                                 }
                                 // CraftBukkit end
 

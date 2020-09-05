@@ -13,9 +13,9 @@ import java.util.List;
 
 public class TileEntityFurnace extends TileEntityContainer implements IUpdatePlayerListBox, IWorldInventory {
 
-    private static final int[] a = new int[] { 0};
-    private static final int[] f = new int[] { 2, 1};
-    private static final int[] g = new int[] { 1};
+    private static final int[] a = new int[]{0};
+    private static final int[] f = new int[]{2, 1};
+    private static final int[] g = new int[]{1};
     private ItemStack[] items = new ItemStack[3];
     public int burnTime;
     private int ticksForCurrentFuel;
@@ -49,7 +49,8 @@ public class TileEntityFurnace extends TileEntityContainer implements IUpdatePla
     }
     // CraftBukkit end
 
-    public TileEntityFurnace() {}
+    public TileEntityFurnace() {
+    }
 
     public int getSize() {
         return this.items.length;
@@ -274,7 +275,7 @@ public class TileEntityFurnace extends TileEntityContainer implements IUpdatePla
             ItemStack itemstack = RecipesFurnace.getInstance().getResult(this.items[0]);
 
             // CraftBukkit - consider resultant count instead of current count
-            return itemstack == null ? false : (this.items[2] == null ? true : (!this.items[2].doMaterialsMatch(itemstack) ? false : (this.items[2].count + itemstack.count <= this.getMaxStackSize() && this.items[2].count < this.items[2].getMaxStackSize() ? true : this.items[2].count + itemstack.count <= itemstack.getMaxStackSize())));
+            return itemstack != null && (this.items[2] == null || (this.items[2].doMaterialsMatch(itemstack) && (this.items[2].count + itemstack.count <= this.getMaxStackSize() && this.items[2].count < this.items[2].getMaxStackSize() || this.items[2].count + itemstack.count <= itemstack.getMaxStackSize())));
         }
     }
 
@@ -358,15 +359,17 @@ public class TileEntityFurnace extends TileEntityContainer implements IUpdatePla
     }
 
     public boolean a(EntityHuman entityhuman) {
-        return this.world.getTileEntity(this.position) != this ? false : entityhuman.e((double) this.position.getX() + 0.5D, (double) this.position.getY() + 0.5D, (double) this.position.getZ() + 0.5D) <= 64.0D;
+        return this.world.getTileEntity(this.position) == this && entityhuman.e((double) this.position.getX() + 0.5D, (double) this.position.getY() + 0.5D, (double) this.position.getZ() + 0.5D) <= 64.0D;
     }
 
-    public void startOpen(EntityHuman entityhuman) {}
+    public void startOpen(EntityHuman entityhuman) {
+    }
 
-    public void closeContainer(EntityHuman entityhuman) {}
+    public void closeContainer(EntityHuman entityhuman) {
+    }
 
     public boolean b(int i, ItemStack itemstack) {
-        return i == 2 ? false : (i != 1 ? true : isFuel(itemstack) || SlotFurnaceFuel.c_(itemstack));
+        return i != 2 && (i != 1 || (isFuel(itemstack) || SlotFurnaceFuel.c_(itemstack)));
     }
 
     public int[] getSlotsForFace(EnumDirection enumdirection) {
@@ -381,9 +384,7 @@ public class TileEntityFurnace extends TileEntityContainer implements IUpdatePla
         if (enumdirection == EnumDirection.DOWN && i == 1) {
             Item item = itemstack.getItem();
 
-            if (item != Items.WATER_BUCKET && item != Items.BUCKET) {
-                return false;
-            }
+            return item == Items.WATER_BUCKET || item == Items.BUCKET;
         }
 
         return true;
@@ -399,39 +400,39 @@ public class TileEntityFurnace extends TileEntityContainer implements IUpdatePla
 
     public int getProperty(int i) {
         switch (i) {
-        case 0:
-            return this.burnTime;
+            case 0:
+                return this.burnTime;
 
-        case 1:
-            return this.ticksForCurrentFuel;
+            case 1:
+                return this.ticksForCurrentFuel;
 
-        case 2:
-            return this.cookTime;
+            case 2:
+                return this.cookTime;
 
-        case 3:
-            return this.cookTimeTotal;
+            case 3:
+                return this.cookTimeTotal;
 
-        default:
-            return 0;
+            default:
+                return 0;
         }
     }
 
     public void b(int i, int j) {
         switch (i) {
-        case 0:
-            this.burnTime = j;
-            break;
+            case 0:
+                this.burnTime = j;
+                break;
 
-        case 1:
-            this.ticksForCurrentFuel = j;
-            break;
+            case 1:
+                this.ticksForCurrentFuel = j;
+                break;
 
-        case 2:
-            this.cookTime = j;
-            break;
+            case 2:
+                this.cookTime = j;
+                break;
 
-        case 3:
-            this.cookTimeTotal = j;
+            case 3:
+                this.cookTimeTotal = j;
         }
 
     }

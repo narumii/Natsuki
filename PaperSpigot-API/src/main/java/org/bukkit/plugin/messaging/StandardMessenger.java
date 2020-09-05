@@ -425,14 +425,12 @@ public class StandardMessenger implements Messenger {
 
         for (PluginMessageListenerRegistration registration : registrations) {
             // Spigot Start
-            try
-            {
-                registration.getListener().onPluginMessageReceived( channel, source, message );
-            } catch ( Throwable t )
-            {
+            try {
+                registration.getListener().onPluginMessageReceived(channel, source, message);
+            } catch (Throwable t) {
                 // Paper start
                 String msg = "Could not pass incoming plugin message to " + registration.getPlugin();
-                org.bukkit.Bukkit.getLogger().log( java.util.logging.Level.WARNING, msg, t );
+                org.bukkit.Bukkit.getLogger().log(java.util.logging.Level.WARNING, msg, t);
                 source.getServer().getPluginManager().callEvent(new ServerExceptionEvent(
                         new ServerPluginMessageException(msg, t, registration.getPlugin(), source, channel, message)
                 ));
@@ -461,18 +459,18 @@ public class StandardMessenger implements Messenger {
      * valid.
      *
      * @param messenger Messenger to use for validation.
-     * @param source Source plugin of the Message.
-     * @param channel Plugin Channel to send the message by.
-     * @param message Raw message payload to send.
-     * @throws IllegalArgumentException Thrown if the source plugin is
-     *     disabled.
-     * @throws IllegalArgumentException Thrown if source, channel or message
-     *     is null.
-     * @throws MessageTooLargeException Thrown if the message is too big.
-     * @throws ChannelNameTooLongException Thrown if the channel name is too
-     *     long.
+     * @param source    Source plugin of the Message.
+     * @param channel   Plugin Channel to send the message by.
+     * @param message   Raw message payload to send.
+     * @throws IllegalArgumentException      Thrown if the source plugin is
+     *                                       disabled.
+     * @throws IllegalArgumentException      Thrown if source, channel or message
+     *                                       is null.
+     * @throws MessageTooLargeException      Thrown if the message is too big.
+     * @throws ChannelNameTooLongException   Thrown if the channel name is too
+     *                                       long.
      * @throws ChannelNotRegisteredException Thrown if the channel is not
-     *     registered for this plugin.
+     *                                       registered for this plugin.
      */
     public static void validatePluginMessage(Messenger messenger, Plugin source, String channel, byte[] message) {
         if (messenger == null) {

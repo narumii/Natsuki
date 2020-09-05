@@ -36,7 +36,7 @@ public abstract class EntityMinecartContainer extends EntityMinecartAbstract imp
 
     public InventoryHolder getOwner() {
         org.bukkit.entity.Entity cart = getBukkitEntity();
-        if(cart instanceof InventoryHolder) return (InventoryHolder) cart;
+        if (cart instanceof InventoryHolder) return (InventoryHolder) cart;
         return null;
     }
 
@@ -105,15 +105,18 @@ public abstract class EntityMinecartContainer extends EntityMinecartAbstract imp
 
     }
 
-    public void update() {}
-
-    public boolean a(EntityHuman entityhuman) {
-        return this.dead ? false : entityhuman.h(this) <= 64.0D;
+    public void update() {
     }
 
-    public void startOpen(EntityHuman entityhuman) {}
+    public boolean a(EntityHuman entityhuman) {
+        return !this.dead && entityhuman.h(this) <= 64.0D;
+    }
 
-    public void closeContainer(EntityHuman entityhuman) {}
+    public void startOpen(EntityHuman entityhuman) {
+    }
+
+    public void closeContainer(EntityHuman entityhuman) {
+    }
 
     public boolean b(int i, ItemStack itemstack) {
         return true;
@@ -129,8 +132,7 @@ public abstract class EntityMinecartContainer extends EntityMinecartAbstract imp
 
     public void c(int i) {
         // Spigot Start
-        for ( HumanEntity human : new java.util.ArrayList<HumanEntity>( transaction ) )
-        {
+        for (HumanEntity human : new java.util.ArrayList<HumanEntity>(transaction)) {
             human.closeInventory();
         }
         // Spigot End
@@ -189,7 +191,7 @@ public abstract class EntityMinecartContainer extends EntityMinecartAbstract imp
     }
 
     protected void o() {
-        int i = 15 - Container.b((IInventory) this);
+        int i = 15 - Container.b(this);
         float f = 0.98F + (float) i * 0.001F;
 
         this.motX *= (double) f;
@@ -201,7 +203,8 @@ public abstract class EntityMinecartContainer extends EntityMinecartAbstract imp
         return 0;
     }
 
-    public void b(int i, int j) {}
+    public void b(int i, int j) {
+    }
 
     public int g() {
         return 0;
@@ -211,7 +214,8 @@ public abstract class EntityMinecartContainer extends EntityMinecartAbstract imp
         return false;
     }
 
-    public void a(ChestLock chestlock) {}
+    public void a(ChestLock chestlock) {
+    }
 
     public ChestLock i() {
         return ChestLock.a;

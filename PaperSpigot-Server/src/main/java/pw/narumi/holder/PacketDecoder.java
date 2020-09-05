@@ -16,11 +16,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import pw.narumi.Natsuki;
 import pw.narumi.exception.NatsukiException;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 public class PacketDecoder extends ByteToMessageDecoder {

@@ -6,7 +6,8 @@ public class PacketPlayInChat implements Packet<PacketListenerPlayIn> {
 
     private String a;
 
-    public PacketPlayInChat() {}
+    public PacketPlayInChat() {
+    }
 
     public PacketPlayInChat(String s) {
         if (s.length() > 100) {
@@ -26,19 +27,17 @@ public class PacketPlayInChat implements Packet<PacketListenerPlayIn> {
 
     // Spigot Start
     private static final java.util.concurrent.ExecutorService executors = java.util.concurrent.Executors.newCachedThreadPool(
-            new com.google.common.util.concurrent.ThreadFactoryBuilder().setDaemon( true ).setNameFormat( "Async Chat Thread - #%d" ).build() );
+            new com.google.common.util.concurrent.ThreadFactoryBuilder().setDaemon(true).setNameFormat("Async Chat Thread - #%d").build());
+
     public void a(final PacketListenerPlayIn packetlistenerplayin) {
-        if ( !a.startsWith("/") )
-        {
-            executors.submit( new Runnable()
-            {
+        if (!a.startsWith("/")) {
+            executors.submit(new Runnable() {
 
                 @Override
-                public void run()
-                {
-                    packetlistenerplayin.a( PacketPlayInChat.this );
+                public void run() {
+                    packetlistenerplayin.a(PacketPlayInChat.this);
                 }
-            } );
+            });
             return;
         }
         // Spigot End

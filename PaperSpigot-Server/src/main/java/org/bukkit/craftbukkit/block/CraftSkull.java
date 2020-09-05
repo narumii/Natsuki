@@ -52,7 +52,7 @@ public class CraftSkull extends CraftBlockState implements Skull {
     }
 
     static int getSkullType(SkullType type) {
-        switch(type) {
+        switch (type) {
             default:
             case SKELETON:
                 return 0;
@@ -172,7 +172,7 @@ public class CraftSkull extends CraftBlockState implements Skull {
     }
 
     public BlockFace getRotation() {
-    	return getBlockFace(rotation);
+        return getBlockFace(rotation);
     }
 
     public void setRotation(BlockFace rotation) {

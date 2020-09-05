@@ -32,13 +32,13 @@ import java.util.regex.Pattern;
  */
 public final class JavaPluginLoader implements PluginLoader {
     final Server server;
-    private final Pattern[] fileFilters = new Pattern[] { Pattern.compile("\\.jar$"), };
+    private final Pattern[] fileFilters = new Pattern[]{Pattern.compile("\\.jar$"),};
     private final Map<String, Class<?>> classes = new java.util.concurrent.ConcurrentHashMap<String, Class<?>>(); // Spigot
     private final Map<String, PluginClassLoader> loaders = new LinkedHashMap<String, PluginClassLoader>();
 
     /**
      * This class was not meant to be constructed explicitly
-     * 
+     *
      * @param instance the server instance
      */
     @Deprecated
@@ -63,39 +63,38 @@ public final class JavaPluginLoader implements PluginLoader {
 
         final File parentFile = file.getParentFile();
         final File dataFolder = new File(parentFile, description.getName());
-        @SuppressWarnings("deprecation")
-        final File oldDataFolder = new File(parentFile, description.getRawName());
+        @SuppressWarnings("deprecation") final File oldDataFolder = new File(parentFile, description.getRawName());
 
         // Found old data folder
         if (dataFolder.equals(oldDataFolder)) {
             // They are equal -- nothing needs to be done!
         } else if (dataFolder.isDirectory() && oldDataFolder.isDirectory()) {
             server.getLogger().warning(String.format(
-                "While loading %s (%s) found old-data folder: `%s' next to the new one `%s'",
-                description.getFullName(),
-                file,
-                oldDataFolder,
-                dataFolder
+                    "While loading %s (%s) found old-data folder: `%s' next to the new one `%s'",
+                    description.getFullName(),
+                    file,
+                    oldDataFolder,
+                    dataFolder
             ));
         } else if (oldDataFolder.isDirectory() && !dataFolder.exists()) {
             if (!oldDataFolder.renameTo(dataFolder)) {
                 throw new InvalidPluginException("Unable to rename old data folder: `" + oldDataFolder + "' to: `" + dataFolder + "'");
             }
             server.getLogger().log(Level.INFO, String.format(
-                "While loading %s (%s) renamed data folder: `%s' to `%s'",
-                description.getFullName(),
-                file,
-                oldDataFolder,
-                dataFolder
+                    "While loading %s (%s) renamed data folder: `%s' to `%s'",
+                    description.getFullName(),
+                    file,
+                    oldDataFolder,
+                    dataFolder
             ));
         }
 
         if (dataFolder.exists() && !dataFolder.isDirectory()) {
             throw new InvalidPluginException(String.format(
-                "Projected datafolder: `%s' for %s (%s) exists and is not a directory",
-                dataFolder,
-                description.getFullName(),
-                file
+                    "Projected datafolder: `%s' for %s (%s) exists and is not a directory",
+                    dataFolder,
+                    description.getFullName(),
+                    file
             ));
         }
 
@@ -177,7 +176,8 @@ public final class JavaPluginLoader implements PluginLoader {
 
                 try {
                     cachedClass = loader.findClass(name, false);
-                } catch (ClassNotFoundException cnfe) {}
+                } catch (ClassNotFoundException cnfe) {
+                }
                 if (cachedClass != null) {
                     return cachedClass;
                 }
@@ -266,7 +266,7 @@ public final class JavaPluginLoader implements PluginLoader {
                             Level.WARNING,
                             String.format(
                                     "\"%s\" has registered a listener for %s on method \"%s\", but the event is Deprecated." +
-                                    " \"%s\"; please notify the authors %s.",
+                                            " \"%s\"; please notify the authors %s.",
                                     plugin.getDescription().getFullName(),
                                     clazz.getName(),
                                     method.toGenericString(),

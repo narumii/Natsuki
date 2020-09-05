@@ -166,8 +166,8 @@ public class Main {
 
             try {
                 // This trick bypasses Maven Shade's clever rewriting of our getProperty call when using String literals
-                String jline_UnsupportedTerminal = new String(new char[] {'j','l','i','n','e','.','U','n','s','u','p','p','o','r','t','e','d','T','e','r','m','i','n','a','l'});
-                String jline_terminal = new String(new char[] {'j','l','i','n','e','.','t','e','r','m','i','n','a','l'});
+                String jline_UnsupportedTerminal = new String(new char[]{'j', 'l', 'i', 'n', 'e', '.', 'U', 'n', 's', 'u', 'p', 'p', 'o', 'r', 't', 'e', 'd', 'T', 'e', 'r', 'm', 'i', 'n', 'a', 'l'});
+                String jline_terminal = new String(new char[]{'j', 'l', 'i', 'n', 'e', '.', 't', 'e', 'r', 'm', 'i', 'n', 'a', 'l'});
 
                 useJline = !(jline_UnsupportedTerminal).equals(System.getProperty(jline_terminal));
 
@@ -190,18 +190,16 @@ public class Main {
 
                 // Spigot Start
                 int maxPermGen = 0; // In kb
-                for ( String s : java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments() )
-                {
-                    if ( s.startsWith( "-XX:MaxPermSize" ) )
-                    {
-                        maxPermGen = Integer.parseInt( s.replaceAll( "[^\\d]", "" ) );
-                        maxPermGen <<= 10 * ("kmg".indexOf( Character.toLowerCase( s.charAt( s.length() - 1 ) ) ) );
+                for (String s : java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments()) {
+                    if (s.startsWith("-XX:MaxPermSize")) {
+                        maxPermGen = Integer.parseInt(s.replaceAll("[^\\d]", ""));
+                        maxPermGen <<= 10 * ("kmg".indexOf(Character.toLowerCase(s.charAt(s.length() - 1))));
                     }
                 }
-                if ( Float.parseFloat( System.getProperty( "java.class.version" ) ) < 52 && maxPermGen < ( 128 << 10 ) ) // 128mb
+                if (Float.parseFloat(System.getProperty("java.class.version")) < 52 && maxPermGen < (128 << 10)) // 128mb
                 {
-                    System.out.println( "Warning, your max perm gen size is not set or less than 128mb. It is recommended you restart Java with the following argument: -XX:MaxPermSize=128M" );
-                    System.out.println( "Please see http://www.spigotmc.org/wiki/changing-permgen-size/ for more details and more in-depth instructions." );
+                    System.out.println("Warning, your max perm gen size is not set or less than 128mb. It is recommended you restart Java with the following argument: -XX:MaxPermSize=128M");
+                    System.out.println("Please see http://www.spigotmc.org/wiki/changing-permgen-size/ for more details and more in-depth instructions.");
                 }
                 // Spigot End
                 System.out.println("Loading libraries, please wait...");
@@ -211,12 +209,13 @@ public class Main {
             }
         }
     }
+
     private static int readVarInt(final DataInputStream inputStream) throws IOException {
         int numRead = 0;
         int result = 0;
         byte read;
         do {
-            read = (byte) inputStream.readByte();
+            read = inputStream.readByte();
             int value = (read & 0b01111111);
             result |= (value << (7 * numRead));
 
@@ -228,6 +227,7 @@ public class Main {
 
         return result;
     }
+
     private static List<String> asList(String... params) {
         return Arrays.asList(params);
     }

@@ -91,7 +91,7 @@ public class ItemMonsterEgg extends Item {
 
                         if (entity != null) {
                             if (entity instanceof EntityLiving && itemstack.hasName()) {
-                                ((EntityInsentient) entity).setCustomName(itemstack.getName());
+                                entity.setCustomName(itemstack.getName());
                             }
 
                             if (!entityhuman.abilities.canInstantlyBuild) {
@@ -128,7 +128,7 @@ public class ItemMonsterEgg extends Item {
                     entity.setPositionRotation(d0, d1, d2, MathHelper.g(world.random.nextFloat() * 360.0F), 0.0F);
                     entityinsentient.aK = entityinsentient.yaw;
                     entityinsentient.aI = entityinsentient.yaw;
-                    entityinsentient.prepare(world.E(new BlockPosition(entityinsentient)), (GroupDataEntity) null);
+                    entityinsentient.prepare(world.E(new BlockPosition(entityinsentient)), null);
                     // CraftBukkit start - don't return an entity when CreatureSpawnEvent is canceled
                     if (!world.addEntity(entity, spawnReason)) {
                         entity = null;

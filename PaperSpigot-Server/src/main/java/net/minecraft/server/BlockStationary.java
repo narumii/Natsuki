@@ -26,7 +26,7 @@ public class BlockStationary extends BlockFluids {
         BlockFlowing blockflowing = a(this.material);
 
         world.setTypeAndData(blockposition, blockflowing.getBlockData().set(BlockStationary.LEVEL, iblockdata.get(BlockStationary.LEVEL)), 2);
-        world.a(blockposition, (Block) blockflowing, this.a(world));
+        world.a(blockposition, blockflowing, this.a(world));
     }
 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
@@ -43,7 +43,7 @@ public class BlockStationary extends BlockFluids {
 
                         if (block.material == Material.AIR) {
                             if (this.f(world, blockposition1)) {
-                                 // CraftBukkit start - Prevent lava putting something on fire
+                                // CraftBukkit start - Prevent lava putting something on fire
                                 if (world.getType(blockposition1) != Blocks.FIRE) {
                                     if (CraftEventFactory.callBlockIgniteEvent(world, blockposition1.getX(), blockposition1.getY(), blockposition1.getZ(), blockposition.getX(), blockposition.getY(), blockposition.getZ()).isCancelled()) {
                                         continue;

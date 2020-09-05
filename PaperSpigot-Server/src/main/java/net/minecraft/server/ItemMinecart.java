@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.event.block.BlockDispenseEvent;
 // CraftBukkit end
@@ -18,7 +19,7 @@ public class ItemMinecart extends Item {
             double d2 = isourceblock.getZ() + (double) enumdirection.getAdjacentZ() * 1.125D;
             BlockPosition blockposition = isourceblock.getBlockPosition().shift(enumdirection);
             IBlockData iblockdata = world.getType(blockposition);
-            BlockMinecartTrackAbstract.EnumTrackPosition blockminecarttrackabstract_enumtrackposition = iblockdata.getBlock() instanceof BlockMinecartTrackAbstract ? (BlockMinecartTrackAbstract.EnumTrackPosition) iblockdata.get(((BlockMinecartTrackAbstract) iblockdata.getBlock()).n()) : BlockMinecartTrackAbstract.EnumTrackPosition.NORTH_SOUTH;
+            BlockMinecartTrackAbstract.EnumTrackPosition blockminecarttrackabstract_enumtrackposition = iblockdata.getBlock() instanceof BlockMinecartTrackAbstract ? iblockdata.get(((BlockMinecartTrackAbstract) iblockdata.getBlock()).n()) : BlockMinecartTrackAbstract.EnumTrackPosition.NORTH_SOUTH;
             double d3;
 
             if (BlockMinecartTrackAbstract.d(iblockdata)) {
@@ -33,7 +34,7 @@ public class ItemMinecart extends Item {
                 }
 
                 IBlockData iblockdata1 = world.getType(blockposition.down());
-                BlockMinecartTrackAbstract.EnumTrackPosition blockminecarttrackabstract_enumtrackposition1 = iblockdata1.getBlock() instanceof BlockMinecartTrackAbstract ? (BlockMinecartTrackAbstract.EnumTrackPosition) iblockdata1.get(((BlockMinecartTrackAbstract) iblockdata1.getBlock()).n()) : BlockMinecartTrackAbstract.EnumTrackPosition.NORTH_SOUTH;
+                BlockMinecartTrackAbstract.EnumTrackPosition blockminecarttrackabstract_enumtrackposition1 = iblockdata1.getBlock() instanceof BlockMinecartTrackAbstract ? iblockdata1.get(((BlockMinecartTrackAbstract) iblockdata1.getBlock()).n()) : BlockMinecartTrackAbstract.EnumTrackPosition.NORTH_SOUTH;
 
                 if (enumdirection != EnumDirection.DOWN && blockminecarttrackabstract_enumtrackposition1.c()) {
                     d3 = -0.4D;
@@ -62,7 +63,7 @@ public class ItemMinecart extends Item {
                 itemstack.count++;
                 // Chain to handler for new item
                 ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+                IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
                 if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                     idispensebehavior.a(isourceblock, eventStack);
                     return itemstack;
@@ -100,7 +101,7 @@ public class ItemMinecart extends Item {
 
         if (BlockMinecartTrackAbstract.d(iblockdata)) {
             if (!world.isClientSide) {
-                BlockMinecartTrackAbstract.EnumTrackPosition blockminecarttrackabstract_enumtrackposition = iblockdata.getBlock() instanceof BlockMinecartTrackAbstract ? (BlockMinecartTrackAbstract.EnumTrackPosition) iblockdata.get(((BlockMinecartTrackAbstract) iblockdata.getBlock()).n()) : BlockMinecartTrackAbstract.EnumTrackPosition.NORTH_SOUTH;
+                BlockMinecartTrackAbstract.EnumTrackPosition blockminecarttrackabstract_enumtrackposition = iblockdata.getBlock() instanceof BlockMinecartTrackAbstract ? iblockdata.get(((BlockMinecartTrackAbstract) iblockdata.getBlock()).n()) : BlockMinecartTrackAbstract.EnumTrackPosition.NORTH_SOUTH;
                 double d0 = 0.0D;
 
                 if (blockminecarttrackabstract_enumtrackposition.c()) {

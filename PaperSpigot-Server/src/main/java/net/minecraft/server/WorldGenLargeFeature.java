@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 public class WorldGenLargeFeature extends StructureGenerator {
 
-    private static final List<BiomeBase> d = Arrays.asList(new BiomeBase[] { BiomeBase.DESERT, BiomeBase.DESERT_HILLS, BiomeBase.JUNGLE, BiomeBase.JUNGLE_HILLS, BiomeBase.SWAMPLAND});
+    private static final List<BiomeBase> d = Arrays.asList(BiomeBase.DESERT, BiomeBase.DESERT_HILLS, BiomeBase.JUNGLE, BiomeBase.JUNGLE_HILLS, BiomeBase.SWAMPLAND);
     private List<BiomeBase.BiomeMeta> f;
     private int g;
     private int h;
@@ -26,7 +26,7 @@ public class WorldGenLargeFeature extends StructureGenerator {
         while (iterator.hasNext()) {
             Entry entry = (Entry) iterator.next();
 
-            if (((String) entry.getKey()).equals("distance")) {
+            if (entry.getKey().equals("distance")) {
                 this.g = MathHelper.a((String) entry.getValue(), this.g, this.h + 1);
             }
         }
@@ -86,7 +86,7 @@ public class WorldGenLargeFeature extends StructureGenerator {
         StructureStart structurestart = this.c(blockposition);
 
         if (structurestart != null && structurestart instanceof WorldGenLargeFeature.WorldGenLargeFeatureStart && !structurestart.a.isEmpty()) {
-            StructurePiece structurepiece = (StructurePiece) structurestart.a.getFirst();
+            StructurePiece structurepiece = structurestart.a.getFirst();
 
             return structurepiece instanceof WorldGenRegistration.WorldGenWitchHut;
         } else {
@@ -100,7 +100,8 @@ public class WorldGenLargeFeature extends StructureGenerator {
 
     public static class WorldGenLargeFeatureStart extends StructureStart {
 
-        public WorldGenLargeFeatureStart() {}
+        public WorldGenLargeFeatureStart() {
+        }
 
         public WorldGenLargeFeatureStart(World world, Random random, int i, int j) {
             super(i, j);

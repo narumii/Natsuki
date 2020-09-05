@@ -13,14 +13,14 @@ public class TellCommand extends VanillaCommand {
         super("tell");
         this.description = "Sends a private message to the given player";
         this.usageMessage = "/tell <player> <message>";
-        this.setAliases(Arrays.asList(new String[] { "w", "msg" }));
+        this.setAliases(Arrays.asList("w", "msg"));
         this.setPermission("bukkit.command.tell");
     }
 
     @Override
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
-        if (args.length < 2)  {
+        if (args.length < 2) {
             sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
             return false;
         }
@@ -49,11 +49,9 @@ public class TellCommand extends VanillaCommand {
 
     // Spigot Start
     @Override
-    public java.util.List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException
-    {
-        if ( args.length == 0 )
-        {
-            return super.tabComplete( sender, alias, args );
+    public java.util.List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+        if (args.length == 0) {
+            return super.tabComplete(sender, alias, args);
         }
         return java.util.Collections.emptyList();
     }

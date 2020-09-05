@@ -20,7 +20,7 @@ import java.util.List;
 
 public class TileEntityBeacon extends TileEntityContainer implements IUpdatePlayerListBox, IInventory {
 
-    public static final MobEffectList[][] a = new MobEffectList[][] { { MobEffectList.FASTER_MOVEMENT, MobEffectList.FASTER_DIG}, { MobEffectList.RESISTANCE, MobEffectList.JUMP}, { MobEffectList.INCREASE_DAMAGE}, { MobEffectList.REGENERATION}};
+    public static final MobEffectList[][] a = new MobEffectList[][]{{MobEffectList.FASTER_MOVEMENT, MobEffectList.FASTER_DIG}, {MobEffectList.RESISTANCE, MobEffectList.JUMP}, {MobEffectList.INCREASE_DAMAGE}, {MobEffectList.REGENERATION}};
     private final List<TileEntityBeacon.BeaconColorTracker> f = Lists.newArrayList();
     private boolean i;
     private int j = -1;
@@ -33,7 +33,7 @@ public class TileEntityBeacon extends TileEntityContainer implements IUpdatePlay
     private int maxStack = MAX_STACK;
 
     public ItemStack[] getContents() {
-        return new ItemStack[] { this.inventorySlot };
+        return new ItemStack[]{this.inventorySlot};
     }
 
     public void onOpen(CraftHumanEntity who) {
@@ -53,7 +53,8 @@ public class TileEntityBeacon extends TileEntityContainer implements IUpdatePlay
     }
     // CraftBukkit end
 
-    public TileEntityBeacon() {}
+    public TileEntityBeacon() {
+    }
 
     public void c() {
         if (this.world.getTime() % 80L == 0L) {
@@ -141,7 +142,7 @@ public class TileEntityBeacon extends TileEntityContainer implements IUpdatePlay
             float[] afloat;
 
             if (iblockdata.getBlock() == Blocks.STAINED_GLASS) {
-                afloat = EntitySheep.a((EnumColor) iblockdata.get(BlockStainedGlass.COLOR));
+                afloat = EntitySheep.a(iblockdata.get(BlockStainedGlass.COLOR));
             } else {
                 if (iblockdata.getBlock() != Blocks.STAINED_GLASS_PANE) {
                     if (iblockdata.getBlock().p() >= 15 && iblockdata.getBlock() != Blocks.BEDROCK) {
@@ -154,11 +155,11 @@ public class TileEntityBeacon extends TileEntityContainer implements IUpdatePlay
                     continue;
                 }
 
-                afloat = EntitySheep.a((EnumColor) iblockdata.get(BlockStainedGlassPane.COLOR));
+                afloat = EntitySheep.a(iblockdata.get(BlockStainedGlassPane.COLOR));
             }
 
             if (!flag) {
-                afloat = new float[] { (tileentitybeacon_beaconcolortracker.b()[0] + afloat[0]) / 2.0F, (tileentitybeacon_beaconcolortracker.b()[1] + afloat[1]) / 2.0F, (tileentitybeacon_beaconcolortracker.b()[2] + afloat[2]) / 2.0F};
+                afloat = new float[]{(tileentitybeacon_beaconcolortracker.b()[0] + afloat[0]) / 2.0F, (tileentitybeacon_beaconcolortracker.b()[1] + afloat[1]) / 2.0F, (tileentitybeacon_beaconcolortracker.b()[2] + afloat[2]) / 2.0F};
             }
 
             if (Arrays.equals(afloat, tileentitybeacon_beaconcolortracker.b())) {
@@ -208,7 +209,7 @@ public class TileEntityBeacon extends TileEntityContainer implements IUpdatePlay
             while (iterator.hasNext()) {
                 EntityHuman entityhuman = (EntityHuman) iterator.next();
 
-                entityhuman.b((Statistic) AchievementList.K);
+                entityhuman.b(AchievementList.K);
             }
         }
 
@@ -304,12 +305,14 @@ public class TileEntityBeacon extends TileEntityContainer implements IUpdatePlay
     }
 
     public boolean a(EntityHuman entityhuman) {
-        return this.world.getTileEntity(this.position) != this ? false : entityhuman.e((double) this.position.getX() + 0.5D, (double) this.position.getY() + 0.5D, (double) this.position.getZ() + 0.5D) <= 64.0D;
+        return this.world.getTileEntity(this.position) == this && entityhuman.e((double) this.position.getX() + 0.5D, (double) this.position.getY() + 0.5D, (double) this.position.getZ() + 0.5D) <= 64.0D;
     }
 
-    public void startOpen(EntityHuman entityhuman) {}
+    public void startOpen(EntityHuman entityhuman) {
+    }
 
-    public void closeContainer(EntityHuman entityhuman) {}
+    public void closeContainer(EntityHuman entityhuman) {
+    }
 
     public boolean b(int i, ItemStack itemstack) {
         return itemstack.getItem() == Items.EMERALD || itemstack.getItem() == Items.DIAMOND || itemstack.getItem() == Items.GOLD_INGOT || itemstack.getItem() == Items.IRON_INGOT;
@@ -325,32 +328,32 @@ public class TileEntityBeacon extends TileEntityContainer implements IUpdatePlay
 
     public int getProperty(int i) {
         switch (i) {
-        case 0:
-            return this.j;
+            case 0:
+                return this.j;
 
-        case 1:
-            return this.k;
+            case 1:
+                return this.k;
 
-        case 2:
-            return this.l;
+            case 2:
+                return this.l;
 
-        default:
-            return 0;
+            default:
+                return 0;
         }
     }
 
     public void b(int i, int j) {
         switch (i) {
-        case 0:
-            this.j = j;
-            break;
+            case 0:
+                this.j = j;
+                break;
 
-        case 1:
-            this.k = this.h(j);
-            break;
+            case 1:
+                this.k = this.h(j);
+                break;
 
-        case 2:
-            this.l = this.h(j);
+            case 2:
+                this.l = this.h(j);
         }
 
     }

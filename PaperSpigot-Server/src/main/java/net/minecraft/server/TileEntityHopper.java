@@ -44,7 +44,8 @@ public class TileEntityHopper extends TileEntityContainer implements IHopper, IU
     }
     // CraftBukkit end
 
-    public TileEntityHopper() {}
+    public TileEntityHopper() {
+    }
 
     public void a(NBTTagCompound nbttagcompound) {
         super.a(nbttagcompound);
@@ -162,9 +163,11 @@ public class TileEntityHopper extends TileEntityContainer implements IHopper, IU
         return this.world.getTileEntity(this.position) == this && entityhuman.e((double) this.position.getX() + 0.5D, (double) this.position.getY() + 0.5D, (double) this.position.getZ() + 0.5D) <= 64.0D;
     }
 
-    public void startOpen(EntityHuman entityhuman) {}
+    public void startOpen(EntityHuman entityhuman) {
+    }
 
-    public void closeContainer(EntityHuman entityhuman) {}
+    public void closeContainer(EntityHuman entityhuman) {
+    }
 
     public boolean b(int i, ItemStack itemstack) {
         return true;
@@ -551,11 +554,11 @@ public class TileEntityHopper extends TileEntityContainer implements IHopper, IU
 
     public static IInventory b(World world, double d0, double d1, double d2) {
         Object object = null;
-        int i =(int) Math.floor(d0);
-        int j =(int) Math.floor(d1);
-        int k =(int) Math.floor(d2);
+        int i = (int) Math.floor(d0);
+        int j = (int) Math.floor(d1);
+        int k = (int) Math.floor(d2);
         BlockPosition blockposition = new BlockPosition(i, j, k);
-        if ( !world.isLoaded( blockposition ) ) return null; // Spigot
+        if (!world.isLoaded(blockposition)) return null; // Spigot
         Block block = world.getType(blockposition).getBlock();
 
         if (block.isTileEntity()) {
@@ -620,7 +623,8 @@ public class TileEntityHopper extends TileEntityContainer implements IHopper, IU
         return 0;
     }
 
-    public void b(int i, int j) {}
+    public void b(int i, int j) {
+    }
 
     public int g() {
         return 0;

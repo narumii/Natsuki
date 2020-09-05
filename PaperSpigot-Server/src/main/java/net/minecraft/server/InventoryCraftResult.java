@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 import org.bukkit.entity.HumanEntity;
 // CraftBukkit end
@@ -21,8 +22,12 @@ public class InventoryCraftResult implements IInventory {
     }
 
     // Don't need a transaction; the InventoryCrafting keeps track of it for us
-    public void onOpen(CraftHumanEntity who) {}
-    public void onClose(CraftHumanEntity who) {}
+    public void onOpen(CraftHumanEntity who) {
+    }
+
+    public void onClose(CraftHumanEntity who) {
+    }
+
     public java.util.List<HumanEntity> getViewers() {
         return new java.util.ArrayList<HumanEntity>();
     }
@@ -32,7 +37,8 @@ public class InventoryCraftResult implements IInventory {
     }
     // CraftBukkit end
 
-    public InventoryCraftResult() {}
+    public InventoryCraftResult() {
+    }
 
     public int getSize() {
         return 1;
@@ -51,7 +57,7 @@ public class InventoryCraftResult implements IInventory {
     }
 
     public IChatBaseComponent getScoreboardDisplayName() {
-        return (IChatBaseComponent) (this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatMessage(this.getName(), new Object[0]));
+        return this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatMessage(this.getName(), new Object[0]);
     }
 
     public ItemStack splitStack(int i, int j) {
@@ -84,15 +90,18 @@ public class InventoryCraftResult implements IInventory {
         return maxStack; // CraftBukkit
     }
 
-    public void update() {}
+    public void update() {
+    }
 
     public boolean a(EntityHuman entityhuman) {
         return true;
     }
 
-    public void startOpen(EntityHuman entityhuman) {}
+    public void startOpen(EntityHuman entityhuman) {
+    }
 
-    public void closeContainer(EntityHuman entityhuman) {}
+    public void closeContainer(EntityHuman entityhuman) {
+    }
 
     public boolean b(int i, ItemStack itemstack) {
         return true;
@@ -102,7 +111,8 @@ public class InventoryCraftResult implements IInventory {
         return 0;
     }
 
-    public void b(int i, int j) {}
+    public void b(int i, int j) {
+    }
 
     public int g() {
         return 0;

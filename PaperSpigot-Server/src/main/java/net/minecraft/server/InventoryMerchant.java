@@ -128,7 +128,7 @@ public class InventoryMerchant implements IInventory {
     }
 
     public IChatBaseComponent getScoreboardDisplayName() {
-        return (IChatBaseComponent) (this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatMessage(this.getName(), new Object[0]));
+        return this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatMessage(this.getName(), new Object[0]);
     }
 
     public int getMaxStackSize() {
@@ -139,9 +139,11 @@ public class InventoryMerchant implements IInventory {
         return this.merchant.v_() == entityhuman;
     }
 
-    public void startOpen(EntityHuman entityhuman) {}
+    public void startOpen(EntityHuman entityhuman) {
+    }
 
-    public void closeContainer(EntityHuman entityhuman) {}
+    public void closeContainer(EntityHuman entityhuman) {
+    }
 
     public boolean b(int i, ItemStack itemstack) {
         return true;
@@ -162,7 +164,7 @@ public class InventoryMerchant implements IInventory {
         }
 
         if (itemstack == null) {
-            this.setItem(2, (ItemStack) null);
+            this.setItem(2, null);
         } else {
             MerchantRecipeList merchantrecipelist = this.merchant.getOffers(this.player);
 
@@ -178,10 +180,10 @@ public class InventoryMerchant implements IInventory {
                         this.recipe = merchantrecipe;
                         this.setItem(2, merchantrecipe.getBuyItem3().cloneItemStack());
                     } else {
-                        this.setItem(2, (ItemStack) null);
+                        this.setItem(2, null);
                     }
                 } else {
-                    this.setItem(2, (ItemStack) null);
+                    this.setItem(2, null);
                 }
             }
         }
@@ -202,7 +204,8 @@ public class InventoryMerchant implements IInventory {
         return 0;
     }
 
-    public void b(int i, int j) {}
+    public void b(int i, int j) {
+    }
 
     public int g() {
         return 0;

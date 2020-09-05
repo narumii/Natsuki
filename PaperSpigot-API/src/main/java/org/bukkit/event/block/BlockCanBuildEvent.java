@@ -10,9 +10,9 @@ import org.bukkit.event.HandlerList;
  * Note:
  * <ul>
  * <li>The Block returned by getBlock() is the block we are trying to place
- *     on, not the block we are trying to place.
+ * on, not the block we are trying to place.
  * <li>If you want to figure out what is being placed, use {@link
- *     #getMaterial()} or {@link #getMaterialId()} instead.
+ * #getMaterial()} or {@link #getMaterialId()} instead.
  * </ul>
  */
 public class BlockCanBuildEvent extends BlockEvent {
@@ -20,18 +20,16 @@ public class BlockCanBuildEvent extends BlockEvent {
     protected boolean buildable;
 
     /**
-     *
      * @deprecated Magic value
      */
     @Deprecated
     protected int material;
 
     /**
-     *
+     * @param block    the block involved in this event
+     * @param id       the id of the block to place
+     * @param canBuild whether we can build
      * @deprecated Magic value
-     * @param block the block involved in this event
-     * @param id the id of the block to place
-     * @param canBuild whether we can build 
      */
     @Deprecated
     public BlockCanBuildEvent(final Block block, final int id, final boolean canBuild) {
@@ -56,7 +54,7 @@ public class BlockCanBuildEvent extends BlockEvent {
      * Sets whether the block can be built here or not.
      *
      * @param cancel true if you want to allow the block to be built here
-     *     despite Minecraft's default behaviour
+     *               despite Minecraft's default behaviour
      */
     public void setBuildable(boolean cancel) {
         this.buildable = cancel;

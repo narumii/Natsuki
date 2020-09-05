@@ -12,7 +12,6 @@ import org.bukkit.event.HandlerList;
  * <p>
  * This event is not called for {@link org.bukkit.Statistic#PLAY_ONE_TICK} or
  * movement based statistics.
- *
  */
 public class PlayerStatisticIncrementEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
@@ -24,7 +23,7 @@ public class PlayerStatisticIncrementEvent extends PlayerEvent implements Cancel
     private final Material material;
 
     public PlayerStatisticIncrementEvent(Player player, Statistic statistic, int initialValue, int newValue) {
-        super (player);
+        super(player);
         this.statistic = statistic;
         this.initialValue = initialValue;
         this.newValue = newValue;
@@ -33,7 +32,7 @@ public class PlayerStatisticIncrementEvent extends PlayerEvent implements Cancel
     }
 
     public PlayerStatisticIncrementEvent(Player player, Statistic statistic, int initialValue, int newValue, EntityType entityType) {
-        super (player);
+        super(player);
         this.statistic = statistic;
         this.initialValue = initialValue;
         this.newValue = newValue;
@@ -42,7 +41,7 @@ public class PlayerStatisticIncrementEvent extends PlayerEvent implements Cancel
     }
 
     public PlayerStatisticIncrementEvent(Player player, Statistic statistic, int initialValue, int newValue, Material material) {
-        super (player);
+        super(player);
         this.statistic = statistic;
         this.initialValue = initialValue;
         this.newValue = newValue;

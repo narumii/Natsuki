@@ -108,9 +108,9 @@ public final class Color implements ConfigurationSerializable {
     /**
      * Creates a new Color object from a red, green, and blue
      *
-     * @param red integer from 0-255
+     * @param red   integer from 0-255
      * @param green integer from 0-255
-     * @param blue integer from 0-255
+     * @param blue  integer from 0-255
      * @return a new Color object for the red, green, blue
      * @throws IllegalArgumentException if any value is strictly {@literal >255 or <0}
      */
@@ -121,9 +121,9 @@ public final class Color implements ConfigurationSerializable {
     /**
      * Creates a new Color object from a blue, green, and red
      *
-     * @param blue integer from 0-255
+     * @param blue  integer from 0-255
      * @param green integer from 0-255
-     * @param red integer from 0-255
+     * @param red   integer from 0-255
      * @return a new Color object for the red, green, blue
      * @throws IllegalArgumentException if any value is strictly {@literal >255 or <0}
      */
@@ -138,7 +138,7 @@ public final class Color implements ConfigurationSerializable {
      * @param rgb the integer storing the red, green, and blue values
      * @return a new color object for specified values
      * @throws IllegalArgumentException if any data is in the highest order 8
-     *     bits
+     *                                  bits
      */
     public static Color fromRGB(int rgb) throws IllegalArgumentException {
         Validate.isTrue((rgb >> 24) == 0, "Extrenuous data in: ", rgb);
@@ -152,7 +152,7 @@ public final class Color implements ConfigurationSerializable {
      * @param bgr the integer storing the blue, green, and red values
      * @return a new color object for specified values
      * @throws IllegalArgumentException if any data is in the highest order 8
-     *     bits
+     *                                  bits
      */
     public static Color fromBGR(int bgr) throws IllegalArgumentException {
         Validate.isTrue((bgr >> 24) == 0, "Extrenuous data in: ", bgr);
@@ -227,7 +227,6 @@ public final class Color implements ConfigurationSerializable {
     }
 
     /**
-     *
      * @return An integer representation of this color, as 0xRRGGBB
      */
     public int asRGB() {
@@ -235,7 +234,6 @@ public final class Color implements ConfigurationSerializable {
     }
 
     /**
-     *
      * @return An integer representation of this color, as 0xBBGGRR
      */
     public int asBGR() {
@@ -309,19 +307,19 @@ public final class Color implements ConfigurationSerializable {
     }
 
     public Map<String, Object> serialize() {
-        return ImmutableMap.<String, Object>of(
-            "RED", getRed(),
-            "BLUE", getBlue(),
-            "GREEN", getGreen()
+        return ImmutableMap.of(
+                "RED", getRed(),
+                "BLUE", getBlue(),
+                "GREEN", getGreen()
         );
     }
 
     @SuppressWarnings("javadoc")
     public static Color deserialize(Map<String, Object> map) {
         return fromRGB(
-            asInt("RED", map),
-            asInt("GREEN", map),
-            asInt("BLUE", map)
+                asInt("RED", map),
+                asInt("GREEN", map),
+                asInt("BLUE", map)
         );
     }
 

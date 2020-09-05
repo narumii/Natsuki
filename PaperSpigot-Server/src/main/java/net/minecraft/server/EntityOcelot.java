@@ -22,7 +22,7 @@ public class EntityOcelot extends EntityTameableAnimal {
         this.goalSelector.a(9, new PathfinderGoalBreed(this, 0.8D));
         this.goalSelector.a(10, new PathfinderGoalRandomStroll(this, 0.8D));
         this.goalSelector.a(11, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 10.0F));
-        this.targetSelector.a(1, new PathfinderGoalRandomTargetNonTamed(this, EntityChicken.class, false, (Predicate) null));
+        this.targetSelector.a(1, new PathfinderGoalRandomTargetNonTamed(this, EntityChicken.class, false, null));
     }
 
     protected void h() {
@@ -61,7 +61,8 @@ public class EntityOcelot extends EntityTameableAnimal {
         this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.30000001192092896D);
     }
 
-    public void e(float f, float f1) {}
+    public void e(float f, float f1) {
+    }
 
     public void b(NBTTagCompound nbttagcompound) {
         super.b(nbttagcompound);
@@ -110,7 +111,8 @@ public class EntityOcelot extends EntityTameableAnimal {
     }
     // CraftBukkit end */
 
-    protected void dropDeathLoot(boolean flag, int i) {}
+    protected void dropDeathLoot(boolean flag, int i) {
+    }
 
     public boolean a(EntityHuman entityhuman) {
         ItemStack itemstack = entityhuman.inventory.getItemInHand();
@@ -125,7 +127,7 @@ public class EntityOcelot extends EntityTameableAnimal {
             }
 
             if (itemstack.count <= 0) {
-                entityhuman.inventory.setItem(entityhuman.inventory.itemInHandIndex, (ItemStack) null);
+                entityhuman.inventory.setItem(entityhuman.inventory.itemInHandIndex, null);
             }
 
             if (!this.world.isClientSide) {
@@ -175,7 +177,7 @@ public class EntityOcelot extends EntityTameableAnimal {
         } else {
             EntityOcelot entityocelot = (EntityOcelot) entityanimal;
 
-            return !entityocelot.isTamed() ? false : this.isInLove() && entityocelot.isInLove();
+            return entityocelot.isTamed() && (this.isInLove() && entityocelot.isInLove());
         }
     }
 
@@ -192,7 +194,7 @@ public class EntityOcelot extends EntityTameableAnimal {
     }
 
     public boolean canSpawn() {
-        if (this.world.a(this.getBoundingBox(), (Entity) this) && this.world.getCubes(this, this.getBoundingBox()).isEmpty() && !this.world.containsLiquid(this.getBoundingBox())) {
+        if (this.world.a(this.getBoundingBox(), this) && this.world.getCubes(this, this.getBoundingBox()).isEmpty() && !this.world.containsLiquid(this.getBoundingBox())) {
             BlockPosition blockposition = new BlockPosition(this.locX, this.getBoundingBox().b, this.locZ);
 
             if (blockposition.getY() < this.world.F()) {
@@ -201,9 +203,7 @@ public class EntityOcelot extends EntityTameableAnimal {
 
             Block block = this.world.getType(blockposition.down()).getBlock();
 
-            if (block == Blocks.GRASS || block.getMaterial() == Material.LEAVES) {
-                return true;
-            }
+            return block == Blocks.GRASS || block.getMaterial() == Material.LEAVES;
         }
 
         return false;
@@ -222,7 +222,7 @@ public class EntityOcelot extends EntityTameableAnimal {
             this.bo = new PathfinderGoalAvoidTarget(this, EntityHuman.class, 16.0F, 0.8D, 1.33D);
         }
 
-        this.goalSelector.a((PathfinderGoal) this.bo);
+        this.goalSelector.a(this.bo);
         if (!this.isTamed()) {
             this.goalSelector.a(4, this.bo);
         }

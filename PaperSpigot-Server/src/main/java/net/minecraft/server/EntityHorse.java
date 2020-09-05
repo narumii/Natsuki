@@ -18,13 +18,13 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
         }
     };
     public static final IAttribute attributeJumpStrength = (new AttributeRanged(null, "horse.jumpStrength", 0.7D, 0.0D, 2.0D)).a("Jump Strength").a(true);
-    private static final String[] bu = new String[] { null, "textures/entity/horse/armor/horse_armor_iron.png", "textures/entity/horse/armor/horse_armor_gold.png", "textures/entity/horse/armor/horse_armor_diamond.png"};
-    private static final String[] bv = new String[] { "", "meo", "goo", "dio"};
-    private static final int[] bw = new int[] { 0, 5, 7, 11};
-    private static final String[] bx = new String[] { "textures/entity/horse/horse_white.png", "textures/entity/horse/horse_creamy.png", "textures/entity/horse/horse_chestnut.png", "textures/entity/horse/horse_brown.png", "textures/entity/horse/horse_black.png", "textures/entity/horse/horse_gray.png", "textures/entity/horse/horse_darkbrown.png"};
-    private static final String[] by = new String[] { "hwh", "hcr", "hch", "hbr", "hbl", "hgr", "hdb"};
-    private static final String[] bz = new String[] { null, "textures/entity/horse/horse_markings_white.png", "textures/entity/horse/horse_markings_whitefield.png", "textures/entity/horse/horse_markings_whitedots.png", "textures/entity/horse/horse_markings_blackdots.png"};
-    private static final String[] bA = new String[] { "", "wo_", "wmo", "wdo", "bdo"};
+    private static final String[] bu = new String[]{null, "textures/entity/horse/armor/horse_armor_iron.png", "textures/entity/horse/armor/horse_armor_gold.png", "textures/entity/horse/armor/horse_armor_diamond.png"};
+    private static final String[] bv = new String[]{"", "meo", "goo", "dio"};
+    private static final int[] bw = new int[]{0, 5, 7, 11};
+    private static final String[] bx = new String[]{"textures/entity/horse/horse_white.png", "textures/entity/horse/horse_creamy.png", "textures/entity/horse/horse_chestnut.png", "textures/entity/horse/horse_brown.png", "textures/entity/horse/horse_black.png", "textures/entity/horse/horse_gray.png", "textures/entity/horse/horse_darkbrown.png"};
+    private static final String[] by = new String[]{"hwh", "hcr", "hch", "hbr", "hbl", "hgr", "hdb"};
+    private static final String[] bz = new String[]{null, "textures/entity/horse/horse_markings_white.png", "textures/entity/horse/horse_markings_whitefield.png", "textures/entity/horse/horse_markings_whitedots.png", "textures/entity/horse/horse_markings_blackdots.png"};
+    private static final String[] bA = new String[]{"", "wo_", "wmo", "wdo", "bdo"};
     private int bB;
     private int bC;
     private int bD;
@@ -99,21 +99,21 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
             int i = this.getType();
 
             switch (i) {
-            case 0:
-            default:
-                return LocaleI18n.get("entity.horse.name");
+                case 0:
+                default:
+                    return LocaleI18n.get("entity.horse.name");
 
-            case 1:
-                return LocaleI18n.get("entity.donkey.name");
+                case 1:
+                    return LocaleI18n.get("entity.donkey.name");
 
-            case 2:
-                return LocaleI18n.get("entity.mule.name");
+                case 2:
+                    return LocaleI18n.get("entity.mule.name");
 
-            case 3:
-                return LocaleI18n.get("entity.zombiehorse.name");
+                case 3:
+                    return LocaleI18n.get("entity.zombiehorse.name");
 
-            case 4:
-                return LocaleI18n.get("entity.skeletonhorse.name");
+                case 4:
+                    return LocaleI18n.get("entity.skeletonhorse.name");
             }
         }
     }
@@ -279,8 +279,8 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
     }
 
     public boolean cD() {
-        int i =(int) Math.floor(this.locX);
-        int j =(int) Math.floor(this.locZ);
+        int i = (int) Math.floor(this.locX);
+        int j = (int) Math.floor(this.locZ);
 
         this.world.getBiome(new BlockPosition(i, 0, j));
         return true;
@@ -736,7 +736,7 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
                 this.heal(1.0F, RegainReason.REGEN); // CraftBukkit
             }
 
-            if (!this.cy() && this.passenger == null && this.random.nextInt(300) == 0 && this.world.getType(new BlockPosition(MathHelper.floor(this.locX),(int) Math.floor(this.locY) - 1,(int) Math.floor(this.locZ))).getBlock() == Blocks.GRASS) {
+            if (!this.cy() && this.passenger == null && this.random.nextInt(300) == 0 && this.world.getType(new BlockPosition(MathHelper.floor(this.locX), (int) Math.floor(this.locY) - 1, (int) Math.floor(this.locZ))).getBlock() == Blocks.GRASS) {
                 this.r(true);
             }
 
@@ -1022,10 +1022,9 @@ public class EntityHorse extends EntityAnimal implements IInventoryListener {
         } else {
             String s1 = nbttagcompound.getString("Owner");
             // Spigot start
-            if ( s1 == null || s1.isEmpty() )
-            {
+            if (s1 == null || s1.isEmpty()) {
                 if (nbttagcompound.hasKey("OwnerName")) {
-                String owner = nbttagcompound.getString("OwnerName");
+                    String owner = nbttagcompound.getString("OwnerName");
                     if (owner != null && !owner.isEmpty()) {
                         s1 = owner;
                     }

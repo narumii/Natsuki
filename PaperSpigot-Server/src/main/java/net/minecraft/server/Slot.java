@@ -28,9 +28,11 @@ public class Slot {
         }
     }
 
-    protected void a(ItemStack itemstack, int i) {}
+    protected void a(ItemStack itemstack, int i) {
+    }
 
-    protected void c(ItemStack itemstack) {}
+    protected void c(ItemStack itemstack) {
+    }
 
     public void a(EntityHuman entityhuman, ItemStack itemstack) {
         this.f();

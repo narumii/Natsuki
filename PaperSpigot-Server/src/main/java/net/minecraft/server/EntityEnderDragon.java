@@ -43,7 +43,7 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
 
     public EntityEnderDragon(World world) {
         super(world);
-        this.children = new EntityComplexPart[] { this.bn = new EntityComplexPart(this, "head", 6.0F, 6.0F), this.bo = new EntityComplexPart(this, "body", 8.0F, 8.0F), this.bp = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.bq = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.br = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.bs = new EntityComplexPart(this, "wing", 4.0F, 4.0F), this.bt = new EntityComplexPart(this, "wing", 4.0F, 4.0F)};
+        this.children = new EntityComplexPart[]{this.bn = new EntityComplexPart(this, "head", 6.0F, 6.0F), this.bo = new EntityComplexPart(this, "body", 8.0F, 8.0F), this.bp = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.bq = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.br = new EntityComplexPart(this, "tail", 4.0F, 4.0F), this.bs = new EntityComplexPart(this, "wing", 4.0F, 4.0F), this.bt = new EntityComplexPart(this, "wing", 4.0F, 4.0F)};
         this.setHealth(this.getMaxHealth());
         this.setSize(16.0F, 8.0F);
         this.noclip = true;
@@ -429,12 +429,12 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
     }
 
     private boolean b(AxisAlignedBB axisalignedbb) {
-        int i =(int) Math.floor(axisalignedbb.a);
-        int j =(int) Math.floor(axisalignedbb.b);
-        int k =(int) Math.floor(axisalignedbb.c);
-        int l =(int) Math.floor(axisalignedbb.d);
-        int i1 =(int) Math.floor(axisalignedbb.e);
-        int j1 =(int) Math.floor(axisalignedbb.f);
+        int i = (int) Math.floor(axisalignedbb.a);
+        int j = (int) Math.floor(axisalignedbb.b);
+        int k = (int) Math.floor(axisalignedbb.c);
+        int l = (int) Math.floor(axisalignedbb.d);
+        int i1 = (int) Math.floor(axisalignedbb.e);
+        int j1 = (int) Math.floor(axisalignedbb.f);
         boolean flag = false;
         boolean flag1 = false;
 
@@ -579,7 +579,8 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
                     double deltaX = this.locX - player.locX;
                     double deltaZ = this.locZ - player.locZ;
                     double distanceSquared = deltaX * deltaX + deltaZ * deltaZ;
-                    if ( world.spigotConfig.dragonDeathSoundRadius > 0 && distanceSquared > world.spigotConfig.dragonDeathSoundRadius * world.spigotConfig.dragonDeathSoundRadius ) continue; // Spigot
+                    if (world.spigotConfig.dragonDeathSoundRadius > 0 && distanceSquared > world.spigotConfig.dragonDeathSoundRadius * world.spigotConfig.dragonDeathSoundRadius)
+                        continue; // Spigot
                     if (distanceSquared > viewDistance * viewDistance) {
                         double deltaLength = Math.sqrt(distanceSquared);
                         double relativeX = player.locX + (deltaX / deltaLength) * viewDistance;
@@ -666,7 +667,7 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
         } else {
             for (BlockState state : event.getBlocks()) {
                 PacketPlayOutBlockChange packet = new PacketPlayOutBlockChange(this.world, new BlockPosition(state.getX(), state.getY(), state.getZ()));
-                for (Iterator it = this.world.players.iterator(); it.hasNext();) {
+                for (Iterator it = this.world.players.iterator(); it.hasNext(); ) {
                     EntityHuman entity = (EntityHuman) it.next();
                     if (entity instanceof EntityPlayer) {
                         ((EntityPlayer) entity).playerConnection.sendPacket(packet);
@@ -677,7 +678,8 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
         // CraftBukkit end
     }
 
-    protected void D() {}
+    protected void D() {
+    }
 
     public Entity[] aB() {
         return this.children;

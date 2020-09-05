@@ -9,7 +9,8 @@ public class PacketPlayOutPlayerListHeaderFooter implements Packet<PacketListene
     private IChatBaseComponent a;
     private IChatBaseComponent b;
 
-    public PacketPlayOutPlayerListHeaderFooter() {}
+    public PacketPlayOutPlayerListHeaderFooter() {
+    }
 
     public PacketPlayOutPlayerListHeaderFooter(IChatBaseComponent ichatbasecomponent) {
         this.a = ichatbasecomponent;

@@ -45,7 +45,7 @@ public enum CropState {
     private final byte data;
     private final static Map<Byte, CropState> BY_DATA = Maps.newHashMap();
 
-    private CropState(final int data) {
+    CropState(final int data) {
         this.data = (byte) data;
     }
 
@@ -65,7 +65,7 @@ public enum CropState {
      *
      * @param data Data value to fetch
      * @return The {@link CropState} representing the given value, or null if
-     *     it doesn't exist
+     * it doesn't exist
      * @deprecated Magic value
      */
     @Deprecated

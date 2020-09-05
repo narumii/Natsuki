@@ -25,7 +25,7 @@ public class BlockNetherWart extends BlockPlant {
     }
 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
-        int i = ((Integer) iblockdata.get(BlockNetherWart.AGE)).intValue();
+        int i = iblockdata.get(BlockNetherWart.AGE).intValue();
 
         if (i < 3 && random.nextInt(Math.max(1, (int) world.growthOdds / world.spigotConfig.wartModifier * 10)) == 0) { // Spigot
             iblockdata = iblockdata.set(BlockNetherWart.AGE, Integer.valueOf(i + 1));
@@ -40,7 +40,7 @@ public class BlockNetherWart extends BlockPlant {
         if (!world.isClientSide) {
             int j = 1;
 
-            if (((Integer) iblockdata.get(BlockNetherWart.AGE)).intValue() >= 3) {
+            if (iblockdata.get(BlockNetherWart.AGE).intValue() >= 3) {
                 j = 2 + world.random.nextInt(3);
                 if (i > 0) {
                     j += world.random.nextInt(i + 1);
@@ -67,10 +67,10 @@ public class BlockNetherWart extends BlockPlant {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockNetherWart.AGE)).intValue();
+        return iblockdata.get(BlockNetherWart.AGE).intValue();
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockNetherWart.AGE});
+        return new BlockStateList(this, BlockNetherWart.AGE);
     }
 }

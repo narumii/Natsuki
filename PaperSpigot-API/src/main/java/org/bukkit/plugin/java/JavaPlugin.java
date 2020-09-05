@@ -55,16 +55,16 @@ public abstract class JavaPlugin extends PluginBase {
     }
 
     /**
-     * @deprecated This method is intended for unit testing purposes when the
-     *     other {@linkplain #JavaPlugin(JavaPluginLoader,
-     *     PluginDescriptionFile, File, File) constructor} cannot be used.
-     *     <p>
-     *     Its existence may be temporary.
-     * @param loader the plugin loader
-     * @param server the server instance
+     * @param loader      the plugin loader
+     * @param server      the server instance
      * @param description the plugin's description
-     * @param dataFolder the plugin's data folder
-     * @param file the location of the plugin
+     * @param dataFolder  the plugin's data folder
+     * @param file        the location of the plugin
+     * @deprecated This method is intended for unit testing purposes when the
+     * other {@linkplain #JavaPlugin(JavaPluginLoader,
+     * PluginDescriptionFile, File, File) constructor} cannot be used.
+     * <p>
+     * Its existence may be temporary.
      */
     @Deprecated
     protected JavaPlugin(final PluginLoader loader, final Server server, final PluginDescriptionFile description, final File dataFolder, final File file) {
@@ -314,14 +314,14 @@ public abstract class JavaPlugin extends PluginBase {
     }
 
     /**
-     * @param loader the plugin loader
-     * @param server the server instance
+     * @param loader      the plugin loader
+     * @param server      the server instance
      * @param description the plugin's description
-     * @param dataFolder the plugin's data folder
-     * @param file the location of the plugin
+     * @param dataFolder  the plugin's data folder
+     * @param file        the location of the plugin
      * @param classLoader the class loader
      * @deprecated This method is legacy and will be removed - it must be
-     *     replaced by the specially provided constructor(s).
+     * replaced by the specially provided constructor(s).
      */
     @Deprecated
     protected final void initialize(PluginLoader loader, Server server, PluginDescriptionFile description, File dataFolder, File file, ClassLoader classLoader) {
@@ -383,7 +383,7 @@ public abstract class JavaPlugin extends PluginBase {
      *
      * @return true if this plugin is initialized, otherwise false
      * @deprecated This method cannot return false, as {@link
-     *     JavaPlugin} is now initialized in the constructor.
+     * JavaPlugin} is now initialized in the constructor.
      */
     @Deprecated
     public final boolean isInitialized() {
@@ -430,13 +430,16 @@ public abstract class JavaPlugin extends PluginBase {
     }
 
     @Override
-    public void onLoad() {}
+    public void onLoad() {
+    }
 
     @Override
-    public void onDisable() {}
+    public void onDisable() {
+    }
 
     @Override
-    public void onEnable() {}
+    public void onEnable() {
+    }
 
     @Override
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
@@ -491,19 +494,19 @@ public abstract class JavaPlugin extends PluginBase {
      * does not extend the class, where the intended plugin would have
      * resided in a different jar / classloader.
      *
-     * @param <T> a class that extends JavaPlugin
+     * @param <T>   a class that extends JavaPlugin
      * @param clazz the class desired
      * @return the plugin that provides and implements said class
      * @throws IllegalArgumentException if clazz is null
      * @throws IllegalArgumentException if clazz does not extend {@link
-     *     JavaPlugin}
-     * @throws IllegalStateException if clazz was not provided by a plugin,
-     *     for example, if called with
-     *     <code>JavaPlugin.getPlugin(JavaPlugin.class)</code>
-     * @throws IllegalStateException if called from the static initializer for
-     *     given JavaPlugin
-     * @throws ClassCastException if plugin that provided the class does not
-     *     extend the class
+     *                                  JavaPlugin}
+     * @throws IllegalStateException    if clazz was not provided by a plugin,
+     *                                  for example, if called with
+     *                                  <code>JavaPlugin.getPlugin(JavaPlugin.class)</code>
+     * @throws IllegalStateException    if called from the static initializer for
+     *                                  given JavaPlugin
+     * @throws ClassCastException       if plugin that provided the class does not
+     *                                  extend the class
      */
     public static <T extends JavaPlugin> T getPlugin(Class<T> clazz) {
         Validate.notNull(clazz, "Null class cannot have a plugin");
@@ -528,10 +531,10 @@ public abstract class JavaPlugin extends PluginBase {
      * @param clazz a class belonging to a plugin
      * @return the plugin that provided the class
      * @throws IllegalArgumentException if the class is not provided by a
-     *     JavaPlugin
+     *                                  JavaPlugin
      * @throws IllegalArgumentException if class is null
-     * @throws IllegalStateException if called from the static initializer for
-     *     given JavaPlugin
+     * @throws IllegalStateException    if called from the static initializer for
+     *                                  given JavaPlugin
      */
     public static JavaPlugin getProvidingPlugin(Class<?> clazz) {
         Validate.notNull(clazz, "Null class cannot have a plugin");

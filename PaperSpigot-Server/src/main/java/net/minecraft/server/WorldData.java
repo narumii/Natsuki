@@ -616,7 +616,7 @@ public class WorldData {
         });
         crashreportsystemdetails.a("Level generator", new Callable() {
             public String a() throws Exception {
-                return String.format("ID %02d - %s, ver %d. Features enabled: %b", new Object[] { Integer.valueOf(WorldData.this.c.g()), WorldData.this.c.name(), Integer.valueOf(WorldData.this.c.getVersion()), Boolean.valueOf(WorldData.this.v)});
+                return String.format("ID %02d - %s, ver %d. Features enabled: %b", Integer.valueOf(WorldData.this.c.g()), WorldData.this.c.name(), Integer.valueOf(WorldData.this.c.getVersion()), Boolean.valueOf(WorldData.this.v));
             }
 
             public Object call() throws Exception {
@@ -643,7 +643,7 @@ public class WorldData {
         });
         crashreportsystemdetails.a("Level time", new Callable() {
             public String a() throws Exception {
-                return String.format("%d game time, %d day time", new Object[] { Long.valueOf(WorldData.this.h), Long.valueOf(WorldData.this.i)});
+                return String.format("%d game time, %d day time", Long.valueOf(WorldData.this.h), Long.valueOf(WorldData.this.i));
             }
 
             public Object call() throws Exception {
@@ -665,18 +665,17 @@ public class WorldData {
 
                 try {
                     switch (WorldData.this.o) {
-                    case 19132:
-                        s = "McRegion";
-                        break;
+                        case 19132:
+                            s = "McRegion";
+                            break;
 
-                    case 19133:
-                        s = "Anvil";
+                        case 19133:
+                            s = "Anvil";
                     }
                 } catch (Throwable throwable) {
-                    ;
                 }
 
-                return String.format("0x%05X - %s", new Object[] { Integer.valueOf(WorldData.this.o), s});
+                return String.format("0x%05X - %s", Integer.valueOf(WorldData.this.o), s);
             }
 
             public Object call() throws Exception {
@@ -685,7 +684,7 @@ public class WorldData {
         });
         crashreportsystemdetails.a("Level weather", new Callable() {
             public String a() throws Exception {
-                return String.format("Rain time: %d (now: %b), thunder time: %d (now: %b)", new Object[] { Integer.valueOf(WorldData.this.r), Boolean.valueOf(WorldData.this.q), Integer.valueOf(WorldData.this.t), Boolean.valueOf(WorldData.this.s)});
+                return String.format("Rain time: %d (now: %b), thunder time: %d (now: %b)", Integer.valueOf(WorldData.this.r), Boolean.valueOf(WorldData.this.q), Integer.valueOf(WorldData.this.t), Boolean.valueOf(WorldData.this.s));
             }
 
             public Object call() throws Exception {
@@ -694,7 +693,7 @@ public class WorldData {
         });
         crashreportsystemdetails.a("Level game mode", new Callable() {
             public String a() throws Exception {
-                return String.format("Game mode: %s (ID %d). Hardcore: %b. Cheats: %b", new Object[] { WorldData.this.u.b(), Integer.valueOf(WorldData.this.u.getId()), Boolean.valueOf(WorldData.this.w), Boolean.valueOf(WorldData.this.x)});
+                return String.format("Game mode: %s (ID %d). Hardcore: %b. Cheats: %b", WorldData.this.u.b(), Integer.valueOf(WorldData.this.u.getId()), Boolean.valueOf(WorldData.this.w), Boolean.valueOf(WorldData.this.x));
             }
 
             public Object call() throws Exception {
@@ -704,8 +703,8 @@ public class WorldData {
     }
 
     // CraftBukkit start - Check if the name stored in NBT is the correct one
-    public void checkName( String name ) {
-        if ( !this.n.equals( name ) ) {
+    public void checkName(String name) {
+        if (!this.n.equals(name)) {
             this.n = name;
         }
     }

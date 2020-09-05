@@ -36,7 +36,7 @@ public class EntityFallingBlock extends Entity {
     public EntityFallingBlock(org.bukkit.Location loc, World world, double d0, double d1, double d2, IBlockData iblockdata) {
         super(world);
         sourceLoc = loc;
-    // PaperSpigot end
+        // PaperSpigot end
         this.block = iblockdata;
         this.k = true;
         this.setSize(0.98F, 0.98F);
@@ -54,7 +54,8 @@ public class EntityFallingBlock extends Entity {
         return false;
     }
 
-    protected void h() {}
+    protected void h() {
+    }
 
     public boolean ad() {
         return !this.dead;

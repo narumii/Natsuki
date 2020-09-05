@@ -49,7 +49,7 @@ public class BlockIce extends BlockHalfTransparent {
                 return;
             }
             // CraftBukkit end
-            
+
             if (world.worldProvider.n()) {
                 world.setAir(blockposition);
             } else {

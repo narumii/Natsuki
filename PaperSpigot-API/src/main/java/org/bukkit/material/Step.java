@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class Step extends TexturedMaterial {
     private static final List<Material> textures = new ArrayList<Material>();
+
     static {
         textures.add(Material.STONE);
         textures.add(Material.SANDSTONE);
@@ -79,7 +80,7 @@ public class Step extends TexturedMaterial {
      * Set step inverted state
      *
      * @param inv - true if step is inverted (top half), false if step is
-     *     normal (bottom half)
+     *            normal (bottom half)
      */
     public void setInverted(boolean inv) {
         int dat = getData() & 0x7;
@@ -90,7 +91,6 @@ public class Step extends TexturedMaterial {
     }
 
     /**
-     *
      * @deprecated Magic value
      */
     @Deprecated
@@ -100,7 +100,6 @@ public class Step extends TexturedMaterial {
     }
 
     /**
-     *
      * @deprecated Magic value
      */
     @Deprecated
@@ -116,6 +115,6 @@ public class Step extends TexturedMaterial {
 
     @Override
     public String toString() {
-        return super.toString() + (isInverted()?"inverted":"");
+        return super.toString() + (isInverted() ? "inverted" : "");
     }
 }

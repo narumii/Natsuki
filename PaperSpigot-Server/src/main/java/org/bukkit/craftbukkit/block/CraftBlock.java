@@ -26,8 +26,8 @@ public class CraftBlock implements Block {
     private final int x;
     private final int y;
     private final int z;
-    private static final Biome BIOME_MAPPING[];
-    private static final BiomeBase BIOMEBASE_MAPPING[];
+    private static final Biome[] BIOME_MAPPING;
+    private static final BiomeBase[] BIOMEBASE_MAPPING;
 
     public CraftBlock(CraftChunk chunk, int x, int y, int z) {
         this.x = x;
@@ -189,8 +189,8 @@ public class CraftBlock implements Block {
 
         for (BlockFace face : values) {
             if ((this.getX() + face.getModX() == block.getX()) &&
-                (this.getY() + face.getModY() == block.getY()) &&
-                (this.getZ() + face.getModZ() == block.getZ())
+                    (this.getY() + face.getModY() == block.getY()) &&
+                    (this.getZ() + face.getModZ() == block.getZ())
             ) {
                 return face;
             }
@@ -207,39 +207,39 @@ public class CraftBlock implements Block {
     public static BlockFace notchToBlockFace(EnumDirection notch) {
         if (notch == null) return BlockFace.SELF;
         switch (notch) {
-        case DOWN:
-            return BlockFace.DOWN;
-        case UP:
-            return BlockFace.UP;
-        case NORTH:
-            return BlockFace.NORTH;
-        case SOUTH:
-            return BlockFace.SOUTH;
-        case WEST:
-            return BlockFace.WEST;
-        case EAST:
-            return BlockFace.EAST;
-        default:
-            return BlockFace.SELF;
+            case DOWN:
+                return BlockFace.DOWN;
+            case UP:
+                return BlockFace.UP;
+            case NORTH:
+                return BlockFace.NORTH;
+            case SOUTH:
+                return BlockFace.SOUTH;
+            case WEST:
+                return BlockFace.WEST;
+            case EAST:
+                return BlockFace.EAST;
+            default:
+                return BlockFace.SELF;
         }
     }
 
     public static EnumDirection blockFaceToNotch(BlockFace face) {
         switch (face) {
-        case DOWN:
-            return EnumDirection.DOWN;
-        case UP:
-            return EnumDirection.UP;
-        case NORTH:
-            return EnumDirection.NORTH;
-        case SOUTH:
-            return EnumDirection.SOUTH;
-        case WEST:
-            return EnumDirection.WEST;
-        case EAST:
-            return EnumDirection.EAST;
-        default:
-            return null;
+            case DOWN:
+                return EnumDirection.DOWN;
+            case UP:
+                return EnumDirection.UP;
+            case NORTH:
+                return EnumDirection.NORTH;
+            case SOUTH:
+                return EnumDirection.SOUTH;
+            case WEST:
+                return EnumDirection.WEST;
+            case EAST:
+                return EnumDirection.EAST;
+            default:
+                return null;
         }
     }
 
@@ -247,42 +247,42 @@ public class CraftBlock implements Block {
         Material material = getType();
 
         switch (material) {
-        case SIGN:
-        case SIGN_POST:
-        case WALL_SIGN:
-            return new CraftSign(this);
-        case CHEST:
-        case TRAPPED_CHEST:
-            return new CraftChest(this);
-        case BURNING_FURNACE:
-        case FURNACE:
-            return new CraftFurnace(this);
-        case DISPENSER:
-            return new CraftDispenser(this);
-        case DROPPER:
-            return new CraftDropper(this);
-        case HOPPER:
-            return new CraftHopper(this);
-        case MOB_SPAWNER:
-            return new CraftCreatureSpawner(this);
-        case NOTE_BLOCK:
-            return new CraftNoteBlock(this);
-        case JUKEBOX:
-            return new CraftJukebox(this);
-        case BREWING_STAND:
-            return new CraftBrewingStand(this);
-        case SKULL:
-            return new CraftSkull(this);
-        case COMMAND:
-            return new CraftCommandBlock(this);
-        case BEACON:
-            return new CraftBeacon(this);
-        case BANNER:
-        case WALL_BANNER:
-        case STANDING_BANNER:
-            return new CraftBanner(this);
-        default:
-            return new CraftBlockState(this);
+            case SIGN:
+            case SIGN_POST:
+            case WALL_SIGN:
+                return new CraftSign(this);
+            case CHEST:
+            case TRAPPED_CHEST:
+                return new CraftChest(this);
+            case BURNING_FURNACE:
+            case FURNACE:
+                return new CraftFurnace(this);
+            case DISPENSER:
+                return new CraftDispenser(this);
+            case DROPPER:
+                return new CraftDropper(this);
+            case HOPPER:
+                return new CraftHopper(this);
+            case MOB_SPAWNER:
+                return new CraftCreatureSpawner(this);
+            case NOTE_BLOCK:
+                return new CraftNoteBlock(this);
+            case JUKEBOX:
+                return new CraftJukebox(this);
+            case BREWING_STAND:
+                return new CraftBrewingStand(this);
+            case SKULL:
+                return new CraftSkull(this);
+            case COMMAND:
+                return new CraftCommandBlock(this);
+            case BEACON:
+                return new CraftBeacon(this);
+            case BANNER:
+            case WALL_BANNER:
+            case STANDING_BANNER:
+                return new CraftBanner(this);
+            default:
+                return new CraftBlockState(this);
         }
     }
 
@@ -358,12 +358,18 @@ public class CraftBlock implements Block {
         int power = 0;
         BlockRedstoneWire wire = Blocks.REDSTONE_WIRE;
         net.minecraft.server.World world = chunk.getHandle().getWorld();
-        if ((face == BlockFace.DOWN || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x, y - 1, z), EnumDirection.DOWN)) power = wire.getPower(world, new BlockPosition(x, y - 1, z), power);
-        if ((face == BlockFace.UP || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x, y + 1, z), EnumDirection.UP)) power = wire.getPower(world, new BlockPosition(x, y + 1, z), power);
-        if ((face == BlockFace.EAST || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x + 1, y, z), EnumDirection.EAST)) power = wire.getPower(world, new BlockPosition(x + 1, y, z), power);
-        if ((face == BlockFace.WEST || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x - 1, y, z), EnumDirection.WEST)) power = wire.getPower(world, new BlockPosition(x - 1, y, z), power);
-        if ((face == BlockFace.NORTH || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x, y, z - 1), EnumDirection.NORTH)) power = wire.getPower(world, new BlockPosition(x, y, z - 1), power);
-        if ((face == BlockFace.SOUTH || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x, y, z + 1), EnumDirection.SOUTH)) power = wire.getPower(world, new BlockPosition(x, y, z - 1), power);
+        if ((face == BlockFace.DOWN || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x, y - 1, z), EnumDirection.DOWN))
+            power = wire.getPower(world, new BlockPosition(x, y - 1, z), power);
+        if ((face == BlockFace.UP || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x, y + 1, z), EnumDirection.UP))
+            power = wire.getPower(world, new BlockPosition(x, y + 1, z), power);
+        if ((face == BlockFace.EAST || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x + 1, y, z), EnumDirection.EAST))
+            power = wire.getPower(world, new BlockPosition(x + 1, y, z), power);
+        if ((face == BlockFace.WEST || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x - 1, y, z), EnumDirection.WEST))
+            power = wire.getPower(world, new BlockPosition(x - 1, y, z), power);
+        if ((face == BlockFace.NORTH || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x, y, z - 1), EnumDirection.NORTH))
+            power = wire.getPower(world, new BlockPosition(x, y, z - 1), power);
+        if ((face == BlockFace.SOUTH || face == BlockFace.SELF) && world.isBlockFacePowered(new BlockPosition(x, y, z + 1), EnumDirection.SOUTH))
+            power = wire.getPower(world, new BlockPosition(x, y, z - 1), power);
         return power > 0 ? power : (face == BlockFace.SELF ? isBlockIndirectlyPowered() : isBlockFaceIndirectlyPowered(face)) ? 15 : 0;
     }
 
@@ -439,7 +445,7 @@ public class CraftBlock implements Block {
                         drops.add(CraftItemStack.asBukkitCopy(nmsStack));
                         // We don't want to drop cocoa blocks, we want to drop cocoa beans.
                     } else if (Blocks.COCOA == block) {
-                        int age = (Integer) block.fromLegacyData(data).get(BlockCocoa.AGE);
+                        int age = block.fromLegacyData(data).get(BlockCocoa.AGE);
                         int dropAmount = (age >= 2 ? 3 : 1);
                         for (int j = 0; j < dropAmount; ++j) {
                             drops.add(new ItemStack(Material.INK_SACK, 1, (short) 3));

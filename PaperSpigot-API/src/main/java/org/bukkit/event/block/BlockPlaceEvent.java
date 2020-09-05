@@ -81,7 +81,7 @@ public class BlockPlaceEvent extends BlockEvent implements Cancellable {
      * Gets the item in the player's hand when they placed the block.
      *
      * @return The ItemStack for the item in the player's hand when they
-     *     placed the block
+     * placed the block
      */
     public ItemStack getItemInHand() {
         return itemInHand;

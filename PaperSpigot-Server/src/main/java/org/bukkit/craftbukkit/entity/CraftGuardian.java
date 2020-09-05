@@ -24,11 +24,11 @@ public class CraftGuardian extends CraftMonster implements Guardian {
 
     @Override
     public boolean isElder() {
-        return ((EntityGuardian)entity).isElder();
+        return ((EntityGuardian) entity).isElder();
     }
 
     @Override
-    public void setElder( boolean shouldBeElder ) {
+    public void setElder(boolean shouldBeElder) {
         EntityGuardian entityGuardian = (EntityGuardian) entity;
 
         if (!isElder() && shouldBeElder) {

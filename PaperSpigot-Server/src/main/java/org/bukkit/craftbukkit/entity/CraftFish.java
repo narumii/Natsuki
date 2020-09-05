@@ -50,10 +50,10 @@ public class CraftFish extends AbstractProjectile implements Fish {
         EntityFishingHook hook = getHandle();
 
         if (this.biteChance == -1) {
-            if (hook.world.isRainingAt(new BlockPosition(MathHelper.floor(hook.locX),(int) Math.floor(hook.locY) + 1,(int) Math.floor(hook.locZ)))) {
-                return 1/300.0;
+            if (hook.world.isRainingAt(new BlockPosition(MathHelper.floor(hook.locX), (int) Math.floor(hook.locY) + 1, (int) Math.floor(hook.locZ)))) {
+                return 1 / 300.0;
             }
-            return 1/500.0;
+            return 1 / 500.0;
         }
         return this.biteChance;
     }

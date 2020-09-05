@@ -28,7 +28,8 @@ public abstract class EntityHanging extends Entity {
         this.blockPosition = blockposition;
     }
 
-    protected void h() {}
+    protected void h() {
+    }
 
     public void setDirection(EnumDirection enumdirection) {
         Validate.notNull(enumdirection);
@@ -47,34 +48,34 @@ public abstract class EntityHanging extends Entity {
         then something in a CraftBukkit file.
      */
     public static AxisAlignedBB calculateBoundingBox(BlockPosition blockPosition, EnumDirection direction, int width, int height) {
-            double d0 = (double) blockPosition.getX() + 0.5D;
-            double d1 = (double) blockPosition.getY() + 0.5D;
-            double d2 = (double) blockPosition.getZ() + 0.5D;
-            double d3 = 0.46875D;
-            double d4 = width % 32 == 0 ? 0.5D : 0.0D;
-            double d5 = height % 32 == 0 ? 0.5D : 0.0D;
+        double d0 = (double) blockPosition.getX() + 0.5D;
+        double d1 = (double) blockPosition.getY() + 0.5D;
+        double d2 = (double) blockPosition.getZ() + 0.5D;
+        double d3 = 0.46875D;
+        double d4 = width % 32 == 0 ? 0.5D : 0.0D;
+        double d5 = height % 32 == 0 ? 0.5D : 0.0D;
 
-            d0 -= (double) direction.getAdjacentX() * 0.46875D;
-            d2 -= (double) direction.getAdjacentZ() * 0.46875D;
-            d1 += d5;
-            EnumDirection enumdirection = direction.f();
+        d0 -= (double) direction.getAdjacentX() * 0.46875D;
+        d2 -= (double) direction.getAdjacentZ() * 0.46875D;
+        d1 += d5;
+        EnumDirection enumdirection = direction.f();
 
-            d0 += d4 * (double) enumdirection.getAdjacentX();
-            d2 += d4 * (double) enumdirection.getAdjacentZ();
-            double d6 = (double) width;
-            double d7 = (double) height;
-            double d8 = (double) width;
+        d0 += d4 * (double) enumdirection.getAdjacentX();
+        d2 += d4 * (double) enumdirection.getAdjacentZ();
+        double d6 = (double) width;
+        double d7 = (double) height;
+        double d8 = (double) width;
 
-            if (direction.k() == EnumDirection.EnumAxis.Z) {
-                d8 = 1.0D;
-            } else {
-                d6 = 1.0D;
-            }
+        if (direction.k() == EnumDirection.EnumAxis.Z) {
+            d8 = 1.0D;
+        } else {
+            d6 = 1.0D;
+        }
 
-            d6 /= 32.0D;
-            d7 /= 32.0D;
-            d8 /= 32.0D;
-            return new AxisAlignedBB(d0 - d6, d1 - d7, d2 - d8, d0 + d6, d1 + d7, d2 + d8);
+        d6 /= 32.0D;
+        d7 /= 32.0D;
+        d8 /= 32.0D;
+        return new AxisAlignedBB(d0 - d6, d1 - d7, d2 - d8, d0 + d6, d1 + d7, d2 + d8);
     }
 
     private void updateBoundingBox() {
@@ -175,7 +176,7 @@ public abstract class EntityHanging extends Entity {
     }
 
     public boolean l(Entity entity) {
-        return entity instanceof EntityHuman ? this.damageEntity(DamageSource.playerAttack((EntityHuman) entity), 0.0F) : false;
+        return entity instanceof EntityHuman && this.damageEntity(DamageSource.playerAttack((EntityHuman) entity), 0.0F);
     }
 
     public EnumDirection getDirection() {

@@ -32,7 +32,10 @@ public abstract class Command {
     private String permission;
     private String permissionMessage;
     public co.aikar.timings.Timing timings; // Spigot
-    public String getTimingName() {return getName();} // Spigot
+
+    public String getTimingName() {
+        return getName();
+    } // Spigot
 
     protected Command(String name) {
         this(name, "", "/" + name, new ArrayList<String>());
@@ -51,9 +54,9 @@ public abstract class Command {
     /**
      * Executes the command, returning its success
      *
-     * @param sender Source object which is executing this command
+     * @param sender       Source object which is executing this command
      * @param commandLabel The alias of the command used
-     * @param args All arguments passed to the command, split via ' '
+     * @param args         All arguments passed to the command, split via ' '
      * @return true if the command was successful, otherwise false
      */
     public abstract boolean execute(CommandSender sender, String commandLabel, String[] args);
@@ -62,11 +65,11 @@ public abstract class Command {
      * Executed on tab completion for this command, returning a list of
      * options the player can tab through.
      *
-     * @deprecated This method is not supported and returns null
      * @param sender Source object which is executing this command
-     * @param args All arguments passed to the command, split via ' '
+     * @param args   All arguments passed to the command, split via ' '
      * @return a list of tab-completions for the specified arguments. This
-     *     will never be null. List may be immutable.
+     * will never be null. List may be immutable.
+     * @deprecated This method is not supported and returns null
      */
     @Deprecated
     public List<String> tabComplete(CommandSender sender, String[] args) {
@@ -78,10 +81,10 @@ public abstract class Command {
      * options the player can tab through.
      *
      * @param sender Source object which is executing this command
-     * @param alias the alias being used
-     * @param args All arguments passed to the command, split via ' '
+     * @param alias  the alias being used
+     * @param args   All arguments passed to the command, split via ' '
      * @return a list of tab-completions for the specified arguments. This
-     *     will never be null. List may be immutable.
+     * will never be null. List may be immutable.
      * @throws IllegalArgumentException if sender, alias, or args is null
      */
     public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
@@ -110,6 +113,7 @@ public abstract class Command {
     }
 
     // PaperSpigot start - location tab-completes
+
     /**
      * Executed on tab completion for this command, returning a list of options the player can tab through. This method
      * returns the {@link Location} of the block the player is looking at at the time of the tab complete.
@@ -119,12 +123,12 @@ public abstract class Command {
      * attempts the tab complete. For this to be valid, the block must be highlighted by the player (i.e. the player is
      * close enough to interact with the block).
      *
-     * @param sender Source object which is executing this command
-     * @param alias the alias being used
-     * @param args All arguments passed to the command, split via ' '
+     * @param sender   Source object which is executing this command
+     * @param alias    the alias being used
+     * @param args     All arguments passed to the command, split via ' '
      * @param location the location of the block the player is looking at
      * @return a list of tab-completions for the specified arguments. This
-     *     will never be null. List may be immutable.
+     * will never be null. List may be immutable.
      * @throws IllegalArgumentException if sender, alias, or args is null
      */
     public List<String> tabComplete(CommandSender sender, String alias, String[] args, Location location) throws IllegalArgumentException {
@@ -151,7 +155,7 @@ public abstract class Command {
      *
      * @param name New command name
      * @return returns true if the name change happened instantly or false if
-     *     the command was already registered
+     * the command was already registered
      */
     public boolean setName(String name) {
         if (!isRegistered()) {
@@ -248,7 +252,7 @@ public abstract class Command {
      *
      * @param name The command's name
      * @return returns true if the name change happened instantly or false if
-     *     the command was already registered
+     * the command was already registered
      */
     public boolean setLabel(String name) {
         this.nextLabel = name;
@@ -265,7 +269,7 @@ public abstract class Command {
      *
      * @param commandMap the CommandMap to register this command to
      * @return true if the registration was successful (the current registered
-     *     CommandMap was the passed CommandMap or null) false otherwise
+     * CommandMap was the passed CommandMap or null) false otherwise
      */
     public boolean register(CommandMap commandMap) {
         if (allowChangesFrom(commandMap)) {
@@ -282,8 +286,8 @@ public abstract class Command {
      *
      * @param commandMap the CommandMap to unregister
      * @return true if the unregistration was successfull (the current
-     *     registered CommandMap was the passed CommandMap or null) false
-     *     otherwise
+     * registered CommandMap was the passed CommandMap or null) false
+     * otherwise
      */
     public boolean unregister(CommandMap commandMap) {
         if (allowChangesFrom(commandMap)) {
@@ -380,7 +384,7 @@ public abstract class Command {
      * Sets the message sent when a permission check fails
      *
      * @param permissionMessage new permission message, null to indicate
-     *     default message, or an empty string to indicate no message
+     *                          default message, or an empty string to indicate no message
      * @return this command object, for chaining
      */
     public Command setPermissionMessage(String permissionMessage) {

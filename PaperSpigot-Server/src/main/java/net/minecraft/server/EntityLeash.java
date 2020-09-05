@@ -25,7 +25,8 @@ public class EntityLeash extends EntityHanging {
         super.h();
     }
 
-    public void setDirection(EnumDirection enumdirection) {}
+    public void setDirection(EnumDirection enumdirection) {
+    }
 
     public int l() {
         return 9;
@@ -39,15 +40,18 @@ public class EntityLeash extends EntityHanging {
         return -0.0625F;
     }
 
-    public void b(Entity entity) {}
+    public void b(Entity entity) {
+    }
 
     public boolean d(NBTTagCompound nbttagcompound) {
         return false;
     }
 
-    public void b(NBTTagCompound nbttagcompound) {}
+    public void b(NBTTagCompound nbttagcompound) {
+    }
 
-    public void a(NBTTagCompound nbttagcompound) {}
+    public void a(NBTTagCompound nbttagcompound) {
+    }
 
     public boolean e(EntityHuman entityhuman) {
         ItemStack itemstack = entityhuman.bA();

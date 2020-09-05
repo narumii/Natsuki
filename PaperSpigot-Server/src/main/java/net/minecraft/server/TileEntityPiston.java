@@ -15,7 +15,8 @@ public class TileEntityPiston extends TileEntity implements IUpdatePlayerListBox
     private float j;
     private List<Entity> k = Lists.newArrayList();
 
-    public TileEntityPiston() {}
+    public TileEntityPiston() {
+    }
 
     public TileEntityPiston(IBlockData iblockdata, EnumDirection enumdirection, boolean flag, boolean flag1) {
         this.a = iblockdata;
@@ -58,7 +59,7 @@ public class TileEntityPiston extends TileEntity implements IUpdatePlayerListBox
         AxisAlignedBB axisalignedbb = Blocks.PISTON_EXTENSION.a(this.world, this.position, this.a, f, this.f);
 
         if (axisalignedbb != null) {
-            List list = this.world.getEntities((Entity) null, axisalignedbb);
+            List list = this.world.getEntities(null, axisalignedbb);
 
             if (!list.isEmpty()) {
                 this.k.addAll(list);
@@ -69,16 +70,16 @@ public class TileEntityPiston extends TileEntity implements IUpdatePlayerListBox
 
                     if (this.a.getBlock() == Blocks.SLIME && this.g) {
                         switch (TileEntityPiston.SyntheticClass_1.a[this.f.k().ordinal()]) {
-                        case 1:
-                            entity.motX = (double) this.f.getAdjacentX();
-                            break;
+                            case 1:
+                                entity.motX = (double) this.f.getAdjacentX();
+                                break;
 
-                        case 2:
-                            entity.motY = (double) this.f.getAdjacentY();
-                            break;
+                            case 2:
+                                entity.motY = (double) this.f.getAdjacentY();
+                                break;
 
-                        case 3:
-                            entity.motZ = (double) this.f.getAdjacentZ();
+                            case 3:
+                                entity.motZ = (double) this.f.getAdjacentZ();
                         }
                     } else {
                         entity.move((double) (f1 * (float) this.f.getAdjacentX()), (double) (f1 * (float) this.f.getAdjacentY()), (double) (f1 * (float) this.f.getAdjacentZ()));
@@ -154,19 +155,16 @@ public class TileEntityPiston extends TileEntity implements IUpdatePlayerListBox
             try {
                 TileEntityPiston.SyntheticClass_1.a[EnumDirection.EnumAxis.X.ordinal()] = 1;
             } catch (NoSuchFieldError nosuchfielderror) {
-                ;
             }
 
             try {
                 TileEntityPiston.SyntheticClass_1.a[EnumDirection.EnumAxis.Y.ordinal()] = 2;
             } catch (NoSuchFieldError nosuchfielderror1) {
-                ;
             }
 
             try {
                 TileEntityPiston.SyntheticClass_1.a[EnumDirection.EnumAxis.Z.ordinal()] = 3;
             } catch (NoSuchFieldError nosuchfielderror2) {
-                ;
             }
 
         }

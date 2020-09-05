@@ -8,10 +8,10 @@ import org.bukkit.entity.Painting;
  * Triggered when a painting is removed by an entity
  *
  * @deprecated Use {@link org.bukkit.event.hanging.HangingBreakByEntityEvent}
- *     instead.
+ * instead.
  */
 @Deprecated
-@Warning(reason="This event has been replaced by HangingBreakByEntityEvent")
+@Warning(reason = "This event has been replaced by HangingBreakByEntityEvent")
 public class PaintingBreakByEntityEvent extends PaintingBreakEvent {
     private final Entity remover;
 

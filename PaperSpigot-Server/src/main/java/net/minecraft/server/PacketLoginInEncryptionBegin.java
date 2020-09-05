@@ -9,7 +9,8 @@ public class PacketLoginInEncryptionBegin implements Packet<PacketLoginInListene
     private byte[] a = new byte[0];
     private byte[] b = new byte[0];
 
-    public PacketLoginInEncryptionBegin() {}
+    public PacketLoginInEncryptionBegin() {
+    }
 
     public void a(PacketDataSerializer packetdataserializer) throws IOException {
         // Paper start

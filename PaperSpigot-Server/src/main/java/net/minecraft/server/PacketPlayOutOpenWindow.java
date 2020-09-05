@@ -10,7 +10,8 @@ public class PacketPlayOutOpenWindow implements Packet<PacketListenerPlayOut> {
     private int d;
     private int e;
 
-    public PacketPlayOutOpenWindow() {}
+    public PacketPlayOutOpenWindow() {
+    }
 
     public PacketPlayOutOpenWindow(int i, String s, IChatBaseComponent ichatbasecomponent) {
         this(i, s, ichatbasecomponent, 0);

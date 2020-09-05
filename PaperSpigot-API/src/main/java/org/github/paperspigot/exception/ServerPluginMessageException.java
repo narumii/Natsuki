@@ -37,6 +37,7 @@ public class ServerPluginMessageException extends ServerPluginException {
 
     /**
      * Gets the channel to which the error occurred from recieving data from
+     *
      * @return exception channel
      */
     public String getChannel() {
@@ -45,6 +46,7 @@ public class ServerPluginMessageException extends ServerPluginException {
 
     /**
      * Gets the data to which the error occurred from
+     *
      * @return exception data
      */
     public byte[] getData() {
@@ -53,7 +55,8 @@ public class ServerPluginMessageException extends ServerPluginException {
 
     /**
      * Gets the player which the plugin message causing the exception originated from
-     * @return  exception player
+     *
+     * @return exception player
      */
     public Player getPlayer() {
         return player;

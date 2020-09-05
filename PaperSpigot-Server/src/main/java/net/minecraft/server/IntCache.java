@@ -21,7 +21,7 @@ public class IntCache {
                 if (c.size() < org.spigotmc.SpigotConfig.intCacheLimit) IntCache.c.add(aint);
                 return aint;
             } else {
-                aint = (int[]) IntCache.b.remove(IntCache.b.size() - 1);
+                aint = IntCache.b.remove(IntCache.b.size() - 1);
                 if (c.size() < org.spigotmc.SpigotConfig.intCacheLimit) IntCache.c.add(aint);
                 return aint;
             }
@@ -37,7 +37,7 @@ public class IntCache {
             if (e.size() < org.spigotmc.SpigotConfig.intCacheLimit) IntCache.e.add(aint);
             return aint;
         } else {
-            aint = (int[]) IntCache.d.remove(IntCache.d.size() - 1);
+            aint = IntCache.d.remove(IntCache.d.size() - 1);
             if (e.size() < org.spigotmc.SpigotConfig.intCacheLimit) IntCache.e.add(aint);
             return aint;
         }

@@ -88,7 +88,7 @@ public class InventoryCrafting implements IInventory {
     }
 
     public IChatBaseComponent getScoreboardDisplayName() {
-        return (IChatBaseComponent) (this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatMessage(this.getName(), new Object[0]));
+        return this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatMessage(this.getName(), new Object[0]);
     }
 
     public ItemStack splitWithoutUpdate(int i) {
@@ -109,7 +109,7 @@ public class InventoryCrafting implements IInventory {
             if (this.items[i].count <= j) {
                 itemstack = this.items[i];
                 this.items[i] = null;
-                this.d.a((IInventory) this);
+                this.d.a(this);
                 return itemstack;
             } else {
                 itemstack = this.items[i].cloneAndSubtract(j);
@@ -117,7 +117,7 @@ public class InventoryCrafting implements IInventory {
                     this.items[i] = null;
                 }
 
-                this.d.a((IInventory) this);
+                this.d.a(this);
                 return itemstack;
             }
         } else {
@@ -127,22 +127,25 @@ public class InventoryCrafting implements IInventory {
 
     public void setItem(int i, ItemStack itemstack) {
         this.items[i] = itemstack;
-        this.d.a((IInventory) this);
+        this.d.a(this);
     }
 
     public int getMaxStackSize() {
         return 64;
     }
 
-    public void update() {}
+    public void update() {
+    }
 
     public boolean a(EntityHuman entityhuman) {
         return true;
     }
 
-    public void startOpen(EntityHuman entityhuman) {}
+    public void startOpen(EntityHuman entityhuman) {
+    }
 
-    public void closeContainer(EntityHuman entityhuman) {}
+    public void closeContainer(EntityHuman entityhuman) {
+    }
 
     public boolean b(int i, ItemStack itemstack) {
         return true;
@@ -152,7 +155,8 @@ public class InventoryCrafting implements IInventory {
         return 0;
     }
 
-    public void b(int i, int j) {}
+    public void b(int i, int j) {
+    }
 
     public int g() {
         return 0;

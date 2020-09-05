@@ -13,7 +13,8 @@ public abstract class StructureGenerator extends WorldGenBase {
     private PersistentStructure d;
     protected Map<Long, StructureStart> e = Maps.newHashMap();
 
-    public StructureGenerator() {}
+    public StructureGenerator() {
+    }
 
     public abstract String a();
 
@@ -43,7 +44,7 @@ public abstract class StructureGenerator extends WorldGenBase {
                         return this.a();
                     }
                 });
-                crashreportsystemdetails.a("Chunk location", (Object) String.format("%d,%d", new Object[] { Integer.valueOf(i), Integer.valueOf(j)}));
+                crashreportsystemdetails.a("Chunk location", String.format("%d,%d", new Object[]{Integer.valueOf(i), Integer.valueOf(j)}));
                 crashreportsystemdetails.a("Chunk pos hash", new Callable() {
                     public String a() throws Exception {
                         return String.valueOf(ChunkCoordIntPair.a(i, j));
@@ -100,13 +101,13 @@ public abstract class StructureGenerator extends WorldGenBase {
         while (iterator.hasNext()) {
             StructureStart structurestart = (StructureStart) iterator.next();
 
-            if (structurestart.d() && structurestart.a().b((BaseBlockPosition) blockposition)) {
+            if (structurestart.d() && structurestart.a().b(blockposition)) {
                 Iterator iterator1 = structurestart.b().iterator();
 
                 while (iterator1.hasNext()) {
                     StructurePiece structurepiece = (StructurePiece) iterator1.next();
 
-                    if (structurepiece.c().b((BaseBlockPosition) blockposition)) {
+                    if (structurepiece.c().b(blockposition)) {
                         return structurestart;
                     }
                 }
@@ -129,7 +130,7 @@ public abstract class StructureGenerator extends WorldGenBase {
             }
 
             structurestart = (StructureStart) iterator.next();
-        } while (!structurestart.d() || !structurestart.a().b((BaseBlockPosition) blockposition));
+        } while (!structurestart.d() || !structurestart.a().b(blockposition));
 
         return true;
     }
@@ -144,7 +145,7 @@ public abstract class StructureGenerator extends WorldGenBase {
         long l = (long) (blockposition.getZ() >> 4) * j;
 
         this.b.setSeed(k ^ l ^ world.getSeed());
-        this.a(world, blockposition.getX() >> 4, blockposition.getZ() >> 4, 0, 0, (ChunkSnapshot) null);
+        this.a(world, blockposition.getX() >> 4, blockposition.getZ() >> 4, 0, 0, null);
         double d0 = Double.MAX_VALUE;
         BlockPosition blockposition1 = null;
         Iterator iterator = this.e.values().iterator();
@@ -156,7 +157,7 @@ public abstract class StructureGenerator extends WorldGenBase {
             StructureStart structurestart = (StructureStart) iterator.next();
 
             if (structurestart.d()) {
-                StructurePiece structurepiece = (StructurePiece) structurestart.b().get(0);
+                StructurePiece structurepiece = structurestart.b().get(0);
 
                 blockposition2 = structurepiece.a();
                 d1 = blockposition2.i(blockposition);
@@ -199,17 +200,15 @@ public abstract class StructureGenerator extends WorldGenBase {
     private void a(World world) {
         if (this.d == null) {
             // Spigot Start
-            if ( world.spigotConfig.saveStructureInfo && !this.a().equals( "Mineshaft" ) )
-            {
-            this.d = (PersistentStructure) world.a(PersistentStructure.class, this.a());
-            } else
-            {
-                this.d = new PersistentStructure( this.a() );
+            if (world.spigotConfig.saveStructureInfo && !this.a().equals("Mineshaft")) {
+                this.d = (PersistentStructure) world.a(PersistentStructure.class, this.a());
+            } else {
+                this.d = new PersistentStructure(this.a());
             }
             // Spigot End
             if (this.d == null) {
                 this.d = new PersistentStructure(this.a());
-                world.a(this.a(), (PersistentBase) this.d);
+                world.a(this.a(), this.d);
             } else {
                 NBTTagCompound nbttagcompound = this.d.a();
                 Iterator iterator = nbttagcompound.c().iterator();

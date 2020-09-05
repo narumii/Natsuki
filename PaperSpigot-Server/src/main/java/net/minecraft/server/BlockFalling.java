@@ -16,11 +16,11 @@ public class BlockFalling extends Block {
     }
 
     public void onPlace(World world, BlockPosition blockposition, IBlockData iblockdata) {
-        world.a(blockposition, (Block) this, this.a(world));
+        world.a(blockposition, this, this.a(world));
     }
 
     public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {
-        world.a(blockposition, (Block) this, this.a(world));
+        world.a(blockposition, this, this.a(world));
     }
 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
@@ -50,7 +50,6 @@ public class BlockFalling extends Block {
                 BlockPosition blockposition1;
 
                 for (blockposition1 = blockposition.down(); canFall(world, blockposition1) && blockposition1.getY() > 0; blockposition1 = blockposition1.down()) {
-                    ;
                 }
 
                 if (blockposition1.getY() > 0) {
@@ -61,7 +60,8 @@ public class BlockFalling extends Block {
         }
     }
 
-    protected void a(EntityFallingBlock entityfallingblock) {}
+    protected void a(EntityFallingBlock entityfallingblock) {
+    }
 
     public int a(World world) {
         return 2;
@@ -74,5 +74,6 @@ public class BlockFalling extends Block {
         return block == Blocks.FIRE || material == Material.AIR || material == Material.WATER || material == Material.LAVA;
     }
 
-    public void a_(World world, BlockPosition blockposition) {}
+    public void a_(World world, BlockPosition blockposition) {
+    }
 }

@@ -15,7 +15,7 @@ public class ContainerAnvil extends Container {
     private IInventory h = new InventorySubcontainer("Repair", true, 2) {
         public void update() {
             super.update();
-            ContainerAnvil.this.a((IInventory) this);
+            ContainerAnvil.this.a(this);
         }
     };
     private World i;
@@ -50,7 +50,7 @@ public class ContainerAnvil extends Container {
                     entityhuman.levelDown(-ContainerAnvil.this.a);
                 }
 
-                ContainerAnvil.this.h.setItem(0, (ItemStack) null);
+                ContainerAnvil.this.h.setItem(0, null);
                 if (ContainerAnvil.this.k > 0) {
                     ItemStack itemstack1 = ContainerAnvil.this.h.getItem(1);
 
@@ -58,17 +58,17 @@ public class ContainerAnvil extends Container {
                         itemstack1.count -= ContainerAnvil.this.k;
                         ContainerAnvil.this.h.setItem(1, itemstack1);
                     } else {
-                        ContainerAnvil.this.h.setItem(1, (ItemStack) null);
+                        ContainerAnvil.this.h.setItem(1, null);
                     }
                 } else {
-                    ContainerAnvil.this.h.setItem(1, (ItemStack) null);
+                    ContainerAnvil.this.h.setItem(1, null);
                 }
 
                 ContainerAnvil.this.a = 0;
                 IBlockData iblockdata = world.getType(blockposition);
 
                 if (!entityhuman.abilities.canInstantlyBuild && !world.isClientSide && iblockdata.getBlock() == Blocks.ANVIL && entityhuman.bc().nextFloat() < 0.12F) {
-                    int i = ((Integer) iblockdata.get(BlockAnvil.DAMAGE)).intValue();
+                    int i = iblockdata.get(BlockAnvil.DAMAGE).intValue();
 
                     ++i;
                     if (i > 2) {
@@ -123,7 +123,7 @@ public class ContainerAnvil extends Container {
         byte b1 = 0;
 
         if (itemstack == null) {
-            this.g.setItem(0, (ItemStack) null);
+            this.g.setItem(0, null);
             this.a = 0;
         } else {
             ItemStack itemstack1 = itemstack.cloneItemStack();
@@ -143,7 +143,7 @@ public class ContainerAnvil extends Container {
                 if (itemstack1.e() && itemstack1.getItem().a(itemstack, itemstack2)) {
                     k = Math.min(itemstack1.h(), itemstack1.j() / 4);
                     if (k <= 0) {
-                        this.g.setItem(0, (ItemStack) null);
+                        this.g.setItem(0, null);
                         this.a = 0;
                         return;
                     }
@@ -158,7 +158,7 @@ public class ContainerAnvil extends Container {
                     this.k = l;
                 } else {
                     if (!flag7 && (itemstack1.getItem() != itemstack2.getItem() || !itemstack1.e())) {
-                        this.g.setItem(0, (ItemStack) null);
+                        this.g.setItem(0, null);
                         this.a = 0;
                         return;
                     }
@@ -228,28 +228,28 @@ public class ContainerAnvil extends Container {
                                 int k2 = 0;
 
                                 switch (enchantment.getRandomWeight()) {
-                                case 1:
-                                    k2 = 8;
-                                    break;
+                                    case 1:
+                                        k2 = 8;
+                                        break;
 
-                                case 2:
-                                    k2 = 4;
+                                    case 2:
+                                        k2 = 4;
 
-                                case 3:
-                                case 4:
-                                case 6:
-                                case 7:
-                                case 8:
-                                case 9:
-                                default:
-                                    break;
+                                    case 3:
+                                    case 4:
+                                    case 6:
+                                    case 7:
+                                    case 8:
+                                    case 9:
+                                    default:
+                                        break;
 
-                                case 5:
-                                    k2 = 2;
-                                    break;
+                                    case 5:
+                                        k2 = 2;
+                                        break;
 
-                                case 10:
-                                    k2 = 1;
+                                    case 10:
+                                        k2 = 1;
                                 }
 
                                 if (flag7) {
@@ -325,12 +325,12 @@ public class ContainerAnvil extends Container {
 
     public boolean a(EntityHuman entityhuman) {
         if (!this.checkReachable) return true; // CraftBukkit
-        return this.i.getType(this.j).getBlock() != Blocks.ANVIL ? false : entityhuman.e((double) this.j.getX() + 0.5D, (double) this.j.getY() + 0.5D, (double) this.j.getZ() + 0.5D) <= 64.0D;
+        return this.i.getType(this.j).getBlock() == Blocks.ANVIL && entityhuman.e((double) this.j.getX() + 0.5D, (double) this.j.getY() + 0.5D, (double) this.j.getZ() + 0.5D) <= 64.0D;
     }
 
     public ItemStack b(EntityHuman entityhuman, int i) {
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.c.get(i);
+        Slot slot = this.c.get(i);
 
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
@@ -351,7 +351,7 @@ public class ContainerAnvil extends Container {
             }
 
             if (itemstack1.count == 0) {
-                slot.set((ItemStack) null);
+                slot.set(null);
             } else {
                 slot.f();
             }

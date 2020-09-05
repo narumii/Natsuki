@@ -197,8 +197,8 @@ public class WorldCreator {
      * printed to the specified output
      *
      * @param generator Name of the generator to use, in "plugin:id" notation
-     * @param output {@link CommandSender} that will receive any error
-     *     messages
+     * @param output    {@link CommandSender} that will receive any error
+     *                  messages
      * @return This object, for chaining
      */
     public WorldCreator generator(String generator, CommandSender output) {
@@ -283,8 +283,8 @@ public class WorldCreator {
      * optional unique identifier for the generator you wish to request from
      * the plugin.
      *
-     * @param world Name of the world this will be used for
-     * @param name Name of the generator to retrieve
+     * @param world  Name of the world this will be used for
+     * @param name   Name of the generator to retrieve
      * @param output Where to output if errors are present
      * @return Resulting generator, or null
      */

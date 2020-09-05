@@ -54,7 +54,7 @@ public abstract class TileEntity {
     }
 
     public void b(NBTTagCompound nbttagcompound) {
-        String s = (String) TileEntity.g.get(this.getClass());
+        String s = TileEntity.g.get(this.getClass());
 
         if (s == null) {
             throw new RuntimeException(this.getClass() + " is missing a mapping! This is a bug!");
@@ -70,7 +70,7 @@ public abstract class TileEntity {
         TileEntity tileentity = null;
 
         try {
-            Class oclass = (Class) TileEntity.f.get(nbttagcompound.getString("id"));
+            Class oclass = TileEntity.f.get(nbttagcompound.getString("id"));
 
             if (oclass != null) {
                 tileentity = (TileEntity) oclass.newInstance();
@@ -152,7 +152,7 @@ public abstract class TileEntity {
     public void a(CrashReportSystemDetails crashreportsystemdetails) {
         crashreportsystemdetails.a("Name", new Callable() {
             public String a() throws Exception {
-                return (String) TileEntity.g.get(TileEntity.this.getClass()) + " // " + TileEntity.this.getClass().getCanonicalName();
+                return TileEntity.g.get(TileEntity.this.getClass()) + " // " + TileEntity.this.getClass().getCanonicalName();
             }
 
             public Object call() throws Exception {
@@ -171,7 +171,7 @@ public abstract class TileEntity {
                     int i = Block.getId(TileEntity.this.world.getType(TileEntity.this.position).getBlock());
 
                     try {
-                        return String.format("ID #%d (%s // %s)", new Object[] { Integer.valueOf(i), Block.getById(i).a(), Block.getById(i).getClass().getCanonicalName()});
+                        return String.format("ID #%d (%s // %s)", Integer.valueOf(i), Block.getById(i).a(), Block.getById(i).getClass().getCanonicalName());
                     } catch (Throwable throwable) {
                         return "ID #" + i;
                     }
@@ -189,9 +189,9 @@ public abstract class TileEntity {
                     if (i < 0) {
                         return "Unknown? (Got " + i + ")";
                     } else {
-                        String s = String.format("%4s", new Object[] { Integer.toBinaryString(i)}).replace(" ", "0");
+                        String s = String.format("%4s", Integer.toBinaryString(i)).replace(" ", "0");
 
-                        return String.format("%1$d / 0x%1$X / 0b%2$s", new Object[] { Integer.valueOf(i), s});
+                        return String.format("%1$d / 0x%1$X / 0b%2$s", Integer.valueOf(i), s);
                     }
                 }
 

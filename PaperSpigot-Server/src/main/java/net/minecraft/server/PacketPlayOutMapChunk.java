@@ -13,7 +13,8 @@ public class PacketPlayOutMapChunk implements Packet<PacketListenerPlayOut> {
     private PacketPlayOutMapChunk.ChunkMap c;
     private boolean d;
 
-    public PacketPlayOutMapChunk() {}
+    public PacketPlayOutMapChunk() {
+    }
 
     public PacketPlayOutMapChunk(Chunk chunk, boolean flag, int i) {
         this.a = chunk.locX;
@@ -116,6 +117,7 @@ public class PacketPlayOutMapChunk implements Packet<PacketListenerPlayOut> {
         public byte[] a;
         public int b;
 
-        public ChunkMap() {}
+        public ChunkMap() {
+        }
     }
 }

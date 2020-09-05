@@ -36,7 +36,7 @@ public enum Difficulty {
     private final int value;
     private final static Map<Integer, Difficulty> BY_ID = Maps.newHashMap();
 
-    private Difficulty(final int value) {
+    Difficulty(final int value) {
         this.value = value;
     }
 
@@ -56,7 +56,7 @@ public enum Difficulty {
      *
      * @param value Value to check
      * @return Associative {@link Difficulty} with the given value, or null if
-     *     it doesn't exist
+     * it doesn't exist
      * @deprecated Magic value
      */
     @Deprecated

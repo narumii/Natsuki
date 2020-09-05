@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class BlockPortal extends BlockHalfTransparent {
 
-    public static final BlockStateEnum<EnumDirection.EnumAxis> AXIS = BlockStateEnum.of("axis", EnumDirection.EnumAxis.class, new EnumDirection.EnumAxis[] { EnumDirection.EnumAxis.X, EnumDirection.EnumAxis.Z});
+    public static final BlockStateEnum<EnumDirection.EnumAxis> AXIS = BlockStateEnum.of("axis", EnumDirection.EnumAxis.class, EnumDirection.EnumAxis.X, EnumDirection.EnumAxis.Z);
 
     public BlockPortal() {
         super(Material.PORTAL, false);
@@ -23,8 +23,7 @@ public class BlockPortal extends BlockHalfTransparent {
 
             BlockPosition blockposition1;
 
-            for (blockposition1 = blockposition; !World.a((IBlockAccess) world, blockposition1) && blockposition1.getY() > 0; blockposition1 = blockposition1.down()) {
-                ;
+            for (blockposition1 = blockposition; !World.a(world, blockposition1) && blockposition1.getY() > 0; blockposition1 = blockposition1.down()) {
             }
 
             if (i > 0 && !world.getType(blockposition1.up()).getBlock().isOccluding()) {
@@ -44,7 +43,7 @@ public class BlockPortal extends BlockHalfTransparent {
     }
 
     public void updateShape(IBlockAccess iblockaccess, BlockPosition blockposition) {
-        EnumDirection.EnumAxis enumdirection_enumaxis = (EnumDirection.EnumAxis) iblockaccess.getType(blockposition).get(BlockPortal.AXIS);
+        EnumDirection.EnumAxis enumdirection_enumaxis = iblockaccess.getType(blockposition).get(BlockPortal.AXIS);
         float f = 0.125F;
         float f1 = 0.125F;
 
@@ -88,7 +87,7 @@ public class BlockPortal extends BlockHalfTransparent {
     }
 
     public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {
-        EnumDirection.EnumAxis enumdirection_enumaxis = (EnumDirection.EnumAxis) iblockdata.get(BlockPortal.AXIS);
+        EnumDirection.EnumAxis enumdirection_enumaxis = iblockdata.get(BlockPortal.AXIS);
         BlockPortal.Shape blockportal_shape;
 
         if (enumdirection_enumaxis == EnumDirection.EnumAxis.X) {
@@ -125,11 +124,11 @@ public class BlockPortal extends BlockHalfTransparent {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return a((EnumDirection.EnumAxis) iblockdata.get(BlockPortal.AXIS));
+        return a(iblockdata.get(BlockPortal.AXIS));
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockPortal.AXIS});
+        return new BlockStateList(this, BlockPortal.AXIS);
     }
 
     public ShapeDetector.ShapeDetectorCollection f(World world, BlockPosition blockposition) {
@@ -209,7 +208,6 @@ public class BlockPortal extends BlockHalfTransparent {
             }
 
             for (BlockPosition blockposition1 = blockposition; blockposition.getY() > blockposition1.getY() - 21 && blockposition.getY() > 0 && this.a(world.getType(blockposition.down()).getBlock()); blockposition = blockposition.down()) {
-                ;
             }
 
             int i = this.a(blockposition, this.d) - 1;

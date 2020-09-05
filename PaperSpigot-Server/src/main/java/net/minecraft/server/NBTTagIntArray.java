@@ -9,7 +9,8 @@ public class NBTTagIntArray extends NBTBase {
 
     private int[] data;
 
-    NBTTagIntArray() {}
+    NBTTagIntArray() {
+    }
 
     public NBTTagIntArray(int[] aint) {
         this.data = aint;
@@ -27,7 +28,7 @@ public class NBTTagIntArray extends NBTBase {
     void load(DataInput datainput, int i, NBTReadLimiter nbtreadlimiter) throws IOException {
         nbtreadlimiter.a(192L);
         int j = datainput.readInt();
-       com.google.common.base.Preconditions.checkArgument( j < 1 << 24);
+        com.google.common.base.Preconditions.checkArgument(j < 1 << 24);
 
         nbtreadlimiter.a((long) (32 * j));
         this.data = new int[j];
@@ -64,7 +65,7 @@ public class NBTTagIntArray extends NBTBase {
     }
 
     public boolean equals(Object object) {
-        return super.equals(object) ? Arrays.equals(this.data, ((NBTTagIntArray) object).data) : false;
+        return super.equals(object) && Arrays.equals(this.data, ((NBTTagIntArray) object).data);
     }
 
     public int hashCode() {

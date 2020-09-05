@@ -23,7 +23,7 @@ public class JsonList<K, V extends JsonListEntry<K>> {
     private boolean e = true;
     private static final ParameterizedType f = new ParameterizedType() {
         public Type[] getActualTypeArguments() {
-            return new Type[] { JsonListEntry.class};
+            return new Type[]{JsonListEntry.class};
         }
 
         public Type getRawType() {
@@ -68,7 +68,7 @@ public class JsonList<K, V extends JsonListEntry<K>> {
 
     public V get(K k0) {
         this.h();
-        return (V) this.d.get(this.a(k0)); // CraftBukkit - fix decompile error
+        return this.d.get(this.a(k0)); // CraftBukkit - fix decompile error
     }
 
     public void remove(K k0) {
@@ -83,7 +83,7 @@ public class JsonList<K, V extends JsonListEntry<K>> {
     }
 
     public String[] getEntries() {
-        return (String[]) this.d.keySet().toArray(new String[this.d.size()]);
+        return this.d.keySet().toArray(new String[this.d.size()]);
     }
 
     // CraftBukkit start
@@ -127,7 +127,7 @@ public class JsonList<K, V extends JsonListEntry<K>> {
     }
 
     protected JsonListEntry<K> a(JsonObject jsonobject) {
-        return new JsonListEntry((Object) null, jsonobject);
+        return new JsonListEntry(null, jsonobject);
     }
 
     protected Map<String, V> e() {
@@ -154,18 +154,16 @@ public class JsonList<K, V extends JsonListEntry<K>> {
 
         try {
             bufferedreader = Files.newReader(this.c, Charsets.UTF_8);
-            collection = (Collection) this.b.fromJson(bufferedreader, JsonList.f);
-        // Spigot Start
-        } catch ( java.io.FileNotFoundException ex )
-        {
-            org.bukkit.Bukkit.getLogger().log( java.util.logging.Level.INFO, "Unable to find file {0}, creating it.", this.c );
-        } catch ( com.google.gson.JsonSyntaxException ex )
-        {
-            org.bukkit.Bukkit.getLogger().log( java.util.logging.Level.WARNING, "Unable to read file {0}, backing it up to {0}.backup and creating new copy.", this.c );
-            File backup = new File( this.c + ".backup" );
-            this.c.renameTo( backup );
+            collection = this.b.fromJson(bufferedreader, JsonList.f);
+            // Spigot Start
+        } catch (java.io.FileNotFoundException ex) {
+            org.bukkit.Bukkit.getLogger().log(java.util.logging.Level.INFO, "Unable to find file {0}, creating it.", this.c);
+        } catch (com.google.gson.JsonSyntaxException ex) {
+            org.bukkit.Bukkit.getLogger().log(java.util.logging.Level.WARNING, "Unable to read file {0}, backing it up to {0}.backup and creating new copy.", this.c);
+            File backup = new File(this.c + ".backup");
+            this.c.renameTo(backup);
             this.c.delete();
-        // Spigot End
+            // Spigot End
         } finally {
             IOUtils.closeQuietly(bufferedreader);
         }
@@ -187,7 +185,8 @@ public class JsonList<K, V extends JsonListEntry<K>> {
 
     class JsonListEntrySerializer implements JsonDeserializer<JsonListEntry<K>>, JsonSerializer<JsonListEntry<K>> {
 
-        private JsonListEntrySerializer() {}
+        private JsonListEntrySerializer() {
+        }
 
         public JsonElement a(JsonListEntry<K> jsonlistentry, Type type, JsonSerializationContext jsonserializationcontext) {
             JsonObject jsonobject = new JsonObject();
@@ -208,7 +207,7 @@ public class JsonList<K, V extends JsonListEntry<K>> {
         }
 
         public JsonElement serialize(JsonListEntry<K> object, Type type, JsonSerializationContext jsonserializationcontext) { // CraftBukkit - fix decompile error
-            return this.a((JsonListEntry) object, type, jsonserializationcontext);
+            return this.a(object, type, jsonserializationcontext);
         }
 
         public JsonListEntry<K> deserialize(JsonElement jsonelement, Type type, JsonDeserializationContext jsondeserializationcontext) throws JsonParseException { // CraftBukkit - fix decompile error

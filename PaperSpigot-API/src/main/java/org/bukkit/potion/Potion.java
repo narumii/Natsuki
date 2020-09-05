@@ -41,7 +41,7 @@ public class Potion {
      * @param type the type of the potion
      * @param tier the tier of the potion
      * @deprecated In favour of {@link #Potion(PotionType, int)}
-     */    
+     */
     @Deprecated
     public Potion(PotionType type, Tier tier) {
         this(type, tier == Tier.TWO ? 2 : 1);
@@ -49,8 +49,8 @@ public class Potion {
     }
 
     /**
-     * @param type the type of the potion
-     * @param tier the tier of the potion
+     * @param type   the type of the potion
+     * @param tier   the tier of the potion
      * @param splash whether the potion is a splash potion
      * @deprecated In favour of {@link #Potion(PotionType, int, boolean)}
      */
@@ -60,12 +60,12 @@ public class Potion {
     }
 
     /**
-     * @param type the type of the potion
-     * @param tier the tier of the potion
-     * @param splash whether the potion is a splash potion
+     * @param type     the type of the potion
+     * @param tier     the tier of the potion
+     * @param splash   whether the potion is a splash potion
      * @param extended whether the potion has an extended duration
      * @deprecated In favour of {@link #Potion(PotionType, int, boolean,
-     *     boolean)}
+     * boolean)}
      */
     @Deprecated
     public Potion(PotionType type, Tier tier, boolean splash, boolean extended) {
@@ -76,7 +76,7 @@ public class Potion {
     /**
      * Create a new potion of the given type and level.
      *
-     * @param type The type of potion.
+     * @param type  The type of potion.
      * @param level The potion's level.
      */
     public Potion(PotionType type, int level) {
@@ -90,11 +90,11 @@ public class Potion {
     /**
      * Create a new potion of the given type and level.
      *
-     * @param type The type of potion.
-     * @param level The potion's level.
+     * @param type   The type of potion.
+     * @param level  The potion's level.
      * @param splash Whether it is a splash potion.
      * @deprecated In favour of using {@link #Potion(PotionType)} with {@link
-     *     #splash()}.
+     * #splash()}.
      */
     @Deprecated
     public Potion(PotionType type, int level, boolean splash) {
@@ -105,12 +105,12 @@ public class Potion {
     /**
      * Create a new potion of the given type and level.
      *
-     * @param type The type of potion.
-     * @param level The potion's level.
-     * @param splash Whether it is a splash potion.
+     * @param type     The type of potion.
+     * @param level    The potion's level.
+     * @param splash   Whether it is a splash potion.
      * @param extended Whether it has an extended duration.
      * @deprecated In favour of using {@link #Potion(PotionType)} with {@link
-     *     #extend()} and possibly {@link #splash()}.
+     * #extend()} and possibly {@link #splash()}.
      */
     @Deprecated
     public Potion(PotionType type, int level, boolean splash, boolean extended) {
@@ -168,8 +168,8 @@ public class Potion {
      * Applies the effects that would be applied by this potion to the given
      * {@link LivingEntity}.
      *
-     * @see LivingEntity#addPotionEffects(Collection)
      * @param to The entity to apply the effects to
+     * @see LivingEntity#addPotionEffects(Collection)
      */
     public void apply(LivingEntity to) {
         Validate.notNull(to, "entity cannot be null");
@@ -192,12 +192,12 @@ public class Potion {
      * Returns a collection of {@link PotionEffect}s that this {@link Potion}
      * would confer upon a {@link LivingEntity}.
      *
+     * @return The effects that this potion applies
      * @see PotionBrewer#getEffectsFromDamage(int)
      * @see Potion#toDamageValue()
-     * @return The effects that this potion applies
      */
     public Collection<PotionEffect> getEffects() {
-        if (type == null) return ImmutableList.<PotionEffect>of();
+        if (type == null) return ImmutableList.of();
         return getBrewer().getEffectsFromDamage(toDamageValue());
     }
 
@@ -385,7 +385,6 @@ public class Potion {
     private static final int NAME_BIT = 0x3F;
 
     /**
-     *
      * @param damage the damage value
      * @return the produced potion
      * @deprecated Magic value
@@ -439,7 +438,6 @@ public class Potion {
     }
 
     /**
-     *
      * @return the name id
      * @deprecated Magic value
      */

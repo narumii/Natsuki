@@ -22,11 +22,10 @@ public class BlockReed extends Block {
                 int i;
 
                 for (i = 1; world.getType(blockposition.down(i)).getBlock() == this; ++i) {
-                    ;
                 }
 
                 if (i < world.paperSpigotConfig.reedMaxHeight) { // PaperSpigot - Configurable max growth height for reed blocks) {
-                    int j = ((Integer) iblockdata.get(BlockReed.AGE)).intValue();
+                    int j = iblockdata.get(BlockReed.AGE).intValue();
 
                     if (j >= (byte) range(3, (world.growthOdds / world.spigotConfig.caneModifier * 15) + 0.5F, 15)) { // Spigot
                         // CraftBukkit start
@@ -107,10 +106,10 @@ public class BlockReed extends Block {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockReed.AGE)).intValue();
+        return iblockdata.get(BlockReed.AGE).intValue();
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockReed.AGE});
+        return new BlockStateList(this, BlockReed.AGE);
     }
 }

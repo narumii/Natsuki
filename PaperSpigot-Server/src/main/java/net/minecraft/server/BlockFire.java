@@ -129,17 +129,17 @@ public class BlockFire extends Block {
             if (!flag && world.S() && this.e(world, blockposition)) {
                 fireExtinguished(world, blockposition); // CraftBukkit - extinguished by rain
             } else {
-                int i = ((Integer) iblockdata.get(BlockFire.AGE)).intValue();
+                int i = iblockdata.get(BlockFire.AGE).intValue();
 
                 if (i < 15) {
                     iblockdata = iblockdata.set(BlockFire.AGE, Integer.valueOf(i + random.nextInt(3) / 2));
                     world.setTypeAndData(blockposition, iblockdata, 4);
                 }
 
-                world.a(blockposition, (Block) this, this.a(world) + random.nextInt(10));
+                world.a(blockposition, this, this.a(world) + random.nextInt(10));
                 if (!flag) {
                     if (!this.f(world, blockposition)) {
-                        if (!World.a((IBlockAccess) world, blockposition.down()) || i > 3) {
+                        if (!World.a(world, blockposition.down()) || i > 3) {
                             fireExtinguished(world, blockposition); // CraftBukkit
                         }
 
@@ -233,13 +233,13 @@ public class BlockFire extends Block {
     }
 
     private int c(Block block) {
-        Integer integer = (Integer) this.U.get(block);
+        Integer integer = this.U.get(block);
 
         return integer == null ? 0 : integer.intValue();
     }
 
     private int d(Block block) {
-        Integer integer = (Integer) this.flameChances.get(block);
+        Integer integer = this.flameChances.get(block);
 
         return integer == null ? 0 : integer.intValue();
     }
@@ -322,11 +322,11 @@ public class BlockFire extends Block {
     }
 
     public boolean canPlace(World world, BlockPosition blockposition) {
-        return World.a((IBlockAccess) world, blockposition.down()) || this.f(world, blockposition);
+        return World.a(world, blockposition.down()) || this.f(world, blockposition);
     }
 
     public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {
-        if (!World.a((IBlockAccess) world, blockposition.down()) && !this.f(world, blockposition)) {
+        if (!World.a(world, blockposition.down()) && !this.f(world, blockposition)) {
             fireExtinguished(world, blockposition); // CraftBukkit - fuel block gone
         }
 
@@ -334,10 +334,10 @@ public class BlockFire extends Block {
 
     public void onPlace(World world, BlockPosition blockposition, IBlockData iblockdata) {
         if (world.worldProvider.getDimension() > 0 || !Blocks.PORTAL.e(world, blockposition)) {
-            if (!World.a((IBlockAccess) world, blockposition.down()) && !this.f(world, blockposition)) {
+            if (!World.a(world, blockposition.down()) && !this.f(world, blockposition)) {
                 fireExtinguished(world, blockposition); // CraftBukkit - fuel block broke
             } else {
-                world.a(blockposition, (Block) this, this.a(world) + world.random.nextInt(10));
+                world.a(blockposition, this, this.a(world) + world.random.nextInt(10));
             }
         }
     }
@@ -351,11 +351,11 @@ public class BlockFire extends Block {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockFire.AGE)).intValue();
+        return iblockdata.get(BlockFire.AGE).intValue();
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockFire.AGE, BlockFire.NORTH, BlockFire.EAST, BlockFire.SOUTH, BlockFire.WEST, BlockFire.UPPER, BlockFire.FLIP, BlockFire.ALT});
+        return new BlockStateList(this, BlockFire.AGE, BlockFire.NORTH, BlockFire.EAST, BlockFire.SOUTH, BlockFire.WEST, BlockFire.UPPER, BlockFire.FLIP, BlockFire.ALT);
     }
 
     // CraftBukkit start

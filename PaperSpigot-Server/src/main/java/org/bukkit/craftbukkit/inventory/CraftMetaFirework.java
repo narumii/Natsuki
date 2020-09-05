@@ -90,7 +90,7 @@ class CraftMetaFirework extends CraftMetaItem implements FireworkMeta {
         List<FireworkEffect> effects = this.effects = new ArrayList<FireworkEffect>(fireworkEffects.size());
 
         for (int i = 0; i < fireworkEffects.size(); i++) {
-            effects.add(getEffect((NBTTagCompound) fireworkEffects.get(i)));
+            effects.add(getEffect(fireworkEffects.get(i)));
         }
     }
 
@@ -241,7 +241,7 @@ class CraftMetaFirework extends CraftMetaItem implements FireworkMeta {
 
     @Override
     boolean applicableTo(Material type) {
-        switch(type) {
+        switch (type) {
             case FIREWORK:
                 return true;
             default:
@@ -255,7 +255,7 @@ class CraftMetaFirework extends CraftMetaItem implements FireworkMeta {
     }
 
     boolean isFireworkEmpty() {
-        return  !(hasEffects() || hasPower());
+        return !(hasEffects() || hasPower());
     }
 
     boolean hasPower() {
@@ -330,7 +330,7 @@ class CraftMetaFirework extends CraftMetaItem implements FireworkMeta {
         this.effects.add(effect);
     }
 
-    public void addEffects(FireworkEffect...effects) {
+    public void addEffects(FireworkEffect... effects) {
         Validate.notNull(effects, "Effects cannot be null");
         if (effects.length == 0) {
             return;
@@ -353,7 +353,7 @@ class CraftMetaFirework extends CraftMetaItem implements FireworkMeta {
     }
 
     public List<FireworkEffect> getEffects() {
-        return this.effects == null ? ImmutableList.<FireworkEffect>of() : ImmutableList.copyOf(this.effects);
+        return this.effects == null ? ImmutableList.of() : ImmutableList.copyOf(this.effects);
     }
 
     public int getEffectsSize() {

@@ -17,7 +17,7 @@ import java.util.Map;
 
 @DelegateDeserialization(CraftMetaItem.SerializableMeta.class)
 public class CraftMetaBanner extends CraftMetaItem implements BannerMeta {
-    
+
     static final ItemMetaKey BASE = new ItemMetaKey("Base", "base-color");
     static final ItemMetaKey PATTERNS = new ItemMetaKey("Patterns", "patterns");
     static final ItemMetaKey COLOR = new ItemMetaKey("Color", "color");
@@ -40,7 +40,7 @@ public class CraftMetaBanner extends CraftMetaItem implements BannerMeta {
 
     CraftMetaBanner(NBTTagCompound tag) {
         super(tag);
-        
+
         if (!tag.hasKey("BlockEntityTag")) {
             return;
         }
@@ -60,17 +60,17 @@ public class CraftMetaBanner extends CraftMetaItem implements BannerMeta {
 
     CraftMetaBanner(Map<String, Object> map) {
         super(map);
-        
+
         String baseStr = SerializableMeta.getString(map, BASE.BUKKIT, true);
         if (baseStr != null) {
             base = DyeColor.valueOf(baseStr);
         }
-        
+
         Iterable<?> rawPatternList = SerializableMeta.getObject(Iterable.class, map, PATTERNS.BUKKIT, true);
         if (rawPatternList == null) {
             return;
         }
-        
+
         for (Object obj : rawPatternList) {
             if (!(obj instanceof Pattern)) {
                 throw new IllegalArgumentException("Object in pattern list is not valid. " + obj.getClass());
@@ -78,15 +78,16 @@ public class CraftMetaBanner extends CraftMetaItem implements BannerMeta {
             addPattern((Pattern) obj);
         }
     }
+
     @Override
     void applyToItem(NBTTagCompound tag) {
         super.applyToItem(tag);
-        
+
         NBTTagCompound entityTag = new NBTTagCompound();
         if (base != null) {
             entityTag.setInt(BASE.NBT, base.getDyeData());
         }
-        
+
         NBTTagList newPatterns = new NBTTagList();
 
         for (Pattern p : patterns) {
@@ -96,7 +97,7 @@ public class CraftMetaBanner extends CraftMetaItem implements BannerMeta {
             newPatterns.add(compound);
         }
         entityTag.set(PATTERNS.NBT, newPatterns);
-        
+
         tag.set("BlockEntityTag", entityTag);
     }
 
@@ -144,16 +145,16 @@ public class CraftMetaBanner extends CraftMetaItem implements BannerMeta {
     public int numberOfPatterns() {
         return patterns.size();
     }
-    
+
     @Override
     ImmutableMap.Builder<String, Object> serialize(ImmutableMap.Builder<String, Object> builder) {
         super.serialize(builder);
-        
-        if(base != null){
+
+        if (base != null) {
             builder.put(BASE.BUKKIT, base.toString());
         }
 
-        if(!patterns.isEmpty()){
+        if (!patterns.isEmpty()) {
             builder.put(PATTERNS.BUKKIT, ImmutableList.copyOf(patterns));
         }
 
@@ -190,14 +191,14 @@ public class CraftMetaBanner extends CraftMetaItem implements BannerMeta {
     boolean notUncommon(CraftMetaItem meta) {
         return super.notUncommon(meta) && (meta instanceof CraftMetaBanner || (patterns.isEmpty() && base == null));
     }
-    
-    
+
+
     @Override
     boolean isEmpty() {
         return super.isEmpty() && patterns.isEmpty() && base == null;
     }
-    
-    
+
+
     @Override
     boolean applicableTo(Material type) {
         return type == Material.BANNER;

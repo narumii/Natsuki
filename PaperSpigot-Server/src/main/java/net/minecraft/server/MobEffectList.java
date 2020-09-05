@@ -74,7 +74,7 @@ public class MobEffectList {
     }
 
     public static MobEffectList b(String s) {
-        return (MobEffectList) MobEffectList.I.get(new MinecraftKey(s));
+        return MobEffectList.I.get(new MinecraftKey(s));
     }
 
     public static Set<MinecraftKey> c() {
@@ -156,13 +156,13 @@ public class MobEffectList {
 
         if (this.id == MobEffectList.REGENERATION.id) {
             k = 50 >> j;
-            return k > 0 ? i % k == 0 : true;
+            return k <= 0 || i % k == 0;
         } else if (this.id == MobEffectList.POISON.id) {
             k = 25 >> j;
-            return k > 0 ? i % k == 0 : true;
+            return k <= 0 || i % k == 0;
         } else if (this.id == MobEffectList.WITHER.id) {
             k = 40 >> j;
-            return k > 0 ? i % k == 0 : true;
+            return k <= 0 || i % k == 0;
         } else {
             return this.id == MobEffectList.HUNGER.id;
         }

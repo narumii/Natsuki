@@ -31,9 +31,9 @@ public class PortalTravelAgent {
                 this.b(entity, f);
             }
         } else {
-            int i =(int) Math.floor(entity.locX);
-            int j =(int) Math.floor(entity.locY) - 1;
-            int k =(int) Math.floor(entity.locZ);
+            int i = (int) Math.floor(entity.locX);
+            int j = (int) Math.floor(entity.locY) - 1;
+            int k = (int) Math.floor(entity.locZ);
             // CraftBukkit start - Modularize end portal creation
             BlockPosition created = this.createEndPortal(entity.locX, entity.locY, entity.locZ);
             entity.setPositionRotation(created.getX(), created.getY(), created.getZ(), entity.yaw, 0.0F);
@@ -43,25 +43,25 @@ public class PortalTravelAgent {
 
     // Split out from original a(Entity, double, double, double, float) method in order to enable being called from createPortal
     private BlockPosition createEndPortal(double x, double y, double z) {
-            int i =(int) Math.floor(x);
-            int j =(int) Math.floor(y) - 1;
-            int k =(int) Math.floor(z);
-            // CraftBukkit end
-            byte b0 = 1;
-            byte b1 = 0;
+        int i = (int) Math.floor(x);
+        int j = (int) Math.floor(y) - 1;
+        int k = (int) Math.floor(z);
+        // CraftBukkit end
+        byte b0 = 1;
+        byte b1 = 0;
 
-            for (int l = -2; l <= 2; ++l) {
-                for (int i1 = -2; i1 <= 2; ++i1) {
-                    for (int j1 = -1; j1 < 3; ++j1) {
-                        int k1 = i + i1 * b0 + l * b1;
-                        int l1 = j + j1;
-                        int i2 = k + i1 * b1 - l * b0;
-                        boolean flag = j1 < 0;
+        for (int l = -2; l <= 2; ++l) {
+            for (int i1 = -2; i1 <= 2; ++i1) {
+                for (int j1 = -1; j1 < 3; ++j1) {
+                    int k1 = i + i1 * b0 + l * b1;
+                    int l1 = j + j1;
+                    int i2 = k + i1 * b1 - l * b0;
+                    boolean flag = j1 < 0;
 
-                        this.a.setTypeUpdate(new BlockPosition(k1, l1, i2), flag ? Blocks.OBSIDIAN.getBlockData() : Blocks.AIR.getBlockData());
-                    }
+                    this.a.setTypeUpdate(new BlockPosition(k1, l1, i2), flag ? Blocks.OBSIDIAN.getBlockData() : Blocks.AIR.getBlockData());
                 }
             }
+        }
 
         // CraftBukkit start
         return new BlockPosition(i, k, k);
@@ -117,8 +117,8 @@ public class PortalTravelAgent {
         // CraftBukkit end
         double d0 = -1.0D;
         // CraftBukkit start
-        int i =(int) Math.floor(x);
-        int j =(int) Math.floor(z);
+        int i = (int) Math.floor(x);
+        int j = (int) Math.floor(z);
         // CraftBukkit end
         boolean flag1 = true;
         Object object = BlockPosition.ZERO;
@@ -222,7 +222,7 @@ public class PortalTravelAgent {
                 f3 = -1.0F;
                 f4 = 1.0F;
             }
-            
+
             // CraftBukkit start
             double d6 = velocity.getX();
             double d7 = velocity.getZ();
@@ -272,9 +272,9 @@ public class PortalTravelAgent {
         // CraftBukkit end
         double d0 = -1.0D;
         // CraftBukkit start
-        int i =(int) Math.floor(x);
-        int j =(int) Math.floor(y);
-        int k =(int) Math.floor(z);
+        int i = (int) Math.floor(x);
+        int j = (int) Math.floor(y);
+        int k = (int) Math.floor(z);
         // CraftBukkit end
         int l = i;
         int i1 = j;

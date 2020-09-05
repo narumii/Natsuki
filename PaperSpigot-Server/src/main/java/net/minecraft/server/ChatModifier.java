@@ -102,7 +102,8 @@ public class ChatModifier {
         }
     };
 
-    public ChatModifier() {}
+    public ChatModifier() {
+    }
 
     public EnumChatFormat getColor() {
         return this.b == null ? this.o().getColor() : this.b;
@@ -212,7 +213,8 @@ public class ChatModifier {
             boolean flag;
 
             if (this.isBold() == chatmodifier.isBold() && this.getColor() == chatmodifier.getColor() && this.isItalic() == chatmodifier.isItalic() && this.isRandom() == chatmodifier.isRandom() && this.isStrikethrough() == chatmodifier.isStrikethrough() && this.isUnderlined() == chatmodifier.isUnderlined()) {
-                label65: {
+                label65:
+                {
                     if (this.h() != null) {
                         if (!this.h().equals(chatmodifier.h())) {
                             break label65;
@@ -296,7 +298,8 @@ public class ChatModifier {
 
     public static class ChatModifierSerializer implements JsonDeserializer<ChatModifier>, JsonSerializer<ChatModifier> {
 
-        public ChatModifierSerializer() {}
+        public ChatModifierSerializer() {
+        }
 
         public ChatModifier a(JsonElement jsonelement, Type type, JsonDeserializationContext jsondeserializationcontext) throws JsonParseException {
             if (jsonelement.isJsonObject()) {
@@ -327,7 +330,7 @@ public class ChatModifier {
                     }
 
                     if (jsonobject.has("color")) {
-                        chatmodifier.b = (EnumChatFormat) jsondeserializationcontext.deserialize(jsonobject.get("color"), EnumChatFormat.class);
+                        chatmodifier.b = jsondeserializationcontext.deserialize(jsonobject.get("color"), EnumChatFormat.class);
                     }
 
                     if (jsonobject.has("insertion")) {
@@ -356,7 +359,7 @@ public class ChatModifier {
                         if (jsonobject1 != null) {
                             jsonprimitive = jsonobject1.getAsJsonPrimitive("action");
                             ChatHoverable.EnumHoverAction chathoverable_enumhoveraction = jsonprimitive == null ? null : ChatHoverable.EnumHoverAction.a(jsonprimitive.getAsString());
-                            IChatBaseComponent ichatbasecomponent = (IChatBaseComponent) jsondeserializationcontext.deserialize(jsonobject1.get("value"), IChatBaseComponent.class);
+                            IChatBaseComponent ichatbasecomponent = jsondeserializationcontext.deserialize(jsonobject1.get("value"), IChatBaseComponent.class);
 
                             if (chathoverable_enumhoveraction != null && ichatbasecomponent != null && chathoverable_enumhoveraction.a()) {
                                 chatmodifier.i = new ChatHoverable(chathoverable_enumhoveraction, ichatbasecomponent);
@@ -426,7 +429,7 @@ public class ChatModifier {
         }
 
         public JsonElement serialize(ChatModifier object, Type type, JsonSerializationContext jsonserializationcontext) { // CraftBukkit - fix decompile error
-            return this.a((ChatModifier) object, type, jsonserializationcontext);
+            return this.a(object, type, jsonserializationcontext);
         }
 
         public ChatModifier deserialize(JsonElement jsonelement, Type type, JsonDeserializationContext jsondeserializationcontext) throws JsonParseException { // CraftBukkit - fix decompile error

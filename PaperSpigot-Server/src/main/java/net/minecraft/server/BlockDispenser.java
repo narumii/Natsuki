@@ -27,7 +27,7 @@ public class BlockDispenser extends BlockContainer {
 
     private void e(World world, BlockPosition blockposition, IBlockData iblockdata) {
         if (!world.isClientSide) {
-            EnumDirection enumdirection = (EnumDirection) iblockdata.get(BlockDispenser.FACING);
+            EnumDirection enumdirection = iblockdata.get(BlockDispenser.FACING);
             boolean flag = world.getType(blockposition.north()).getBlock().o();
             boolean flag1 = world.getType(blockposition.south()).getBlock().o();
 
@@ -71,7 +71,7 @@ public class BlockDispenser extends BlockContainer {
 
     public void dispense(World world, BlockPosition blockposition) {
         SourceBlock sourceblock = new SourceBlock(world, blockposition);
-        TileEntityDispenser tileentitydispenser = (TileEntityDispenser) sourceblock.getTileEntity();
+        TileEntityDispenser tileentitydispenser = sourceblock.getTileEntity();
 
         if (tileentitydispenser != null) {
             int i = tileentitydispenser.m();
@@ -94,15 +94,15 @@ public class BlockDispenser extends BlockContainer {
     }
 
     protected IDispenseBehavior a(ItemStack itemstack) {
-        return (IDispenseBehavior) BlockDispenser.REGISTRY.get(itemstack == null ? null : itemstack.getItem());
+        return BlockDispenser.REGISTRY.get(itemstack == null ? null : itemstack.getItem());
     }
 
     public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {
         boolean flag = world.isBlockIndirectlyPowered(blockposition) || world.isBlockIndirectlyPowered(blockposition.up());
-        boolean flag1 = ((Boolean) iblockdata.get(BlockDispenser.TRIGGERED)).booleanValue();
+        boolean flag1 = iblockdata.get(BlockDispenser.TRIGGERED).booleanValue();
 
         if (flag && !flag1) {
-            world.a(blockposition, (Block) this, this.a(world));
+            world.a(blockposition, this, this.a(world));
             world.setTypeAndData(blockposition, iblockdata.set(BlockDispenser.TRIGGERED, Boolean.valueOf(true)), 4);
         } else if (!flag && flag1) {
             world.setTypeAndData(blockposition, iblockdata.set(BlockDispenser.TRIGGERED, Boolean.valueOf(false)), 4);
@@ -179,9 +179,9 @@ public class BlockDispenser extends BlockContainer {
 
     public int toLegacyData(IBlockData iblockdata) {
         byte b0 = 0;
-        int i = b0 | ((EnumDirection) iblockdata.get(BlockDispenser.FACING)).a();
+        int i = b0 | iblockdata.get(BlockDispenser.FACING).a();
 
-        if (((Boolean) iblockdata.get(BlockDispenser.TRIGGERED)).booleanValue()) {
+        if (iblockdata.get(BlockDispenser.TRIGGERED).booleanValue()) {
             i |= 8;
         }
 
@@ -189,6 +189,6 @@ public class BlockDispenser extends BlockContainer {
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockDispenser.FACING, BlockDispenser.TRIGGERED});
+        return new BlockStateList(this, BlockDispenser.FACING, BlockDispenser.TRIGGERED);
     }
 }

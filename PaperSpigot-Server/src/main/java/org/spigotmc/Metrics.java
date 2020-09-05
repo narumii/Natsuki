@@ -37,6 +37,7 @@ import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -468,8 +469,8 @@ public class Metrics {
      * </code>
      *
      * @param buffer the stringbuilder to append the data pair onto
-     * @param key the key value
-     * @param value the value
+     * @param key    the key value
+     * @param value  the value
      */
     private static void encodeDataPair(final StringBuilder buffer, final String key, final String value) throws UnsupportedEncodingException {
         buffer.append('&').append(encode(key)).append('=').append(encode(value));
@@ -482,7 +483,7 @@ public class Metrics {
      * @return the encoded text, as UTF-8
      */
     private static String encode(final String text) throws UnsupportedEncodingException {
-        return URLEncoder.encode(text, "UTF-8");
+        return URLEncoder.encode(text, StandardCharsets.UTF_8.name());
     }
 
     /**

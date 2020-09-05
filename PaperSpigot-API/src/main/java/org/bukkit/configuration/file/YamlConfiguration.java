@@ -178,7 +178,7 @@ public class YamlConfiguration extends FileConfiguration {
         } catch (IOException ex) {
             Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
         } catch (InvalidConfigurationException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file , ex);
+            Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
         }
 
         return config;
@@ -194,9 +194,9 @@ public class YamlConfiguration extends FileConfiguration {
      * @param stream Input stream
      * @return Resulting configuration
      * @throws IllegalArgumentException Thrown if stream is null
-     * @deprecated does not properly consider encoding
      * @see #load(InputStream)
      * @see #loadConfiguration(Reader)
+     * @deprecated does not properly consider encoding
      */
     @Deprecated
     public static YamlConfiguration loadConfiguration(InputStream stream) {

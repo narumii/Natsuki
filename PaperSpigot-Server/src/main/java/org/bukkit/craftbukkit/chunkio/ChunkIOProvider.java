@@ -18,7 +18,7 @@ class ChunkIOProvider implements AsynchronousExecutor.CallBackProvider<QueuedChu
         try {
             ChunkRegionLoader loader = queuedChunk.loader;
             Object[] data = loader.loadChunk(queuedChunk.world, queuedChunk.x, queuedChunk.z);
-            
+
             if (data != null) {
                 queuedChunk.compound = (NBTTagCompound) data[1];
                 return (Chunk) data[0];

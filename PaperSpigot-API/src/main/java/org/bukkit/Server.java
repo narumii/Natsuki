@@ -39,7 +39,7 @@ public interface Server extends PluginMessageRecipient {
      * <p>
      * For use in {@link #broadcast(java.lang.String, java.lang.String)}.
      */
-    public static final String BROADCAST_CHANNEL_ADMINISTRATIVE = "bukkit.broadcast.admin";
+    String BROADCAST_CHANNEL_ADMINISTRATIVE = "bukkit.broadcast.admin";
 
     /**
      * Used for all announcement messages, such as informing users that a
@@ -47,28 +47,28 @@ public interface Server extends PluginMessageRecipient {
      * <p>
      * For use in {@link #broadcast(java.lang.String, java.lang.String)}.
      */
-    public static final String BROADCAST_CHANNEL_USERS = "bukkit.broadcast.user";
+    String BROADCAST_CHANNEL_USERS = "bukkit.broadcast.user";
 
     /**
      * Gets the name of this server implementation.
      *
      * @return name of this server implementation
      */
-    public String getName();
+    String getName();
 
     /**
      * Gets the version string of this server implementation.
      *
      * @return version of this server implementation
      */
-    public String getVersion();
+    String getVersion();
 
     /**
      * Gets the Bukkit version that this server is running.
      *
      * @return version of Bukkit
      */
-    public String getBukkitVersion();
+    String getBukkitVersion();
 
     /**
      * Gets an array copy of all currently logged in players.
@@ -77,11 +77,11 @@ public interface Server extends PluginMessageRecipient {
      * compatibility. It will not exist at runtime and should not be used
      * under any circumstances.
      *
-     * @deprecated superseded by {@link #getOnlinePlayers()}
      * @return an array of Players that are currently online
+     * @deprecated superseded by {@link #getOnlinePlayers()}
      */
     @Deprecated
-    public Player[] _INVALID_getOnlinePlayers();
+    Player[] _INVALID_getOnlinePlayers();
 
     /**
      * Gets a view of all currently logged in players. This {@linkplain
@@ -101,7 +101,7 @@ public interface Server extends PluginMessageRecipient {
      * affect the collection are fully supported. The effects following
      * (non-exhaustive) {@link Entity#teleport(Location) teleportation},
      * {@link Player#setHealth(double) death}, and {@link Player#kickPlayer(
-     * String) kicking} are undefined. Any use of this collection from
+     *String) kicking} are undefined. Any use of this collection from
      * asynchronous threads is unsafe.
      * <p>
      * For safe consequential iteration or mimicking the old array behavior,
@@ -110,44 +110,44 @@ public interface Server extends PluginMessageRecipient {
      *
      * @return a view of currently online players.
      */
-    public Collection<? extends Player> getOnlinePlayers();
+    Collection<? extends Player> getOnlinePlayers();
 
     /**
      * Get the maximum amount of players which can login to this server.
      *
      * @return the amount of players this server allows
      */
-    public int getMaxPlayers();
+    int getMaxPlayers();
 
     /**
      * Get the game port that the server runs on.
      *
      * @return the port number of this server
      */
-    public int getPort();
+    int getPort();
 
     /**
      * Get the view distance from this server.
      *
      * @return the view distance from this server.
      */
-    public int getViewDistance();
+    int getViewDistance();
 
     /**
      * Get the IP that this server is bound to, or empty string if not
      * specified.
      *
      * @return the IP string that this server is bound to, otherwise empty
-     *     string
+     * string
      */
-    public String getIp();
+    String getIp();
 
     /**
      * Get the name of this server.
      *
      * @return the name of this server
      */
-    public String getServerName();
+    String getServerName();
 
     /**
      * Get an ID of this server. The ID is a simple generally alphanumeric ID
@@ -155,61 +155,61 @@ public interface Server extends PluginMessageRecipient {
      *
      * @return the ID of this server
      */
-    public String getServerId();
+    String getServerId();
 
     /**
      * Get world type (level-type setting) for default world.
      *
      * @return the value of level-type (e.g. DEFAULT, FLAT, DEFAULT_1_1)
      */
-    public String getWorldType();
+    String getWorldType();
 
     /**
      * Get generate-structures setting.
      *
      * @return true if structure generation is enabled, false otherwise
      */
-    public boolean getGenerateStructures();
+    boolean getGenerateStructures();
 
     /**
      * Gets whether this server allows the End or not.
      *
      * @return whether this server allows the End or not
      */
-    public boolean getAllowEnd();
+    boolean getAllowEnd();
 
     /**
      * Gets whether this server allows the Nether or not.
      *
      * @return whether this server allows the Nether or not
      */
-    public boolean getAllowNether();
+    boolean getAllowNether();
 
     /**
      * Gets whether this server has a whitelist or not.
      *
      * @return whether this server has a whitelist or not
      */
-    public boolean hasWhitelist();
+    boolean hasWhitelist();
 
     /**
      * Sets if the server is whitelisted.
      *
      * @param value true for whitelist on, false for off
      */
-    public void setWhitelist(boolean value);
+    void setWhitelist(boolean value);
 
     /**
      * Gets a list of whitelisted players.
      *
      * @return a set containing all whitelisted players
      */
-    public Set<OfflinePlayer> getWhitelistedPlayers();
+    Set<OfflinePlayer> getWhitelistedPlayers();
 
     /**
      * Reloads the whitelist from disk.
      */
-    public void reloadWhitelist();
+    void reloadWhitelist();
 
     /**
      * Broadcast a message to all players.
@@ -220,22 +220,23 @@ public interface Server extends PluginMessageRecipient {
      * @param message the message
      * @return the number of players
      */
-    public int broadcastMessage(String message);
+    int broadcastMessage(String message);
 
     // Paper start
+
     /**
      * Sends the component to the player
      *
      * @param component the components to send
      */
-    public void broadcast(net.md_5.bungee.api.chat.BaseComponent component);
+    void broadcast(net.md_5.bungee.api.chat.BaseComponent component);
 
     /**
      * Sends an array of components as a single message to the player
      *
      * @param components the components to send
      */
-    public void broadcast(net.md_5.bungee.api.chat.BaseComponent... components);
+    void broadcast(net.md_5.bungee.api.chat.BaseComponent... components);
     // Paper end
 
     /**
@@ -246,7 +247,7 @@ public interface Server extends PluginMessageRecipient {
      *
      * @return the name of the update folder
      */
-    public String getUpdateFolder();
+    String getUpdateFolder();
 
     /**
      * Gets the update folder. The update folder is used to safely update
@@ -254,14 +255,14 @@ public interface Server extends PluginMessageRecipient {
      *
      * @return the update folder
      */
-    public File getUpdateFolderFile();
+    File getUpdateFolderFile();
 
     /**
      * Gets the value of the connection throttle setting.
      *
      * @return the value of the connection throttle setting
      */
-    public long getConnectionThrottle();
+    long getConnectionThrottle();
 
     /**
      * Gets default ticks per animal spawns value.
@@ -269,9 +270,9 @@ public interface Server extends PluginMessageRecipient {
      * <b>Example Usage:</b>
      * <ul>
      * <li>A value of 1 will mean the server will attempt to spawn monsters
-     *     every tick.
+     * every tick.
      * <li>A value of 400 will mean the server will attempt to spawn monsters
-     *     every 400th tick.
+     * every 400th tick.
      * <li>A value below 0 will be reset back to Minecraft's default.
      * </ul>
      * <p>
@@ -282,7 +283,7 @@ public interface Server extends PluginMessageRecipient {
      *
      * @return the default ticks per animal spawns value
      */
-    public int getTicksPerAnimalSpawns();
+    int getTicksPerAnimalSpawns();
 
     /**
      * Gets the default ticks per monster spawns value.
@@ -290,9 +291,9 @@ public interface Server extends PluginMessageRecipient {
      * <b>Example Usage:</b>
      * <ul>
      * <li>A value of 1 will mean the server will attempt to spawn monsters
-     *     every tick.
+     * every tick.
      * <li>A value of 400 will mean the server will attempt to spawn monsters
-     *     every 400th tick.
+     * every 400th tick.
      * <li>A value below 0 will be reset back to Minecraft's default.
      * </ul>
      * <p>
@@ -303,7 +304,7 @@ public interface Server extends PluginMessageRecipient {
      *
      * @return the default ticks per monsters spawn value
      */
-    public int getTicksPerMonsterSpawns();
+    int getTicksPerMonsterSpawns();
 
     /**
      * Gets a player object by the given username.
@@ -313,7 +314,7 @@ public interface Server extends PluginMessageRecipient {
      * @param name the name to look up
      * @return a player if one was found, null otherwise
      */
-    public Player getPlayer(String name);
+    Player getPlayer(String name);
 
     /**
      * Gets the player with the exact given name, case insensitive.
@@ -321,7 +322,7 @@ public interface Server extends PluginMessageRecipient {
      * @param name Exact name of the player to retrieve
      * @return a player object if one was found, null otherwise
      */
-    public Player getPlayerExact(String name);
+    Player getPlayerExact(String name);
 
     /**
      * Attempts to match any players with the given name, and returns a list
@@ -333,7 +334,7 @@ public interface Server extends PluginMessageRecipient {
      * @param name the (partial) name to match
      * @return list of all possible players
      */
-    public List<Player> matchPlayer(String name);
+    List<Player> matchPlayer(String name);
 
     /**
      * Gets the player with the given UUID.
@@ -341,35 +342,35 @@ public interface Server extends PluginMessageRecipient {
      * @param id UUID of the player to retrieve
      * @return a player object if one was found, null otherwise
      */
-    public Player getPlayer(UUID id);
+    Player getPlayer(UUID id);
 
     /**
      * Gets the plugin manager for interfacing with plugins.
      *
      * @return a plugin manager for this Server instance
      */
-    public PluginManager getPluginManager();
+    PluginManager getPluginManager();
 
     /**
      * Gets the scheduler for managing scheduled events.
      *
      * @return a scheduling service for this server
      */
-    public BukkitScheduler getScheduler();
+    BukkitScheduler getScheduler();
 
     /**
      * Gets a services manager.
      *
      * @return s services manager
      */
-    public ServicesManager getServicesManager();
+    ServicesManager getServicesManager();
 
     /**
      * Gets a list of all worlds on this server.
      *
      * @return a list of worlds
      */
-    public List<World> getWorlds();
+    List<World> getWorlds();
 
     /**
      * Creates or loads a world with the given name using the specified
@@ -381,7 +382,7 @@ public interface Server extends PluginMessageRecipient {
      * @param creator the options to use when creating the world
      * @return newly created or loaded world
      */
-    public World createWorld(WorldCreator creator);
+    World createWorld(WorldCreator creator);
 
     /**
      * Unloads a world with the given name.
@@ -390,16 +391,16 @@ public interface Server extends PluginMessageRecipient {
      * @param save whether to save the chunks before unloading
      * @return true if successful, false otherwise
      */
-    public boolean unloadWorld(String name, boolean save);
+    boolean unloadWorld(String name, boolean save);
 
     /**
      * Unloads the given world.
      *
      * @param world the world to unload
-     * @param save whether to save the chunks before unloading
+     * @param save  whether to save the chunks before unloading
      * @return true if successful, false otherwise
      */
-    public boolean unloadWorld(World world, boolean save);
+    boolean unloadWorld(World world, boolean save);
 
     /**
      * Gets the world with the given name.
@@ -407,7 +408,7 @@ public interface Server extends PluginMessageRecipient {
      * @param name the name of the world to retrieve
      * @return a world with the given name, or null if none exists
      */
-    public World getWorld(String name);
+    World getWorld(String name);
 
     /**
      * Gets the world from the given Unique ID.
@@ -415,7 +416,7 @@ public interface Server extends PluginMessageRecipient {
      * @param uid a unique-id of the world to retrieve
      * @return a world with the given Unique ID, or null if none exists
      */
-    public World getWorld(UUID uid);
+    World getWorld(UUID uid);
 
     /**
      * Gets the map from the given item ID.
@@ -425,7 +426,7 @@ public interface Server extends PluginMessageRecipient {
      * @deprecated Magic value
      */
     @Deprecated
-    public MapView getMap(short id);
+    MapView getMap(short id);
 
     /**
      * Create a new map with an automatically assigned ID.
@@ -433,19 +434,19 @@ public interface Server extends PluginMessageRecipient {
      * @param world the world the map will belong to
      * @return a newly created map view
      */
-    public MapView createMap(World world);
+    MapView createMap(World world);
 
     /**
      * Reloads the server, refreshing settings and plugin information.
      */
-    public void reload();
+    void reload();
 
     /**
      * Returns the primary logger associated with this server instance.
      *
      * @return Logger associated with this server
      */
-    public Logger getLogger();
+    Logger getLogger();
 
     /**
      * Gets a {@link PluginCommand} with the given name or alias.
@@ -453,24 +454,24 @@ public interface Server extends PluginMessageRecipient {
      * @param name the name of the command to retrieve
      * @return a plugin command if found, null otherwise
      */
-    public PluginCommand getPluginCommand(String name);
+    PluginCommand getPluginCommand(String name);
 
     /**
      * Writes loaded players to disk.
      */
-    public void savePlayers();
+    void savePlayers();
 
     /**
      * Dispatches a command on this server, and executes it if found.
      *
-     * @param sender the apparent sender of the command
+     * @param sender      the apparent sender of the command
      * @param commandLine the command + arguments. Example: <code>test abc
-     *     123</code>
+     *                    123</code>
      * @return returns false if no target is found
      * @throws CommandException thrown when the executor for the given command
-     *     fails with an unhandled exception
+     *                          fails with an unhandled exception
      */
-    public boolean dispatchCommand(CommandSender sender, String commandLine) throws CommandException;
+    boolean dispatchCommand(CommandSender sender, String commandLine) throws CommandException;
 
     /**
      * Populates a given {@link ServerConfig} with values attributes to this
@@ -478,16 +479,16 @@ public interface Server extends PluginMessageRecipient {
      *
      * @param config the server config to populate
      */
-    public void configureDbConfig(ServerConfig config);
+    void configureDbConfig(ServerConfig config);
 
     /**
      * Adds a recipe to the crafting manager.
      *
      * @param recipe the recipe to add
      * @return true if the recipe was added, false if it wasn't for some
-     *     reason
+     * reason
      */
-    public boolean addRecipe(Recipe recipe);
+    boolean addRecipe(Recipe recipe);
 
     /**
      * Get a list of all recipes for a given item. The stack size is ignored
@@ -496,99 +497,98 @@ public interface Server extends PluginMessageRecipient {
      * @param result the item to match against recipe results
      * @return a list of recipes with the given result
      */
-    public List<Recipe> getRecipesFor(ItemStack result);
+    List<Recipe> getRecipesFor(ItemStack result);
 
     /**
      * Get an iterator through the list of crafting recipes.
      *
      * @return an iterator
      */
-    public Iterator<Recipe> recipeIterator();
+    Iterator<Recipe> recipeIterator();
 
     /**
      * Clears the list of crafting recipes.
      */
-    public void clearRecipes();
+    void clearRecipes();
 
     /**
      * Resets the list of crafting recipes to the default.
      */
-    public void resetRecipes();
+    void resetRecipes();
 
     /**
      * Gets a list of command aliases defined in the server properties.
      *
      * @return a map of aliases to command names
      */
-    public Map<String, String[]> getCommandAliases();
+    Map<String, String[]> getCommandAliases();
 
     /**
      * Gets the radius, in blocks, around each worlds spawn point to protect.
      *
      * @return spawn radius, or 0 if none
      */
-    public int getSpawnRadius();
+    int getSpawnRadius();
 
     /**
      * Sets the radius, in blocks, around each worlds spawn point to protect.
      *
      * @param value new spawn radius, or 0 if none
      */
-    public void setSpawnRadius(int value);
+    void setSpawnRadius(int value);
 
     /**
      * Gets whether the Server is in online mode or not.
      *
      * @return true if the server authenticates clients, false otherwise
      */
-    public boolean getOnlineMode();
+    boolean getOnlineMode();
 
     /**
      * Gets whether this server allows flying or not.
      *
      * @return true if the server allows flight, false otherwise
      */
-    public boolean getAllowFlight();
+    boolean getAllowFlight();
 
     /**
      * Gets whether the server is in hardcore mode or not.
      *
      * @return true if the server mode is hardcore, false otherwise
      */
-    public boolean isHardcore();
+    boolean isHardcore();
 
     /**
      * Gets whether to use vanilla (false) or exact behaviour (true).
      *
      * <ul>
      * <li>Vanilla behaviour: check for collisions and move the player if
-     *     needed.
+     * needed.
      * <li>Exact behaviour: spawn players exactly where they should be.
      * </ul>
      *
      * @return true if exact location locations are used for spawning, false
-     *     for vanilla collision detection or otherwise
-     *
+     * for vanilla collision detection or otherwise
      * @deprecated non standard and unused feature.
      */
     @Deprecated
-    public boolean useExactLoginLocation();
+    boolean useExactLoginLocation();
 
     /**
      * Shutdowns the server, stopping everything.
      */
-    public void shutdown();
+    void shutdown();
 
     /**
      * Broadcasts the specified message to every user with the given
      * permission name.
      *
-     * @param message message to broadcast
+     * @param message    message to broadcast
      * @param permission the required permission {@link Permissible
-     *     permissibles} must have to receive the broadcast
+     *                   permissibles} must have to receive the broadcast
      * @return number of message recipients
      */
-    public int broadcast(String message, String permission);
+    int broadcast(String message, String permission);
 
     /**
      * Gets the player by the given name, regardless if they are offline or
@@ -600,14 +600,14 @@ public interface Server extends PluginMessageRecipient {
      * This will return an object even if the player does not exist. To this
      * method, all players will exist.
      *
-     * @deprecated Persistent storage of users should be by UUID as names are no longer
-     *             unique past a single session.
      * @param name the name the player to retrieve
      * @return an offline player
      * @see #getOfflinePlayer(java.util.UUID)
+     * @deprecated Persistent storage of users should be by UUID as names are no longer
+     * unique past a single session.
      */
     @Deprecated
-    public OfflinePlayer getOfflinePlayer(String name);
+    OfflinePlayer getOfflinePlayer(String name);
 
     /**
      * Gets the player by the given UUID, regardless if they are offline or
@@ -619,35 +619,35 @@ public interface Server extends PluginMessageRecipient {
      * @param id the UUID of the player to retrieve
      * @return an offline player
      */
-    public OfflinePlayer getOfflinePlayer(UUID id);
+    OfflinePlayer getOfflinePlayer(UUID id);
 
     /**
      * Gets a set containing all current IPs that are banned.
      *
      * @return a set containing banned IP addresses
      */
-    public Set<String> getIPBans();
+    Set<String> getIPBans();
 
     /**
      * Bans the specified address from the server.
      *
      * @param address the IP address to ban
      */
-    public void banIP(String address);
+    void banIP(String address);
 
     /**
      * Unbans the specified address from the server.
      *
      * @param address the IP address to unban
      */
-    public void unbanIP(String address);
+    void unbanIP(String address);
 
     /**
      * Gets a set containing all banned players.
      *
      * @return a set containing banned players
      */
-    public Set<OfflinePlayer> getBannedPlayers();
+    Set<OfflinePlayer> getBannedPlayers();
 
     /**
      * Gets a ban list for the supplied type.
@@ -658,28 +658,28 @@ public interface Server extends PluginMessageRecipient {
      * @param type the type of list to fetch, cannot be null
      * @return a ban list of the specified type
      */
-    public BanList getBanList(BanList.Type type);
+    BanList getBanList(BanList.Type type);
 
     /**
      * Gets a set containing all player operators.
      *
      * @return a set containing player operators
      */
-    public Set<OfflinePlayer> getOperators();
+    Set<OfflinePlayer> getOperators();
 
     /**
      * Gets the default {@link GameMode} for new players.
      *
      * @return the default game mode
      */
-    public GameMode getDefaultGameMode();
+    GameMode getDefaultGameMode();
 
     /**
      * Sets the default {@link GameMode} for new players.
      *
      * @param mode the new game mode
      */
-    public void setDefaultGameMode(GameMode mode);
+    void setDefaultGameMode(GameMode mode);
 
     /**
      * Gets a {@link ConsoleCommandSender} that may be used as an input source
@@ -687,35 +687,35 @@ public interface Server extends PluginMessageRecipient {
      *
      * @return a console command sender
      */
-    public ConsoleCommandSender getConsoleSender();
+    ConsoleCommandSender getConsoleSender();
 
     /**
      * Gets the folder that contains all of the various {@link World}s.
      *
      * @return folder that contains all worlds
      */
-    public File getWorldContainer();
+    File getWorldContainer();
 
     /**
      * Gets every player that has ever played on this server.
      *
      * @return an array containing all previous players
      */
-    public OfflinePlayer[] getOfflinePlayers();
+    OfflinePlayer[] getOfflinePlayers();
 
     /**
      * Gets the {@link Messenger} responsible for this server.
      *
      * @return messenger responsible for this server
      */
-    public Messenger getMessenger();
+    Messenger getMessenger();
 
     /**
      * Gets the {@link HelpMap} providing help topics for this server.
      *
      * @return a help map for this server
      */
-    public HelpMap getHelpMap();
+    HelpMap getHelpMap();
 
     /**
      * Creates an empty inventory of the specified type. If the type is {@link
@@ -723,7 +723,7 @@ public interface Server extends PluginMessageRecipient {
      * new inventory has the normal size for its type.
      *
      * @param owner the holder of the inventory, or null to indicate no holder
-     * @param type the type of inventory to create
+     * @param type  the type of inventory to create
      * @return a new inventory
      */
     Inventory createInventory(InventoryHolder owner, InventoryType type);
@@ -736,7 +736,7 @@ public interface Server extends PluginMessageRecipient {
      * may not render with said titles on the Minecraft client.
      *
      * @param owner The holder of the inventory; can be null if there's no holder.
-     * @param type The type of inventory to create.
+     * @param type  The type of inventory to create.
      * @param title The title of the inventory, to be displayed when it is viewed.
      * @return The new inventory.
      */
@@ -747,7 +747,7 @@ public interface Server extends PluginMessageRecipient {
      * specified size.
      *
      * @param owner the holder of the inventory, or null to indicate no holder
-     * @param size a multiple of 9 as the size of inventory to create
+     * @param size  a multiple of 9 as the size of inventory to create
      * @return a new inventory
      * @throws IllegalArgumentException if the size is not a multiple of 9
      */
@@ -758,9 +758,9 @@ public interface Server extends PluginMessageRecipient {
      * specified size and title.
      *
      * @param owner the holder of the inventory, or null to indicate no holder
-     * @param size a multiple of 9 as the size of inventory to create
+     * @param size  a multiple of 9 as the size of inventory to create
      * @param title the title of the inventory, displayed when inventory is
-     *     viewed
+     *              viewed
      * @return a new inventory
      * @throws IllegalArgumentException if the size is not a multiple of 9
      */
@@ -808,7 +808,7 @@ public interface Server extends PluginMessageRecipient {
      * preclude</b> the same assumption.
      *
      * @return true if the current thread matches the expected primary thread,
-     *     false otherwise
+     * false otherwise
      */
     boolean isPrimaryThread();
 
@@ -831,7 +831,7 @@ public interface Server extends PluginMessageRecipient {
      *
      * @return the configured warning state
      */
-    public WarningState getWarningState();
+    WarningState getWarningState();
 
     /**
      * Gets the instance of the item factory (for {@link ItemMeta}).
@@ -854,8 +854,8 @@ public interface Server extends PluginMessageRecipient {
      * Gets an instance of the server's default server-icon.
      *
      * @return the default server-icon; null values may be used by the
-     *     implementation to indicate no defined icon, but this behavior is
-     *     not guaranteed
+     * implementation to indicate no defined icon, but this behavior is
+     * not guaranteed
      */
     CachedServerIcon getServerIcon();
 
@@ -867,11 +867,11 @@ public interface Server extends PluginMessageRecipient {
      * guaranteed to throw an implementation-defined {@link Exception}.
      *
      * @param file the file to load the from
-     * @throws IllegalArgumentException if image is null
-     * @throws Exception if the image does not meet current server server-icon
-     *     specifications
      * @return a cached server-icon that can be used for a {@link
-     *     ServerListPingEvent#setServerIcon(CachedServerIcon)}
+     * ServerListPingEvent#setServerIcon(CachedServerIcon)}
+     * @throws IllegalArgumentException if image is null
+     * @throws Exception                if the image does not meet current server server-icon
+     *                                  specifications
      */
     CachedServerIcon loadServerIcon(File file) throws IllegalArgumentException, Exception;
 
@@ -882,11 +882,11 @@ public interface Server extends PluginMessageRecipient {
      * guaranteed to throw an implementation-defined {@link Exception}.
      *
      * @param image the image to use
-     * @throws IllegalArgumentException if image is null
-     * @throws Exception if the image does not meet current server
-     *     server-icon specifications
      * @return a cached server-icon that can be used for a {@link
-     *     ServerListPingEvent#setServerIcon(CachedServerIcon)}
+     * ServerListPingEvent#setServerIcon(CachedServerIcon)}
+     * @throws IllegalArgumentException if image is null
+     * @throws Exception                if the image does not meet current server
+     *                                  server-icon specifications
      */
     CachedServerIcon loadServerIcon(BufferedImage image) throws IllegalArgumentException, Exception;
 
@@ -898,34 +898,34 @@ public interface Server extends PluginMessageRecipient {
      *
      * @param threshold the idle timeout in minutes
      */
-    public void setIdleTimeout(int threshold);
+    void setIdleTimeout(int threshold);
 
     /**
      * Gets the idle kick timeout.
      *
      * @return the idle timeout in minutes
      */
-    public int getIdleTimeout();
+    int getIdleTimeout();
 
     /**
      * Create a ChunkData for use in a generator.
-     * 
+     * <p>
      * See {@link ChunkGenerator#generateChunkData(org.bukkit.World, java.util.Random, int, int, org.bukkit.generator.ChunkGenerator.BiomeGrid)}
-     * 
+     *
      * @param world the world to create the ChunkData for
      * @return a new ChunkData for the world
-     * 
      */
-    public ChunkGenerator.ChunkData createChunkData(World world);
+    ChunkGenerator.ChunkData createChunkData(World world);
 
     /**
-     * @see UnsafeValues
      * @return the unsafe values instance
+     * @see UnsafeValues
      */
     @Deprecated
     UnsafeValues getUnsafe();
 
     // Paper start
+
     /**
      * Gets the active {@link CommandMap}.
      *
@@ -934,26 +934,21 @@ public interface Server extends PluginMessageRecipient {
     CommandMap getCommandMap();
     // Paper end
 
-    public class Spigot
-    {
+    class Spigot {
         @Deprecated
-        public org.bukkit.configuration.file.YamlConfiguration getConfig()
-        {
-            throw new UnsupportedOperationException( "Not supported yet." );
-        }
-
-        public org.bukkit.configuration.file.YamlConfiguration getBukkitConfig()
-        {
-            throw new UnsupportedOperationException( "Not supported yet." );
-        }
-
-        public org.bukkit.configuration.file.YamlConfiguration getSpigotConfig()
-        {
+        public org.bukkit.configuration.file.YamlConfiguration getConfig() {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
-        public org.bukkit.configuration.file.YamlConfiguration getPaperSpigotConfig()
-        {
+        public org.bukkit.configuration.file.YamlConfiguration getBukkitConfig() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public org.bukkit.configuration.file.YamlConfiguration getSpigotConfig() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public org.bukkit.configuration.file.YamlConfiguration getPaperSpigotConfig() {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
@@ -983,9 +978,8 @@ public interface Server extends PluginMessageRecipient {
         }
 
         // PaperSpigot start - Add getTPS method
-        public double[] getTPS()
-        {
-            throw new UnsupportedOperationException( "Not supported yet." );
+        public double[] getTPS() {
+            throw new UnsupportedOperationException("Not supported yet.");
         }
         // PaperSpigot end
     }

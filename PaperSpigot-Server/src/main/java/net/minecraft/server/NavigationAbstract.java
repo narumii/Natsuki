@@ -55,7 +55,7 @@ public abstract class NavigationAbstract {
     }
 
     public boolean a(double d0, double d1, double d2, double d3) {
-        PathEntity pathentity = this.a(MathHelper.floor(d0), (int) d1,(int) Math.floor(d2));
+        PathEntity pathentity = this.a(MathHelper.floor(d0), (int) d1, (int) Math.floor(d2));
 
         return this.a(pathentity, d3);
     }
@@ -98,6 +98,7 @@ public abstract class NavigationAbstract {
             return false;
         }
     }
+
     private int lastFailure = 0;
     private int pathfindFailures = 0;
     // PaperSpigot end
@@ -140,7 +141,7 @@ public abstract class NavigationAbstract {
                 vec3d = this.c();
                 Vec3D vec3d1 = this.d.a(this.b, this.d.e());
 
-                if (vec3d.b > vec3d1.b && !this.b.onGround &&(int) Math.floor(vec3d.a) ==(int) Math.floor(vec3d1.a) &&(int) Math.floor(vec3d.c) ==(int) Math.floor(vec3d1.c)) {
+                if (vec3d.b > vec3d1.b && !this.b.onGround && (int) Math.floor(vec3d.a) == (int) Math.floor(vec3d1.a) && (int) Math.floor(vec3d.c) == (int) Math.floor(vec3d1.c)) {
                     this.d.c(this.d.e() + 1);
                 }
             }
@@ -220,7 +221,8 @@ public abstract class NavigationAbstract {
     }
 
     public void n() {
-        this.pathfindFailures = 0; this.lastFailure = 0; // PaperSpigot - Pathfinding optimizations
+        this.pathfindFailures = 0;
+        this.lastFailure = 0; // PaperSpigot - Pathfinding optimizations
         this.d = null;
     }
 
@@ -232,7 +234,8 @@ public abstract class NavigationAbstract {
         return this.b.V() || this.b.ab();
     }
 
-    protected void d() {}
+    protected void d() {
+    }
 
     protected abstract boolean a(Vec3D vec3d, Vec3D vec3d1, int i, int j, int k);
 }

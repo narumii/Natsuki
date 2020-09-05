@@ -35,7 +35,7 @@ public class WorldTimingsHandler {
     public final Timing syncChunkLoadPostTimer;
 
     public WorldTimingsHandler(World server) {
-        String name = server.worldData.getName() +" - ";
+        String name = server.worldData.getName() + " - ";
 
         mobSpawn = Timings.ofSafe(name + "mobSpawn");
         doChunkUnload = Timings.ofSafe(name + "doChunkUnload");

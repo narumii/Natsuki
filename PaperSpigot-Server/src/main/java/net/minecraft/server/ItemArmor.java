@@ -11,8 +11,8 @@ import java.util.List;
 
 public class ItemArmor extends Item {
 
-    private static final int[] k = new int[] { 11, 16, 15, 13};
-    public static final String[] a = new String[] { "minecraft:items/empty_armor_slot_helmet", "minecraft:items/empty_armor_slot_chestplate", "minecraft:items/empty_armor_slot_leggings", "minecraft:items/empty_armor_slot_boots"};
+    private static final int[] k = new int[]{11, 16, 15, 13};
+    public static final String[] a = new String[]{"minecraft:items/empty_armor_slot_helmet", "minecraft:items/empty_armor_slot_chestplate", "minecraft:items/empty_armor_slot_leggings", "minecraft:items/empty_armor_slot_boots"};
     private static final IDispenseBehavior l = new DispenseBehaviorItem() {
         protected ItemStack b(ISourceBlock isourceblock, ItemStack itemstack) {
             BlockPosition blockposition = isourceblock.getBlockPosition().shift(BlockDispenser.b(isourceblock.f()));
@@ -47,7 +47,7 @@ public class ItemArmor extends Item {
                     itemstack.count++;
                     // Chain to handler for new item
                     ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                    IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+                    IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
                     if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                         idispensebehavior.a(isourceblock, eventStack);
                         return itemstack;
@@ -93,7 +93,7 @@ public class ItemArmor extends Item {
     }
 
     public boolean d_(ItemStack itemstack) {
-        return this.m != ItemArmor.EnumArmorMaterial.LEATHER ? false : (!itemstack.hasTag() ? false : (!itemstack.getTag().hasKeyOfType("display", 10) ? false : itemstack.getTag().getCompound("display").hasKeyOfType("color", 3)));
+        return this.m == EnumArmorMaterial.LEATHER && (itemstack.hasTag() && (itemstack.getTag().hasKeyOfType("display", 10) && itemstack.getTag().getCompound("display").hasKeyOfType("color", 3)));
     }
 
     public int b(ItemStack itemstack) {
@@ -151,7 +151,7 @@ public class ItemArmor extends Item {
     }
 
     public boolean a(ItemStack itemstack, ItemStack itemstack1) {
-        return this.m.b() == itemstack1.getItem() ? true : super.a(itemstack, itemstack1);
+        return this.m.b() == itemstack1.getItem() || super.a(itemstack, itemstack1);
     }
 
     public ItemStack a(ItemStack itemstack, World world, EntityHuman entityhuman) {
@@ -166,16 +166,16 @@ public class ItemArmor extends Item {
         return itemstack;
     }
 
-    public static enum EnumArmorMaterial {
+    public enum EnumArmorMaterial {
 
-        LEATHER("leather", 5, new int[] { 1, 3, 2, 1}, 15), CHAIN("chainmail", 15, new int[] { 2, 5, 4, 1}, 12), IRON("iron", 15, new int[] { 2, 6, 5, 2}, 9), GOLD("gold", 7, new int[] { 2, 5, 3, 1}, 25), DIAMOND("diamond", 33, new int[] { 3, 8, 6, 3}, 10);
+        LEATHER("leather", 5, new int[]{1, 3, 2, 1}, 15), CHAIN("chainmail", 15, new int[]{2, 5, 4, 1}, 12), IRON("iron", 15, new int[]{2, 6, 5, 2}, 9), GOLD("gold", 7, new int[]{2, 5, 3, 1}, 25), DIAMOND("diamond", 33, new int[]{3, 8, 6, 3}, 10);
 
         private final String f;
         private final int g;
         private final int[] h;
         private final int i;
 
-        private EnumArmorMaterial(String s, int i, int[] aint, int j) {
+        EnumArmorMaterial(String s, int i, int[] aint, int j) {
             this.f = s;
             this.g = i;
             this.h = aint;

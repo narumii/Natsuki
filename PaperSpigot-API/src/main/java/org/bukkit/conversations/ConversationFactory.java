@@ -35,8 +35,7 @@ public class ConversationFactory {
      *
      * @param plugin The plugin that owns the factory.
      */
-    public ConversationFactory(Plugin plugin)
-    {
+    public ConversationFactory(Plugin plugin) {
         this.plugin = plugin;
         isModal = true;
         localEchoEnabled = true;
@@ -58,8 +57,7 @@ public class ConversationFactory {
      * @param modal The modality of all conversations to be created.
      * @return This object.
      */
-    public ConversationFactory withModality(boolean modal)
-    {
+    public ConversationFactory withModality(boolean modal) {
         isModal = modal;
         return this;
     }
@@ -122,7 +120,7 @@ public class ConversationFactory {
      * sessionData map.
      *
      * @param initialSessionData The conversation context's initial
-     *     sessionData.
+     *                           sessionData.
      * @return This object.
      */
     public ConversationFactory withInitialSessionData(Map<Object, Object> initialSessionData) {
@@ -158,7 +156,7 @@ public class ConversationFactory {
      * {@link Conversable} objects.
      *
      * @param playerOnlyMessage The message to return to a non-play in lieu of
-     *     starting a conversation.
+     *                          starting a conversation.
      * @return This object.
      */
     public ConversationFactory thatExcludesNonPlayersWithMessage(String playerOnlyMessage) {

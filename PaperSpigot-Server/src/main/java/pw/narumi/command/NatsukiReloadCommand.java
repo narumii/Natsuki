@@ -17,7 +17,7 @@ public class NatsukiReloadCommand extends Command {
             Natsuki.getInstance().reload();
             sender.sendMessage(" §8» §7Reloaded Natsuki");
             return false;
-        }else {
+        } else {
             sender.sendMessage(" §8» §7Command only for console");
         }
         return false;

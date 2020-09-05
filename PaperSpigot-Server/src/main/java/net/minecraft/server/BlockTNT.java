@@ -45,7 +45,7 @@ public class BlockTNT extends Block {
 
     public void a(World world, BlockPosition blockposition, IBlockData iblockdata, EntityLiving entityliving) {
         if (!world.isClientSide) {
-            if (((Boolean) iblockdata.get(BlockTNT.EXPLODE)).booleanValue()) {
+            if (iblockdata.get(BlockTNT.EXPLODE).booleanValue()) {
                 org.bukkit.Location loc = new org.bukkit.Location(world.getWorld(), blockposition.getX(), blockposition.getY(), blockposition.getZ()); // PaperSpigot
                 // PaperSpigot start - Fix cannons
                 double y = blockposition.getY();
@@ -106,10 +106,10 @@ public class BlockTNT extends Block {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Boolean) iblockdata.get(BlockTNT.EXPLODE)).booleanValue() ? 1 : 0;
+        return iblockdata.get(BlockTNT.EXPLODE).booleanValue() ? 1 : 0;
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockTNT.EXPLODE});
+        return new BlockStateList(this, BlockTNT.EXPLODE);
     }
 }

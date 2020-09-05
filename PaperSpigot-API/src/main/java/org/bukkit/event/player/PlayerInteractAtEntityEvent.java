@@ -17,7 +17,7 @@ public class PlayerInteractAtEntityEvent extends PlayerInteractEntityEvent {
         super(who, clickedEntity);
         this.position = position;
     }
-    
+
     public Vector getClickedPosition() {
         return position.clone();
     }

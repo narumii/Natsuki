@@ -69,7 +69,7 @@ public class ShapedRecipe implements Recipe {
     /**
      * Sets the material that a character in the recipe shape refers to.
      *
-     * @param key The character that represents the ingredient in the shape.
+     * @param key        The character that represents the ingredient in the shape.
      * @param ingredient The ingredient.
      * @return The changed recipe, so you can chain calls.
      */
@@ -80,7 +80,7 @@ public class ShapedRecipe implements Recipe {
     /**
      * Sets the material that a character in the recipe shape refers to.
      *
-     * @param key The character that represents the ingredient in the shape.
+     * @param key        The character that represents the ingredient in the shape.
      * @param ingredient The ingredient.
      * @return The changed recipe, so you can chain calls.
      */
@@ -91,9 +91,9 @@ public class ShapedRecipe implements Recipe {
     /**
      * Sets the material that a character in the recipe shape refers to.
      *
-     * @param key The character that represents the ingredient in the shape.
+     * @param key        The character that represents the ingredient in the shape.
      * @param ingredient The ingredient.
-     * @param raw The raw material data as an integer.
+     * @param raw        The raw material data as an integer.
      * @return The changed recipe, so you can chain calls.
      * @deprecated Magic value
      */

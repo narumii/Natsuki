@@ -51,9 +51,9 @@ public class EntityTrackerEntry {
         this.b = i;
         this.c = j;
         this.u = flag;
-        this.xLoc =(int) Math.floor(entity.locX * 32.0D);
-        this.yLoc =(int) Math.floor(entity.locY * 32.0D);
-        this.zLoc =(int) Math.floor(entity.locZ * 32.0D);
+        this.xLoc = (int) Math.floor(entity.locX * 32.0D);
+        this.yLoc = (int) Math.floor(entity.locY * 32.0D);
+        this.zLoc = (int) Math.floor(entity.locZ * 32.0D);
         this.yRot = MathHelper.d(entity.yaw * 256.0F / 360.0F);
         this.xRot = MathHelper.d(entity.pitch * 256.0F / 360.0F);
         this.i = MathHelper.d(entity.getHeadRotation() * 256.0F / 360.0F);
@@ -114,9 +114,9 @@ public class EntityTrackerEntry {
 
             if (this.tracker.vehicle == null) {
                 ++this.v;
-                i =(int) Math.floor(this.tracker.locX * 32.0D);
-                j =(int) Math.floor(this.tracker.locY * 32.0D);
-                int k =(int) Math.floor(this.tracker.locZ * 32.0D);
+                i = (int) Math.floor(this.tracker.locX * 32.0D);
+                j = (int) Math.floor(this.tracker.locY * 32.0D);
+                int k = (int) Math.floor(this.tracker.locZ * 32.0D);
                 int l = MathHelper.d(this.tracker.yaw * 256.0F / 360.0F);
                 int i1 = MathHelper.d(this.tracker.pitch * 256.0F / 360.0F);
                 int j1 = i - this.xLoc;
@@ -226,9 +226,9 @@ public class EntityTrackerEntry {
                     this.xRot = j;
                 }
 
-                this.xLoc =(int) Math.floor(this.tracker.locX * 32.0D);
-                this.yLoc =(int) Math.floor(this.tracker.locY * 32.0D);
-                this.zLoc =(int) Math.floor(this.tracker.locZ * 32.0D);
+                this.xLoc = (int) Math.floor(this.tracker.locX * 32.0D);
+                this.yLoc = (int) Math.floor(this.tracker.locY * 32.0D);
+                this.zLoc = (int) Math.floor(this.tracker.locZ * 32.0D);
                 this.b();
                 this.x = true;
             }
@@ -334,7 +334,7 @@ public class EntityTrackerEntry {
     }
 
     public void updatePlayer(EntityPlayer entityplayer) {
-        org.spigotmc.AsyncCatcher.catchOp( "player tracker update"); // Spigot
+        org.spigotmc.AsyncCatcher.catchOp("player tracker update"); // Spigot
         if (entityplayer != this.tracker) {
             if (this.c(entityplayer)) {
                 if (!this.trackedPlayers.contains(entityplayer) && (this.e(entityplayer) || this.tracker.attachedToPlayer)) {
@@ -565,7 +565,7 @@ public class EntityTrackerEntry {
     }
 
     public void clear(EntityPlayer entityplayer) {
-        org.spigotmc.AsyncCatcher.catchOp( "player tracker clear"); // Spigot
+        org.spigotmc.AsyncCatcher.catchOp("player tracker clear"); // Spigot
         if (this.trackedPlayers.contains(entityplayer)) {
             this.trackedPlayers.remove(entityplayer);
             entityplayer.d(this.tracker);

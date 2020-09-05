@@ -71,7 +71,7 @@ public class EntitySlice<T> extends AbstractSet<T> {
     }
 
     private void a(T t0, Class<?> oclass) {
-        List list = (List) this.b.get(oclass);
+        List list = this.b.get(oclass);
 
         if (list == null) {
             this.b.put(oclass, Lists.newArrayList(t0));
@@ -90,7 +90,7 @@ public class EntitySlice<T> extends AbstractSet<T> {
             Class oclass = (Class) iterator.next();
 
             if (oclass.isAssignableFrom(object1.getClass())) {
-                List list = (List) this.b.get(oclass);
+                List list = this.b.get(oclass);
 
                 if (list != null && list.remove(object1)) {
                     flag = true;
@@ -108,7 +108,7 @@ public class EntitySlice<T> extends AbstractSet<T> {
     public <S> Iterable<S> c(final Class<S> oclass) {
         return new Iterable() {
             public Iterator<S> iterator() {
-                List list = (List) EntitySlice.this.b.get(EntitySlice.this.b(oclass));
+                List list = EntitySlice.this.b.get(EntitySlice.this.b(oclass));
 
                 if (list == null) {
                     return Iterators.emptyIterator();
@@ -122,7 +122,7 @@ public class EntitySlice<T> extends AbstractSet<T> {
     }
 
     public Iterator<T> iterator() {
-        return this.e.isEmpty() ? Iterators.<T>emptyIterator() : Iterators.unmodifiableIterator(this.e.iterator());
+        return this.e.isEmpty() ? Iterators.emptyIterator() : Iterators.unmodifiableIterator(this.e.iterator());
     }
 
     public int size() {

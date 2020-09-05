@@ -52,7 +52,7 @@ public class EntityWitherSkull extends EntityFireball {
                 }
 
                 if (didDamage && movingobjectposition.entity instanceof EntityLiving) {
-                // Spigot end
+                    // Spigot end
                     byte b0 = 0;
 
                     if (this.world.getDifficulty() == EnumDifficulty.NORMAL) {

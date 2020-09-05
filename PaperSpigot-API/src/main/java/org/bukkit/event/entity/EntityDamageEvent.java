@@ -79,13 +79,13 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
     /**
      * Sets the damage for the specified modifier.
      *
-     * @param type the damage modifier
+     * @param type   the damage modifier
      * @param damage the scalar value of the damage's modifier
-     * @see #getFinalDamage()
-     * @throws IllegalArgumentException if type is null
+     * @throws IllegalArgumentException      if type is null
      * @throws UnsupportedOperationException if the caller does not support
-     *     the particular DamageModifier, or to rephrase, when {@link
-     *     #isApplicable(DamageModifier)} returns false
+     *                                       the particular DamageModifier, or to rephrase, when {@link
+     *                                       #isApplicable(DamageModifier)} returns false
+     * @see #getFinalDamage()
      */
     public void setDamage(DamageModifier type, double damage) throws IllegalArgumentException, UnsupportedOperationException {
         if (!modifiers.containsKey(type)) {
@@ -152,7 +152,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
      * This method exists for legacy reasons to provide backwards
      * compatibility. It will not exist at runtime and should not be used
      * under any circumstances.
-     * 
+     *
      * @return the (rounded) damage
      */
     @Deprecated
@@ -201,7 +201,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
      * This method exists for legacy reasons to provide backwards
      * compatibility. It will not exist at runtime and should not be used
      * under any circumstances.
-     * 
+     *
      * @param damage the new damage value
      */
     @Deprecated
@@ -258,9 +258,9 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
          * This represents the damage reduction caused by the combination of:
          * <ul>
          * <li>
-         *     Armor enchantments
+         * Armor enchantments
          * </li><li>
-         *     Witch's potion resistance
+         * Witch's potion resistance
          * </li>
          * </ul>
          */

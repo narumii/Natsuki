@@ -27,10 +27,10 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
         super.b(world, blockposition, iblockdata, random);
         if (world.getLightLevel(blockposition.up()) >= 9) {
-            int i = ((Integer) iblockdata.get(BlockCrops.AGE)).intValue();
+            int i = iblockdata.get(BlockCrops.AGE).intValue();
 
             if (i < 7) {
-                float f = a((Block) this, world, blockposition);
+                float f = a(this, world, blockposition);
 
                 if (random.nextInt((int) (world.growthOdds / world.spigotConfig.wheatModifier * (25.0F / f)) + 1) == 0) { // Spigot                    // CraftBukkit start
                     IBlockData data = iblockdata.set(AGE, Integer.valueOf(i + 1));
@@ -43,7 +43,7 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement 
     }
 
     public void g(World world, BlockPosition blockposition, IBlockData iblockdata) {
-        int i = ((Integer) iblockdata.get(BlockCrops.AGE)).intValue() + MathHelper.nextInt(world.random, 2, 5);
+        int i = iblockdata.get(BlockCrops.AGE).intValue() + MathHelper.nextInt(world.random, 2, 5);
 
         if (i > 7) {
             i = 7;
@@ -66,7 +66,7 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement 
 
                 if (iblockdata.getBlock() == Blocks.FARMLAND) {
                     f1 = 1.0F;
-                    if (((Integer) iblockdata.get(BlockSoil.MOISTURE)).intValue() > 0) {
+                    if (iblockdata.get(BlockSoil.MOISTURE).intValue() > 0) {
                         f1 = 3.0F;
                     }
                 }
@@ -114,7 +114,7 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement 
     public void dropNaturally(World world, BlockPosition blockposition, IBlockData iblockdata, float f, int i) {
         super.dropNaturally(world, blockposition, iblockdata, f, 0);
         if (!world.isClientSide) {
-            int j = ((Integer) iblockdata.get(BlockCrops.AGE)).intValue();
+            int j = iblockdata.get(BlockCrops.AGE).intValue();
 
             if (j >= 7) {
                 int k = 3 + i;
@@ -130,11 +130,11 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement 
     }
 
     public Item getDropType(IBlockData iblockdata, Random random, int i) {
-        return ((Integer) iblockdata.get(BlockCrops.AGE)).intValue() == 7 ? this.n() : this.l();
+        return iblockdata.get(BlockCrops.AGE).intValue() == 7 ? this.n() : this.l();
     }
 
     public boolean a(World world, BlockPosition blockposition, IBlockData iblockdata, boolean flag) {
-        return ((Integer) iblockdata.get(BlockCrops.AGE)).intValue() < 7;
+        return iblockdata.get(BlockCrops.AGE).intValue() < 7;
     }
 
     public boolean a(World world, Random random, BlockPosition blockposition, IBlockData iblockdata) {
@@ -150,10 +150,10 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement 
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockCrops.AGE)).intValue();
+        return iblockdata.get(BlockCrops.AGE).intValue();
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockCrops.AGE});
+        return new BlockStateList(this, BlockCrops.AGE);
     }
 }

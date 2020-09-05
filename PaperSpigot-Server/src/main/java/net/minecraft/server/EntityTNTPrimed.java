@@ -18,7 +18,7 @@ public class EntityTNTPrimed extends Entity {
     public EntityTNTPrimed(org.bukkit.Location loc, World world) {
         super(world);
         sourceLoc = loc;
-    // PaperSpigot end
+        // PaperSpigot end
         this.k = true;
         this.setSize(0.98F, 0.98F);
         this.loadChunks = world.paperSpigotConfig.loadUnloadedTNTEntities; // PaperSpigot
@@ -40,7 +40,8 @@ public class EntityTNTPrimed extends Entity {
         if (world.paperSpigotConfig.fixCannons) this.motX = this.motZ = 0.0F; // PaperSpigot - Fix cannons
     }
 
-    protected void h() {}
+    protected void h() {
+    }
 
     protected boolean s_() {
         return false;
@@ -51,7 +52,9 @@ public class EntityTNTPrimed extends Entity {
     }
 
     public void t_() {
-        if (world.spigotConfig.currentPrimedTnt++ > world.spigotConfig.maxTntTicksPerTick) { return; } // Spigot
+        if (world.spigotConfig.currentPrimedTnt++ > world.spigotConfig.maxTntTicksPerTick) {
+            return;
+        } // Spigot
         this.lastX = this.locX;
         this.lastY = this.locY;
         this.lastZ = this.locZ;

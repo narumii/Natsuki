@@ -55,7 +55,7 @@ public class SecondaryWorldServer extends WorldServer {
             this.worldMaps.a(s, this.villages);
         } else {
             this.villages = persistentvillage;
-            this.villages.a((World) this);
+            this.villages.a(this);
         }
 
         return super.b(); // CraftBukkit

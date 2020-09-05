@@ -200,12 +200,12 @@ public class RegionFile {
                 if (l1 != -1) {
                     for (j2 = l1; j2 < this.f.size(); ++j2) {
                         if (i2 != 0) {
-                            if (((Boolean) this.f.get(j2)).booleanValue()) {
+                            if (this.f.get(j2).booleanValue()) {
                                 ++i2;
                             } else {
                                 i2 = 0;
                             }
-                        } else if (((Boolean) this.f.get(j2)).booleanValue()) {
+                        } else if (this.f.get(j2).booleanValue()) {
                             l1 = j2;
                             i2 = 1;
                         }

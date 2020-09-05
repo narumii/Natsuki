@@ -15,7 +15,7 @@ public class ContainerMerchant extends Container {
     @Override
     public CraftInventoryView getBukkitView() {
         if (bukkitEntity == null) {
-            bukkitEntity = new CraftInventoryView(this.player.player.getBukkitEntity(), new org.bukkit.craftbukkit.inventory.CraftInventoryMerchant((InventoryMerchant) f), this);
+            bukkitEntity = new CraftInventoryView(this.player.player.getBukkitEntity(), new org.bukkit.craftbukkit.inventory.CraftInventoryMerchant(f), this);
         }
         return bukkitEntity;
     }
@@ -27,7 +27,7 @@ public class ContainerMerchant extends Container {
         this.f = new InventoryMerchant(playerinventory.player, imerchant);
         this.a(new Slot(this.f, 0, 36, 53));
         this.a(new Slot(this.f, 1, 62, 53));
-        this.a((Slot) (new SlotMerchantResult(playerinventory.player, imerchant, this.f, 2, 120, 53)));
+        this.a(new SlotMerchantResult(playerinventory.player, imerchant, this.f, 2, 120, 53));
         this.player = playerinventory; // CraftBukkit - save player
 
         int i;
@@ -71,7 +71,7 @@ public class ContainerMerchant extends Container {
 
     public ItemStack b(EntityHuman entityhuman, int i) {
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.c.get(i);
+        Slot slot = this.c.get(i);
 
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
@@ -96,7 +96,7 @@ public class ContainerMerchant extends Container {
             }
 
             if (itemstack1.count == 0) {
-                slot.set((ItemStack) null);
+                slot.set(null);
             } else {
                 slot.f();
             }

@@ -70,11 +70,11 @@ class CraftMetaBookSigned extends CraftMetaBook implements BookMeta {
             NBTTagList list = new NBTTagList();
             for (IChatBaseComponent page : pages) {
                 list.add(new NBTTagString(
-                    ChatSerializer.a(page)
+                        ChatSerializer.a(page)
                 ));
             }
             itemData.set(BOOK_PAGES.NBT, list);
-        }        
+        }
         itemData.setBoolean(RESOLVED.NBT, true);
 
         if (generation != null) {
@@ -92,11 +92,11 @@ class CraftMetaBookSigned extends CraftMetaBook implements BookMeta {
     @Override
     boolean applicableTo(Material type) {
         switch (type) {
-        case WRITTEN_BOOK:
-        case BOOK_AND_QUILL:
-            return true;
-        default:
-            return false;
+            case WRITTEN_BOOK:
+            case BOOK_AND_QUILL:
+                return true;
+            default:
+                return false;
         }
     }
 

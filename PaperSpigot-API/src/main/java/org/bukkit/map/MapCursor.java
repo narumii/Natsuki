@@ -11,11 +11,11 @@ public final class MapCursor {
     /**
      * Initialize the map cursor.
      *
-     * @param x The x coordinate, from -128 to 127.
-     * @param y The y coordinate, from -128 to 127.
+     * @param x         The x coordinate, from -128 to 127.
+     * @param y         The y coordinate, from -128 to 127.
      * @param direction The facing of the cursor, from 0 to 15.
-     * @param type The type (color/style) of the map cursor.
-     * @param visible Whether the cursor is visible by default.
+     * @param type      The type (color/style) of the map cursor.
+     * @param visible   Whether the cursor is visible by default.
      * @deprecated Magic value
      */
     @Deprecated
@@ -160,13 +160,12 @@ public final class MapCursor {
 
         private byte value;
 
-        private Type(int value) {
+        Type(int value) {
             this.value = (byte) value;
         }
 
         /**
-         *
-         * @return the value 
+         * @return the value
          * @deprecated Magic value
          */
         @Deprecated
@@ -175,7 +174,6 @@ public final class MapCursor {
         }
 
         /**
-         *
          * @param value the value
          * @return the matching type
          * @deprecated Magic value

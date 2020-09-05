@@ -16,7 +16,8 @@ public class PacketPlayInBlockPlace implements Packet<PacketListenerPlayIn> {
 
     public long timestamp; // CraftBukkit
 
-    public PacketPlayInBlockPlace() {}
+    public PacketPlayInBlockPlace() {
+    }
 
     public PacketPlayInBlockPlace(ItemStack itemstack) {
         this(PacketPlayInBlockPlace.a, 255, itemstack, 0.0F, 0.0F, 0.0F);

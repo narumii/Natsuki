@@ -26,7 +26,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
     }
 
     public CraftScoreboard getNewScoreboard() {
-        org.spigotmc.AsyncCatcher.catchOp( "scoreboard creation"); // Spigot
+        org.spigotmc.AsyncCatcher.catchOp("scoreboard creation"); // Spigot
         CraftScoreboard scoreboard = new CraftScoreboard(new ScoreboardServer(server));
         scoreboards.add(scoreboard);
         return scoreboard;
@@ -35,7 +35,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
     // CraftBukkit method
     public CraftScoreboard getPlayerBoard(CraftPlayer player) {
         CraftScoreboard board = playerBoards.get(player);
-        return (CraftScoreboard) (board == null ? getMainScoreboard() : board);
+        return board == null ? getMainScoreboard() : board;
     }
 
     // CraftBukkit method
@@ -54,7 +54,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
         if (scoreboard == mainScoreboard) {
             playerBoards.remove(player);
         } else {
-            playerBoards.put(player, (CraftScoreboard) scoreboard);
+            playerBoards.put(player, scoreboard);
         }
 
         // Old objective tracking
@@ -87,7 +87,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
     public Collection<ScoreboardScore> getScoreboardScores(IScoreboardCriteria criteria, String name, Collection<ScoreboardScore> collection) {
         for (CraftScoreboard scoreboard : scoreboards) {
             Scoreboard board = scoreboard.board;
-            for (ScoreboardObjective objective : (Iterable<ScoreboardObjective>) board.getObjectivesForCriteria(criteria)) {
+            for (ScoreboardObjective objective : board.getObjectivesForCriteria(criteria)) {
                 collection.add(board.getPlayerScoreForObjective(name, objective));
             }
         }

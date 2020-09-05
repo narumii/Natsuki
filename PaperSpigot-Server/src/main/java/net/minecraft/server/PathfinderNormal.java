@@ -8,7 +8,8 @@ public class PathfinderNormal extends PathfinderAbstract {
     private boolean i;
     private boolean j;
 
-    public PathfinderNormal() {}
+    public PathfinderNormal() {
+    }
 
     public void a(IBlockAccess iblockaccess, Entity entity) {
         super.a(iblockaccess, entity);
@@ -25,23 +26,23 @@ public class PathfinderNormal extends PathfinderAbstract {
 
         if (this.i && entity.V()) {
             i = (int) entity.getBoundingBox().b;
-            BlockPosition.MutableBlockPosition blockposition_mutableblockposition = new BlockPosition.MutableBlockPosition(MathHelper.floor(entity.locX), i,(int) Math.floor(entity.locZ));
+            BlockPosition.MutableBlockPosition blockposition_mutableblockposition = new BlockPosition.MutableBlockPosition(MathHelper.floor(entity.locX), i, (int) Math.floor(entity.locZ));
 
             for (Block block = this.a.getType(blockposition_mutableblockposition).getBlock(); block == Blocks.FLOWING_WATER || block == Blocks.WATER; block = this.a.getType(blockposition_mutableblockposition).getBlock()) {
                 ++i;
-                blockposition_mutableblockposition.c(MathHelper.floor(entity.locX), i,(int) Math.floor(entity.locZ));
+                blockposition_mutableblockposition.c(MathHelper.floor(entity.locX), i, (int) Math.floor(entity.locZ));
             }
 
             this.h = false;
         } else {
-            i =(int) Math.floor(entity.getBoundingBox().b + 0.5D);
+            i = (int) Math.floor(entity.getBoundingBox().b + 0.5D);
         }
 
-        return this.a(MathHelper.floor(entity.getBoundingBox().a), i,(int) Math.floor(entity.getBoundingBox().c));
+        return this.a(MathHelper.floor(entity.getBoundingBox().a), i, (int) Math.floor(entity.getBoundingBox().c));
     }
 
     public PathPoint a(Entity entity, double d0, double d1, double d2) {
-        return this.a(MathHelper.floor(d0 - (double) (entity.width / 2.0F)),(int) Math.floor(d1),(int) Math.floor(d2 - (double) (entity.width / 2.0F)));
+        return this.a(MathHelper.floor(d0 - (double) (entity.width / 2.0F)), (int) Math.floor(d1), (int) Math.floor(d2 - (double) (entity.width / 2.0F)));
     }
 
     public int a(PathPoint[] apathpoint, Entity entity, PathPoint pathpoint, PathPoint pathpoint1, float f) {

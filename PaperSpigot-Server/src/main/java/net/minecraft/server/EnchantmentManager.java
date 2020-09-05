@@ -8,10 +8,10 @@ import java.util.*;
 public class EnchantmentManager {
 
     private static final Random a = new Random();
-    private static final EnchantmentManager.EnchantmentModifierProtection b = new EnchantmentManager.EnchantmentModifierProtection((EnchantmentManager.SyntheticClass_1) null);
-    private static final EnchantmentManager.EnchantmentModifierDamage c = new EnchantmentManager.EnchantmentModifierDamage((EnchantmentManager.SyntheticClass_1) null);
-    private static final EnchantmentManager.EnchantmentModifierThorns d = new EnchantmentManager.EnchantmentModifierThorns((EnchantmentManager.SyntheticClass_1) null);
-    private static final EnchantmentManager.EnchantmentModifierArthropods e = new EnchantmentManager.EnchantmentModifierArthropods((EnchantmentManager.SyntheticClass_1) null);
+    private static final EnchantmentManager.EnchantmentModifierProtection b = new EnchantmentManager.EnchantmentModifierProtection(null);
+    private static final EnchantmentManager.EnchantmentModifierDamage c = new EnchantmentManager.EnchantmentModifierDamage(null);
+    private static final EnchantmentManager.EnchantmentModifierThorns d = new EnchantmentManager.EnchantmentModifierThorns(null);
+    private static final EnchantmentManager.EnchantmentModifierArthropods e = new EnchantmentManager.EnchantmentModifierArthropods(null);
 
     public static int getEnchantmentLevel(int i, ItemStack itemstack) {
         if (itemstack == null) {
@@ -64,17 +64,17 @@ public class EnchantmentManager {
                 NBTTagCompound nbttagcompound = new NBTTagCompound();
 
                 nbttagcompound.setShort("id", (short) i);
-                nbttagcompound.setShort("lvl", (short) ((Integer) map.get(Integer.valueOf(i))).intValue());
+                nbttagcompound.setShort("lvl", (short) map.get(Integer.valueOf(i)).intValue());
                 nbttaglist.add(nbttagcompound);
                 if (itemstack.getItem() == Items.ENCHANTED_BOOK) {
-                    Items.ENCHANTED_BOOK.a(itemstack, new WeightedRandomEnchant(enchantment, ((Integer) map.get(Integer.valueOf(i))).intValue()));
+                    Items.ENCHANTED_BOOK.a(itemstack, new WeightedRandomEnchant(enchantment, map.get(Integer.valueOf(i)).intValue()));
                 }
             }
         }
 
         if (nbttaglist.size() > 0) {
             if (itemstack.getItem() != Items.ENCHANTED_BOOK) {
-                itemstack.a("ench", (NBTBase) nbttaglist);
+                itemstack.a("ench", nbttaglist);
             }
         } else if (itemstack.hasTag()) {
             itemstack.getTag().remove("ench");
@@ -136,7 +136,7 @@ public class EnchantmentManager {
     public static int a(ItemStack[] aitemstack, DamageSource damagesource) {
         EnchantmentManager.b.a = 0;
         EnchantmentManager.b.b = damagesource;
-        a((EnchantmentManager.EnchantmentModifier) EnchantmentManager.b, aitemstack);
+        a(EnchantmentManager.b, aitemstack);
         if (EnchantmentManager.b.a > 25) {
             EnchantmentManager.b.a = 25;
         } else if (EnchantmentManager.b.a < 0) {
@@ -149,7 +149,7 @@ public class EnchantmentManager {
     public static float a(ItemStack itemstack, EnumMonsterType enummonstertype) {
         EnchantmentManager.c.a = 0.0F;
         EnchantmentManager.c.b = enummonstertype;
-        a((EnchantmentManager.EnchantmentModifier) EnchantmentManager.c, itemstack);
+        a(EnchantmentManager.c, itemstack);
         return EnchantmentManager.c.a;
     }
 
@@ -157,11 +157,11 @@ public class EnchantmentManager {
         EnchantmentManager.d.b = entity;
         EnchantmentManager.d.a = entityliving;
         if (entityliving != null) {
-            a((EnchantmentManager.EnchantmentModifier) EnchantmentManager.d, entityliving.getEquipment());
+            a(EnchantmentManager.d, entityliving.getEquipment());
         }
 
         if (entity instanceof EntityHuman) {
-            a((EnchantmentManager.EnchantmentModifier) EnchantmentManager.d, entityliving.bA());
+            a(EnchantmentManager.d, entityliving.bA());
         }
 
     }
@@ -170,11 +170,11 @@ public class EnchantmentManager {
         EnchantmentManager.e.a = entityliving;
         EnchantmentManager.e.b = entity;
         if (entityliving != null) {
-            a((EnchantmentManager.EnchantmentModifier) EnchantmentManager.e, entityliving.getEquipment());
+            a(EnchantmentManager.e, entityliving.getEquipment());
         }
 
         if (entityliving instanceof EntityHuman) {
-            a((EnchantmentManager.EnchantmentModifier) EnchantmentManager.e, entityliving.bA());
+            a(EnchantmentManager.e, entityliving.bA());
         }
 
     }
@@ -372,14 +372,16 @@ public class EnchantmentManager {
         return hashmap;
     }
 
-    static class SyntheticClass_1 {    }
+    static class SyntheticClass_1 {
+    }
 
     static final class EnchantmentModifierArthropods implements EnchantmentManager.EnchantmentModifier {
 
         public EntityLiving a;
         public Entity b;
 
-        private EnchantmentModifierArthropods() {}
+        private EnchantmentModifierArthropods() {
+        }
 
         public void a(Enchantment enchantment, int i) {
             enchantment.a(this.a, this.b, i);
@@ -395,7 +397,8 @@ public class EnchantmentManager {
         public EntityLiving a;
         public Entity b;
 
-        private EnchantmentModifierThorns() {}
+        private EnchantmentModifierThorns() {
+        }
 
         public void a(Enchantment enchantment, int i) {
             enchantment.b(this.a, this.b, i);
@@ -411,7 +414,8 @@ public class EnchantmentManager {
         public float a;
         public EnumMonsterType b;
 
-        private EnchantmentModifierDamage() {}
+        private EnchantmentModifierDamage() {
+        }
 
         public void a(Enchantment enchantment, int i) {
             this.a += enchantment.a(i, this.b);
@@ -427,7 +431,8 @@ public class EnchantmentManager {
         public int a;
         public DamageSource b;
 
-        private EnchantmentModifierProtection() {}
+        private EnchantmentModifierProtection() {
+        }
 
         public void a(Enchantment enchantment, int i) {
             this.a += enchantment.a(i, this.b);

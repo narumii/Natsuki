@@ -118,7 +118,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
         CraftScoreboard scoreboard = checkState();
 
         ImmutableSet.Builder<String> entries = ImmutableSet.builder();
-        for (String playerName: team.getPlayerNameSet()){
+        for (String playerName : team.getPlayerNameSet()) {
             entries.add(playerName);
         }
         return entries.build();

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Config {
 
-    @SerializedName(value = "EnginePrefix")
+    @SerializedName(value = "Engine Prefix")
     public String PREFIX = "\u00267(*) \u0026f(o) \u0026dNatsuki \u0026f(o) \u00267(*)";
 
     @SerializedName(value = "Api")
@@ -17,7 +17,7 @@ public class Config {
     @SerializedName(value = "Connection")
     public final Connection CONNECTION = new Connection();
 
-    @SerializedName(value = "PacketSettings")
+    @SerializedName(value = "Packet Settings")
     public final PacketSettings PACKET = new PacketSettings();
 
     @SerializedName(value = "AntiBot")
@@ -39,18 +39,18 @@ public class Config {
     }};
 
     public class Api {
-        @SerializedName(value = "GeoLite2FilePath")
+        @SerializedName(value = "GeoLite2 File Path")
         public String getGeoLiteFile = "Natsuki/GeoLite2-Country.mmdb";
 
-        @SerializedName(value = "ProxyCheckApiKey")
+        @SerializedName(value = "Proxy Check Api Key")
         public String proxyCheckKey = "Your Key";
     }
 
     public class Connection {
-        @SerializedName(value = "MaxConnectionsPerAddress")
+        @SerializedName(value = "Max Connections Per Address")
         public int maxConnections = 2;
 
-        @SerializedName(value = "CheckPlayerAddress")
+        @SerializedName(value = "Check Player Address")
         public boolean addressCheck = true;
 
         @SerializedName(value = "Region")
@@ -60,82 +60,84 @@ public class Config {
             @SerializedName(value = "Check")
             public boolean check = true;
 
-            @SerializedName(value = "AllowedRegions")
+            @SerializedName(value = "Allowed Regions")
             public final List<String> allowedRegions = Arrays.asList("PL", "DE");
         }
     }
 
-
     public class PacketSettings {
-        @SerializedName(value = "CustomPacketDecoder")
+
+        @SerializedName(value = "Packets per second")
+        public int maxPackets = 1200;
+
+        @SerializedName(value = "Custom PacketDecoder")
         public boolean customDecoder = true;
 
-        @SerializedName(value = "NbtSettings")
+        @SerializedName(value = "NBT Settings")
         public final NBT NBT = new NBT();
 
         public class NBT {
-            @SerializedName(value = "SkipNbtReading")
+            @SerializedName(value = "Skip NBT Reading")
             public boolean skipNbt = true;
 
-            @SerializedName(value = "FixSkullExploit")
+            @SerializedName(value = "Fix Skull Exploit")
             public boolean fixSkull = true;
 
-            @SerializedName(value = "MaxNbtSize")
+            @SerializedName(value = "Max NBT Size")
             public int maxNbtSize = 10000;
         }
 
-        @SerializedName(value = "PayloadSettings")
+        @SerializedName(value = "Payload Settings")
         public final CustomPayload PAYLOAD = new CustomPayload();
 
         public class CustomPayload {
-            @SerializedName(value = "SkipPayloadReading")
+            @SerializedName(value = "Skip Payload Reading")
             public boolean skipPayload = true;
 
-            @SerializedName(value = "MaxChannelLength")
+            @SerializedName(value = "Max Channel Length")
             public int maxChannelLength = 64;
 
-            @SerializedName(value = "MaxDataLength")
+            @SerializedName(value = "Max Data Length")
             public int maxDataLength = 1000;
 
-            @SerializedName(value = "BlockChannels")
+            @SerializedName(value = "Block Channels")
             public boolean blockChannels;
 
-            @SerializedName(value = "BlockedChannels")
+            @SerializedName(value = "Blocked Channels")
             public final List<String> blockedChannels = Arrays.asList("FML", "WDL");
         }
     }
 
     public class AntiBot {
-        @SerializedName(value = "PingCheck")
+        @SerializedName(value = "Ping Check")
         public boolean pingCheck = true;
 
-        @SerializedName(value = "PingCpsTrigger")
+        @SerializedName(value = "Ping CPS Trigger")
         public int pingCheckTrigger = 15;
 
-        @SerializedName(value = "DoubleJoin")
+        @SerializedName(value = "Double Join")
         public boolean doubleJoin = true;
 
-        @SerializedName(value = "DoubleJoinCpsTrigger")
+        @SerializedName(value = "Double Join CPS Trigger")
         public int doubleJoinTrigger = 15;
     }
 
     public class Utils {
-        @SerializedName(value = "TickPerSecondCommandPermissionCheck")
+        @SerializedName(value = "TickPerSecondCommand Permission Check")
         public boolean tpsCommandPermission;
 
-        @SerializedName(value = "AntiRedStoneLagger")
+        @SerializedName(value = "AntiRedStone Lagger")
         public boolean antiRedStone = true;
 
-        @SerializedName(value = "PacketDebugger")
+        @SerializedName(value = "Packet Debugger")
         public boolean packetDebugger;
 
         @SerializedName(value = "Debug")
         public boolean debug;
     }
 
-    @SerializedName(value = "PacketLimiter")
+    @SerializedName(value = "Packet Limiter")
     public final HashMap<String, Integer> PACKETS = new HashMap<String, Integer>() {{
-        put("Name of packet / max packet per second (-1 = disable)", -1);
         put("PacketPlayInFlying", 200);
         put("PacketPlayInBlockDig", 100);
         put("PacketPlayInBlockPlace", 100);

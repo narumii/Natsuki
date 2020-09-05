@@ -21,7 +21,8 @@ public abstract class EntityProjectile extends Entity implements IProjectile {
         this.setSize(0.25F, 0.25F);
     }
 
-    protected void h() {}
+    protected void h() {
+    }
 
     public EntityProjectile(World world, EntityLiving entityliving) {
         super(world);

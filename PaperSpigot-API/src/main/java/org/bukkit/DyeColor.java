@@ -83,7 +83,7 @@ public enum DyeColor {
     private final static Map<Color, DyeColor> BY_COLOR;
     private final static Map<Color, DyeColor> BY_FIREWORK;
 
-    private DyeColor(final int woolData, final int dyeData, Color color, Color firework) {
+    DyeColor(final int woolData, final int dyeData, Color color, Color firework) {
         this.woolData = (byte) woolData;
         this.dyeData = (byte) dyeData;
         this.color = color;
@@ -94,10 +94,10 @@ public enum DyeColor {
      * Gets the associated (wool) data value representing this color.
      *
      * @return A byte containing the (wool) data value of this color
-     * @deprecated The name is misleading. It would imply {@link
-     *     Material#INK_SACK} but uses {@link Material#WOOL}
      * @see #getWoolData()
      * @see #getDyeData()
+     * @deprecated The name is misleading. It would imply {@link
+     * Material#INK_SACK} but uses {@link Material#WOOL}
      */
     @Deprecated
     public byte getData() {
@@ -151,11 +151,11 @@ public enum DyeColor {
      *
      * @param data (wool) data value to fetch
      * @return The {@link DyeColor} representing the given value, or null if
-     *     it doesn't exist
-     * @deprecated The name is misleading. It would imply {@link
-     *     Material#INK_SACK} but uses {@link Material#WOOL}
+     * it doesn't exist
      * @see #getByDyeData(byte)
      * @see #getByWoolData(byte)
+     * @deprecated The name is misleading. It would imply {@link
+     * Material#INK_SACK} but uses {@link Material#WOOL}
      */
     @Deprecated
     public static DyeColor getByData(final byte data) {
@@ -167,7 +167,7 @@ public enum DyeColor {
      *
      * @param data Wool data value to fetch
      * @return The {@link DyeColor} representing the given value, or null if
-     *     it doesn't exist
+     * it doesn't exist
      * @see #getByDyeData(byte)
      * @deprecated Magic value
      */
@@ -185,7 +185,7 @@ public enum DyeColor {
      *
      * @param data Dye data value to fetch
      * @return The {@link DyeColor} representing the given value, or null if
-     *     it doesn't exist
+     * it doesn't exist
      * @see #getByWoolData(byte)
      * @deprecated Magic value
      */
@@ -203,7 +203,7 @@ public enum DyeColor {
      *
      * @param color Color value to get the dye by
      * @return The {@link DyeColor} representing the given value, or null if
-     *     it doesn't exist
+     * it doesn't exist
      */
     public static DyeColor getByColor(final Color color) {
         return BY_COLOR.get(color);
@@ -214,7 +214,7 @@ public enum DyeColor {
      *
      * @param color Color value to get dye by
      * @return The {@link DyeColor} representing the given value, or null if
-     *     it doesn't exist
+     * it doesn't exist
      */
     public static DyeColor getByFireworkColor(final Color color) {
         return BY_FIREWORK.get(color);

@@ -37,7 +37,7 @@ public class EntityItemFrame extends EntityHanging {
                 }
                 // CraftBukkit end
                 this.a(damagesource.getEntity(), false);
-                this.setItem((ItemStack) null);
+                this.setItem(null);
             }
 
             return true;
@@ -170,7 +170,7 @@ public class EntityItemFrame extends EntityHanging {
             if (itemstack != null && !this.world.isClientSide) {
                 this.setItem(itemstack);
                 if (!entityhuman.abilities.canInstantlyBuild && --itemstack.count <= 0) {
-                    entityhuman.inventory.setItem(entityhuman.inventory.itemInHandIndex, (ItemStack) null);
+                    entityhuman.inventory.setItem(entityhuman.inventory.itemInHandIndex, null);
                 }
             }
         } else if (!this.world.isClientSide) {

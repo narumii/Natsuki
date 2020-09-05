@@ -25,7 +25,8 @@ public abstract class EntityFireball extends Entity {
         this.setSize(1.0F, 1.0F);
     }
 
-    protected void h() {}
+    protected void h() {
+    }
 
     public EntityFireball(World world, double d0, double d1, double d2, double d3, double d4, double d5) {
         super(world);
@@ -226,7 +227,7 @@ public abstract class EntityFireball extends Entity {
             this.motX = nbttaglist.d(0);
             this.motY = nbttaglist.d(1);
             this.motZ = nbttaglist.d(2);
-        // CraftBukkit end
+            // CraftBukkit end
         } else {
             this.die();
         }

@@ -32,7 +32,7 @@ import java.util.Map;
 
 /**
  * <p>Used as a basis for fast HashMap key comparisons for the Timing Map.</p>
- *
+ * <p>
  * This class uses interned strings giving us the ability to do an identity check instead of equals() on the strings
  */
 final class TimingIdentifier {
@@ -40,12 +40,12 @@ final class TimingIdentifier {
      * Holds all groups. Autoloads on request for a group by name.
      */
     static final Map<String, TimingGroup> GROUP_MAP = MRUMapCache.of(
-        LoadingMap.newIdentityHashMap(new Function<String, TimingGroup>() {
-            @Override
-            public TimingGroup apply(String group) {
-                return new TimingGroup(group);
-            }
-        }, 64)
+            LoadingMap.newIdentityHashMap(new Function<String, TimingGroup>() {
+                @Override
+                public TimingGroup apply(String group) {
+                    return new TimingGroup(group);
+                }
+            }, 64)
     );
     static final TimingGroup DEFAULT_GROUP = getGroup("Minecraft");
     final String group;

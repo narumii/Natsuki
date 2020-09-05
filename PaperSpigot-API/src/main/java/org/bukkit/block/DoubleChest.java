@@ -33,18 +33,18 @@ public class DoubleChest implements InventoryHolder {
     }
 
     public World getWorld() {
-        return ((Chest)getLeftSide()).getWorld();
+        return ((Chest) getLeftSide()).getWorld();
     }
 
     public double getX() {
-        return 0.5 * (((Chest)getLeftSide()).getX() + ((Chest)getRightSide()).getX());
+        return 0.5 * (((Chest) getLeftSide()).getX() + ((Chest) getRightSide()).getX());
     }
 
     public double getY() {
-        return 0.5 * (((Chest)getLeftSide()).getY() + ((Chest)getRightSide()).getY());
+        return 0.5 * (((Chest) getLeftSide()).getY() + ((Chest) getRightSide()).getY());
     }
 
     public double getZ() {
-        return 0.5 * (((Chest)getLeftSide()).getZ() + ((Chest)getRightSide()).getZ());
+        return 0.5 * (((Chest) getLeftSide()).getZ() + ((Chest) getRightSide()).getZ());
     }
 }

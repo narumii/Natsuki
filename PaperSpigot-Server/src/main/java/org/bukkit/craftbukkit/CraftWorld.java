@@ -116,9 +116,11 @@ public class CraftWorld implements World {
             }
         });
     }
+
     public void getChunkAtAsync(Block block, ChunkLoadCallback callback) {
         getChunkAtAsync(block.getX() >> 4, block.getZ() >> 4, callback);
     }
+
     public void getChunkAtAsync(Location location, ChunkLoadCallback callback) {
         getChunkAtAsync(location.getBlockX() >> 4, location.getBlockZ() >> 4, callback);
     }
@@ -169,7 +171,7 @@ public class CraftWorld implements World {
     }
 
     public boolean unloadChunkRequest(int x, int z, boolean safe) {
-        org.spigotmc.AsyncCatcher.catchOp( "chunk unload"); // Spigot
+        org.spigotmc.AsyncCatcher.catchOp("chunk unload"); // Spigot
         if (safe && isChunkInUse(x, z)) {
             return false;
         }
@@ -180,7 +182,7 @@ public class CraftWorld implements World {
     }
 
     public boolean unloadChunk(int x, int z, boolean save, boolean safe) {
-        org.spigotmc.AsyncCatcher.catchOp( "chunk unload"); // Spigot
+        org.spigotmc.AsyncCatcher.catchOp("chunk unload"); // Spigot
         if (safe && isChunkInUse(x, z)) {
             return false;
         }
@@ -253,7 +255,7 @@ public class CraftWorld implements World {
     }
 
     public boolean loadChunk(int x, int z, boolean generate) {
-        org.spigotmc.AsyncCatcher.catchOp( "chunk load"); // Spigot
+        org.spigotmc.AsyncCatcher.catchOp("chunk load"); // Spigot
         chunkLoadCount++;
         if (generate) {
             // Use the default variant of loadChunk when generate == true.
@@ -400,63 +402,63 @@ public class CraftWorld implements World {
     public boolean generateTree(Location loc, TreeType type) {
         net.minecraft.server.WorldGenerator gen;
         switch (type) {
-        case BIG_TREE:
-            gen = new WorldGenBigTree(true);
-            break;
-        case BIRCH:
-            gen = new WorldGenForest(true, false);
-            break;
-        case REDWOOD:
-            gen = new WorldGenTaiga2(true);
-            break;
-        case TALL_REDWOOD:
-            gen = new WorldGenTaiga1();
-            break;
-        case JUNGLE:
-            IBlockData iblockdata1 = Blocks.LOG.getBlockData().set(BlockLog1.VARIANT, BlockWood.EnumLogVariant.JUNGLE);
-            IBlockData iblockdata2 = Blocks.LEAVES.getBlockData().set(BlockLeaves1.VARIANT, BlockWood.EnumLogVariant.JUNGLE).set(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-            gen = new WorldGenJungleTree(true, 10, 20, iblockdata1, iblockdata2); // Magic values as in BlockSapling
-            break;
-        case SMALL_JUNGLE:
-            iblockdata1 = Blocks.LOG.getBlockData().set(BlockLog1.VARIANT, BlockWood.EnumLogVariant.JUNGLE);
-            iblockdata2 = Blocks.LEAVES.getBlockData().set(BlockLeaves1.VARIANT, BlockWood.EnumLogVariant.JUNGLE).set(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-            gen = new WorldGenTrees(true, 4 + rand.nextInt(7), iblockdata1, iblockdata2, false);
-            break;
-        case COCOA_TREE:
-            iblockdata1 = Blocks.LOG.getBlockData().set(BlockLog1.VARIANT, BlockWood.EnumLogVariant.JUNGLE);
-            iblockdata2 = Blocks.LEAVES.getBlockData().set(BlockLeaves1.VARIANT, BlockWood.EnumLogVariant.JUNGLE).set(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-            gen = new WorldGenTrees(true, 4 + rand.nextInt(7), iblockdata1, iblockdata2, true);
-            break;
-        case JUNGLE_BUSH:
-            iblockdata1 = Blocks.LOG.getBlockData().set(BlockLog1.VARIANT, BlockWood.EnumLogVariant.JUNGLE);
-            iblockdata2 = Blocks.LEAVES.getBlockData().set(BlockLeaves1.VARIANT, BlockWood.EnumLogVariant.OAK).set(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-            gen = new WorldGenGroundBush(iblockdata1, iblockdata2);
-            break;
-        case RED_MUSHROOM:
-            gen = new WorldGenHugeMushroom(Blocks.RED_MUSHROOM_BLOCK);
-            break;
-        case BROWN_MUSHROOM:
-            gen = new WorldGenHugeMushroom(Blocks.BROWN_MUSHROOM_BLOCK);
-            break;
-        case SWAMP:
-            gen = new WorldGenSwampTree();
-            break;
-        case ACACIA:
-            gen = new WorldGenAcaciaTree(true);
-            break;
-        case DARK_OAK:
-            gen = new WorldGenForestTree(true);
-            break;
-        case MEGA_REDWOOD:
-            gen = new WorldGenMegaTree(false, rand.nextBoolean());
-            break;
-        case TALL_BIRCH:
-            gen = new WorldGenForest(true, true);
-            break;
-        case TREE:
-        default:
-            gen = new WorldGenTrees(true);
-            break;
+            case BIG_TREE:
+                gen = new WorldGenBigTree(true);
+                break;
+            case BIRCH:
+                gen = new WorldGenForest(true, false);
+                break;
+            case REDWOOD:
+                gen = new WorldGenTaiga2(true);
+                break;
+            case TALL_REDWOOD:
+                gen = new WorldGenTaiga1();
+                break;
+            case JUNGLE:
+                IBlockData iblockdata1 = Blocks.LOG.getBlockData().set(BlockLog1.VARIANT, BlockWood.EnumLogVariant.JUNGLE);
+                IBlockData iblockdata2 = Blocks.LEAVES.getBlockData().set(BlockLeaves1.VARIANT, BlockWood.EnumLogVariant.JUNGLE).set(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
+                gen = new WorldGenJungleTree(true, 10, 20, iblockdata1, iblockdata2); // Magic values as in BlockSapling
+                break;
+            case SMALL_JUNGLE:
+                iblockdata1 = Blocks.LOG.getBlockData().set(BlockLog1.VARIANT, BlockWood.EnumLogVariant.JUNGLE);
+                iblockdata2 = Blocks.LEAVES.getBlockData().set(BlockLeaves1.VARIANT, BlockWood.EnumLogVariant.JUNGLE).set(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
+                gen = new WorldGenTrees(true, 4 + rand.nextInt(7), iblockdata1, iblockdata2, false);
+                break;
+            case COCOA_TREE:
+                iblockdata1 = Blocks.LOG.getBlockData().set(BlockLog1.VARIANT, BlockWood.EnumLogVariant.JUNGLE);
+                iblockdata2 = Blocks.LEAVES.getBlockData().set(BlockLeaves1.VARIANT, BlockWood.EnumLogVariant.JUNGLE).set(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
+                gen = new WorldGenTrees(true, 4 + rand.nextInt(7), iblockdata1, iblockdata2, true);
+                break;
+            case JUNGLE_BUSH:
+                iblockdata1 = Blocks.LOG.getBlockData().set(BlockLog1.VARIANT, BlockWood.EnumLogVariant.JUNGLE);
+                iblockdata2 = Blocks.LEAVES.getBlockData().set(BlockLeaves1.VARIANT, BlockWood.EnumLogVariant.OAK).set(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
+                gen = new WorldGenGroundBush(iblockdata1, iblockdata2);
+                break;
+            case RED_MUSHROOM:
+                gen = new WorldGenHugeMushroom(Blocks.RED_MUSHROOM_BLOCK);
+                break;
+            case BROWN_MUSHROOM:
+                gen = new WorldGenHugeMushroom(Blocks.BROWN_MUSHROOM_BLOCK);
+                break;
+            case SWAMP:
+                gen = new WorldGenSwampTree();
+                break;
+            case ACACIA:
+                gen = new WorldGenAcaciaTree(true);
+                break;
+            case DARK_OAK:
+                gen = new WorldGenForestTree(true);
+                break;
+            case MEGA_REDWOOD:
+                gen = new WorldGenMegaTree(false, rand.nextBoolean());
+                break;
+            case TALL_BIRCH:
+                gen = new WorldGenForest(true, true);
+                break;
+            case TREE:
+            default:
+                gen = new WorldGenTrees(true);
+                break;
         }
 
         return gen.generate(world, rand, new BlockPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
@@ -477,7 +479,7 @@ public class CraftWorld implements World {
                 net.minecraft.server.Block oldBlock = world.getType(position).getBlock();
                 int typeId = blockstate.getTypeId();
                 int data = blockstate.getRawData();
-                int flag = ((CraftBlockState)blockstate).getFlag();
+                int flag = ((CraftBlockState) blockstate).getFlag();
                 delegate.setTypeIdAndData(x, y, z, typeId, data);
                 net.minecraft.server.Block newBlock = world.getType(position).getBlock();
                 world.notifyAndUpdatePhysics(position, null, oldBlock, newBlock, flag);
@@ -614,7 +616,7 @@ public class CraftWorld implements World {
 
             if (chunk != null) {
                 byte[] biomevals = chunk.getBiomeIndex();
-                biomevals[((z & 0xF) << 4) | (x & 0xF)] = (byte)bb.id;
+                biomevals[((z & 0xF) << 4) | (x & 0xF)] = (byte) bb.id;
             }
         }
     }
@@ -666,14 +668,14 @@ public class CraftWorld implements World {
     @SuppressWarnings("unchecked")
     @Deprecated
     public <T extends Entity> Collection<T> getEntitiesByClass(Class<T>... classes) {
-        return (Collection<T>)getEntitiesByClasses(classes);
+        return (Collection<T>) getEntitiesByClasses(classes);
     }
 
     @SuppressWarnings("unchecked")
     public <T extends Entity> Collection<T> getEntitiesByClass(Class<T> clazz) {
         Collection<T> list = new ArrayList<T>();
 
-        for (Object entity: world.entityList) {
+        for (Object entity : world.entityList) {
             if (entity instanceof net.minecraft.server.Entity) {
                 Entity bukkitEntity = ((net.minecraft.server.Entity) entity).getBukkitEntity();
 
@@ -695,7 +697,7 @@ public class CraftWorld implements World {
     public Collection<Entity> getEntitiesByClasses(Class<?>... classes) {
         Collection<Entity> list = new ArrayList<Entity>();
 
-        for (Object entity: world.entityList) {
+        for (Object entity : world.entityList) {
             if (entity instanceof net.minecraft.server.Entity) {
                 Entity bukkitEntity = ((net.minecraft.server.Entity) entity).getBukkitEntity();
 
@@ -747,11 +749,12 @@ public class CraftWorld implements World {
     }
 
     public void save() {
-    // Spigot start
+        // Spigot start
         save(true);
     }
+
     public void save(boolean forceSave) {
-    // Spigot end
+        // Spigot end
         this.server.checkSaveState();
         try {
             boolean oldSave = world.savingDisabled;
@@ -849,18 +852,18 @@ public class CraftWorld implements World {
             Validate.isTrue(effect.getData() == null, "Wrong kind of data for this effect!");
         }
 
-        if (data != null && data.getClass().equals( org.bukkit.material.MaterialData.class )) {
+        if (data != null && data.getClass().equals(org.bukkit.material.MaterialData.class)) {
             org.bukkit.material.MaterialData materialData = (org.bukkit.material.MaterialData) data;
-            Validate.isTrue( materialData.getItemType().isBlock(), "Material must be block" );
-            spigot().playEffect( loc, effect, materialData.getItemType().getId(), materialData.getData(), 0, 0, 0, 1, 1, radius );
+            Validate.isTrue(materialData.getItemType().isBlock(), "Material must be block");
+            spigot().playEffect(loc, effect, materialData.getItemType().getId(), materialData.getData(), 0, 0, 0, 1, 1, radius);
         } else {
-            int dataValue = data == null ? 0 : CraftEffect.getDataValue( effect, data );
-            playEffect( loc, effect, dataValue, radius );
+            int dataValue = data == null ? 0 : CraftEffect.getDataValue(effect, data);
+            playEffect(loc, effect, dataValue, radius);
         }
     }
 
     public void playEffect(Location location, Effect effect, int data, int radius) {
-        spigot().playEffect( location, effect, data, 0, 0, 0, 0, 1, 1, radius );
+        spigot().playEffect(location, effect, data, 0, 0, 0, 0, 1, 1, radius);
     }
 
     public <T extends Entity> T spawn(Location location, Class<T> clazz) throws IllegalArgumentException {
@@ -1044,7 +1047,7 @@ public class CraftWorld implements World {
                 entity = new EntityRabbit(world);
             } else if (Endermite.class.isAssignableFrom(clazz)) {
                 entity = new EntityEndermite(world);
-            } else if (Guardian.class.isAssignableFrom(clazz)){
+            } else if (Guardian.class.isAssignableFrom(clazz)) {
                 entity = new EntityGuardian(world);
             } else if (ArmorStand.class.isAssignableFrom(clazz)) {
                 entity = new EntityArmorStand(world, x, y, z);
@@ -1068,15 +1071,15 @@ public class CraftWorld implements World {
                 height = 9;
             }
 
-            BlockFace[] faces = new BlockFace[]{BlockFace.EAST,BlockFace.NORTH,BlockFace.WEST,BlockFace.SOUTH};
+            BlockFace[] faces = new BlockFace[]{BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH};
             final BlockPosition pos = new BlockPosition((int) x, (int) y, (int) z);
             for (BlockFace dir : faces) {
                 net.minecraft.server.Block nmsBlock = CraftMagicNumbers.getBlock(block.getRelative(dir));
                 if (nmsBlock.getMaterial().isBuildable() || BlockDiodeAbstract.d(nmsBlock)) {
                     boolean taken = false;
-                    AxisAlignedBB bb = EntityHanging.calculateBoundingBox(pos,CraftBlock.blockFaceToNotch(dir).opposite(),width,height);
-                    List<net.minecraft.server.Entity> list = (List<net.minecraft.server.Entity>) world.getEntities(null, bb);
-                    for (Iterator<net.minecraft.server.Entity> it = list.iterator(); !taken && it.hasNext();) {
+                    AxisAlignedBB bb = EntityHanging.calculateBoundingBox(pos, CraftBlock.blockFaceToNotch(dir).opposite(), width, height);
+                    List<net.minecraft.server.Entity> list = world.getEntities(null, bb);
+                    for (Iterator<net.minecraft.server.Entity> it = list.iterator(); !taken && it.hasNext(); ) {
                         net.minecraft.server.Entity e = it.next();
                         if (e instanceof EntityHanging) {
                             taken = true; // Hanging entities do not like hanging entities which intersect them.
@@ -1091,7 +1094,7 @@ public class CraftWorld implements World {
             }
 
             EnumDirection dir = CraftBlock.blockFaceToNotch(face).opposite();
-            
+
             if (Painting.class.isAssignableFrom(clazz)) {
                 entity = new EntityPainting(world, new BlockPosition((int) x, (int) y, (int) z), dir);
             } else if (ItemFrame.class.isAssignableFrom(clazz)) {
@@ -1121,9 +1124,8 @@ public class CraftWorld implements World {
 
         if (entity != null) {
             // Spigot start
-            if (entity instanceof EntityOcelot)
-            {
-                ( (EntityOcelot) entity ).spawnBonus = false;
+            if (entity instanceof EntityOcelot) {
+                ((EntityOcelot) entity).spawnBonus = false;
             }
             // Spigot end
             return entity;
@@ -1137,7 +1139,7 @@ public class CraftWorld implements World {
         Preconditions.checkArgument(entity != null, "Cannot spawn null entity");
 
         if (entity instanceof EntityInsentient) {
-            ((EntityInsentient) entity).prepare(getHandle().E(new BlockPosition(entity)), (GroupDataEntity) null);
+            ((EntityInsentient) entity).prepare(getHandle().E(new BlockPosition(entity)), null);
         }
 
         world.addEntity(entity, reason);
@@ -1222,7 +1224,7 @@ public class CraftWorld implements World {
     }
 
     public File getWorldFolder() {
-        return ((WorldNBTStorage) world.getDataManager()).getDirectory();
+        return world.getDataManager().getDirectory();
     }
 
     public void sendPluginMessage(Plugin source, String channel, byte[] message) {
@@ -1400,93 +1402,76 @@ public class CraftWorld implements World {
             cps.queueUnload(chunk.locX, chunk.locZ);
         }
     }
+
     // Spigot start
-    private final Spigot spigot = new Spigot()
-    {
+    private final Spigot spigot = new Spigot() {
         @Override
-        public void playEffect( Location location, Effect effect, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius )
-        {
-            Validate.notNull( location, "Location cannot be null" );
-            Validate.notNull( effect, "Effect cannot be null" );
-            Validate.notNull( location.getWorld(), "World cannot be null" );
+        public void playEffect(Location location, Effect effect, int id, int data, float offsetX, float offsetY, float offsetZ, float speed, int particleCount, int radius) {
+            Validate.notNull(location, "Location cannot be null");
+            Validate.notNull(effect, "Effect cannot be null");
+            Validate.notNull(location.getWorld(), "World cannot be null");
             Packet packet;
-            if ( effect.getType() != Effect.Type.PARTICLE )
-            {
+            if (effect.getType() != Effect.Type.PARTICLE) {
                 int packetData = effect.getId();
-                packet = new PacketPlayOutWorldEvent( packetData, new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ() ), id, false );
-            } else
-            {
+                packet = new PacketPlayOutWorldEvent(packetData, new BlockPosition(location.getBlockX(), location.getBlockY(), location.getBlockZ()), id, false);
+            } else {
                 net.minecraft.server.EnumParticle particle = null;
                 int[] extra = null;
-                for ( net.minecraft.server.EnumParticle p : net.minecraft.server.EnumParticle.values() )
-                {
-                    if ( effect.getName().startsWith( p.b().replace("_", "") ) )
-                    {
+                for (net.minecraft.server.EnumParticle p : net.minecraft.server.EnumParticle.values()) {
+                    if (effect.getName().startsWith(p.b().replace("_", ""))) {
                         particle = p;
-                        if ( effect.getData() != null ) 
-                        {
-                            if ( effect.getData().equals( org.bukkit.Material.class ) )
-                            {
-                                extra = new int[]{ id };
-                            } else 
-                            {
-                                extra = new int[]{ (data << 12) | (id & 0xFFF) };
+                        if (effect.getData() != null) {
+                            if (effect.getData().equals(org.bukkit.Material.class)) {
+                                extra = new int[]{id};
+                            } else {
+                                extra = new int[]{(data << 12) | (id & 0xFFF)};
                             }
                         }
                         break;
                     }
                 }
-                if ( extra == null )
-                {
+                if (extra == null) {
                     extra = new int[0];
                 }
-                packet = new PacketPlayOutWorldParticles( particle, true, (float) location.getX(), (float) location.getY(), (float) location.getZ(), offsetX, offsetY, offsetZ, speed, particleCount, extra );
+                packet = new PacketPlayOutWorldParticles(particle, true, (float) location.getX(), (float) location.getY(), (float) location.getZ(), offsetX, offsetY, offsetZ, speed, particleCount, extra);
             }
             int distance;
             radius *= radius;
-            for ( Player player : getPlayers() )
-            {
-                if ( ( (CraftPlayer) player ).getHandle().playerConnection == null )
-                {
+            for (Player player : getPlayers()) {
+                if (((CraftPlayer) player).getHandle().playerConnection == null) {
                     continue;
                 }
-                if ( !location.getWorld().equals( player.getWorld() ) )
-                {
+                if (!location.getWorld().equals(player.getWorld())) {
                     continue;
                 }
-                distance = (int) player.getLocation().distanceSquared( location );
-                if ( distance <= radius )
-                {
-                    ( (CraftPlayer) player ).getHandle().playerConnection.sendPacket( packet );
+                distance = (int) player.getLocation().distanceSquared(location);
+                if (distance <= radius) {
+                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
                 }
             }
         }
 
         @Override
-        public void playEffect( Location location, Effect effect )
-        {
-            CraftWorld.this.playEffect( location, effect, 0 );
+        public void playEffect(Location location, Effect effect) {
+            CraftWorld.this.playEffect(location, effect, 0);
         }
 
         @Override
-        public LightningStrike strikeLightning(Location loc, boolean isSilent)
-        {
-            EntityLightning lightning = new EntityLightning( world, loc.getX(), loc.getY(), loc.getZ(), false, isSilent );
-            world.strikeLightning( lightning );
-            return new CraftLightningStrike( server, lightning );
+        public LightningStrike strikeLightning(Location loc, boolean isSilent) {
+            EntityLightning lightning = new EntityLightning(world, loc.getX(), loc.getY(), loc.getZ(), false, isSilent);
+            world.strikeLightning(lightning);
+            return new CraftLightningStrike(server, lightning);
         }
 
         @Override
-        public LightningStrike strikeLightningEffect(Location loc, boolean isSilent)
-        {
-            EntityLightning lightning = new EntityLightning( world, loc.getX(), loc.getY(), loc.getZ(), true, isSilent );
-            world.strikeLightning( lightning );
-            return new CraftLightningStrike( server, lightning );
+        public LightningStrike strikeLightningEffect(Location loc, boolean isSilent) {
+            EntityLightning lightning = new EntityLightning(world, loc.getX(), loc.getY(), loc.getZ(), true, isSilent);
+            world.strikeLightning(lightning);
+            return new CraftLightningStrike(server, lightning);
         }
     };
 
-    public Spigot spigot()
-    {
+    public Spigot spigot() {
         return spigot;
     }
     // Spigot end

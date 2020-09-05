@@ -17,7 +17,7 @@ public class BlockPressurePlateBinary extends BlockPressurePlateAbstract {
     }
 
     protected int e(IBlockData iblockdata) {
-        return ((Boolean) iblockdata.get(BlockPressurePlateBinary.POWERED)).booleanValue() ? 15 : 0;
+        return iblockdata.get(BlockPressurePlateBinary.POWERED).booleanValue() ? 15 : 0;
     }
 
     protected IBlockData a(IBlockData iblockdata, int i) {
@@ -29,16 +29,16 @@ public class BlockPressurePlateBinary extends BlockPressurePlateAbstract {
         List list;
 
         switch (BlockPressurePlateBinary.SyntheticClass_1.a[this.b.ordinal()]) {
-        case 1:
-            list = world.getEntities((Entity) null, axisalignedbb);
-            break;
+            case 1:
+                list = world.getEntities(null, axisalignedbb);
+                break;
 
-        case 2:
-            list = world.a(EntityLiving.class, axisalignedbb);
-            break;
+            case 2:
+                list = world.a(EntityLiving.class, axisalignedbb);
+                break;
 
-        default:
-            return 0;
+            default:
+                return 0;
         }
 
         if (!list.isEmpty()) {
@@ -81,11 +81,11 @@ public class BlockPressurePlateBinary extends BlockPressurePlateAbstract {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Boolean) iblockdata.get(BlockPressurePlateBinary.POWERED)).booleanValue() ? 1 : 0;
+        return iblockdata.get(BlockPressurePlateBinary.POWERED).booleanValue() ? 1 : 0;
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockPressurePlateBinary.POWERED});
+        return new BlockStateList(this, BlockPressurePlateBinary.POWERED);
     }
 
     static class SyntheticClass_1 {
@@ -96,22 +96,21 @@ public class BlockPressurePlateBinary extends BlockPressurePlateAbstract {
             try {
                 BlockPressurePlateBinary.SyntheticClass_1.a[BlockPressurePlateBinary.EnumMobType.EVERYTHING.ordinal()] = 1;
             } catch (NoSuchFieldError nosuchfielderror) {
-                ;
             }
 
             try {
                 BlockPressurePlateBinary.SyntheticClass_1.a[BlockPressurePlateBinary.EnumMobType.MOBS.ordinal()] = 2;
             } catch (NoSuchFieldError nosuchfielderror1) {
-                ;
             }
 
         }
     }
 
-    public static enum EnumMobType {
+    public enum EnumMobType {
 
         EVERYTHING, MOBS;
 
-        private EnumMobType() {}
+        EnumMobType() {
+        }
     }
 }

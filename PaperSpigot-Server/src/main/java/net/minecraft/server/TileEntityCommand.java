@@ -6,6 +6,7 @@ public class TileEntityCommand extends TileEntity {
         {
             sender = new org.bukkit.craftbukkit.command.CraftBlockCommandSender(this); // CraftBukkit - add sender
         }
+
         public BlockPosition getChunkCoordinates() {
             return TileEntityCommand.this.position;
         }
@@ -32,7 +33,8 @@ public class TileEntityCommand extends TileEntity {
         }
     };
 
-    public TileEntityCommand() {}
+    public TileEntityCommand() {
+    }
 
     public void b(NBTTagCompound nbttagcompound) {
         super.b(nbttagcompound);

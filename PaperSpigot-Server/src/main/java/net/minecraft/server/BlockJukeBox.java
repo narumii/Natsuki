@@ -11,7 +11,7 @@ public class BlockJukeBox extends BlockContainer {
     }
 
     public boolean interact(World world, BlockPosition blockposition, IBlockData iblockdata, EntityHuman entityhuman, EnumDirection enumdirection, float f, float f1, float f2) {
-        if (((Boolean) iblockdata.get(BlockJukeBox.HAS_RECORD)).booleanValue()) {
+        if (iblockdata.get(BlockJukeBox.HAS_RECORD).booleanValue()) {
             this.dropRecord(world, blockposition, iblockdata);
             iblockdata = iblockdata.set(BlockJukeBox.HAS_RECORD, Boolean.valueOf(false));
             world.setTypeAndData(blockposition, iblockdata, 2);
@@ -43,7 +43,7 @@ public class BlockJukeBox extends BlockContainer {
                 if (itemstack != null) {
                     world.triggerEffect(1005, blockposition, 0);
                     world.a(blockposition, (String) null);
-                    blockjukebox_tileentityrecordplayer.setRecord((ItemStack) null);
+                    blockjukebox_tileentityrecordplayer.setRecord(null);
                     float f = 0.7F;
                     double d0 = (double) (world.random.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
                     double d1 = (double) (world.random.nextFloat() * f) + (double) (1.0F - f) * 0.2D + 0.6D;
@@ -100,18 +100,19 @@ public class BlockJukeBox extends BlockContainer {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Boolean) iblockdata.get(BlockJukeBox.HAS_RECORD)).booleanValue() ? 1 : 0;
+        return iblockdata.get(BlockJukeBox.HAS_RECORD).booleanValue() ? 1 : 0;
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockJukeBox.HAS_RECORD});
+        return new BlockStateList(this, BlockJukeBox.HAS_RECORD);
     }
 
     public static class TileEntityRecordPlayer extends TileEntity {
 
         private ItemStack record;
 
-        public TileEntityRecordPlayer() {}
+        public TileEntityRecordPlayer() {
+        }
 
         public void a(NBTTagCompound nbttagcompound) {
             super.a(nbttagcompound);

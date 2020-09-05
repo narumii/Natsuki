@@ -22,7 +22,8 @@ public class BlockEnderPortal extends BlockContainer {
         this.a(0.0F, 0.0F, 0.0F, 1.0F, f, 1.0F);
     }
 
-    public void a(World world, BlockPosition blockposition, IBlockData iblockdata, AxisAlignedBB axisalignedbb, List<AxisAlignedBB> list, Entity entity) {}
+    public void a(World world, BlockPosition blockposition, IBlockData iblockdata, AxisAlignedBB axisalignedbb, List<AxisAlignedBB> list, Entity entity) {
+    }
 
     public boolean c() {
         return false;

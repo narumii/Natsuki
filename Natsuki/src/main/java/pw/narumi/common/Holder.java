@@ -1,13 +1,22 @@
 package pw.narumi.common;
 
-import java.util.*;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Holder {
 
-    //private static final Map<String, Integer> channelMap = new HashMap<>();
+    private static final Executor executor = Executors.newFixedThreadPool(
+            Runtime.getRuntime().availableProcessors() * 2,
+            new ThreadFactoryBuilder().build());
+
     private static final List<String> whitelist = new ArrayList<>();
     private static final Set<String> blacklist = new HashSet<>();
     private static final Set<String> ping = new HashSet<>();
@@ -21,10 +30,7 @@ public class Holder {
             ping.clear();
             verified.clear();
         }, 0, 3, TimeUnit.MINUTES);
-        Executors.newSingleThreadScheduledExecutor().scheduleWithFixedDelay(() -> {
-            channels.set(0);
-            //channelMap.clear();
-        }, 0, 1, TimeUnit.SECONDS);
+        Executors.newSingleThreadScheduledExecutor().scheduleWithFixedDelay(() -> channels.set(0), 0, 1, TimeUnit.SECONDS);
     }
 
     public static List<String> getWhitelist() {
@@ -34,10 +40,6 @@ public class Holder {
     public static Set<String> getBlacklist() {
         return blacklist;
     }
-
-    //public static Map<String, Integer> getChannelMap() {
-    //return channelMap;
-    //}
 
     public static AtomicInteger getChannels() {
         return channels;
@@ -49,5 +51,9 @@ public class Holder {
 
     public static Set<String> getVerified() {
         return verified;
+    }
+
+    public static Executor getExecutor() {
+        return executor;
     }
 }

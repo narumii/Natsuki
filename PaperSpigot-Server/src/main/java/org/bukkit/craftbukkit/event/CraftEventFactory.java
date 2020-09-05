@@ -181,7 +181,7 @@ public class CraftEventFactory {
     public static PlayerInteractEvent callPlayerInteractEvent(EntityHuman who, Action action, BlockPosition position, EnumDirection direction, ItemStack itemstack) {
         return callPlayerInteractEvent(who, action, position, direction, itemstack, false);
     }
-    
+
     public static PlayerInteractEvent callPlayerInteractEvent(EntityHuman who, Action action, BlockPosition position, EnumDirection direction, ItemStack itemstack, boolean cancelledBlock) {
         Player player = (who == null) ? null : (Player) who.getBukkitEntity();
         CraftItemStack itemInHand = CraftItemStack.asCraftMirror(itemstack);
@@ -195,12 +195,12 @@ public class CraftEventFactory {
         if (position.getY() > 255) {
             blockClicked = null;
             switch (action) {
-            case LEFT_CLICK_BLOCK:
-                action = Action.LEFT_CLICK_AIR;
-                break;
-            case RIGHT_CLICK_BLOCK:
-                action = Action.RIGHT_CLICK_AIR;
-                break;
+                case LEFT_CLICK_BLOCK:
+                    action = Action.LEFT_CLICK_AIR;
+                    break;
+                case RIGHT_CLICK_BLOCK:
+                    action = Action.RIGHT_CLICK_AIR;
+                    break;
             }
         }
 
@@ -800,18 +800,18 @@ public class CraftEventFactory {
         org.bukkit.entity.Entity bukkitIgniter = igniter.getBukkitEntity();
         IgniteCause cause;
         switch (bukkitIgniter.getType()) {
-        case ENDER_CRYSTAL:
-            cause = IgniteCause.ENDER_CRYSTAL;
-            break;
-        case LIGHTNING:
-            cause = IgniteCause.LIGHTNING;
-            break;
-        case SMALL_FIREBALL:
-        case FIREBALL:
-            cause = IgniteCause.FIREBALL;
-            break;
-        default:
-            cause = IgniteCause.FLINT_AND_STEEL;
+            case ENDER_CRYSTAL:
+                cause = IgniteCause.ENDER_CRYSTAL;
+                break;
+            case LIGHTNING:
+                cause = IgniteCause.LIGHTNING;
+                break;
+            case SMALL_FIREBALL:
+            case FIREBALL:
+                cause = IgniteCause.FIREBALL;
+                break;
+            default:
+                cause = IgniteCause.FLINT_AND_STEEL;
         }
 
         BlockIgniteEvent event = new BlockIgniteEvent(bukkitWorld.getBlockAt(x, y, z), cause, bukkitIgniter);

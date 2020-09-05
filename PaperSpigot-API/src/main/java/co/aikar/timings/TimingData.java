@@ -31,7 +31,7 @@ import static co.aikar.util.JSONUtil.toArray;
 
 /**
  * <p>Lightweight object for tracking timing data</p>
- *
+ * <p>
  * This is broken out to reduce memory usage
  */
 class TimingData {
@@ -93,9 +93,9 @@ class TimingData {
 
     public List export() {
         List list = toArray(
-            id,
-            count,
-            totalTime);
+                id,
+                count,
+                totalTime);
         if (lagCount > 0) {
             list.add(lagCount);
             list.add(lagTotalTime);

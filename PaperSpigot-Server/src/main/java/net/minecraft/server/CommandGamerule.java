@@ -5,7 +5,8 @@ import java.util.List;
 
 public class CommandGamerule extends CommandAbstract {
 
-    public CommandGamerule() {}
+    public CommandGamerule() {
+    }
 
     public String getCommand() {
         return "gamerule";
@@ -25,29 +26,29 @@ public class CommandGamerule extends CommandAbstract {
         String s1 = astring.length > 1 ? a(astring, 1) : "";
 
         switch (astring.length) {
-        case 0:
-            icommandlistener.sendMessage(new ChatComponentText(a((Object[]) gamerules.getGameRules())));
-            break;
+            case 0:
+                icommandlistener.sendMessage(new ChatComponentText(a(gamerules.getGameRules())));
+                break;
 
-        case 1:
-            if (!gamerules.contains(s)) {
-                throw new CommandException("commands.gamerule.norule", new Object[] { s});
-            }
+            case 1:
+                if (!gamerules.contains(s)) {
+                    throw new CommandException("commands.gamerule.norule", s);
+                }
 
-            String s2 = gamerules.get(s);
+                String s2 = gamerules.get(s);
 
-            icommandlistener.sendMessage((new ChatComponentText(s)).a(" = ").a(s2));
-            icommandlistener.a(CommandObjectiveExecutor.EnumCommandResult.QUERY_RESULT, gamerules.c(s));
-            break;
+                icommandlistener.sendMessage((new ChatComponentText(s)).a(" = ").a(s2));
+                icommandlistener.a(CommandObjectiveExecutor.EnumCommandResult.QUERY_RESULT, gamerules.c(s));
+                break;
 
-        default:
-            if (gamerules.a(s, GameRules.EnumGameRuleType.BOOLEAN_VALUE) && !"true".equals(s1) && !"false".equals(s1)) {
-                throw new CommandException("commands.generic.boolean.invalid", new Object[] { s1});
-            }
+            default:
+                if (gamerules.a(s, GameRules.EnumGameRuleType.BOOLEAN_VALUE) && !"true".equals(s1) && !"false".equals(s1)) {
+                    throw new CommandException("commands.generic.boolean.invalid", s1);
+                }
 
-            gamerules.set(s, s1);
-            a(gamerules, s);
-            a(icommandlistener, this, "commands.gamerule.success", new Object[0]);
+                gamerules.set(s, s1);
+                a(gamerules, s);
+                a(icommandlistener, this, "commands.gamerule.success");
         }
 
     }
@@ -74,7 +75,7 @@ public class CommandGamerule extends CommandAbstract {
                 GameRules gamerules = this.d();
 
                 if (gamerules.a(astring[0], GameRules.EnumGameRuleType.BOOLEAN_VALUE)) {
-                    return a(astring, new String[] { "true", "false"});
+                    return a(astring, "true", "false");
                 }
             }
 
@@ -89,7 +90,7 @@ public class CommandGamerule extends CommandAbstract {
     // CraftBukkit start - fix decompile error
     @Override
     public int compareTo(ICommand o) {
-        return a((ICommand) o);
+        return a(o);
     }
     // CraftBukkit end
 }

@@ -76,9 +76,9 @@ public class EntityIronGolem extends EntityGolem {
         }
 
         if (this.motX * this.motX + this.motZ * this.motZ > 2.500000277905201E-7D && this.random.nextInt(5) == 0) {
-            int i =(int) Math.floor(this.locX);
-            int j =(int) Math.floor(this.locY - 0.20000000298023224D);
-            int k =(int) Math.floor(this.locZ);
+            int i = (int) Math.floor(this.locX);
+            int j = (int) Math.floor(this.locY - 0.20000000298023224D);
+            int k = (int) Math.floor(this.locZ);
             IBlockData iblockdata = this.world.getType(new BlockPosition(i, j, k));
             Block block = iblockdata.getBlock();
 

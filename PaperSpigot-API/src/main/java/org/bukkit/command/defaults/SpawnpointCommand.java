@@ -53,7 +53,7 @@ public class SpawnpointCommand extends VanillaCommand {
                     x = getInteger(sender, args[pos++], MIN_COORD, MAX_COORD, true);
                     y = getInteger(sender, args[pos++], 0, world.getMaxHeight());
                     z = getInteger(sender, args[pos], MIN_COORD, MAX_COORD, true);
-                } catch(NumberFormatException ex) {
+                } catch (NumberFormatException ex) {
                     sender.sendMessage(ex.getMessage());
                     return true;
                 }

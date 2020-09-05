@@ -3,7 +3,6 @@ package pw.narumi.command;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import pw.narumi.Natsuki;
-import pw.narumi.common.Holder;
 
 public class NatsukiCommand extends Command {
 

@@ -16,15 +16,15 @@ import org.bukkit.event.HandlerList;
  * <ul>
  * <li>Logging executed commands to a separate file
  * <li>Variable substitution. For example, replacing <code>${ip:Steve}</code>
- *     with the connection IP of the player named Steve, or simulating the
- *     <code>@a</code> and <code>@p</code> decorators used by Command Blocks
- *     for plugins that do not handle it.
+ * with the connection IP of the player named Steve, or simulating the
+ * <code>@a</code> and <code>@p</code> decorators used by Command Blocks
+ * for plugins that do not handle it.
  * <li>Conditionally blocking commands belonging to other plugins.
  * <li>Per-sender command aliases. For example, after the console runs the
- *     command <code>/calias cr gamemode creative</code>, the next time they
- *     run <code>/cr</code>, it gets replaced into
- *     <code>/gamemode creative</code>. (Global command aliases should be
- *     done by registering the alias.)
+ * command <code>/calias cr gamemode creative</code>, the next time they
+ * run <code>/cr</code>, it gets replaced into
+ * <code>/gamemode creative</code>. (Global command aliases should be
+ * done by registering the alias.)
  * </ul>
  * <p>
  * Examples of incorrect uses are:

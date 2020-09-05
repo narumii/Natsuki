@@ -2,8 +2,6 @@ package net.minecraft.server;
 
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
-import com.maxmind.geoip2.record.Country;
 import io.netty.channel.*;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.local.LocalChannel;
@@ -21,12 +19,10 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import pw.narumi.Natsuki;
-import pw.narumi.exception.NatsukiException;
 import pw.narumi.common.Holder;
+import pw.narumi.exception.NatsukiException;
 
 import javax.crypto.SecretKey;
-import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.Queue;
@@ -89,6 +85,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
 
         Holder.getChannels().incrementAndGet();
 
+        if (channelhandlercontext.channel().remoteAddress() == null || channelhandlercontext.channel().localAddress() == null)
+            channel.close();
+
         this.channel = channelhandlercontext.channel();
         this.l = this.channel.remoteAddress();
         // Spigot Start
@@ -115,7 +114,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     }
 
     public void channelInactive(ChannelHandlerContext channelhandlercontext) throws Exception {
-        this.close(new ChatMessage("disconnect.endOfStream", new Object[0]));
+        this.close(new ChatMessage("disconnect.endOfStream"));
     }
 
     public void exceptionCaught(ChannelHandlerContext channelhandlercontext, Throwable throwable) {
@@ -129,9 +128,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
         }
 
         if (throwable instanceof TimeoutException) {
-            chatmessage = new ChatMessage("disconnect.timeout", new Object[0]);
+            chatmessage = new ChatMessage("disconnect.timeout");
         } else {
-            chatmessage = new ChatMessage("disconnect.genericReason", new Object[]{"Internal Exception: " + throwable});
+            chatmessage = new ChatMessage("disconnect.genericReason", "Internal Exception: " + throwable);
         }
 
         this.close(chatmessage);
@@ -148,15 +147,15 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     }
 
     public void a(PacketListener packetlistener) {
-        Validate.notNull(packetlistener, "packetListener", new Object[0]);
-        NetworkManager.g.debug("Set listener of {} to {}", new Object[] { this, packetlistener});
+        Validate.notNull(packetlistener, "packetListener");
+        NetworkManager.g.debug("Set listener of {} to {}", this, packetlistener);
         this.m = packetlistener;
     }
 
     public void handle(Packet packet) {
         if (this.g()) {
             this.m();
-            this.a(packet, (GenericFutureListener[]) null);
+            this.a(packet, null);
         } else {
             this.j.writeLock().lock();
 
@@ -172,7 +171,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     public void a(Packet packet, GenericFutureListener<? extends Future<? super Void>> genericfuturelistener, GenericFutureListener<? extends Future<? super Void>>... agenericfuturelistener) {
         if (this.g()) {
             this.m();
-            this.a(packet, (GenericFutureListener[]) ArrayUtils.add(agenericfuturelistener, 0, genericfuturelistener));
+            this.a(packet, ArrayUtils.add(agenericfuturelistener, 0, genericfuturelistener));
         } else {
             this.j.writeLock().lock();
 
@@ -187,7 +186,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
 
     private void a(final Packet packet, final GenericFutureListener<? extends Future<? super Void>>[] agenericfuturelistener) {
         final EnumProtocol enumprotocol = EnumProtocol.a(packet);
-        final EnumProtocol enumprotocol1 = (EnumProtocol) this.channel.attr(NetworkManager.c).get();
+        final EnumProtocol enumprotocol1 = this.channel.attr(NetworkManager.c).get();
         if (enumprotocol1 != enumprotocol) {
             NetworkManager.g.debug("Disabled auto read");
             this.channel.config().setAutoRead(false);
@@ -231,7 +230,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
 
             try {
                 while (!this.i.isEmpty()) {
-                    NetworkManager.QueuedPacket networkmanager_queuedpacket = (NetworkManager.QueuedPacket) this.i.poll();
+                    NetworkManager.QueuedPacket networkmanager_queuedpacket = this.i.poll();
                     this.a(networkmanager_queuedpacket.a, networkmanager_queuedpacket.b);
                 }
             } finally {
@@ -337,7 +336,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     }
 
     protected void channelRead0(ChannelHandlerContext channelhandlercontext, Packet object) throws Exception { // CraftBukkit - fix decompile error;
-        this.a(channelhandlercontext, (Packet) object);
+        this.a(channelhandlercontext, object);
     }
 
     static class QueuedPacket {
@@ -352,8 +351,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     }
 
     // Spigot Start
-    public SocketAddress getRawAddress()
-    {
+    public SocketAddress getRawAddress() {
         return this.channel.remoteAddress();
     }
     // Spigot End

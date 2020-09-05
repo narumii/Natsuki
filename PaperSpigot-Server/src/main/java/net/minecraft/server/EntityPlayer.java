@@ -64,14 +64,12 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     private int containerUpdateDelay; // PaperSpigot
 
     @Override
-    public boolean ad()
-    {
+    public boolean ad() {
         return this.collidesWithEntities && super.ad(); // (first !this.isDead near bottom of EntityLiving)
     }
 
     @Override
-    public boolean ae()
-    {
+    public boolean ae() {
         return this.collidesWithEntities && super.ae(); // (second !this.isDead near bottom of EntityLiving)
     }
     // Spigot end
@@ -85,7 +83,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
         if (!worldserver.worldProvider.o() && worldserver.getWorldData().getGameType() != WorldSettings.EnumGamemode.ADVENTURE) {
             int i = Math.max(5, minecraftserver.getSpawnProtection() - 6);
-            int j =(int) Math.floor(worldserver.getWorldBorder().b(blockposition.getX(), blockposition.getZ()));
+            int j = (int) Math.floor(worldserver.getWorldBorder().b(blockposition.getX(), blockposition.getZ()));
 
             if (j < i) {
                 i = j;
@@ -194,7 +192,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         if (this.noDamageTicks > 0) {
             --this.noDamageTicks;
         }
-        
+
         // PaperSpigot start - Configurable container update tick rate
         if (--containerUpdateDelay <= 0) {
             this.activeContainer.b();
@@ -316,7 +314,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
                 while (iterator.hasNext()) {
                     ScoreboardObjective scoreboardobjective = (ScoreboardObjective) iterator.next();
 
-                    this.getScoreboard().getPlayerScoreForObjective(this.getName(), scoreboardobjective).updateForList(Arrays.asList(new EntityHuman[] { this}));
+                    this.getScoreboard().getPlayerScoreForObjective(this.getName(), scoreboardobjective).updateForList(Arrays.asList(new EntityHuman[]{this}));
                 }
                 // CraftBukkit - Update ALL the scores!
                 this.world.getServer().getScoreboardManager().updateAllScoresForList(IScoreboardCriteria.g, this.getName(), com.google.common.collect.ImmutableList.of(this));
@@ -356,7 +354,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     }
 
     protected void i_() {
-        BiomeBase biomebase = this.world.getBiome(new BlockPosition(MathHelper.floor(this.locX), 0,(int) Math.floor(this.locZ)));
+        BiomeBase biomebase = this.world.getBiome(new BlockPosition(MathHelper.floor(this.locX), 0, (int) Math.floor(this.locZ)));
         String s = biomebase.ah;
         AchievementSet achievementset = this.getStatisticManager().b((Statistic) AchievementList.L);
 
@@ -521,7 +519,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
                 this.viewingCredits = true;
                 this.playerConnection.sendPacket(new PacketPlayOutGameStateChange(4, 0.0F));
             }
-        // PaperSpigot end
+            // PaperSpigot end
         } else {
             if (this.dimension == 0 && i == 1) {
                 this.b(AchievementList.C);
@@ -613,12 +611,13 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     }
 
-    protected void a(double d0, boolean flag, Block block, BlockPosition blockposition) {}
+    protected void a(double d0, boolean flag, Block block, BlockPosition blockposition) {
+    }
 
     public void a(double d0, boolean flag) {
-        int i =(int) Math.floor(this.locX);
-        int j =(int) Math.floor(this.locY - 0.20000000298023224D);
-        int k =(int) Math.floor(this.locZ);
+        int i = (int) Math.floor(this.locX);
+        int j = (int) Math.floor(this.locY - 0.20000000298023224D);
+        int k = (int) Math.floor(this.locZ);
         BlockPosition blockposition = new BlockPosition(i, j, k);
         Block block = this.world.getType(blockposition).getBlock();
 
@@ -669,7 +668,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
         Container container;
         if (iinventory instanceof ITileEntityContainer) {
-            container = ((ITileEntityContainer)iinventory).createContainer(this.inventory, this);
+            container = ((ITileEntityContainer) iinventory).createContainer(this.inventory, this);
         } else {
             container = new ContainerChest(this.inventory, iinventory, this);
         }
@@ -779,7 +778,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         this.playerConnection.sendPacket(new PacketPlayOutWindowItems(container.windowId, list));
         this.playerConnection.sendPacket(new PacketPlayOutSetSlot(-1, -1, this.inventory.getCarried()));
         // CraftBukkit start - Send a Set Slot to update the crafting result slot
-        if (java.util.EnumSet.of(InventoryType.CRAFTING,InventoryType.WORKBENCH).contains(container.getBukkitView().getType())) {
+        if (java.util.EnumSet.of(InventoryType.CRAFTING, InventoryType.WORKBENCH).contains(container.getBukkitView().getType())) {
             this.playerConnection.sendPacket(new PacketPlayOutSetSlot(container.windowId, 0, container.getSlot(0).getItem()));
         }
         // CraftBukkit end

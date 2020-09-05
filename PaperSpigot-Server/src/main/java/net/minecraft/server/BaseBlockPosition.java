@@ -4,30 +4,29 @@ import com.google.common.base.Objects;
 
 public class BaseBlockPosition implements Comparable<BaseBlockPosition> {
 
-    public static final BaseBlockPosition ZERO = new BaseBlockPosition(0, 0, 0);
     // PaperSpigot start - Make mutable and protected for MutableBlockPos
     protected int a;
     protected int c;
     protected int d;
     // PaperSpigot end
 
-    public BaseBlockPosition(int i, int j, int k) {
+    public BaseBlockPosition(final int i, final int j, final int k) {
         this.a = i;
         this.c = j;
         this.d = k;
     }
 
-    public BaseBlockPosition(double d0, double d1, double d2) {
-        this(MathHelper.floor(d0),(int) Math.floor(d1),(int) Math.floor(d2));
+    public BaseBlockPosition(final double d0, final double d1, final double d2) {
+        this(MathHelper.floor(d0), (int) Math.floor(d1), (int) Math.floor(d2));
     }
 
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (this == object) {
             return true;
         } else if (!(object instanceof BaseBlockPosition)) {
             return false;
         } else {
-            BaseBlockPosition baseblockposition = (BaseBlockPosition) object;
+            final BaseBlockPosition baseblockposition = (BaseBlockPosition) object;
 
             return this.getX() == baseblockposition.getX() && (this.getY() == baseblockposition.getY() && this.getZ() == baseblockposition.getZ());
         }
@@ -37,7 +36,7 @@ public class BaseBlockPosition implements Comparable<BaseBlockPosition> {
         return (this.getY() + this.getZ() * 31) * 31 + this.getX();
     }
 
-    public int g(BaseBlockPosition baseblockposition) {
+    public int g(final BaseBlockPosition baseblockposition) {
         return this.getY() == baseblockposition.getY() ? (this.getZ() == baseblockposition.getZ() ? this.getX() - baseblockposition.getX() : this.getZ() - baseblockposition.getZ()) : this.getY() - baseblockposition.getY();
     }
 
@@ -55,27 +54,27 @@ public class BaseBlockPosition implements Comparable<BaseBlockPosition> {
     }
     // PaperSpigot end
 
-    public BaseBlockPosition d(BaseBlockPosition baseblockposition) {
+    public BaseBlockPosition d(final BaseBlockPosition baseblockposition) {
         return new BaseBlockPosition(this.getY() * baseblockposition.getZ() - this.getZ() * baseblockposition.getY(), this.getZ() * baseblockposition.getX() - this.getX() * baseblockposition.getZ(), this.getX() * baseblockposition.getY() - this.getY() * baseblockposition.getX());
     }
 
-    public double c(double d0, double d1, double d2) {
-        double d3 = (double) this.getX() - d0;
-        double d4 = (double) this.getY() - d1;
-        double d5 = (double) this.getZ() - d2;
+    public double c(final double d0, final double d1, final double d2) {
+        final double d3 = (double) this.getX() - d0;
+        final double d4 = (double) this.getY() - d1;
+        final double d5 = (double) this.getZ() - d2;
 
         return d3 * d3 + d4 * d4 + d5 * d5;
     }
 
-    public double d(double d0, double d1, double d2) {
-        double d3 = (double) this.getX() + 0.5D - d0;
-        double d4 = (double) this.getY() + 0.5D - d1;
-        double d5 = (double) this.getZ() + 0.5D - d2;
+    public double d(final double d0, final double d1, final double d2) {
+        final double d3 = (double) this.getX() + 0.5D - d0;
+        final double d4 = (double) this.getY() + 0.5D - d1;
+        final double d5 = (double) this.getZ() + 0.5D - d2;
 
         return d3 * d3 + d4 * d4 + d5 * d5;
     }
 
-    public double i(BaseBlockPosition baseblockposition) {
+    public double i(final BaseBlockPosition baseblockposition) {
         return this.c(baseblockposition.getX(), baseblockposition.getY(), baseblockposition.getZ());
     }
 
@@ -84,7 +83,7 @@ public class BaseBlockPosition implements Comparable<BaseBlockPosition> {
     }
 
     // Paperspigot - Signature change, Object -> BaseBlockPosition
-    public int compareTo(BaseBlockPosition object) {
+    public int compareTo(final BaseBlockPosition object) {
         return this.g(object);
     }
 }

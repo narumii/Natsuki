@@ -56,7 +56,7 @@ public class EnchantCommand extends VanillaCommand {
                 Enchantment enchantment = getEnchantment(args[1].toUpperCase());
                 if (enchantment == null) {
                     sender.sendMessage(String.format("Enchantment does not exist: %s", args[1]));
-                }  else {
+                } else {
                     String enchantmentName = enchantment.getName().replaceAll("_", " ");
                     enchantmentName = WordUtils.capitalizeFully(enchantmentName);
 
@@ -119,7 +119,7 @@ public class EnchantCommand extends VanillaCommand {
         return true;
     }
 
-     @Override
+    @Override
     public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
         Validate.notNull(sender, "Sender cannot be null");
         Validate.notNull(args, "Arguments cannot be null");
@@ -140,7 +140,7 @@ public class EnchantCommand extends VanillaCommand {
         }
 
         return ImmutableList.of();
-     }
+    }
 
     private Enchantment getEnchantment(String lookup) {
         Enchantment enchantment = Enchantment.getByName(lookup);

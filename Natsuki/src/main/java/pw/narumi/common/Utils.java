@@ -2,10 +2,10 @@ package pw.narumi.common;
 
 import com.maxmind.geoip2.record.Country;
 import com.sun.management.OperatingSystemMXBean;
-import oshi.SystemInfo;
-import pw.narumi.Natsuki;
 import json.JSONObject;
 import org.apache.commons.io.IOUtils;
+import oshi.SystemInfo;
+import pw.narumi.Natsuki;
 
 import java.lang.management.ManagementFactory;
 import java.net.HttpURLConnection;
@@ -19,7 +19,6 @@ public class Utils {
     private static final com.sun.management.OperatingSystemMXBean osBean = (com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
     private static final DecimalFormat format = new DecimalFormat("##.##");
     private static final SystemInfo systemInfo = new SystemInfo();
-    private static final Runtime runtime = Runtime.getRuntime();
 
     public static OperatingSystemMXBean getOsBean() {
         return osBean;
@@ -31,10 +30,6 @@ public class Utils {
 
     public static SystemInfo getSystemInfo() {
         return systemInfo;
-    }
-
-    public static Runtime getRuntime() {
-        return runtime;
     }
 
     public static String getUpTime(final long time) {
@@ -50,7 +45,7 @@ public class Utils {
             return bytes + " B";
 
         final int exp = (int) (Math.log(bytes) / Math.log(1000));
-        final String pre = ("kMGTPE").charAt(exp-1) + ("");
+        final String pre = ("kMGTPE").charAt(exp - 1) + ("");
         return String.format("%.1f %sB", bytes / Math.pow(1000, exp), pre);
     }
 
@@ -93,7 +88,7 @@ public class Utils {
             final Country country = Natsuki.getInstance().getDatabaseReader().country(inetAddress).getCountry();
             if (Natsuki.getInstance().getConfig().CONNECTION.REGION.allowedRegions.contains(country.getIsoCode().toUpperCase()))
                 return true;
-        }catch (final Exception e){
+        } catch (final Exception e) {
             return false;
         }
         return false;

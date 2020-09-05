@@ -66,9 +66,9 @@ public abstract class EntityAnimal extends EntityAgeable implements IAnimal {
     }
 
     public boolean bR() {
-        int i =(int) Math.floor(this.locX);
-        int j =(int) Math.floor(this.getBoundingBox().b);
-        int k =(int) Math.floor(this.locZ);
+        int i = (int) Math.floor(this.locX);
+        int j = (int) Math.floor(this.getBoundingBox().b);
+        int k = (int) Math.floor(this.locZ);
         BlockPosition blockposition = new BlockPosition(i, j, k);
 
         return this.world.getType(blockposition.down()).getBlock() == this.bn && this.world.k(blockposition) > 8 && super.bR();

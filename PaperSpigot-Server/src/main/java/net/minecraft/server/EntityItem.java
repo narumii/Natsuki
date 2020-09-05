@@ -91,7 +91,7 @@ public class EntityItem extends Entity {
             float f = 0.98F;
 
             if (this.onGround) {
-                f = this.world.getType(new BlockPosition(MathHelper.floor(this.locX),(int) Math.floor(this.getBoundingBox().b) - 1,(int) Math.floor(this.locZ))).getBlock().frictionFactor * 0.98F;
+                f = this.world.getType(new BlockPosition(MathHelper.floor(this.locX), (int) Math.floor(this.getBoundingBox().b) - 1, (int) Math.floor(this.locZ))).getBlock().frictionFactor * 0.98F;
             }
 
             this.motX *= f;
@@ -183,7 +183,8 @@ public class EntityItem extends Entity {
                         return false;
                     } else {
                         // Spigot start
-                        if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemMergeEvent(entityitem, this).isCancelled()) return false; // CraftBukkit
+                        if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemMergeEvent(entityitem, this).isCancelled())
+                            return false; // CraftBukkit
                         itemstack.count += itemstack1.count;
                         this.pickupDelay = Math.max(entityitem.pickupDelay, this.pickupDelay);
                         this.age = Math.min(entityitem.age, this.age);

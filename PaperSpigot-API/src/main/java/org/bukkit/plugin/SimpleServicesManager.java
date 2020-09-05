@@ -21,10 +21,10 @@ public class SimpleServicesManager implements ServicesManager {
     /**
      * Register a provider of a service.
      *
-     * @param <T> Provider
-     * @param service service class
+     * @param <T>      Provider
+     * @param service  service class
      * @param provider provider to register
-     * @param plugin plugin with the provider
+     * @param plugin   plugin with the provider
      * @param priority priority of the provider
      */
     public <T> void register(Class<T> service, T provider, Plugin plugin, ServicePriority priority) {
@@ -84,7 +84,8 @@ public class SimpleServicesManager implements ServicesManager {
                         it.remove();
                     }
                 }
-            } catch (NoSuchElementException e) {}
+            } catch (NoSuchElementException e) {
+            }
         }
         for (ServiceUnregisterEvent event : unregisteredEvents) {
             Bukkit.getServer().getPluginManager().callEvent(event);
@@ -94,7 +95,7 @@ public class SimpleServicesManager implements ServicesManager {
     /**
      * Unregister a particular provider for a particular service.
      *
-     * @param service The service interface
+     * @param service  The service interface
      * @param provider The service provider implementation
      */
     public void unregister(Class<?> service, Object provider) {
@@ -132,7 +133,8 @@ public class SimpleServicesManager implements ServicesManager {
                         it.remove();
                     }
                 }
-            } catch (NoSuchElementException e) {}
+            } catch (NoSuchElementException e) {
+            }
         }
         for (ServiceUnregisterEvent event : unregisteredEvents) {
             Bukkit.getServer().getPluginManager().callEvent(event);
@@ -173,7 +175,8 @@ public class SimpleServicesManager implements ServicesManager {
                         it.remove();
                     }
                 }
-            } catch (NoSuchElementException e) {}
+            } catch (NoSuchElementException e) {
+            }
         }
         for (ServiceUnregisterEvent event : unregisteredEvents) {
             Bukkit.getServer().getPluginManager().callEvent(event);
@@ -184,7 +187,7 @@ public class SimpleServicesManager implements ServicesManager {
      * Queries for a provider. This may return if no provider has been
      * registered for a service. The highest priority provider is returned.
      *
-     * @param <T> The service interface
+     * @param <T>     The service interface
      * @param service The service interface
      * @return provider or null
      */
@@ -205,7 +208,7 @@ public class SimpleServicesManager implements ServicesManager {
      * Queries for a provider registration. This may return if no provider
      * has been registered for a service.
      *
-     * @param <T> The service interface
+     * @param <T>     The service interface
      * @param service The service interface
      * @return provider registration or null
      */
@@ -230,7 +233,7 @@ public class SimpleServicesManager implements ServicesManager {
      * @return provider registration or null
      */
     public List<RegisteredServiceProvider<?>> getRegistrations(Plugin plugin) {
-        ImmutableList.Builder<RegisteredServiceProvider<?>> ret = ImmutableList.<RegisteredServiceProvider<?>>builder();
+        ImmutableList.Builder<RegisteredServiceProvider<?>> ret = ImmutableList.builder();
         synchronized (providers) {
             for (List<RegisteredServiceProvider<?>> registered : providers.values()) {
                 for (RegisteredServiceProvider<?> provider : registered) {
@@ -247,7 +250,7 @@ public class SimpleServicesManager implements ServicesManager {
      * Get registrations of providers for a service. The returned list is
      * an unmodifiable copy.
      *
-     * @param <T> The service interface
+     * @param <T>     The service interface
      * @param service The service interface
      * @return a copy of the list of registrations
      */
@@ -258,10 +261,10 @@ public class SimpleServicesManager implements ServicesManager {
             List<RegisteredServiceProvider<?>> registered = providers.get(service);
 
             if (registered == null) {
-                return ImmutableList.<RegisteredServiceProvider<T>>of();
+                return ImmutableList.of();
             }
 
-            ret = ImmutableList.<RegisteredServiceProvider<T>>builder();
+            ret = ImmutableList.builder();
 
             for (RegisteredServiceProvider<?> provider : registered) {
                 ret.add((RegisteredServiceProvider<T>) provider);
@@ -279,14 +282,14 @@ public class SimpleServicesManager implements ServicesManager {
      */
     public Set<Class<?>> getKnownServices() {
         synchronized (providers) {
-            return ImmutableSet.<Class<?>>copyOf(providers.keySet());
+            return ImmutableSet.copyOf(providers.keySet());
         }
     }
 
     /**
      * Returns whether a provider has been registered for a service.
      *
-     * @param <T> service
+     * @param <T>     service
      * @param service service to check
      * @return true if and only if there are registered providers
      */

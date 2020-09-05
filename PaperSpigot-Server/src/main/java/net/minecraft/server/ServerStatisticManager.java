@@ -29,11 +29,10 @@ public class ServerStatisticManager extends StatisticManager {
         this.c = minecraftserver;
         this.d = file;
         // Spigot start
-        for ( String name : org.spigotmc.SpigotConfig.forcedStats.keySet() )
-        {
+        for (String name : org.spigotmc.SpigotConfig.forcedStats.keySet()) {
             StatisticWrapper wrapper = new StatisticWrapper();
-            wrapper.a( org.spigotmc.SpigotConfig.forcedStats.get( name ) );
-            a.put( StatisticList.getStatistic( name ), wrapper );
+            wrapper.a(org.spigotmc.SpigotConfig.forcedStats.get(name));
+            a.put(StatisticList.getStatistic(name), wrapper);
         }
         // Spigot end
     }
@@ -53,7 +52,7 @@ public class ServerStatisticManager extends StatisticManager {
     }
 
     public void b() {
-        if ( org.spigotmc.SpigotConfig.disableStatSaving ) return; // Spigot
+        if (org.spigotmc.SpigotConfig.disableStatSaving) return; // Spigot
         try {
             FileUtils.writeStringToFile(this.d, a(this.a));
         } catch (IOException ioexception) {
@@ -63,7 +62,7 @@ public class ServerStatisticManager extends StatisticManager {
     }
 
     public void setStatistic(EntityHuman entityhuman, Statistic statistic, int i) {
-        if ( org.spigotmc.SpigotConfig.disableStatSaving ) return; // Spigot
+        if (org.spigotmc.SpigotConfig.disableStatSaving) return; // Spigot
         int j = statistic.d() ? this.getStatisticValue(statistic) : 0;
 
         super.setStatistic(entityhuman, statistic, i);
@@ -71,14 +70,14 @@ public class ServerStatisticManager extends StatisticManager {
         if (statistic.d() && j == 0 && i > 0) {
             this.g = true;
             if (this.c.aB()) {
-                this.c.getPlayerList().sendMessage(new ChatMessage("chat.type.achievement", new Object[] { entityhuman.getScoreboardDisplayName(), statistic.j()}));
+                this.c.getPlayerList().sendMessage(new ChatMessage("chat.type.achievement", entityhuman.getScoreboardDisplayName(), statistic.j()));
             }
         }
 
         if (statistic.d() && j > 0 && i == 0) {
             this.g = true;
             if (this.c.aB()) {
-                this.c.getPlayerList().sendMessage(new ChatMessage("chat.type.achievement.taken", new Object[] { entityhuman.getScoreboardDisplayName(), statistic.j()}));
+                this.c.getPlayerList().sendMessage(new ChatMessage("chat.type.achievement.taken", entityhuman.getScoreboardDisplayName(), statistic.j()));
             }
         }
 
@@ -120,7 +119,7 @@ public class ServerStatisticManager extends StatisticManager {
 
                         if (jsonobject1.has("progress") && statistic.l() != null) {
                             try {
-                                Constructor constructor = statistic.l().getConstructor(new Class[0]);
+                                Constructor constructor = statistic.l().getConstructor();
                                 IJsonStatistic ijsonstatistic = (IJsonStatistic) constructor.newInstance(new Object[0]);
 
                                 ijsonstatistic.a(jsonobject1.get("progress"));
@@ -133,7 +132,7 @@ public class ServerStatisticManager extends StatisticManager {
 
                     hashmap.put(statistic, statisticwrapper);
                 } else {
-                    ServerStatisticManager.b.warn("Invalid statistic in " + this.d + ": Don\'t know what " + (String) entry.getKey() + " is");
+                    ServerStatisticManager.b.warn("Invalid statistic in " + this.d + ": Don\'t know what " + entry.getKey() + " is");
                 }
             }
 

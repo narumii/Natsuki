@@ -57,7 +57,7 @@ public class PathfinderGoalTame extends PathfinderGoal {
 
             // CraftBukkit start - Handle dismounting to account for VehicleExitEvent being fired.
             if (this.entity.passenger != null) {
-                this.entity.passenger.mount((Entity) null);
+                this.entity.passenger.mount(null);
                 // If the entity still has a passenger, then a plugin cancelled the event.
                 if (this.entity.passenger != null) {
                     return;

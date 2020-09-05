@@ -344,9 +344,9 @@ public class EntityEnderman extends EntityMonster {
         public void e() {
             Random random = this.enderman.bc();
             World world = this.enderman.world;
-            int i =(int) Math.floor(this.enderman.locX - 2.0D + random.nextDouble() * 4.0D);
-            int j =(int) Math.floor(this.enderman.locY + random.nextDouble() * 3.0D);
-            int k =(int) Math.floor(this.enderman.locZ - 2.0D + random.nextDouble() * 4.0D);
+            int i = (int) Math.floor(this.enderman.locX - 2.0D + random.nextDouble() * 4.0D);
+            int j = (int) Math.floor(this.enderman.locY + random.nextDouble() * 3.0D);
+            int k = (int) Math.floor(this.enderman.locZ - 2.0D + random.nextDouble() * 4.0D);
             BlockPosition blockposition = new BlockPosition(i, j, k);
             IBlockData iblockdata = world.getType(blockposition);
             Block block = iblockdata.getBlock();
@@ -378,9 +378,9 @@ public class EntityEnderman extends EntityMonster {
         public void e() {
             Random random = this.a.bc();
             World world = this.a.world;
-            int i =(int) Math.floor(this.a.locX - 1.0D + random.nextDouble() * 2.0D);
-            int j =(int) Math.floor(this.a.locY + random.nextDouble() * 2.0D);
-            int k =(int) Math.floor(this.a.locZ - 1.0D + random.nextDouble() * 2.0D);
+            int i = (int) Math.floor(this.a.locX - 1.0D + random.nextDouble() * 2.0D);
+            int j = (int) Math.floor(this.a.locY + random.nextDouble() * 2.0D);
+            int k = (int) Math.floor(this.a.locZ - 1.0D + random.nextDouble() * 2.0D);
             BlockPosition blockposition = new BlockPosition(i, j, k);
             Block block = world.getType(blockposition).getBlock();
             Block block1 = world.getType(blockposition.down()).getBlock();
@@ -388,8 +388,8 @@ public class EntityEnderman extends EntityMonster {
             if (this.a(world, blockposition, this.a.getCarried().getBlock(), block, block1)) {
                 // CraftBukkit start - Place event
                 if (!org.bukkit.craftbukkit.event.CraftEventFactory.callEntityChangeBlockEvent(this.a, blockposition.getX(), blockposition.getY(), blockposition.getZ(), this.a.getCarried().getBlock(), this.a.getCarried().getBlock().toLegacyData(this.a.getCarried())).isCancelled()) {
-                world.setTypeAndData(blockposition, this.a.getCarried(), 3);
-                this.a.setCarried(Blocks.AIR.getBlockData());
+                    world.setTypeAndData(blockposition, this.a.getCarried(), 3);
+                    this.a.setCarried(Blocks.AIR.getBlockData());
                 }
                 // CraftBukkit end
             }

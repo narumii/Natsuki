@@ -15,7 +15,7 @@ public class InactivityConversationCanceller implements ConversationCanceller {
     /**
      * Creates an InactivityConversationCanceller.
      *
-     * @param plugin The owning plugin.
+     * @param plugin         The owning plugin.
      * @param timeoutSeconds The number of seconds of inactivity to wait.
      */
     public InactivityConversationCanceller(Plugin plugin, int timeoutSeconds) {
@@ -47,7 +47,7 @@ public class InactivityConversationCanceller implements ConversationCanceller {
             public void run() {
                 if (conversation.getState() == Conversation.ConversationState.UNSTARTED) {
                     startTimer();
-                } else if (conversation.getState() ==  Conversation.ConversationState.STARTED) {
+                } else if (conversation.getState() == Conversation.ConversationState.STARTED) {
                     cancelling(conversation);
                     conversation.abandon(new ConversationAbandonedEvent(conversation, InactivityConversationCanceller.this));
                 }

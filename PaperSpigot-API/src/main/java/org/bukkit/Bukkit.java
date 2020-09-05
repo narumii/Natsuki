@@ -38,7 +38,8 @@ public final class Bukkit {
     /**
      * Static class cannot be initialized.
      */
-    private Bukkit() {}
+    private Bukkit() {
+    }
 
     /**
      * Gets the current {@link Server} singleton
@@ -98,8 +99,8 @@ public final class Bukkit {
      * compatibility. It will not exist at runtime and should not be used
      * under any circumstances.
      *
-     * @deprecated superseded by {@link #getOnlinePlayers()}
      * @return an array of Players that are currently online
+     * @deprecated superseded by {@link #getOnlinePlayers()}
      */
     @Deprecated
     public static Player[] _INVALID_getOnlinePlayers() {
@@ -124,7 +125,7 @@ public final class Bukkit {
      * affect the collection are fully supported. The effects following
      * (non-exhaustive) {@link Entity#teleport(Location) teleportation},
      * {@link Player#setHealth(double) death}, and {@link Player#kickPlayer(
-     * String) kicking} are undefined. Any use of this collection from
+     *String) kicking} are undefined. Any use of this collection from
      * asynchronous threads is unsafe.
      * <p>
      * For safe consequential iteration or mimicking the old array behavior,
@@ -169,7 +170,7 @@ public final class Bukkit {
      * specified.
      *
      * @return the IP string that this server is bound to, otherwise empty
-     *     string
+     * string
      */
     public static String getIp() {
         return server.getIp();
@@ -193,7 +194,7 @@ public final class Bukkit {
     public static String getServerId() {
         return server.getServerId();
     }
-    
+
     /**
      * Get world type (level-type setting) for default world.
      *
@@ -278,6 +279,7 @@ public final class Bukkit {
     }
 
     // Paper start
+
     /**
      * Sends the component to the player
      *
@@ -334,9 +336,9 @@ public final class Bukkit {
      * <b>Example Usage:</b>
      * <ul>
      * <li>A value of 1 will mean the server will attempt to spawn monsters
-     *     every tick.
+     * every tick.
      * <li>A value of 400 will mean the server will attempt to spawn monsters
-     *     every 400th tick.
+     * every 400th tick.
      * <li>A value below 0 will be reset back to Minecraft's default.
      * </ul>
      * <p>
@@ -357,9 +359,9 @@ public final class Bukkit {
      * <b>Example Usage:</b>
      * <ul>
      * <li>A value of 1 will mean the server will attempt to spawn monsters
-     *     every tick.
+     * every tick.
      * <li>A value of 400 will mean the server will attempt to spawn monsters
-     *     every 400th tick.
+     * every 400th tick.
      * <li>A value below 0 will be reset back to Minecraft's default.
      * </ul>
      * <p>
@@ -485,7 +487,7 @@ public final class Bukkit {
      * Unloads the given world.
      *
      * @param world the world to unload
-     * @param save whether to save the chunks before unloading
+     * @param save  whether to save the chunks before unloading
      * @return true if successful, false otherwise
      */
     public static boolean unloadWorld(World world, boolean save) {
@@ -566,16 +568,16 @@ public final class Bukkit {
     public static void savePlayers() {
         server.savePlayers();
     }
-    
+
     /**
      * Dispatches a command on this server, and executes it if found.
      *
-     * @param sender the apparent sender of the command
+     * @param sender      the apparent sender of the command
      * @param commandLine the command + arguments. Example: <code>test abc
-     *     123</code>
+     *                    123</code>
      * @return returns false if no target is found
      * @throws CommandException thrown when the executor for the given command
-     *     fails with an unhandled exception
+     *                          fails with an unhandled exception
      */
     public static boolean dispatchCommand(CommandSender sender, String commandLine) throws CommandException {
         return server.dispatchCommand(sender, commandLine);
@@ -596,7 +598,7 @@ public final class Bukkit {
      *
      * @param recipe the recipe to add
      * @return true if the recipe was added, false if it wasn't for some
-     *     reason
+     * reason
      */
     public static boolean addRecipe(Recipe recipe) {
         return server.addRecipe(recipe);
@@ -635,7 +637,7 @@ public final class Bukkit {
     public static void resetRecipes() {
         server.resetRecipes();
     }
-    
+
     /**
      * Gets a list of command aliases defined in the server properties.
      *
@@ -695,20 +697,19 @@ public final class Bukkit {
      *
      * <ul>
      * <li>Vanilla behaviour: check for collisions and move the player if
-     *     needed.
+     * needed.
      * <li>Exact behaviour: spawn players exactly where they should be.
      * </ul>
      *
      * @return true if exact location locations are used for spawning, false
-     *     for vanilla collision detection or otherwise
-     *
+     * for vanilla collision detection or otherwise
      * @deprecated non standard and unused feature.
      */
     @Deprecated
     public static boolean useExactLoginLocation() {
         return server.useExactLoginLocation();
     }
- 
+
     /**
      * Shutdowns the server, stopping everything.
      */
@@ -720,9 +721,9 @@ public final class Bukkit {
      * Broadcasts the specified message to every user with the given
      * permission name.
      *
-     * @param message message to broadcast
+     * @param message    message to broadcast
      * @param permission the required permission {@link Permissible
-     *     permissibles} must have to receive the broadcast
+     *                   permissibles} must have to receive the broadcast
      * @return number of message recipients
      */
     public static int broadcast(String message, String permission) {
@@ -739,11 +740,11 @@ public final class Bukkit {
      * This will return an object even if the player does not exist. To this
      * method, all players will exist.
      *
-     * @deprecated Persistent storage of users should be by UUID as names are no longer
-     *             unique past a single session.
      * @param name the name the player to retrieve
      * @return an offline player
      * @see #getOfflinePlayer(java.util.UUID)
+     * @deprecated Persistent storage of users should be by UUID as names are no longer
+     * unique past a single session.
      */
     @Deprecated
     public static OfflinePlayer getOfflinePlayer(String name) {
@@ -809,7 +810,7 @@ public final class Bukkit {
      * @param type the type of list to fetch, cannot be null
      * @return a ban list of the specified type
      */
-    public static BanList getBanList(BanList.Type type){
+    public static BanList getBanList(BanList.Type type) {
         return server.getBanList(type);
     }
 
@@ -892,7 +893,7 @@ public final class Bukkit {
      * new inventory has the normal size for its type.
      *
      * @param owner the holder of the inventory, or null to indicate no holder
-     * @param type the type of inventory to create
+     * @param type  the type of inventory to create
      * @return a new inventory
      */
     public static Inventory createInventory(InventoryHolder owner, InventoryType type) {
@@ -907,7 +908,7 @@ public final class Bukkit {
      * may not render with said titles on the Minecraft client.
      *
      * @param owner The holder of the inventory; can be null if there's no holder.
-     * @param type The type of inventory to create.
+     * @param type  The type of inventory to create.
      * @param title The title of the inventory, to be displayed when it is viewed.
      * @return The new inventory.
      */
@@ -920,7 +921,7 @@ public final class Bukkit {
      * specified size.
      *
      * @param owner the holder of the inventory, or null to indicate no holder
-     * @param size a multiple of 9 as the size of inventory to create
+     * @param size  a multiple of 9 as the size of inventory to create
      * @return a new inventory
      * @throws IllegalArgumentException if the size is not a multiple of 9
      */
@@ -933,9 +934,9 @@ public final class Bukkit {
      * specified size and title.
      *
      * @param owner the holder of the inventory, or null to indicate no holder
-     * @param size a multiple of 9 as the size of inventory to create
+     * @param size  a multiple of 9 as the size of inventory to create
      * @param title the title of the inventory, displayed when inventory is
-     *     viewed
+     *              viewed
      * @return a new inventory
      * @throws IllegalArgumentException if the size is not a multiple of 9
      */
@@ -972,7 +973,7 @@ public final class Bukkit {
     public static int getWaterAnimalSpawnLimit() {
         return server.getWaterAnimalSpawnLimit();
     }
-    
+
     /**
      * Gets user-specified limit for number of ambient mobs that can spawn in
      * a chunk.
@@ -993,7 +994,7 @@ public final class Bukkit {
      * preclude</b> the same assumption.
      *
      * @return true if the current thread matches the expected primary thread,
-     *     false otherwise
+     * false otherwise
      */
     public static boolean isPrimaryThread() {
         return server.isPrimaryThread();
@@ -1051,8 +1052,8 @@ public final class Bukkit {
      * Gets an instance of the server's default server-icon.
      *
      * @return the default server-icon; null values may be used by the
-     *     implementation to indicate no defined icon, but this behavior is
-     *     not guaranteed
+     * implementation to indicate no defined icon, but this behavior is
+     * not guaranteed
      */
     public static CachedServerIcon getServerIcon() {
         return server.getServerIcon();
@@ -1066,11 +1067,11 @@ public final class Bukkit {
      * guaranteed to throw an implementation-defined {@link Exception}.
      *
      * @param file the file to load the from
-     * @throws IllegalArgumentException if image is null
-     * @throws Exception if the image does not meet current server server-icon
-     *     specifications
      * @return a cached server-icon that can be used for a {@link
-     *     ServerListPingEvent#setServerIcon(CachedServerIcon)}
+     * ServerListPingEvent#setServerIcon(CachedServerIcon)}
+     * @throws IllegalArgumentException if image is null
+     * @throws Exception                if the image does not meet current server server-icon
+     *                                  specifications
      */
     public static CachedServerIcon loadServerIcon(File file) throws IllegalArgumentException, Exception {
         return server.loadServerIcon(file);
@@ -1083,11 +1084,11 @@ public final class Bukkit {
      * guaranteed to throw an implementation-defined {@link Exception}.
      *
      * @param image the image to use
-     * @throws IllegalArgumentException if image is null
-     * @throws Exception if the image does not meet current server
-     *     server-icon specifications
      * @return a cached server-icon that can be used for a {@link
-     *     ServerListPingEvent#setServerIcon(CachedServerIcon)}
+     * ServerListPingEvent#setServerIcon(CachedServerIcon)}
+     * @throws IllegalArgumentException if image is null
+     * @throws Exception                if the image does not meet current server
+     *                                  server-icon specifications
      */
     public static CachedServerIcon loadServerIcon(BufferedImage image) throws IllegalArgumentException, Exception {
         return server.loadServerIcon(image);
@@ -1116,20 +1117,19 @@ public final class Bukkit {
 
     /**
      * Create a ChunkData for use in a generator.
-     * 
+     * <p>
      * See {@link ChunkGenerator#generateChunkData(org.bukkit.World, java.util.Random, int, int, org.bukkit.generator.ChunkGenerator.BiomeGrid)}
-     * 
+     *
      * @param world the world to create the ChunkData for
      * @return a new ChunkData for the world
-     * 
      */
     public static ChunkGenerator.ChunkData createChunkData(World world) {
         return server.createChunkData(world);
     }
 
     /**
-     * @see UnsafeValues
      * @return the unsafe values instance
+     * @see UnsafeValues
      */
     @Deprecated
     public static UnsafeValues getUnsafe() {
@@ -1137,6 +1137,7 @@ public final class Bukkit {
     }
 
     // Paper start
+
     /**
      * Gets the active {@link CommandMap}.
      *
@@ -1147,8 +1148,7 @@ public final class Bukkit {
     }
     // Paper end
 
-    public static Server.Spigot spigot()
-    {
+    public static Server.Spigot spigot() {
         return server.spigot();
     }
 }

@@ -25,7 +25,7 @@ public enum GrassSpecies {
     private final byte data;
     private final static Map<Byte, GrassSpecies> BY_DATA = Maps.newHashMap();
 
-    private GrassSpecies(final int data) {
+    GrassSpecies(final int data) {
         this.data = (byte) data;
     }
 
@@ -45,7 +45,7 @@ public enum GrassSpecies {
      *
      * @param data Data value to fetch
      * @return The {@link GrassSpecies} representing the given value, or null
-     *     if it doesn't exist
+     * if it doesn't exist
      * @deprecated Magic value
      */
     @Deprecated

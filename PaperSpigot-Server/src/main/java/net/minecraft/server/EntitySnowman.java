@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 import org.bukkit.event.block.EntityBlockFormEvent;
@@ -28,9 +29,9 @@ public class EntitySnowman extends EntityGolem implements IRangedEntity {
     public void m() {
         super.m();
         if (!this.world.isClientSide) {
-            int i =(int) Math.floor(this.locX);
-            int j =(int) Math.floor(this.locY);
-            int k =(int) Math.floor(this.locZ);
+            int i = (int) Math.floor(this.locX);
+            int j = (int) Math.floor(this.locY);
+            int k = (int) Math.floor(this.locZ);
 
             if (this.U()) {
                 this.damageEntity(DamageSource.DROWN, 1.0F);
@@ -41,9 +42,9 @@ public class EntitySnowman extends EntityGolem implements IRangedEntity {
             }
 
             for (int l = 0; l < 4; ++l) {
-                i =(int) Math.floor(this.locX + (double) ((float) (l % 2 * 2 - 1) * 0.25F));
-                j =(int) Math.floor(this.locY);
-                k =(int) Math.floor(this.locZ + (double) ((float) (l / 2 % 2 * 2 - 1) * 0.25F));
+                i = (int) Math.floor(this.locX + (double) ((float) (l % 2 * 2 - 1) * 0.25F));
+                j = (int) Math.floor(this.locY);
+                k = (int) Math.floor(this.locZ + (double) ((float) (l / 2 % 2 * 2 - 1) * 0.25F));
                 BlockPosition blockposition = new BlockPosition(i, j, k);
 
                 if (this.world.getType(blockposition).getBlock().getMaterial() == Material.AIR && this.world.getBiome(new BlockPosition(i, 0, k)).a(blockposition) < 0.8F && Blocks.SNOW_LAYER.canPlace(this.world, blockposition)) {
@@ -54,7 +55,7 @@ public class EntitySnowman extends EntityGolem implements IRangedEntity {
                     EntityBlockFormEvent event = new EntityBlockFormEvent(this.getBukkitEntity(), blockState.getBlock(), blockState);
                     this.world.getServer().getPluginManager().callEvent(event);
 
-                    if(!event.isCancelled()) {
+                    if (!event.isCancelled()) {
                         blockState.update(true);
                     }
                     // CraftBukkit end

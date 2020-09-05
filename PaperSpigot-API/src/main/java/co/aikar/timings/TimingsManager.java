@@ -37,18 +37,18 @@ import java.util.logging.Level;
 
 public final class TimingsManager {
     static final Map<TimingIdentifier, TimingHandler> TIMING_MAP =
-        Collections.synchronizedMap(LoadingMap.newHashMap(
-            new Function<TimingIdentifier, TimingHandler>() {
-                @Override
-                public TimingHandler apply(TimingIdentifier id) {
-                    return (id.protect ?
-                        new UnsafeTimingHandler(id) :
-                        new TimingHandler(id)
-                    );
-                }
-            },
-            256, .5F
-        ));
+            Collections.synchronizedMap(LoadingMap.newHashMap(
+                    new Function<TimingIdentifier, TimingHandler>() {
+                        @Override
+                        public TimingHandler apply(TimingIdentifier id) {
+                            return (id.protect ?
+                                    new UnsafeTimingHandler(id) :
+                                    new TimingHandler(id)
+                            );
+                        }
+                    },
+                    256, .5F
+            ));
     public static final FullServerTickHandler FULL_SERVER_TICK = new FullServerTickHandler();
     public static final TimingHandler TIMINGS_TICK = Timings.ofSafe("Timings Tick", FULL_SERVER_TICK);
     public static final Timing PLUGIN_GROUP_HANDLER = Timings.ofSafe("Plugins");
@@ -65,7 +65,8 @@ public final class TimingsManager {
     static boolean needsFullReset = false;
     static boolean needsRecheckEnabled = false;
 
-    private TimingsManager() {}
+    private TimingsManager() {
+    }
 
     /**
      * Resets all timing data on the next tick
@@ -95,10 +96,12 @@ public final class TimingsManager {
             // Generate TPS/Ping/Tick reports every minute
         }
     }
+
     static void stopServer() {
         Timings.timingsEnabled = false;
         recheckEnabled();
     }
+
     static void recheckEnabled() {
         synchronized (TIMING_MAP) {
             for (TimingHandler timings : TIMING_MAP.values()) {
@@ -107,6 +110,7 @@ public final class TimingsManager {
         }
         needsRecheckEnabled = false;
     }
+
     static void resetTimings() {
         if (needsFullReset) {
             // Full resets need to re-check every handlers enabled state
@@ -143,7 +147,7 @@ public final class TimingsManager {
 
     /**
      * <p>Due to access restrictions, we need a helper method to get a Command TimingHandler with String group</p>
-     *
+     * <p>
      * Plugins should never call this
      *
      * @param pluginName Plugin this command is associated with
@@ -154,7 +158,7 @@ public final class TimingsManager {
         Plugin plugin = null;
         final Server server = Bukkit.getServer();
         if (!("minecraft".equals(pluginName) || "bukkit".equals(pluginName) || "Spigot".equals(pluginName) || "Natsuki".equalsIgnoreCase(pluginName) ||
-            server == null)) {
+                server == null)) {
             plugin = server.getPluginManager().getPlugin(pluginName);
             if (plugin == null) {
                 // Plugin is passing custom fallback prefix, try to look up by class loader

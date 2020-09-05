@@ -101,7 +101,7 @@ public class SpreadPlayersCommand extends VanillaCommand {
 
         sender.sendMessage(String.format("Succesfully spread %d %s around %s,%s", locations.length, teams ? "teams" : "players", x, z));
         if (locations.length > 1) {
-            sender.sendMessage(String.format("(Average distance between %s is %s blocks apart after %s iterations)", teams ? "teams" : "players",  String.format("%.2f", distanceSpread), rangeSpread));
+            sender.sendMessage(String.format("(Average distance between %s is %s blocks apart after %s iterations)", teams ? "teams" : "players", String.format("%.2f", distanceSpread), rangeSpread));
         }
         return true;
     }

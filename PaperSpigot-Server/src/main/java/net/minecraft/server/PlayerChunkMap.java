@@ -20,7 +20,7 @@ public class PlayerChunkMap {
     private final Queue<PlayerChunkMap.PlayerChunk> f = new java.util.concurrent.ConcurrentLinkedQueue<PlayerChunkMap.PlayerChunk>(); // CraftBukkit ArrayList -> ConcurrentLinkedQueue
     private int g;
     private long h;
-    private final int[][] i = new int[][] { { 1, 0}, { 0, 1}, { -1, 0}, { 0, -1}};
+    private final int[][] i = new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
     private boolean wasNotEmpty; // CraftBukkit - add field
 
     public PlayerChunkMap(WorldServer worldserver, int viewDistance /* Spigot */) {
@@ -82,7 +82,7 @@ public class PlayerChunkMap {
 
     private PlayerChunkMap.PlayerChunk a(int i, int j, boolean flag) {
         long k = (long) i + 2147483647L | (long) j + 2147483647L << 32;
-        PlayerChunkMap.PlayerChunk playerchunkmap_playerchunk = (PlayerChunkMap.PlayerChunk) this.d.getEntry(k);
+        PlayerChunkMap.PlayerChunk playerchunkmap_playerchunk = this.d.getEntry(k);
 
         if (playerchunkmap_playerchunk == null && flag) {
             playerchunkmap_playerchunk = new PlayerChunkMap.PlayerChunk(i, j);
@@ -127,11 +127,11 @@ public class PlayerChunkMap {
         // PaperSpigot start - Player view distance API
         for (int k = i - entityplayer.viewDistance; k <= i + entityplayer.viewDistance; ++k) {
             for (int l = j - entityplayer.viewDistance; l <= j + entityplayer.viewDistance; ++l) {
-        // PaperSpigot end
+                // PaperSpigot end
                 chunkList.add(new ChunkCoordIntPair(k, l));
             }
         }
-        
+
         Collections.sort(chunkList, new ChunkCoordComparator(entityplayer));
         for (ChunkCoordIntPair pair : chunkList) {
             this.a(pair.x, pair.z, true).a(entityplayer);
@@ -194,7 +194,7 @@ public class PlayerChunkMap {
         // PaperSpigot start - Player view distance API
         for (int k = i - entityplayer.viewDistance; k <= i + entityplayer.viewDistance; ++k) {
             for (int l = j - entityplayer.viewDistance; l <= j + entityplayer.viewDistance; ++l) {
-        // PaperSpigot end
+                // PaperSpigot end
                 PlayerChunkMap.PlayerChunk playerchunkmap_playerchunk = this.a(k, l, false);
 
                 if (playerchunkmap_playerchunk != null) {
@@ -210,7 +210,7 @@ public class PlayerChunkMap {
         int j1 = i - k;
         int k1 = j - l;
 
-        return j1 >= -i1 && j1 <= i1 ? k1 >= -i1 && k1 <= i1 : false;
+        return (j1 >= -i1 && j1 <= i1) && (k1 >= -i1 && k1 <= i1);
     }
 
     public void movePlayer(EntityPlayer entityplayer) {
@@ -370,7 +370,7 @@ public class PlayerChunkMap {
 
         public void a(final EntityPlayer entityplayer) {  // CraftBukkit - added final to argument
             if (this.b.contains(entityplayer)) {
-                PlayerChunkMap.a.debug("Failed to add player. {} already is in chunk {}, {}", new Object[] { entityplayer, Integer.valueOf(this.location.x), Integer.valueOf(this.location.z)});
+                PlayerChunkMap.a.debug("Failed to add player. {} already is in chunk {}, {}", entityplayer, Integer.valueOf(this.location.x), Integer.valueOf(this.location.z));
             } else {
                 if (this.b.isEmpty()) {
                     this.g = PlayerChunkMap.this.world.getTime();
@@ -470,7 +470,7 @@ public class PlayerChunkMap {
 
         public void a(Packet packet) {
             for (int i = 0; i < this.b.size(); ++i) {
-                EntityPlayer entityplayer = (EntityPlayer) this.b.get(i);
+                EntityPlayer entityplayer = this.b.get(i);
 
                 if (!entityplayer.chunkCoordIntPairQueue.contains(this.location)) {
                     entityplayer.playerConnection.sendPacket(packet);
@@ -491,7 +491,7 @@ public class PlayerChunkMap {
                     k = (this.dirtyBlocks[0] >> 8 & 15) + this.location.z * 16;
                     BlockPosition blockposition = new BlockPosition(i, j, k);
 
-                    this.a((Packet) (new PacketPlayOutBlockChange(PlayerChunkMap.this.world, blockposition)));
+                    this.a(new PacketPlayOutBlockChange(PlayerChunkMap.this.world, blockposition));
                     if (PlayerChunkMap.this.world.getType(blockposition).getBlock().isTileEntity()) {
                         this.a(PlayerChunkMap.this.world.getTileEntity(blockposition));
                     }
@@ -501,7 +501,7 @@ public class PlayerChunkMap {
                     if (this.dirtyCount == 64) {
                         i = this.location.x * 16;
                         j = this.location.z * 16;
-                        this.a((Packet) (new PacketPlayOutMapChunk(PlayerChunkMap.this.world.getChunkAt(this.location.x, this.location.z), false, this.f)));
+                        this.a(new PacketPlayOutMapChunk(PlayerChunkMap.this.world.getChunkAt(this.location.x, this.location.z), false, this.f));
 
                         for (k = 0; k < 16; ++k) {
                             if ((this.f & 1 << k) != 0) {
@@ -514,7 +514,7 @@ public class PlayerChunkMap {
                             }
                         }
                     } else {
-                        this.a((Packet) (new PacketPlayOutMultiBlockChange(this.dirtyCount, this.dirtyBlocks, PlayerChunkMap.this.world.getChunkAt(this.location.x, this.location.z))));
+                        this.a(new PacketPlayOutMultiBlockChange(this.dirtyCount, this.dirtyBlocks, PlayerChunkMap.this.world.getChunkAt(this.location.x, this.location.z)));
 
                         for (i = 0; i < this.dirtyCount; ++i) {
                             j = (this.dirtyBlocks[i] >> 12 & 15) + this.location.x * 16;
@@ -551,7 +551,7 @@ public class PlayerChunkMap {
         private int x;
         private int z;
 
-        public ChunkCoordComparator (EntityPlayer entityplayer) {
+        public ChunkCoordComparator(EntityPlayer entityplayer) {
             x = (int) entityplayer.locX >> 4;
             z = (int) entityplayer.locZ >> 4;
         }

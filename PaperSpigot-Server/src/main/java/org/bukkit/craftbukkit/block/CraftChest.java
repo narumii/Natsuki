@@ -50,7 +50,7 @@ public class CraftChest extends CraftBlockState implements Chest {
         }
 
         if (world.getBlockTypeIdAt(x - 1, y, z) == id) {
-            CraftInventory left = new CraftInventory((TileEntityChest)world.getHandle().getTileEntity(new BlockPosition(x - 1, y, z)));
+            CraftInventory left = new CraftInventory((TileEntityChest) world.getHandle().getTileEntity(new BlockPosition(x - 1, y, z)));
             inventory = new CraftInventoryDoubleChest(left, inventory);
         }
         if (world.getBlockTypeIdAt(x + 1, y, z) == id) {

@@ -66,7 +66,7 @@ public abstract class EntityMonster extends EntityCreature implements IMonster {
 
         if (entity instanceof EntityLiving) {
             f += EnchantmentManager.a(this.bA(), ((EntityLiving) entity).getMonsterType());
-            i += EnchantmentManager.a((EntityLiving) this);
+            i += EnchantmentManager.a(this);
         }
 
         boolean flag = entity.damageEntity(DamageSource.mobAttack(this), f);
@@ -91,7 +91,7 @@ public abstract class EntityMonster extends EntityCreature implements IMonster {
                 // CraftBukkit end
             }
 
-            this.a((EntityLiving) this, entity);
+            this.a(this, entity);
         }
 
         return flag;

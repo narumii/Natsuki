@@ -27,8 +27,7 @@ public final class CraftMapView implements MapView {
         if (text.startsWith("map_")) {
             try {
                 return Short.parseShort(text.substring("map_".length()));
-            }
-            catch (NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 throw new IllegalStateException("Map has non-numeric ID");
             }
         } else {
@@ -123,7 +122,7 @@ public final class CraftMapView implements MapView {
             renderCache.put(context ? player : null, render);
         }
 
-        if (context && renderCache.containsKey(null)) {
+        if (context) {
             renderCache.remove(null);
         }
 

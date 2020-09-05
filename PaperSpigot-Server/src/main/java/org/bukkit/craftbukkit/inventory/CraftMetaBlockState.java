@@ -14,10 +14,10 @@ import java.util.Map;
 
 @DelegateDeserialization(CraftMetaItem.SerializableMeta.class)
 public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta {
-    
+
     @ItemMetaKey.Specific(ItemMetaKey.Specific.To.NBT)
     static final ItemMetaKey BLOCK_ENTITY_TAG = new ItemMetaKey("BlockEntityTag");
-    
+
     final Material material;
     NBTTagCompound blockEntityTag;
 
@@ -40,7 +40,7 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
     CraftMetaBlockState(NBTTagCompound tag, Material material) {
         super(tag);
         this.material = material;
-        
+
         if (tag.hasKeyOfType(BLOCK_ENTITY_TAG.NBT, 10)) {
             blockEntityTag = tag.getCompound(BLOCK_ENTITY_TAG.NBT);
         } else {
@@ -62,7 +62,7 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
     @Override
     void applyToItem(NBTTagCompound tag) {
         super.applyToItem(tag);
-        
+
         if (blockEntityTag != null) {
             tag.set(BLOCK_ENTITY_TAG.NBT, blockEntityTag);
         }
@@ -124,7 +124,7 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
 
     @Override
     boolean applicableTo(Material type) {
-        switch(type){         
+        switch (type) {
             case FURNACE:
             case CHEST:
             case TRAPPED_CHEST:
@@ -159,84 +159,84 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
         TileEntity te = blockEntityTag == null ? null : TileEntity.c(blockEntityTag);
 
         switch (material) {
-        case SIGN:
-        case SIGN_POST:
-        case WALL_SIGN:
-            if (te == null) {
-                te = new TileEntitySign();
-            }
-            return new CraftSign(material, (TileEntitySign) te);
-        case CHEST:
-        case TRAPPED_CHEST:
-            if (te == null) {
-                te = new TileEntityChest();
-            }
-            return new CraftChest(material, (TileEntityChest) te);
-        case BURNING_FURNACE:
-        case FURNACE:
-            if (te == null) {
-                te = new TileEntityFurnace();
-            }
-            return new CraftFurnace(material, (TileEntityFurnace) te);
-        case DISPENSER:
-            if (te == null) {
-                te = new TileEntityDispenser();
-            }
-            return new CraftDispenser(material, (TileEntityDispenser) te);
-        case DROPPER:
-            if (te == null) {
-                te = new TileEntityDispenser();
-            }
-            return new CraftDropper(material, (TileEntityDropper) te);
-        case HOPPER:
-            if (te == null) {
-                te = new TileEntityHopper();
-            }
-            return new CraftHopper(material, (TileEntityHopper) te);
-        case MOB_SPAWNER:
-            if (te == null) {
-                te = new TileEntityMobSpawner();
-            }
-            return new CraftCreatureSpawner(material, (TileEntityMobSpawner) te);
-        case NOTE_BLOCK:
-            if (te == null) {
-                te = new TileEntityNote();
-            }
-            return new CraftNoteBlock(material, (TileEntityNote) te);
-        case JUKEBOX:
-            if (te == null) {
-                te = new BlockJukeBox.TileEntityRecordPlayer();
-            }
-            return new CraftJukebox(material, (BlockJukeBox.TileEntityRecordPlayer) te);
-        case BREWING_STAND:
-            if (te == null) {
-                te = new TileEntityBrewingStand();
-            }
-            return new CraftBrewingStand(material, (TileEntityBrewingStand) te);
-        case SKULL:
-            if (te == null) {
-                te = new TileEntitySkull();
-            }
-            return new CraftSkull(material, (TileEntitySkull) te);
-        case COMMAND:
-            if (te == null) {
-                te = new TileEntityCommand();
-            }
-            return new CraftCommandBlock(material, (TileEntityCommand) te);
-        case BEACON:
-            if (te == null) {
-                te = new TileEntityBeacon();
-            }
-            return new CraftBeacon(material, (TileEntityBeacon) te);
-        case BANNER:
-        case WALL_BANNER:
-        case STANDING_BANNER:
-            if (te == null) {
-                te = new TileEntityBanner();
-            }
-            return new CraftBanner(material, (TileEntityBanner) te);
-        default:
-            throw new IllegalStateException("Missing blockState for " + material);
+            case SIGN:
+            case SIGN_POST:
+            case WALL_SIGN:
+                if (te == null) {
+                    te = new TileEntitySign();
+                }
+                return new CraftSign(material, (TileEntitySign) te);
+            case CHEST:
+            case TRAPPED_CHEST:
+                if (te == null) {
+                    te = new TileEntityChest();
+                }
+                return new CraftChest(material, (TileEntityChest) te);
+            case BURNING_FURNACE:
+            case FURNACE:
+                if (te == null) {
+                    te = new TileEntityFurnace();
+                }
+                return new CraftFurnace(material, (TileEntityFurnace) te);
+            case DISPENSER:
+                if (te == null) {
+                    te = new TileEntityDispenser();
+                }
+                return new CraftDispenser(material, (TileEntityDispenser) te);
+            case DROPPER:
+                if (te == null) {
+                    te = new TileEntityDispenser();
+                }
+                return new CraftDropper(material, (TileEntityDropper) te);
+            case HOPPER:
+                if (te == null) {
+                    te = new TileEntityHopper();
+                }
+                return new CraftHopper(material, (TileEntityHopper) te);
+            case MOB_SPAWNER:
+                if (te == null) {
+                    te = new TileEntityMobSpawner();
+                }
+                return new CraftCreatureSpawner(material, (TileEntityMobSpawner) te);
+            case NOTE_BLOCK:
+                if (te == null) {
+                    te = new TileEntityNote();
+                }
+                return new CraftNoteBlock(material, (TileEntityNote) te);
+            case JUKEBOX:
+                if (te == null) {
+                    te = new BlockJukeBox.TileEntityRecordPlayer();
+                }
+                return new CraftJukebox(material, (BlockJukeBox.TileEntityRecordPlayer) te);
+            case BREWING_STAND:
+                if (te == null) {
+                    te = new TileEntityBrewingStand();
+                }
+                return new CraftBrewingStand(material, (TileEntityBrewingStand) te);
+            case SKULL:
+                if (te == null) {
+                    te = new TileEntitySkull();
+                }
+                return new CraftSkull(material, (TileEntitySkull) te);
+            case COMMAND:
+                if (te == null) {
+                    te = new TileEntityCommand();
+                }
+                return new CraftCommandBlock(material, (TileEntityCommand) te);
+            case BEACON:
+                if (te == null) {
+                    te = new TileEntityBeacon();
+                }
+                return new CraftBeacon(material, (TileEntityBeacon) te);
+            case BANNER:
+            case WALL_BANNER:
+            case STANDING_BANNER:
+                if (te == null) {
+                    te = new TileEntityBanner();
+                }
+                return new CraftBanner(material, (TileEntityBanner) te);
+            default:
+                throw new IllegalStateException("Missing blockState for " + material);
         }
     }
 
@@ -248,57 +248,57 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
 
         boolean valid;
         switch (material) {
-        case SIGN:
-        case SIGN_POST:
-        case WALL_SIGN:
-            valid = te instanceof TileEntitySign;
-            break;
-        case CHEST:
-        case TRAPPED_CHEST:
-            valid = te instanceof TileEntityChest;
-            break;
-        case BURNING_FURNACE:
-        case FURNACE:
-            valid = te instanceof TileEntityFurnace;
-            break;
-        case DISPENSER:
-            valid = te instanceof TileEntityDispenser;
-            break;
-        case DROPPER:
-            valid = te instanceof TileEntityDropper;
-            break;
-        case HOPPER:
-            valid = te instanceof TileEntityHopper;
-            break;
-        case MOB_SPAWNER:
-            valid = te instanceof TileEntityMobSpawner;
-            break;
-        case NOTE_BLOCK:
-            valid = te instanceof TileEntityNote;
-            break;
-        case JUKEBOX:
-            valid = te instanceof BlockJukeBox.TileEntityRecordPlayer;
-            break;
-        case BREWING_STAND:
-            valid = te instanceof TileEntityBrewingStand;
-            break;
-        case SKULL:
-            valid = te instanceof TileEntitySkull;
-            break;
-        case COMMAND:
-            valid = te instanceof TileEntityCommand;
-            break;
-        case BEACON:
-            valid = te instanceof TileEntityBeacon;
-            break;
-        case BANNER:
-        case WALL_BANNER:
-        case STANDING_BANNER:
-            valid = te instanceof TileEntityBanner;
-            break;
-        default:
-            valid = false;
-            break;
+            case SIGN:
+            case SIGN_POST:
+            case WALL_SIGN:
+                valid = te instanceof TileEntitySign;
+                break;
+            case CHEST:
+            case TRAPPED_CHEST:
+                valid = te instanceof TileEntityChest;
+                break;
+            case BURNING_FURNACE:
+            case FURNACE:
+                valid = te instanceof TileEntityFurnace;
+                break;
+            case DISPENSER:
+                valid = te instanceof TileEntityDispenser;
+                break;
+            case DROPPER:
+                valid = te instanceof TileEntityDropper;
+                break;
+            case HOPPER:
+                valid = te instanceof TileEntityHopper;
+                break;
+            case MOB_SPAWNER:
+                valid = te instanceof TileEntityMobSpawner;
+                break;
+            case NOTE_BLOCK:
+                valid = te instanceof TileEntityNote;
+                break;
+            case JUKEBOX:
+                valid = te instanceof BlockJukeBox.TileEntityRecordPlayer;
+                break;
+            case BREWING_STAND:
+                valid = te instanceof TileEntityBrewingStand;
+                break;
+            case SKULL:
+                valid = te instanceof TileEntitySkull;
+                break;
+            case COMMAND:
+                valid = te instanceof TileEntityCommand;
+                break;
+            case BEACON:
+                valid = te instanceof TileEntityBeacon;
+                break;
+            case BANNER:
+            case WALL_BANNER:
+            case STANDING_BANNER:
+                valid = te instanceof TileEntityBanner;
+                break;
+            default:
+                valid = false;
+                break;
         }
 
         Validate.isTrue(valid, "Invalid blockState for " + material);

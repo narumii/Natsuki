@@ -18,11 +18,11 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
     private final Fish hookEntity;
 
     /**
-     * @deprecated replaced by {@link #PlayerFishEvent(Player, Entity, Fish,
-     *     State)} to include the {@link Fish} hook entity.
      * @param player the player fishing
      * @param entity the caught entity
-     * @param state the state of fishing
+     * @param state  the state of fishing
+     * @deprecated replaced by {@link #PlayerFishEvent(Player, Entity, Fish,
+     * State)} to include the {@link Fish} hook entity.
      */
     @Deprecated
     public PlayerFishEvent(final Player player, final Entity entity, final State state) {
@@ -43,7 +43,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
      * org.bukkit.entity.Item}.
      *
      * @return Entity caught by the player, Entity if fishing, and null if
-     *     bobber has gotten stuck in the ground or nothing has been caught
+     * bobber has gotten stuck in the ground or nothing has been caught
      */
     public Entity getCaught() {
         return entity;

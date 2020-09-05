@@ -38,7 +38,7 @@ public enum TreeSpecies {
     private final byte data;
     private final static Map<Byte, TreeSpecies> BY_DATA = Maps.newHashMap();
 
-    private TreeSpecies(final int data) {
+    TreeSpecies(final int data) {
         this.data = (byte) data;
     }
 
@@ -58,7 +58,7 @@ public enum TreeSpecies {
      *
      * @param data Data value to fetch
      * @return The {@link TreeSpecies} representing the given value, or null
-     *     if it doesn't exist
+     * if it doesn't exist
      * @deprecated Magic value
      */
     @Deprecated

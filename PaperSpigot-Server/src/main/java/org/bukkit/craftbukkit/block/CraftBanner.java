@@ -30,7 +30,7 @@ public class CraftBanner extends CraftBlockState implements Banner {
 
         if (banner.patterns != null) {
             for (int i = 0; i < banner.patterns.size(); i++) {
-                NBTTagCompound p = (NBTTagCompound) banner.patterns.get(i);
+                NBTTagCompound p = banner.patterns.get(i);
                 patterns.add(new Pattern(DyeColor.getByDyeData((byte) p.getInt("Color")), PatternType.getByIdentifier(p.getString("Pattern"))));
             }
         }
@@ -44,7 +44,7 @@ public class CraftBanner extends CraftBlockState implements Banner {
 
         if (banner.patterns != null) {
             for (int i = 0; i < banner.patterns.size(); i++) {
-                NBTTagCompound p = (NBTTagCompound) banner.patterns.get(i);
+                NBTTagCompound p = banner.patterns.get(i);
                 patterns.add(new Pattern(DyeColor.getByDyeData((byte) p.getInt("Color")), PatternType.getByIdentifier(p.getString("Pattern"))));
             }
         }

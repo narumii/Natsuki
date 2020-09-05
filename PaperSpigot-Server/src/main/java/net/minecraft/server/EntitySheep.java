@@ -30,7 +30,7 @@ public class EntitySheep extends EntityAnimal {
     private PathfinderGoalEatTile bq = new PathfinderGoalEatTile(this);
 
     public static float[] a(EnumColor enumcolor) {
-        return (float[]) EntitySheep.bo.get(enumcolor);
+        return EntitySheep.bo.get(enumcolor);
     }
 
     public EntitySheep(World world) {
@@ -192,7 +192,7 @@ public class EntitySheep extends EntityAnimal {
         EntitySheep entitysheep = (EntitySheep) entityageable;
         EntitySheep entitysheep1 = new EntitySheep(this.world);
 
-        entitysheep1.setColor(this.a((EntityAnimal) this, (EntityAnimal) entitysheep));
+        entitysheep1.setColor(this.a(this, entitysheep));
         return entitysheep1;
     }
 
@@ -244,21 +244,21 @@ public class EntitySheep extends EntityAnimal {
     }
 
     static {
-        EntitySheep.bo.put(EnumColor.WHITE, new float[] { 1.0F, 1.0F, 1.0F});
-        EntitySheep.bo.put(EnumColor.ORANGE, new float[] { 0.85F, 0.5F, 0.2F});
-        EntitySheep.bo.put(EnumColor.MAGENTA, new float[] { 0.7F, 0.3F, 0.85F});
-        EntitySheep.bo.put(EnumColor.LIGHT_BLUE, new float[] { 0.4F, 0.6F, 0.85F});
-        EntitySheep.bo.put(EnumColor.YELLOW, new float[] { 0.9F, 0.9F, 0.2F});
-        EntitySheep.bo.put(EnumColor.LIME, new float[] { 0.5F, 0.8F, 0.1F});
-        EntitySheep.bo.put(EnumColor.PINK, new float[] { 0.95F, 0.5F, 0.65F});
-        EntitySheep.bo.put(EnumColor.GRAY, new float[] { 0.3F, 0.3F, 0.3F});
-        EntitySheep.bo.put(EnumColor.SILVER, new float[] { 0.6F, 0.6F, 0.6F});
-        EntitySheep.bo.put(EnumColor.CYAN, new float[] { 0.3F, 0.5F, 0.6F});
-        EntitySheep.bo.put(EnumColor.PURPLE, new float[] { 0.5F, 0.25F, 0.7F});
-        EntitySheep.bo.put(EnumColor.BLUE, new float[] { 0.2F, 0.3F, 0.7F});
-        EntitySheep.bo.put(EnumColor.BROWN, new float[] { 0.4F, 0.3F, 0.2F});
-        EntitySheep.bo.put(EnumColor.GREEN, new float[] { 0.4F, 0.5F, 0.2F});
-        EntitySheep.bo.put(EnumColor.RED, new float[] { 0.6F, 0.2F, 0.2F});
-        EntitySheep.bo.put(EnumColor.BLACK, new float[] { 0.1F, 0.1F, 0.1F});
+        EntitySheep.bo.put(EnumColor.WHITE, new float[]{1.0F, 1.0F, 1.0F});
+        EntitySheep.bo.put(EnumColor.ORANGE, new float[]{0.85F, 0.5F, 0.2F});
+        EntitySheep.bo.put(EnumColor.MAGENTA, new float[]{0.7F, 0.3F, 0.85F});
+        EntitySheep.bo.put(EnumColor.LIGHT_BLUE, new float[]{0.4F, 0.6F, 0.85F});
+        EntitySheep.bo.put(EnumColor.YELLOW, new float[]{0.9F, 0.9F, 0.2F});
+        EntitySheep.bo.put(EnumColor.LIME, new float[]{0.5F, 0.8F, 0.1F});
+        EntitySheep.bo.put(EnumColor.PINK, new float[]{0.95F, 0.5F, 0.65F});
+        EntitySheep.bo.put(EnumColor.GRAY, new float[]{0.3F, 0.3F, 0.3F});
+        EntitySheep.bo.put(EnumColor.SILVER, new float[]{0.6F, 0.6F, 0.6F});
+        EntitySheep.bo.put(EnumColor.CYAN, new float[]{0.3F, 0.5F, 0.6F});
+        EntitySheep.bo.put(EnumColor.PURPLE, new float[]{0.5F, 0.25F, 0.7F});
+        EntitySheep.bo.put(EnumColor.BLUE, new float[]{0.2F, 0.3F, 0.7F});
+        EntitySheep.bo.put(EnumColor.BROWN, new float[]{0.4F, 0.3F, 0.2F});
+        EntitySheep.bo.put(EnumColor.GREEN, new float[]{0.4F, 0.5F, 0.2F});
+        EntitySheep.bo.put(EnumColor.RED, new float[]{0.6F, 0.2F, 0.2F});
+        EntitySheep.bo.put(EnumColor.BLACK, new float[]{0.1F, 0.1F, 0.1F});
     }
 }

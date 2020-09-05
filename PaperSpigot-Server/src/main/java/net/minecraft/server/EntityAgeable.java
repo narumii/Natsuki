@@ -11,24 +11,19 @@ public abstract class EntityAgeable extends EntityCreature {
 
     // Spigot start
     @Override
-    public void inactiveTick()
-    {
+    public void inactiveTick() {
         super.inactiveTick();
-        if ( this.world.isClientSide || this.ageLocked )
-        { // CraftBukkit
-            this.a( this.isBaby() );
-        } else
-        {
+        if (this.world.isClientSide || this.ageLocked) { // CraftBukkit
+            this.a(this.isBaby());
+        } else {
             int i = this.getAge();
 
-            if ( i < 0 )
-            {
+            if (i < 0) {
                 ++i;
-                this.setAgeRaw( i );
-            } else if ( i > 0 )
-            {
+                this.setAgeRaw(i);
+            } else if (i > 0) {
                 --i;
-                this.setAgeRaw( i );
+                this.setAgeRaw(i);
             }
         }
     }
@@ -61,7 +56,7 @@ public abstract class EntityAgeable extends EntityCreature {
                         if (!entityhuman.abilities.canInstantlyBuild) {
                             --itemstack.count;
                             if (itemstack.count == 0) { // CraftBukkit - allow less than 0 stacks as "infinite"
-                                entityhuman.inventory.setItem(entityhuman.inventory.itemInHandIndex, (ItemStack) null);
+                                entityhuman.inventory.setItem(entityhuman.inventory.itemInHandIndex, null);
                             }
                         }
                     }
@@ -140,7 +135,7 @@ public abstract class EntityAgeable extends EntityCreature {
         if (this.world.isClientSide || ageLocked) { // CraftBukkit
             if (this.c > 0) {
                 if (this.c % 4 == 0) {
-                    this.world.addParticle(EnumParticle.VILLAGER_HAPPY, this.locX + (double) (this.random.nextFloat() * this.width * 2.0F) - (double) this.width, this.locY + 0.5D + (double) (this.random.nextFloat() * this.length), this.locZ + (double) (this.random.nextFloat() * this.width * 2.0F) - (double) this.width, 0.0D, 0.0D, 0.0D, new int[0]);
+                    this.world.addParticle(EnumParticle.VILLAGER_HAPPY, this.locX + (double) (this.random.nextFloat() * this.width * 2.0F) - (double) this.width, this.locY + 0.5D + (double) (this.random.nextFloat() * this.length), this.locZ + (double) (this.random.nextFloat() * this.width * 2.0F) - (double) this.width, 0.0D, 0.0D, 0.0D);
                 }
 
                 --this.c;
@@ -164,7 +159,8 @@ public abstract class EntityAgeable extends EntityCreature {
 
     }
 
-    protected void n() {}
+    protected void n() {
+    }
 
     public boolean isBaby() {
         return this.getAge() < 0;

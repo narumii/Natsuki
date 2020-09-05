@@ -14,10 +14,10 @@ public class BlockRedstoneTorch extends BlockTorch {
 
     private boolean a(World world, BlockPosition blockposition, boolean flag) {
         if (!BlockRedstoneTorch.b.containsKey(world)) {
-            BlockRedstoneTorch.b.put(world, Lists.<BlockRedstoneTorch.RedstoneUpdateInfo>newArrayList()); // CraftBukkit - fix decompile error
+            BlockRedstoneTorch.b.put(world, Lists.newArrayList()); // CraftBukkit - fix decompile error
         }
 
-        List list = (List) BlockRedstoneTorch.b.get(world);
+        List list = BlockRedstoneTorch.b.get(world);
 
         if (flag) {
             list.add(new BlockRedstoneTorch.RedstoneUpdateInfo(blockposition, world.getTime()));
@@ -104,16 +104,17 @@ public class BlockRedstoneTorch extends BlockTorch {
     }
 
     private boolean g(World world, BlockPosition blockposition, IBlockData iblockdata) {
-        EnumDirection enumdirection = ((EnumDirection) iblockdata.get(BlockRedstoneTorch.FACING)).opposite();
+        EnumDirection enumdirection = iblockdata.get(BlockRedstoneTorch.FACING).opposite();
 
         return world.isBlockFacePowered(blockposition.shift(enumdirection), enumdirection);
     }
 
-    public void a(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {}
+    public void a(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
+    }
 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
         boolean flag = this.g(world, blockposition, iblockdata);
-        List list = (List) BlockRedstoneTorch.b.get(world);
+        List list = BlockRedstoneTorch.b.get(world);
 
         while (list != null && !list.isEmpty() && world.getTime() - ((BlockRedstoneTorch.RedstoneUpdateInfo) list.get(0)).b > 60L) {
             list.remove(0);
@@ -147,7 +148,7 @@ public class BlockRedstoneTorch extends BlockTorch {
                         double d1 = (double) blockposition.getY() + random.nextDouble() * 0.6D + 0.2D;
                         double d2 = (double) blockposition.getZ() + random.nextDouble() * 0.6D + 0.2D;
 
-                        world.addParticle(EnumParticle.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
+                        world.addParticle(EnumParticle.SMOKE_NORMAL, d0, d1, d2, 0.0D, 0.0D, 0.0D);
                     }
 
                     world.a(blockposition, world.getType(blockposition).getBlock(), 160);
@@ -171,7 +172,7 @@ public class BlockRedstoneTorch extends BlockTorch {
     public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {
         if (!this.e(world, blockposition, iblockdata)) {
             if (this.isOn == this.g(world, blockposition, iblockdata)) {
-                world.a(blockposition, (Block) this, this.a(world));
+                world.a(blockposition, this, this.a(world));
             }
 
         }

@@ -45,8 +45,8 @@ public class ItemWorldMap extends ItemWorldMapBase {
             int i = 1 << worldmap.scale;
             int j = worldmap.centerX;
             int k = worldmap.centerZ;
-            int l =(int) Math.floor(entity.locX - (double) j) / i + 64;
-            int i1 =(int) Math.floor(entity.locZ - (double) k) / i + 64;
+            int l = (int) Math.floor(entity.locX - (double) j) / i + 64;
+            int i1 = (int) Math.floor(entity.locZ - (double) k) / i + 64;
             int j1 = 128 / i;
 
             if (world.worldProvider.o()) {

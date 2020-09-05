@@ -18,7 +18,7 @@ public abstract class EntityMinecartAbstract extends Entity implements INamableT
 
     private boolean a;
     private String b;
-    private static final int[][][] matrix = new int[][][] { { { 0, 0, -1}, { 0, 0, 1}}, { { -1, 0, 0}, { 1, 0, 0}}, { { -1, -1, 0}, { 1, 0, 0}}, { { -1, 0, 0}, { 1, -1, 0}}, { { 0, 0, -1}, { 0, -1, 1}}, { { 0, -1, -1}, { 0, 0, 1}}, { { 0, 0, 1}, { 1, 0, 0}}, { { 0, 0, 1}, { -1, 0, 0}}, { { 0, 0, -1}, { -1, 0, 0}}, { { 0, 0, -1}, { 1, 0, 0}}};
+    private static final int[][][] matrix = new int[][][]{{{0, 0, -1}, {0, 0, 1}}, {{-1, 0, 0}, {1, 0, 0}}, {{-1, -1, 0}, {1, 0, 0}}, {{-1, 0, 0}, {1, -1, 0}}, {{0, 0, -1}, {0, -1, 1}}, {{0, -1, -1}, {0, 0, 1}}, {{0, 0, 1}, {1, 0, 0}}, {{0, 0, 1}, {-1, 0, 0}}, {{0, 0, -1}, {-1, 0, 0}}, {{0, 0, -1}, {1, 0, 0}}};
     private int d;
     private double e;
     private double f;
@@ -45,26 +45,26 @@ public abstract class EntityMinecartAbstract extends Entity implements INamableT
 
     public static EntityMinecartAbstract a(World world, double d0, double d1, double d2, EntityMinecartAbstract.EnumMinecartType entityminecartabstract_enumminecarttype) {
         switch (EntityMinecartAbstract.SyntheticClass_1.a[entityminecartabstract_enumminecarttype.ordinal()]) {
-        case 1:
-            return new EntityMinecartChest(world, d0, d1, d2);
+            case 1:
+                return new EntityMinecartChest(world, d0, d1, d2);
 
-        case 2:
-            return new EntityMinecartFurnace(world, d0, d1, d2);
+            case 2:
+                return new EntityMinecartFurnace(world, d0, d1, d2);
 
-        case 3:
-            return new EntityMinecartTNT(world, d0, d1, d2);
+            case 3:
+                return new EntityMinecartTNT(world, d0, d1, d2);
 
-        case 4:
-            return new EntityMinecartMobSpawner(world, d0, d1, d2);
+            case 4:
+                return new EntityMinecartMobSpawner(world, d0, d1, d2);
 
-        case 5:
-            return new EntityMinecartHopper(world, d0, d1, d2);
+            case 5:
+                return new EntityMinecartHopper(world, d0, d1, d2);
 
-        case 6:
-            return new EntityMinecartCommandBlock(world, d0, d1, d2);
+            case 6:
+                return new EntityMinecartCommandBlock(world, d0, d1, d2);
 
-        default:
-            return new EntityMinecartRideable(world, d0, d1, d2);
+            default:
+                return new EntityMinecartRideable(world, d0, d1, d2);
         }
     }
 
@@ -192,7 +192,7 @@ public abstract class EntityMinecartAbstract extends Entity implements INamableT
         float prevYaw = this.yaw;
         float prevPitch = this.pitch;
         // CraftBukkit end
-        
+
         if (this.getType() > 0) {
             this.j(this.getType() - 1);
         }
@@ -269,10 +269,10 @@ public abstract class EntityMinecartAbstract extends Entity implements INamableT
             this.lastY = this.locY;
             this.lastZ = this.locZ;
             this.motY -= 0.03999999910593033D;
-            int j =(int) Math.floor(this.locX);
+            int j = (int) Math.floor(this.locX);
 
             i = (int) Math.floor(this.locY);
-            int k =(int) Math.floor(this.locZ);
+            int k = (int) Math.floor(this.locZ);
 
             if (BlockMinecartTrackAbstract.e(this.world, new BlockPosition(j, i - 1, k))) {
                 --i;
@@ -350,7 +350,8 @@ public abstract class EntityMinecartAbstract extends Entity implements INamableT
         return this.maxSpeed; // CraftBukkit
     }
 
-    public void a(int i, int j, int k, boolean flag) {}
+    public void a(int i, int j, int k, boolean flag) {
+    }
 
     protected void n() {
         double d0 = this.m();
@@ -394,24 +395,24 @@ public abstract class EntityMinecartAbstract extends Entity implements INamableT
         BlockMinecartTrackAbstract.EnumTrackPosition blockminecarttrackabstract_enumtrackposition = iblockdata.get(blockminecarttrackabstract.n());
 
         switch (EntityMinecartAbstract.SyntheticClass_1.b[blockminecarttrackabstract_enumtrackposition.ordinal()]) {
-        case 1:
-            this.motX -= 0.0078125D;
-            ++this.locY;
-            break;
+            case 1:
+                this.motX -= 0.0078125D;
+                ++this.locY;
+                break;
 
-        case 2:
-            this.motX += 0.0078125D;
-            ++this.locY;
-            break;
+            case 2:
+                this.motX += 0.0078125D;
+                ++this.locY;
+                break;
 
-        case 3:
-            this.motZ += 0.0078125D;
-            ++this.locY;
-            break;
+            case 3:
+                this.motZ += 0.0078125D;
+                ++this.locY;
+                break;
 
-        case 4:
-            this.motZ -= 0.0078125D;
-            ++this.locY;
+            case 4:
+                this.motZ -= 0.0078125D;
+                ++this.locY;
         }
 
         int[][] aint = EntityMinecartAbstract.matrix[blockminecarttrackabstract_enumtrackposition.a()];
@@ -503,9 +504,9 @@ public abstract class EntityMinecartAbstract extends Entity implements INamableT
         d11 = MathHelper.a(d11, -d13, d13);
         d12 = MathHelper.a(d12, -d13, d13);
         this.move(d11, 0.0D, d12);
-        if (aint[0][1] != 0 &&(int) Math.floor(this.locX) - blockposition.getX() == aint[0][0] &&(int) Math.floor(this.locZ) - blockposition.getZ() == aint[0][2]) {
+        if (aint[0][1] != 0 && (int) Math.floor(this.locX) - blockposition.getX() == aint[0][0] && (int) Math.floor(this.locZ) - blockposition.getZ() == aint[0][2]) {
             this.setPosition(this.locX, this.locY + (double) aint[0][1], this.locZ);
-        } else if (aint[1][1] != 0 &&(int) Math.floor(this.locX) - blockposition.getX() == aint[1][0] &&(int) Math.floor(this.locZ) - blockposition.getZ() == aint[1][2]) {
+        } else if (aint[1][1] != 0 && (int) Math.floor(this.locX) - blockposition.getX() == aint[1][0] && (int) Math.floor(this.locZ) - blockposition.getZ() == aint[1][2]) {
             this.setPosition(this.locX, this.locY + (double) aint[1][1], this.locZ);
         }
 
@@ -524,8 +525,8 @@ public abstract class EntityMinecartAbstract extends Entity implements INamableT
             this.setPosition(this.locX, vec3d1.b, this.locZ);
         }
 
-        int i =(int) Math.floor(this.locX);
-        int j =(int) Math.floor(this.locZ);
+        int i = (int) Math.floor(this.locX);
+        int j = (int) Math.floor(this.locZ);
 
         if (i != blockposition.getX() || j != blockposition.getZ()) {
             d5 = Math.sqrt(this.motX * this.motX + this.motZ * this.motZ);
@@ -582,9 +583,9 @@ public abstract class EntityMinecartAbstract extends Entity implements INamableT
     }
 
     public Vec3D k(double d0, double d1, double d2) {
-        int i =(int) Math.floor(d0);
-        int j =(int) Math.floor(d1);
-        int k =(int) Math.floor(d2);
+        int i = (int) Math.floor(d0);
+        int j = (int) Math.floor(d1);
+        int k = (int) Math.floor(d2);
 
         if (BlockMinecartTrackAbstract.e(this.world, new BlockPosition(i, j - 1, k))) {
             --j;

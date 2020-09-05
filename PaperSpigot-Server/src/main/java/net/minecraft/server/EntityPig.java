@@ -137,7 +137,7 @@ public class EntityPig extends EntityAnimal {
     public void e(float f, float f1) {
         super.e(f, f1);
         if (f > 5.0F && this.passenger instanceof EntityHuman) {
-            ((EntityHuman) this.passenger).b((Statistic) AchievementList.u);
+            ((EntityHuman) this.passenger).b(AchievementList.u);
         }
 
     }

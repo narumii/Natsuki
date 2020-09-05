@@ -45,26 +45,26 @@ public class BlockSkull extends BlockContainer {
     }
 
     public void updateShape(IBlockAccess iblockaccess, BlockPosition blockposition) {
-        switch (BlockSkull.SyntheticClass_1.a[((EnumDirection) iblockaccess.getType(blockposition).get(BlockSkull.FACING)).ordinal()]) {
-        case 1:
-        default:
-            this.a(0.25F, 0.0F, 0.25F, 0.75F, 0.5F, 0.75F);
-            break;
+        switch (BlockSkull.SyntheticClass_1.a[iblockaccess.getType(blockposition).get(BlockSkull.FACING).ordinal()]) {
+            case 1:
+            default:
+                this.a(0.25F, 0.0F, 0.25F, 0.75F, 0.5F, 0.75F);
+                break;
 
-        case 2:
-            this.a(0.25F, 0.25F, 0.5F, 0.75F, 0.75F, 1.0F);
-            break;
+            case 2:
+                this.a(0.25F, 0.25F, 0.5F, 0.75F, 0.75F, 1.0F);
+                break;
 
-        case 3:
-            this.a(0.25F, 0.25F, 0.0F, 0.75F, 0.75F, 0.5F);
-            break;
+            case 3:
+                this.a(0.25F, 0.25F, 0.0F, 0.75F, 0.75F, 0.5F);
+                break;
 
-        case 4:
-            this.a(0.5F, 0.25F, 0.25F, 1.0F, 0.75F, 0.75F);
-            break;
+            case 4:
+                this.a(0.5F, 0.25F, 0.25F, 1.0F, 0.75F, 0.75F);
+                break;
 
-        case 5:
-            this.a(0.0F, 0.25F, 0.25F, 0.5F, 0.75F, 0.75F);
+            case 5:
+                this.a(0.0F, 0.25F, 0.25F, 0.5F, 0.75F, 0.75F);
         }
 
     }
@@ -87,7 +87,7 @@ public class BlockSkull extends BlockContainer {
 
         return tileentity instanceof TileEntitySkull ? ((TileEntitySkull) tileentity).getSkullType() : super.getDropData(world, blockposition);
     }
-    
+
     // CraftBukkit start - Special case dropping so we can get info from the tile entity
     @Override
     public void dropNaturally(World world, BlockPosition blockposition, IBlockData iblockdata, float f, int i) {
@@ -150,7 +150,7 @@ public class BlockSkull extends BlockContainer {
     }
 
     public boolean b(World world, BlockPosition blockposition, ItemStack itemstack) {
-        return itemstack.getData() == 1 && blockposition.getY() >= 2 && world.getDifficulty() != EnumDifficulty.PEACEFUL && !world.isClientSide ? this.l().a(world, blockposition) != null : false;
+        return (itemstack.getData() == 1 && blockposition.getY() >= 2 && world.getDifficulty() != EnumDifficulty.PEACEFUL && !world.isClientSide) && this.l().a(world, blockposition) != null;
     }
 
     public void a(World world, BlockPosition blockposition, TileEntitySkull tileentityskull) {
@@ -199,26 +199,26 @@ public class BlockSkull extends BlockContainer {
                 // CraftBukkit start
                 if (world.addEntity(entitywither, SpawnReason.BUILD_WITHER)) {
                     blockList.updateList();
-                    
-                while (iterator.hasNext()) {
-                    EntityHuman entityhuman = (EntityHuman) iterator.next();
 
-                    entityhuman.b((Statistic) AchievementList.I);
-                }
+                    while (iterator.hasNext()) {
+                        EntityHuman entityhuman = (EntityHuman) iterator.next();
 
-                int k;
-
-                for (k = 0; k < 120; ++k) {
-                    world.addParticle(EnumParticle.SNOWBALL, (double) blockposition1.getX() + world.random.nextDouble(), (double) (blockposition1.getY() - 2) + world.random.nextDouble() * 3.9D, (double) blockposition1.getZ() + world.random.nextDouble(), 0.0D, 0.0D, 0.0D, new int[0]);
-                }
-
-                for (k = 0; k < shapedetector.c(); ++k) {
-                    for (int l = 0; l < shapedetector.b(); ++l) {
-                        ShapeDetectorBlock shapedetectorblock2 = shapedetector_shapedetectorcollection.a(k, l, 0);
-
-                        world.update(shapedetectorblock2.getPosition(), Blocks.AIR);
+                        entityhuman.b(AchievementList.I);
                     }
-                }
+
+                    int k;
+
+                    for (k = 0; k < 120; ++k) {
+                        world.addParticle(EnumParticle.SNOWBALL, (double) blockposition1.getX() + world.random.nextDouble(), (double) (blockposition1.getY() - 2) + world.random.nextDouble() * 3.9D, (double) blockposition1.getZ() + world.random.nextDouble(), 0.0D, 0.0D, 0.0D);
+                    }
+
+                    for (k = 0; k < shapedetector.c(); ++k) {
+                        for (int l = 0; l < shapedetector.b(); ++l) {
+                            ShapeDetectorBlock shapedetectorblock2 = shapedetector_shapedetectorcollection.a(k, l, 0);
+
+                            world.update(shapedetectorblock2.getPosition(), Blocks.AIR);
+                        }
+                    }
                 } // CraftBukkit end
 
             }
@@ -231,9 +231,9 @@ public class BlockSkull extends BlockContainer {
 
     public int toLegacyData(IBlockData iblockdata) {
         byte b0 = 0;
-        int i = b0 | ((EnumDirection) iblockdata.get(BlockSkull.FACING)).a();
+        int i = b0 | iblockdata.get(BlockSkull.FACING).a();
 
-        if (((Boolean) iblockdata.get(BlockSkull.NODROP)).booleanValue()) {
+        if (iblockdata.get(BlockSkull.NODROP).booleanValue()) {
             i |= 8;
         }
 
@@ -241,12 +241,12 @@ public class BlockSkull extends BlockContainer {
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockSkull.FACING, BlockSkull.NODROP});
+        return new BlockStateList(this, BlockSkull.FACING, BlockSkull.NODROP);
     }
 
     protected ShapeDetector l() {
         if (this.O == null) {
-            this.O = ShapeDetectorBuilder.a().a(new String[] { "   ", "###", "~#~"}).a('#', ShapeDetectorBlock.a(BlockStatePredicate.a(Blocks.SOUL_SAND))).a('~', ShapeDetectorBlock.a(BlockStatePredicate.a(Blocks.AIR))).b();
+            this.O = ShapeDetectorBuilder.a().a(new String[]{"   ", "###", "~#~"}).a('#', ShapeDetectorBlock.a(BlockStatePredicate.a(Blocks.SOUL_SAND))).a('~', ShapeDetectorBlock.a(BlockStatePredicate.a(Blocks.AIR))).b();
         }
 
         return this.O;
@@ -254,7 +254,7 @@ public class BlockSkull extends BlockContainer {
 
     protected ShapeDetector n() {
         if (this.P == null) {
-            this.P = ShapeDetectorBuilder.a().a(new String[] { "^^^", "###", "~#~"}).a('#', ShapeDetectorBlock.a(BlockStatePredicate.a(Blocks.SOUL_SAND))).a('^', BlockSkull.N).a('~', ShapeDetectorBlock.a(BlockStatePredicate.a(Blocks.AIR))).b();
+            this.P = ShapeDetectorBuilder.a().a(new String[]{"^^^", "###", "~#~"}).a('#', ShapeDetectorBlock.a(BlockStatePredicate.a(Blocks.SOUL_SAND))).a('^', BlockSkull.N).a('~', ShapeDetectorBlock.a(BlockStatePredicate.a(Blocks.AIR))).b();
         }
 
         return this.P;
@@ -268,31 +268,26 @@ public class BlockSkull extends BlockContainer {
             try {
                 BlockSkull.SyntheticClass_1.a[EnumDirection.UP.ordinal()] = 1;
             } catch (NoSuchFieldError nosuchfielderror) {
-                ;
             }
 
             try {
                 BlockSkull.SyntheticClass_1.a[EnumDirection.NORTH.ordinal()] = 2;
             } catch (NoSuchFieldError nosuchfielderror1) {
-                ;
             }
 
             try {
                 BlockSkull.SyntheticClass_1.a[EnumDirection.SOUTH.ordinal()] = 3;
             } catch (NoSuchFieldError nosuchfielderror2) {
-                ;
             }
 
             try {
                 BlockSkull.SyntheticClass_1.a[EnumDirection.WEST.ordinal()] = 4;
             } catch (NoSuchFieldError nosuchfielderror3) {
-                ;
             }
 
             try {
                 BlockSkull.SyntheticClass_1.a[EnumDirection.EAST.ordinal()] = 5;
             } catch (NoSuchFieldError nosuchfielderror4) {
-                ;
             }
 
         }

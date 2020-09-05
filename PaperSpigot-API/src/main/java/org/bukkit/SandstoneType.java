@@ -15,7 +15,7 @@ public enum SandstoneType {
     private final byte data;
     private final static Map<Byte, SandstoneType> BY_DATA = Maps.newHashMap();
 
-    private SandstoneType(final int data) {
+    SandstoneType(final int data) {
         this.data = (byte) data;
     }
 
@@ -35,7 +35,7 @@ public enum SandstoneType {
      *
      * @param data Data value to fetch
      * @return The {@link SandstoneType} representing the given value, or null
-     *     if it doesn't exist
+     * if it doesn't exist
      * @deprecated Magic value
      */
     @Deprecated

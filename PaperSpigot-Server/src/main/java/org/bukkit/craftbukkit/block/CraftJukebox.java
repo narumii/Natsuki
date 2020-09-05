@@ -52,12 +52,12 @@ public class CraftJukebox extends CraftBlockState implements Jukebox {
         jukebox.update();
         if (record == Material.AIR) {
             world.getHandle().setTypeAndData(new BlockPosition(getX(), getY(), getZ()),
-                Blocks.JUKEBOX.getBlockData()
-                    .set(BlockJukeBox.HAS_RECORD, false), 3);
+                    Blocks.JUKEBOX.getBlockData()
+                            .set(BlockJukeBox.HAS_RECORD, false), 3);
         } else {
             world.getHandle().setTypeAndData(new BlockPosition(getX(), getY(), getZ()),
-                Blocks.JUKEBOX.getBlockData()
-                    .set(BlockJukeBox.HAS_RECORD, true), 3);
+                    Blocks.JUKEBOX.getBlockData()
+                            .set(BlockJukeBox.HAS_RECORD, true), 3);
         }
         world.playEffect(getLocation(), Effect.RECORD_PLAY, record.getId());
     }

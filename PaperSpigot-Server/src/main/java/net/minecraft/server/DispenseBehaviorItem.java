@@ -1,13 +1,15 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.event.block.BlockDispenseEvent;
 // CraftBukkit end
 
 public class DispenseBehaviorItem implements IDispenseBehavior {
 
-    public DispenseBehaviorItem() {}
+    public DispenseBehaviorItem() {
+    }
 
     public final ItemStack a(ISourceBlock isourceblock, ItemStack itemstack) {
         ItemStack itemstack1 = this.b(isourceblock, itemstack);
@@ -75,7 +77,7 @@ public class DispenseBehaviorItem implements IDispenseBehavior {
         if (!event.getItem().getType().equals(craftItem.getType())) {
             // Chain to handler for new item
             ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-            IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+            IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
             if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior.getClass() != DispenseBehaviorItem.class) {
                 idispensebehavior.a(isourceblock, eventStack);
             } else {

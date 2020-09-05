@@ -14,7 +14,7 @@ public enum CoalType {
     private final byte data;
     private final static Map<Byte, CoalType> BY_DATA = Maps.newHashMap();
 
-    private CoalType(final int data) {
+    CoalType(final int data) {
         this.data = (byte) data;
     }
 
@@ -34,7 +34,7 @@ public enum CoalType {
      *
      * @param data Data value to fetch
      * @return The {@link CoalType} representing the given value, or null if
-     *     it doesn't exist
+     * it doesn't exist
      * @deprecated Magic value
      */
     @Deprecated

@@ -62,7 +62,7 @@ public abstract class Enchantment {
     }
 
     public static Enchantment getByName(String s) {
-        return (Enchantment) Enchantment.E.get(new MinecraftKey(s));
+        return Enchantment.E.get(new MinecraftKey(s));
     }
 
     public static Set<MinecraftKey> getEffects() {
@@ -120,9 +120,11 @@ public abstract class Enchantment {
         return this.slot.canEnchant(itemstack.getItem());
     }
 
-    public void a(EntityLiving entityliving, Entity entity, int i) {}
+    public void a(EntityLiving entityliving, Entity entity, int i) {
+    }
 
-    public void b(EntityLiving entityliving, Entity entity, int i) {}
+    public void b(EntityLiving entityliving, Entity entity, int i) {
+    }
 
     static {
         ArrayList arraylist = Lists.newArrayList();

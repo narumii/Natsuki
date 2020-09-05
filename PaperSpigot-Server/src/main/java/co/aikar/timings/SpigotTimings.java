@@ -32,10 +32,12 @@ public final class SpigotTimings {
     public static final Timing antiXrayUpdateTimer = Timings.ofSafe("anti-xray - update");
     public static final Timing antiXrayObfuscateTimer = Timings.ofSafe("anti-xray - obfuscate");
 
-    private SpigotTimings() {}
+    private SpigotTimings() {
+    }
 
     /**
      * Gets a timer associated with a plugins tasks.
+     *
      * @param bukkitTask
      * @param period
      * @return
@@ -62,9 +64,9 @@ public final class SpigotTimings {
             taskname = taskClass.getCanonicalName();
         }
 
-        String name = "Task: " +taskname;
+        String name = "Task: " + taskname;
         if (period > 0) {
-            name += " (interval:" + period +")";
+            name += " (interval:" + period + ")";
         } else {
             name += " (Single)";
         }
@@ -78,6 +80,7 @@ public final class SpigotTimings {
 
     /**
      * Get a named timer for the specified entity type to track type specific timings.
+     *
      * @param entity
      * @return
      */
@@ -88,6 +91,7 @@ public final class SpigotTimings {
 
     /**
      * Get a named timer for the specified tile entity type to track type specific timings.
+     *
      * @param entity
      * @return
      */
@@ -95,9 +99,11 @@ public final class SpigotTimings {
         String entityType = entity.getClass().getName();
         return Timings.ofSafe("Minecraft", "## tickTileEntity - " + entityType, tickTileEntityTimer);
     }
+
     public static Timing getCancelTasksTimer() {
         return Timings.ofSafe("Cancel Tasks");
     }
+
     public static Timing getCancelTasksTimer(Plugin plugin) {
         return Timings.ofSafe(plugin, "Cancel Tasks");
     }

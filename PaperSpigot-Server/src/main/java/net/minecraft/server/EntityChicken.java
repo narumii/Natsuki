@@ -63,7 +63,8 @@ public class EntityChicken extends EntityAnimal {
 
     }
 
-    public void e(float f, float f1) {}
+    public void e(float f, float f1) {
+    }
 
     protected String z() {
         return "mob.chicken.say";

@@ -48,7 +48,7 @@ public class VehicleDamageEvent extends VehicleEvent implements Cancellable {
      * This method exists for legacy reasons to provide backwards
      * compatibility. It will not exist at runtime and should not be used
      * under any circumstances.
-     * 
+     *
      * @return the damage
      */
     @Deprecated
@@ -69,7 +69,7 @@ public class VehicleDamageEvent extends VehicleEvent implements Cancellable {
      * This method exists for legacy reasons to provide backwards
      * compatibility. It will not exist at runtime and should not be used
      * under any circumstances.
-     * 
+     *
      * @param damage the damage
      */
     @Deprecated

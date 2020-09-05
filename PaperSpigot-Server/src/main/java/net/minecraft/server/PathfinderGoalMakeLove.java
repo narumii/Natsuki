@@ -57,7 +57,7 @@ public class PathfinderGoalMakeLove extends PathfinderGoal {
         --this.e;
         this.b.getControllerLook().a(this.c, 10.0F, 30.0F);
         if (this.b.h(this.c) > 2.25D) {
-            this.b.getNavigation().a((Entity) this.c, 0.25D);
+            this.b.getNavigation().a(this.c, 0.25D);
         } else if (this.e == 0 && this.c.cm()) {
             this.g();
         }
@@ -79,7 +79,7 @@ public class PathfinderGoalMakeLove extends PathfinderGoal {
     }
 
     private void g() {
-        EntityVillager entityvillager = this.b.b((EntityAgeable) this.c);
+        EntityVillager entityvillager = this.b.b(this.c);
 
         this.c.setAgeRaw(6000);
         this.b.setAgeRaw(6000);

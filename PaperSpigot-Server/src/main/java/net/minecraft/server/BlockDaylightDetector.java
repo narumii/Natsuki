@@ -23,7 +23,7 @@ public class BlockDaylightDetector extends BlockContainer {
     }
 
     public int a(IBlockAccess iblockaccess, BlockPosition blockposition, IBlockData iblockdata, EnumDirection enumdirection) {
-        return ((Integer) iblockdata.get(BlockDaylightDetector.POWER)).intValue();
+        return iblockdata.get(BlockDaylightDetector.POWER).intValue();
     }
 
     public void f(World world, BlockPosition blockposition) {
@@ -40,8 +40,8 @@ public class BlockDaylightDetector extends BlockContainer {
                 i = 15 - i;
             }
 
-            if (((Integer) iblockdata.get(BlockDaylightDetector.POWER)).intValue() != i) {
-                i = org.bukkit.craftbukkit.event.CraftEventFactory.callRedstoneChange(world, blockposition.getX(), blockposition.getY(), blockposition.getZ(), ((Integer) iblockdata.get(POWER)), i).getNewCurrent(); // CraftBukkit - Call BlockRedstoneEvent
+            if (iblockdata.get(BlockDaylightDetector.POWER).intValue() != i) {
+                i = org.bukkit.craftbukkit.event.CraftEventFactory.callRedstoneChange(world, blockposition.getX(), blockposition.getY(), blockposition.getZ(), iblockdata.get(POWER), i).getNewCurrent(); // CraftBukkit - Call BlockRedstoneEvent
                 world.setTypeAndData(blockposition, iblockdata.set(BlockDaylightDetector.POWER, Integer.valueOf(i)), 3);
             }
 
@@ -97,10 +97,10 @@ public class BlockDaylightDetector extends BlockContainer {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockDaylightDetector.POWER)).intValue();
+        return iblockdata.get(BlockDaylightDetector.POWER).intValue();
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockDaylightDetector.POWER});
+        return new BlockStateList(this, BlockDaylightDetector.POWER);
     }
 }

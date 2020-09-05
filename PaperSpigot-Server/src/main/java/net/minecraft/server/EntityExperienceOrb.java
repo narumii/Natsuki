@@ -37,7 +37,8 @@ public class EntityExperienceOrb extends Entity {
         this.setSize(0.25F, 0.25F);
     }
 
-    protected void h() {}
+    protected void h() {
+    }
 
     public void t_() {
         super.t_();
@@ -83,18 +84,18 @@ public class EntityExperienceOrb extends Entity {
             }
 
             if (!cancelled && targetPlayer != null) {
-            double d1 = (this.targetPlayer.locX - this.locX) / d0;
-            double d2 = (this.targetPlayer.locY + (double) this.targetPlayer.getHeadHeight() - this.locY) / d0;
-            double d3 = (this.targetPlayer.locZ - this.locZ) / d0;
-            double d4 = Math.sqrt(d1 * d1 + d2 * d2 + d3 * d3);
-            double d5 = 1.0D - d4;
+                double d1 = (this.targetPlayer.locX - this.locX) / d0;
+                double d2 = (this.targetPlayer.locY + (double) this.targetPlayer.getHeadHeight() - this.locY) / d0;
+                double d3 = (this.targetPlayer.locZ - this.locZ) / d0;
+                double d4 = Math.sqrt(d1 * d1 + d2 * d2 + d3 * d3);
+                double d5 = 1.0D - d4;
 
-            if (d5 > 0.0D) {
-                d5 *= d5;
-                this.motX += d1 / d4 * d5 * 0.1D;
-                this.motY += d2 / d4 * d5 * 0.1D;
-                this.motZ += d3 / d4 * d5 * 0.1D;
-            }
+                if (d5 > 0.0D) {
+                    d5 *= d5;
+                    this.motX += d1 / d4 * d5 * 0.1D;
+                    this.motY += d2 / d4 * d5 * 0.1D;
+                    this.motZ += d3 / d4 * d5 * 0.1D;
+                }
             }
             // CraftBukkit end
         }
@@ -103,7 +104,7 @@ public class EntityExperienceOrb extends Entity {
         float f = 0.98F;
 
         if (this.onGround) {
-            f = this.world.getType(new BlockPosition(MathHelper.floor(this.locX),(int) Math.floor(this.getBoundingBox().b) - 1,(int) Math.floor(this.locZ))).getBlock().frictionFactor * 0.98F;
+            f = this.world.getType(new BlockPosition(MathHelper.floor(this.locX), (int) Math.floor(this.getBoundingBox().b) - 1, (int) Math.floor(this.locZ))).getBlock().frictionFactor * 0.98F;
         }
 
         this.motX *= f;

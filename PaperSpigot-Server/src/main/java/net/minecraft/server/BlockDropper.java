@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 // CraftBukkit start
+
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 // CraftBukkit end
@@ -9,7 +10,8 @@ public class BlockDropper extends BlockDispenser {
 
     private final IDispenseBehavior P = new DispenseBehaviorItem();
 
-    public BlockDropper() {}
+    public BlockDropper() {
+    }
 
     protected IDispenseBehavior a(ItemStack itemstack) {
         return this.P;
@@ -21,7 +23,7 @@ public class BlockDropper extends BlockDispenser {
 
     public void dispense(World world, BlockPosition blockposition) {
         SourceBlock sourceblock = new SourceBlock(world, blockposition);
-        TileEntityDispenser tileentitydispenser = (TileEntityDispenser) sourceblock.getTileEntity();
+        TileEntityDispenser tileentitydispenser = sourceblock.getTileEntity();
 
         if (tileentitydispenser != null) {
             int i = tileentitydispenser.m();
@@ -32,7 +34,7 @@ public class BlockDropper extends BlockDispenser {
                 ItemStack itemstack = tileentitydispenser.getItem(i);
 
                 if (itemstack != null) {
-                    EnumDirection enumdirection = (EnumDirection) world.getType(blockposition).get(BlockDropper.FACING);
+                    EnumDirection enumdirection = world.getType(blockposition).get(BlockDropper.FACING);
                     BlockPosition blockposition1 = blockposition.shift(enumdirection);
                     IInventory iinventory = TileEntityHopper.b(world, (double) blockposition1.getX(), (double) blockposition1.getY(), (double) blockposition1.getZ());
                     ItemStack itemstack1;

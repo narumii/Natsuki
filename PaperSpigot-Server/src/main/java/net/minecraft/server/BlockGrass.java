@@ -132,6 +132,6 @@ public class BlockGrass extends Block implements IBlockFragilePlantElement {
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockGrass.SNOWY});
+        return new BlockStateList(this, BlockGrass.SNOWY);
     }
 }

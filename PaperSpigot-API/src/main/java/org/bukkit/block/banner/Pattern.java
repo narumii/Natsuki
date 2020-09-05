@@ -13,7 +13,7 @@ public class Pattern implements ConfigurationSerializable {
 
     private static final String COLOR = "color";
     private static final String PATTERN = "pattern";
-    
+
     private final DyeColor color;
     private final PatternType pattern;
 
@@ -28,7 +28,7 @@ public class Pattern implements ConfigurationSerializable {
         this.color = color;
         this.pattern = pattern;
     }
-    
+
     /**
      * Constructor for deserialization.
      *
@@ -37,21 +37,21 @@ public class Pattern implements ConfigurationSerializable {
     public Pattern(Map<String, Object> map) {
         color = DyeColor.valueOf(getString(map, COLOR));
         pattern = PatternType.getByIdentifier(getString(map, PATTERN));
-    }    
+    }
 
-    private static String getString(Map<?,?> map, Object key) {
+    private static String getString(Map<?, ?> map, Object key) {
         Object str = map.get(key);
         if (str instanceof String) {
             return (String) str;
         }
         throw new NoSuchElementException(map + " does not contain " + key);
     }
-    
+
     @Override
     public Map<String, Object> serialize() {
-        return ImmutableMap.<String, Object>of(
-            COLOR, color.toString(),
-            PATTERN, pattern.getIdentifier()
+        return ImmutableMap.of(
+                COLOR, color.toString(),
+                PATTERN, pattern.getIdentifier()
         );
     }
 

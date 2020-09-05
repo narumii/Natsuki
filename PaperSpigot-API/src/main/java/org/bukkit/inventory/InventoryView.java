@@ -14,6 +14,7 @@ import org.bukkit.event.inventory.InventoryType;
  */
 public abstract class InventoryView {
     public final static int OUTSIDE = -999;
+
     /**
      * Represents various extra properties of certain inventory windows.
      */
@@ -51,7 +52,8 @@ public abstract class InventoryView {
         ENCHANT_BUTTON3(2, InventoryType.ENCHANTING);
         int id;
         InventoryType style;
-        private Property(int id, InventoryType appliesTo) {
+
+        Property(int id, InventoryType appliesTo) {
             this.id = id;
             style = appliesTo;
         }
@@ -61,7 +63,6 @@ public abstract class InventoryView {
         }
 
         /**
-         *
          * @return the id of this view
          * @deprecated Magic value
          */
@@ -70,6 +71,7 @@ public abstract class InventoryView {
             return id;
         }
     }
+
     /**
      * Get the upper inventory involved in this transaction.
      *
@@ -112,9 +114,9 @@ public abstract class InventoryView {
     public void setItem(int slot, ItemStack item) {
         if (slot != OUTSIDE) {
             if (slot < getTopInventory().getSize()) {
-                getTopInventory().setItem(convertSlot(slot),item);
+                getTopInventory().setItem(convertSlot(slot), item);
             } else {
-                getBottomInventory().setItem(convertSlot(slot),item);
+                getBottomInventory().setItem(convertSlot(slot), item);
             }
         } else {
             getPlayer().getWorld().dropItemNaturally(getPlayer().getLocation(), item);
@@ -142,7 +144,7 @@ public abstract class InventoryView {
      * Sets the item on the cursor of one of the viewing players.
      *
      * @param item The item to put on the cursor, or null to remove the item
-     *     on their cursor.
+     *             on their cursor.
      */
     public final void setCursor(ItemStack item) {
         getPlayer().setItemOnCursor(item);
@@ -152,7 +154,7 @@ public abstract class InventoryView {
      * Get the item on the cursor of one of the viewing players.
      *
      * @return The item on the player's cursor, or null if they aren't holding
-     *     one.
+     * one.
      */
     public final ItemStack getCursor() {
         return getPlayer().getItemOnCursor();
@@ -180,7 +182,7 @@ public abstract class InventoryView {
             return slot;
         }
         if (getType() == InventoryType.CRAFTING) {
-            if(slot < 4) return 39 - slot;
+            if (slot < 4) return 39 - slot;
             else slot -= 4;
         }
         if (slot >= 27) slot -= 27;
@@ -212,10 +214,10 @@ public abstract class InventoryView {
      * Sets an extra property of this inventory if supported by that
      * inventory, for example the state of a progress bar.
      *
-     * @param prop the window property to update
+     * @param prop  the window property to update
      * @param value the new value for the window property
      * @return true if the property was updated successfully, false if the
-     *     property is not supported by that inventory
+     * property is not supported by that inventory
      */
     public final boolean setProperty(Property prop, int value) {
         return getPlayer().setWindowProperty(prop, value);

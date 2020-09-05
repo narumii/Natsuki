@@ -4,7 +4,7 @@ import com.google.common.base.Predicate;
 
 public class BlockAnvil extends BlockFalling {
 
-    public static final BlockStateDirection FACING = BlockStateDirection.of("facing", (Predicate) EnumDirection.EnumDirectionLimit.HORIZONTAL);
+    public static final BlockStateDirection FACING = BlockStateDirection.of("facing", EnumDirection.EnumDirectionLimit.HORIZONTAL);
     public static final BlockStateInteger DAMAGE = BlockStateInteger.of("damage", 0, 2);
 
     protected BlockAnvil() {
@@ -37,11 +37,11 @@ public class BlockAnvil extends BlockFalling {
     }
 
     public int getDropData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockAnvil.DAMAGE)).intValue();
+        return iblockdata.get(BlockAnvil.DAMAGE).intValue();
     }
 
     public void updateShape(IBlockAccess iblockaccess, BlockPosition blockposition) {
-        EnumDirection enumdirection = (EnumDirection) iblockaccess.getType(blockposition).get(BlockAnvil.FACING);
+        EnumDirection enumdirection = iblockaccess.getType(blockposition).get(BlockAnvil.FACING);
 
         if (enumdirection.k() == EnumDirection.EnumAxis.X) {
             this.a(0.0F, 0.0F, 0.125F, 1.0F, 1.0F, 0.875F);
@@ -65,14 +65,14 @@ public class BlockAnvil extends BlockFalling {
 
     public int toLegacyData(IBlockData iblockdata) {
         byte b0 = 0;
-        int i = b0 | ((EnumDirection) iblockdata.get(BlockAnvil.FACING)).b();
+        int i = b0 | iblockdata.get(BlockAnvil.FACING).b();
 
-        i |= ((Integer) iblockdata.get(BlockAnvil.DAMAGE)).intValue() << 2;
+        i |= iblockdata.get(BlockAnvil.DAMAGE).intValue() << 2;
         return i;
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockAnvil.FACING, BlockAnvil.DAMAGE});
+        return new BlockStateList(this, BlockAnvil.FACING, BlockAnvil.DAMAGE);
     }
 
     public static class TileEntityContainerAnvil implements ITileEntityContainer {
@@ -94,7 +94,7 @@ public class BlockAnvil extends BlockFalling {
         }
 
         public IChatBaseComponent getScoreboardDisplayName() {
-            return new ChatMessage(Blocks.ANVIL.a() + ".name", new Object[0]);
+            return new ChatMessage(Blocks.ANVIL.a() + ".name");
         }
 
         public Container createContainer(PlayerInventory playerinventory, EntityHuman entityhuman) {

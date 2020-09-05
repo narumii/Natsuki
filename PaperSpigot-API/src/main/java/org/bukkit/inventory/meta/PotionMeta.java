@@ -32,9 +32,9 @@ public interface PotionMeta extends ItemMeta {
     /**
      * Adds a custom potion effect to this potion.
      *
-     * @param effect the potion effect to add
+     * @param effect    the potion effect to add
      * @param overwrite true if any existing effect of the same type should be
-     *     overwritten
+     *                  overwritten
      * @return true if the potion meta changed as a result of this call
      */
     boolean addCustomEffect(PotionEffect effect, boolean overwrite);
@@ -49,7 +49,7 @@ public interface PotionMeta extends ItemMeta {
 
     /**
      * Checks for a specific custom potion effect type on this potion.
-     * 
+     *
      * @param type the potion effect type to check for
      * @return true if the potion has this effect
      */

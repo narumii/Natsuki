@@ -8,7 +8,8 @@ public class PacketPlayOutChat implements Packet<PacketListenerPlayOut> {
     public net.md_5.bungee.api.chat.BaseComponent[] components; // Spigot
     private byte b;
 
-    public PacketPlayOutChat() {}
+    public PacketPlayOutChat() {
+    }
 
     public PacketPlayOutChat(IChatBaseComponent ichatbasecomponent) {
         this(ichatbasecomponent, (byte) 1);

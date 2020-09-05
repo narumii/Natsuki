@@ -7,6 +7,7 @@ public class FullServerTickHandler extends TimingHandler {
     final TimingData minuteData;
     double avgFreeMemory = -1D;
     double avgUsedMemory = -1D;
+
     FullServerTickHandler() {
         super(IDENTITY);
         minuteData = new TimingData(id);

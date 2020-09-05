@@ -11,6 +11,7 @@ import java.util.List;
 public class SmoothBrick extends TexturedMaterial {
 
     private static final List<Material> textures = new ArrayList<Material>();
+
     static {
         textures.add(Material.STONE);
         textures.add(Material.MOSSY_COBBLESTONE);

@@ -145,7 +145,7 @@ public class ChunkProviderHell implements IChunkProvider {
                     // PaperSpigot start - Configurable flat bedrock worldgen
                     if (l1 < 127 - (h.paperSpigotConfig.generateFlatBedrock ? 0 : this.j.nextInt(5)) &&
                             l1 > (h.paperSpigotConfig.generateFlatBedrock ? 0 : this.j.nextInt(5))) {
-                    // PaperSpigot end
+                        // PaperSpigot end
                         IBlockData iblockdata2 = chunksnapshot.a(i1, l1, l);
 
                         if (iblockdata2.getBlock() != null && iblockdata2.getBlock().getMaterial() != Material.AIR) {
@@ -207,7 +207,7 @@ public class ChunkProviderHell implements IChunkProvider {
         }
 
         Chunk chunk = new Chunk(this.h, chunksnapshot, i, j);
-        BiomeBase[] abiomebase = this.h.getWorldChunkManager().getBiomeBlock((BiomeBase[]) null, i * 16, j * 16, 16, 16);
+        BiomeBase[] abiomebase = this.h.getWorldChunkManager().getBiomeBlock(null, i * 16, j * 16, 16, 16);
         byte[] abyte = chunk.getBiomeIndex();
 
         for (int k = 0; k < abyte.length; ++k) {
@@ -348,7 +348,8 @@ public class ChunkProviderHell implements IChunkProvider {
         return true;
     }
 
-    public void c() {}
+    public void c() {
+    }
 
     public boolean unloadChunks() {
         return false;
@@ -387,7 +388,8 @@ public class ChunkProviderHell implements IChunkProvider {
     }
 
     public void recreateStructures(Chunk chunk, int i, int j) {
-        if (this.h.paperSpigotConfig.generateFortress) this.B.a(this, this.h, i, j, (ChunkSnapshot) null); // PaperSpigot
+        if (this.h.paperSpigotConfig.generateFortress)
+            this.B.a(this, this.h, i, j, null); // PaperSpigot
     }
 
     public Chunk getChunkAt(BlockPosition blockposition) {

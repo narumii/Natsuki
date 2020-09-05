@@ -36,7 +36,7 @@ public class BlockRedstoneLamp extends Block {
     public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {
         if (!world.isClientSide) {
             if (this.a && !world.isBlockIndirectlyPowered(blockposition)) {
-                world.a(blockposition, (Block) this, 4);
+                world.a(blockposition, this, 4);
             } else if (!this.a && world.isBlockIndirectlyPowered(blockposition)) {
                 // CraftBukkit start
                 if (CraftEventFactory.callRedstoneChange(world, blockposition.getX(), blockposition.getY(), blockposition.getZ(), 0, 15).getNewCurrent() != 15) {

@@ -34,7 +34,7 @@ public class BlockSoil extends Block {
     }
 
     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
-        int i = ((Integer) iblockdata.get(BlockSoil.MOISTURE)).intValue();
+        int i = iblockdata.get(BlockSoil.MOISTURE).intValue();
 
         if (!this.f(world, blockposition) && !world.isRainingAt(blockposition.up())) {
             if (i > 0) {
@@ -126,10 +126,10 @@ public class BlockSoil extends Block {
     }
 
     public int toLegacyData(IBlockData iblockdata) {
-        return ((Integer) iblockdata.get(BlockSoil.MOISTURE)).intValue();
+        return iblockdata.get(BlockSoil.MOISTURE).intValue();
     }
 
     protected BlockStateList getStateList() {
-        return new BlockStateList(this, new IBlockState[] { BlockSoil.MOISTURE});
+        return new BlockStateList(this, BlockSoil.MOISTURE);
     }
 }

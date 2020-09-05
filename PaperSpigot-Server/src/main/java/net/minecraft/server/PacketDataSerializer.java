@@ -8,7 +8,10 @@ import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import pw.narumi.Natsuki;
 import pw.narumi.exception.NatsukiException;
 
-import java.io.*;
+import java.io.DataOutput;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.GatheringByteChannel;
@@ -44,11 +47,11 @@ public class PacketDataSerializer extends ByteBuf {
         return readByteArray(Short.MAX_VALUE);
     }
 
-    public byte[]readByteArray(int limit) {
+    public byte[] readByteArray(int limit) {
         int len = this.e();
         if (len > 500) throw new DecoderException("The received a byte array longer than allowed " + len + " > " + 500);
         byte[] abyte = new byte[len];
-    // Paper end
+        // Paper end
 
         this.readBytes(abyte);
         return abyte;
@@ -172,8 +175,7 @@ public class PacketDataSerializer extends ByteBuf {
     }
 
     /**
-     * @vocan
-     * 2097152L
+     * @vocan 2097152L
      */
     public NBTTagCompound h() {
         int i = this.readerIndex();
@@ -185,7 +187,7 @@ public class PacketDataSerializer extends ByteBuf {
             this.readerIndex(i);
             try {
                 return NBTCompressedStreamTools.a(new ByteBufInputStream(this),
-                        new NBTReadLimiter( (Natsuki.getInstance().getConfig().PACKET.NBT.maxNbtSize == -1 ? 2097152L : Natsuki.getInstance().getConfig().PACKET.NBT.maxNbtSize) ));
+                        new NBTReadLimiter((Natsuki.getInstance().getConfig().PACKET.NBT.maxNbtSize == -1 ? 2097152L : Natsuki.getInstance().getConfig().PACKET.NBT.maxNbtSize)));
             } catch (IOException e) {
                 return null;
             }
@@ -240,7 +242,7 @@ public class PacketDataSerializer extends ByteBuf {
 
             if (Natsuki.getInstance().getConfig().PACKET.NBT.skipNbt) {
                 skipBytes(readableBytes());
-            }else {
+            } else {
                 final NBTTagCompound compound = this.h();
 
                 if (isValid(compound))
@@ -273,10 +275,7 @@ public class PacketDataSerializer extends ByteBuf {
         if (compound.map.values().stream().filter(tag -> tag instanceof NBTTagList).count() > 50)
             return false;
 
-        if (compound.map.values().stream().filter(tag -> tag instanceof NBTTagString).anyMatch(nbtBase -> nbtBase.a_().length() > 300))
-            return false;
-
-        return true;
+        return compound.map.values().stream().filter(tag -> tag instanceof NBTTagString).noneMatch(nbtBase -> nbtBase.a_().length() > 300);
     }
 
     public String c(int i) {

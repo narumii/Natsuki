@@ -20,7 +20,7 @@ public class PathfinderGoalNearestAttackableTarget<T extends EntityLiving> exten
     }
 
     public PathfinderGoalNearestAttackableTarget(EntityCreature entitycreature, Class<T> oclass, boolean flag, boolean flag1) {
-        this(entitycreature, oclass, 10, flag, flag1, (Predicate) null);
+        this(entitycreature, oclass, 10, flag, flag1, null);
     }
 
     public PathfinderGoalNearestAttackableTarget(EntityCreature entitycreature, Class<T> oclass, int i, boolean flag, boolean flag1, final Predicate<? super T> predicate) {
@@ -104,7 +104,7 @@ public class PathfinderGoalNearestAttackableTarget<T extends EntityLiving> exten
         }
 
         public int compare(Entity object, Entity object1) { // CraftBukkit - fix decompile error
-            return this.a((Entity) object, (Entity) object1);
+            return this.a(object, object1);
         }
     }
 }

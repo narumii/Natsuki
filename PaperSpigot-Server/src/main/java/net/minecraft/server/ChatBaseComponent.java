@@ -12,7 +12,8 @@ public abstract class ChatBaseComponent implements IChatBaseComponent {
     protected List<IChatBaseComponent> a = Lists.newArrayList();
     private ChatModifier b;
 
-    public ChatBaseComponent() {}
+    public ChatBaseComponent() {
+    }
 
     public IChatBaseComponent addSibling(IChatBaseComponent ichatbasecomponent) {
         ichatbasecomponent.getChatModifier().setChatModifier(this.getChatModifier());
@@ -57,7 +58,7 @@ public abstract class ChatBaseComponent implements IChatBaseComponent {
     }
 
     public Iterator<IChatBaseComponent> iterator() {
-        return Iterators.concat(Iterators.forArray(new ChatBaseComponent[] { this}), a((Iterable) this.a));
+        return Iterators.concat(Iterators.forArray(this), a((Iterable) this.a));
     }
 
     public final String c() {

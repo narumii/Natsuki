@@ -97,5 +97,6 @@ public class NormalChunkGenerator extends InternalChunkGenerator {
     }
 
     @Override
-    public void c() {}
+    public void c() {
+    }
 }

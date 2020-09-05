@@ -12,7 +12,7 @@ public class NBTCompressedStreamTools {
         NBTTagCompound nbttagcompound;
 
         try {
-            nbttagcompound = a((DataInput) datainputstream, NBTReadLimiter.a);
+            nbttagcompound = a(datainputstream, NBTReadLimiter.a);
         } finally {
             datainputstream.close();
         }
@@ -32,13 +32,12 @@ public class NBTCompressedStreamTools {
     }
 
     public static NBTTagCompound a(DataInputStream datainputstream) throws IOException {
-        return a((DataInput) datainputstream, NBTReadLimiter.a);
+        return a(datainputstream, NBTReadLimiter.a);
     }
 
     public static NBTTagCompound a(DataInput datainput, NBTReadLimiter nbtreadlimiter) throws IOException {
         // Spigot start
-        if ( datainput instanceof io.netty.buffer.ByteBufInputStream )
-        {
+        if (datainput instanceof io.netty.buffer.ByteBufInputStream) {
             datainput = new DataInputStream(new org.spigotmc.LimitStream((InputStream) datainput, nbtreadlimiter));
         }
         // Spigot end
@@ -80,8 +79,8 @@ public class NBTCompressedStreamTools {
                 CrashReport crashreport = CrashReport.a(ioexception, "Loading NBT data");
                 CrashReportSystemDetails crashreportsystemdetails = crashreport.a("NBT Tag");
 
-                crashreportsystemdetails.a("Tag name", (Object) "[UNNAMED TAG]");
-                crashreportsystemdetails.a("Tag type", (Object) Byte.valueOf(b0));
+                crashreportsystemdetails.a("Tag name", "[UNNAMED TAG]");
+                crashreportsystemdetails.a("Tag type", Byte.valueOf(b0));
                 throw new ReportedException(crashreport);
             }
         }

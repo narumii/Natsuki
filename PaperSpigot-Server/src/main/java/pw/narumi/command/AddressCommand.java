@@ -2,7 +2,6 @@ package pw.narumi.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import pw.narumi.Natsuki;
 import pw.narumi.common.Holder;
 
 public class AddressCommand extends Command {
@@ -35,11 +34,11 @@ public class AddressCommand extends Command {
             if (Holder.getWhitelist().contains(address)) {
                 Holder.getWhitelist().remove(address);
                 sender.sendMessage(" §8» §7Removed §d" + address + "§7 ip from whitelist");
-            }else {
+            } else {
                 Holder.getWhitelist().add(address);
                 sender.sendMessage(" §8» §7Added §d" + address + "§7 ip to whitelist");
             }
-        }else {
+        } else {
             sender.sendMessage(" §8» §7Blocked addresses: §d" + Holder.getBlacklist().size());
             sender.sendMessage(" §8» §7WhiteListed addresses: §d" + Holder.getWhitelist().size());
         }

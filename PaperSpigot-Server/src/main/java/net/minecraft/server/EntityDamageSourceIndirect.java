@@ -23,7 +23,7 @@ public class EntityDamageSourceIndirect extends EntityDamageSource {
         String s = "death.attack." + this.translationIndex;
         String s1 = s + ".item";
 
-        return itemstack != null && itemstack.hasName() && LocaleI18n.c(s1) ? new ChatMessage(s1, new Object[] { entityliving.getScoreboardDisplayName(), ichatbasecomponent, itemstack.C()}) : new ChatMessage(s, new Object[] { entityliving.getScoreboardDisplayName(), ichatbasecomponent});
+        return itemstack != null && itemstack.hasName() && LocaleI18n.c(s1) ? new ChatMessage(s1, entityliving.getScoreboardDisplayName(), ichatbasecomponent, itemstack.C()) : new ChatMessage(s, entityliving.getScoreboardDisplayName(), ichatbasecomponent);
     }
 
     // CraftBukkit start

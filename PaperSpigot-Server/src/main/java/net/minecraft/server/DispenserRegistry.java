@@ -102,7 +102,7 @@ public class DispenserRegistry {
                     itemstack.count++;
                     // Chain to handler for new item
                     ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                    IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+                    IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
                     if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                         idispensebehavior.a(isourceblock, eventStack);
                         return itemstack;
@@ -114,7 +114,7 @@ public class DispenserRegistry {
                 Entity entity = ItemMonsterEgg.spawnCreature(isourceblock.getWorld(), itemstack.getData(), event.getVelocity().getX(), event.getVelocity().getY(), event.getVelocity().getZ(), org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.DISPENSE_EGG);
 
                 if (entity instanceof EntityLiving && itemstack.hasName()) {
-                    ((EntityInsentient) entity).setCustomName(itemstack.getName());
+                    entity.setCustomName(itemstack.getName());
                 }
 
                 // itemstack.a(1); // Handled during event processing
@@ -148,7 +148,7 @@ public class DispenserRegistry {
                     itemstack.count++;
                     // Chain to handler for new item
                     ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                    IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+                    IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
                     if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                         idispensebehavior.a(isourceblock, eventStack);
                         return itemstack;
@@ -200,7 +200,7 @@ public class DispenserRegistry {
                     itemstack.count++;
                     // Chain to handler for new item
                     ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                    IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+                    IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
                     if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                         idispensebehavior.a(isourceblock, eventStack);
                         return itemstack;
@@ -208,7 +208,7 @@ public class DispenserRegistry {
                 }
 
                 EntitySmallFireball entitysmallfireball = new EntitySmallFireball(world, d0, d1, d2, event.getVelocity().getX(), event.getVelocity().getY(), event.getVelocity().getZ());
-                entitysmallfireball.projectileSource = new org.bukkit.craftbukkit.projectiles.CraftBlockProjectileSource((TileEntityDispenser) isourceblock.getTileEntity());
+                entitysmallfireball.projectileSource = new org.bukkit.craftbukkit.projectiles.CraftBlockProjectileSource(isourceblock.getTileEntity());
 
                 world.addEntity(entitysmallfireball);
                 // itemstack.a(1); // Handled during event processing
@@ -263,7 +263,7 @@ public class DispenserRegistry {
                     itemstack.count++;
                     // Chain to handler for new item
                     ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                    IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+                    IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
                     if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                         idispensebehavior.a(isourceblock, eventStack);
                         return itemstack;
@@ -310,7 +310,7 @@ public class DispenserRegistry {
                     if (!event.getItem().equals(craftItem)) {
                         // Chain to handler for new item
                         ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                        IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+                        IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
                         if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                             idispensebehavior.a(isourceblock, eventStack);
                             return itemstack;
@@ -351,10 +351,10 @@ public class DispenserRegistry {
                 Material material = block.getMaterial();
                 Item item;
 
-                if (Material.WATER.equals(material) && block instanceof BlockFluids && ((Integer) iblockdata.get(BlockFluids.LEVEL)).intValue() == 0) {
+                if (Material.WATER.equals(material) && block instanceof BlockFluids && iblockdata.get(BlockFluids.LEVEL).intValue() == 0) {
                     item = Items.WATER_BUCKET;
                 } else {
-                    if (!Material.LAVA.equals(material) || !(block instanceof BlockFluids) || ((Integer) iblockdata.get(BlockFluids.LEVEL)).intValue() != 0) {
+                    if (!Material.LAVA.equals(material) || !(block instanceof BlockFluids) || iblockdata.get(BlockFluids.LEVEL).intValue() != 0) {
                         return super.b(isourceblock, itemstack);
                     }
 
@@ -377,7 +377,7 @@ public class DispenserRegistry {
                 if (!event.getItem().equals(craftItem)) {
                     // Chain to handler for new item
                     ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                    IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+                    IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
                     if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                         idispensebehavior.a(isourceblock, eventStack);
                         return itemstack;
@@ -419,7 +419,7 @@ public class DispenserRegistry {
                 if (!event.getItem().equals(craftItem)) {
                     // Chain to handler for new item
                     ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                    IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+                    IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
                     if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                         idispensebehavior.a(isourceblock, eventStack);
                         return itemstack;
@@ -479,7 +479,7 @@ public class DispenserRegistry {
                     if (!event.getItem().equals(craftItem)) {
                         // Chain to handler for new item
                         ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                        IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+                        IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
                         if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                             idispensebehavior.a(isourceblock, eventStack);
                             return itemstack;
@@ -527,7 +527,7 @@ public class DispenserRegistry {
                 BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(blockposition.getX() + 0.5, y, blockposition.getZ() + 0.5));
                 // PaperSpigot end
                 if (!BlockDispenser.eventFired) {
-                   world.getServer().getPluginManager().callEvent(event);
+                    world.getServer().getPluginManager().callEvent(event);
                 }
 
                 if (event.isCancelled()) {
@@ -539,14 +539,14 @@ public class DispenserRegistry {
                     itemstack.count++;
                     // Chain to handler for new item
                     ItemStack eventStack = CraftItemStack.asNMSCopy(event.getItem());
-                    IDispenseBehavior idispensebehavior = (IDispenseBehavior) BlockDispenser.REGISTRY.get(eventStack.getItem());
+                    IDispenseBehavior idispensebehavior = BlockDispenser.REGISTRY.get(eventStack.getItem());
                     if (idispensebehavior != IDispenseBehavior.NONE && idispensebehavior != this) {
                         idispensebehavior.a(isourceblock, eventStack);
                         return itemstack;
                     }
                 }
 
-                EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(block.getLocation(), world, event.getVelocity().getX(), event.getVelocity().getY(), event.getVelocity().getZ(), (EntityLiving) null); // PaperSpigot
+                EntityTNTPrimed entitytntprimed = new EntityTNTPrimed(block.getLocation(), world, event.getVelocity().getX(), event.getVelocity().getY(), event.getVelocity().getZ(), null); // PaperSpigot
                 // CraftBukkit end
 
                 world.addEntity(entitytntprimed);
@@ -582,7 +582,7 @@ public class DispenserRegistry {
                                         String s = nbttagcompound.getString("SkullOwner");
 
                                         if (!UtilColor.b(s)) {
-                                            gameprofile = new GameProfile((UUID) null, s);
+                                            gameprofile = new GameProfile(null, s);
                                         }
                                     }
                                 }

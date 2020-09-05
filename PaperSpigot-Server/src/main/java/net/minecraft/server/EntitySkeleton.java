@@ -18,7 +18,7 @@ public class EntitySkeleton extends EntityMonster implements IRangedEntity {
         this.goalSelector.a(4, new PathfinderGoalRandomStroll(this, 1.0D));
         this.goalSelector.a(6, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
         this.goalSelector.a(6, new PathfinderGoalRandomLookaround(this));
-        this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false, new Class[0]));
+        this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
         this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, true));
         this.targetSelector.a(3, new PathfinderGoalNearestAttackableTarget(this, EntityIronGolem.class, true));
         if (world != null && !world.isClientSide) {
@@ -83,7 +83,7 @@ public class EntitySkeleton extends EntityMonster implements IRangedEntity {
                         itemstack.setData(itemstack.h() + this.random.nextInt(2));
                         if (itemstack.h() >= itemstack.j()) {
                             this.b(itemstack);
-                            this.setEquipment(4, (ItemStack) null);
+                            this.setEquipment(4, null);
                         }
                     }
 
@@ -128,7 +128,7 @@ public class EntitySkeleton extends EntityMonster implements IRangedEntity {
             double d1 = entityhuman.locZ - this.locZ;
 
             if (d0 * d0 + d1 * d1 >= 2500.0D) {
-                entityhuman.b((Statistic) AchievementList.v);
+                entityhuman.b(AchievementList.v);
             }
         } else if (damagesource.getEntity() instanceof EntityCreeper && ((EntityCreeper) damagesource.getEntity()).isPowered() && ((EntityCreeper) damagesource.getEntity()).cp()) {
             ((EntityCreeper) damagesource.getEntity()).cq();
@@ -215,8 +215,8 @@ public class EntitySkeleton extends EntityMonster implements IRangedEntity {
     }
 
     public void n() {
-        this.goalSelector.a((PathfinderGoal) this.b);
-        this.goalSelector.a((PathfinderGoal) this.a);
+        this.goalSelector.a(this.b);
+        this.goalSelector.a(this.a);
         ItemStack itemstack = this.bA();
 
         if (itemstack != null && itemstack.getItem() == Items.BOW) {
