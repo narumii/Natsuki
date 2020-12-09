@@ -17,23 +17,6 @@ import java.util.logging.Logger;
 
 public class Natsuki {
 
-    private final Logger logger1 = Logger.getLogger("1");
-    private final Logger logger2 = Logger.getLogger("1");
-    private final Logger logger3 = Logger.getLogger("1");
-    private final Logger logger4 = Logger.getLogger("1");
-    private final Logger logger5 = Logger.getLogger("1");
-    private final Logger logger6 = Logger.getLogger("1");
-    private final Logger logger7 = Logger.getLogger("1");
-    private final Logger logger8 = Logger.getLogger("1");
-    private final Logger logger9 = Logger.getLogger("1");
-    private final Logger logger10 = Logger.getLogger("1");
-    private final Logger logger11 = Logger.getLogger("1");
-    private final Logger logger12 = Logger.getLogger("1");
-    private final Logger logger13 = Logger.getLogger("1");
-    private final Logger logger14 = Logger.getLogger("1");
-    private final Logger logger15 = Logger.getLogger("1");
-    private final Logger logger16 = Logger.getLogger("1");
-
     private final String version = "1.1.0-Beta";
     private DatabaseReader databaseReader;
     private ConfigReader configReader;
@@ -68,13 +51,13 @@ public class Natsuki {
     }
 
     private void initConfig() {
-        final File file = new File("Natsuki", "config.json");
+        final File file = new File("Natsuki");
 
         if (!file.exists())
             file.mkdirs();
 
         try {
-            if (!file.getAbsoluteFile().exists()) {
+            if (!new File(file, "config.json").exists()) {
                 System.err.println("Nie znaleziono pliku konfuguracji, tworzenie pliku");
                 configReader.createConfig();
             }
