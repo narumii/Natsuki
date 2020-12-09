@@ -14,6 +14,8 @@ public class NatsukiPacketSplitter extends ByteToMessageDecoder {
   public NatsukiPacketSplitter() {
   }
 
+  private int packet;
+
   protected void decode(ChannelHandlerContext handlerContext, ByteBuf buf, List<Object> packets)
       throws NatsukiException {
     buf.markReaderIndex();
@@ -23,6 +25,10 @@ public class NatsukiPacketSplitter extends ByteToMessageDecoder {
       try {
         if (!buf.isReadable()) {
           throw new NatsukiException("NO.");
+        }
+
+        if (++packet < 3 && (buf.readableBytes() > 300 || buf.readableBytes() < 4)) {
+          throw new NatsukiException("WUT.");
         }
 
         byte b = bytes[i] = buf.readByte();

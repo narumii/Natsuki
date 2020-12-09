@@ -1,18 +1,7 @@
 .gitmodules
 .idea
 
-paperspigot-parent.iml
-
-PaperSpigot-API/paperspigot-api.iml
-PaperSpigot-API/target
-PaperSpigot-API/src/test
-PaperSpigot-API/src/main/javadoc
-
-Natsuki/Natsuki.iml
-Natsuki/target
-
-PaperSpigot-Server/paperspigot.iml
-PaperSpigot-Server/target
-PaperSpigot-Server/src/test
+*/target
+*.iml
 
 work
