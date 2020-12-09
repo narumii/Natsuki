@@ -1,7 +1,6 @@
 package pw.narumi.common;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +21,7 @@ public class Holder {
     private static final Set<String> ping = new HashSet<>();
     private static final Set<String> verified = new HashSet<>();
 
+  private static final AtomicInteger blocked = new AtomicInteger();
     private static final AtomicInteger channels = new AtomicInteger();
 
     public static void startTask() {
@@ -56,4 +56,8 @@ public class Holder {
     public static Executor getExecutor() {
         return executor;
     }
+
+  public static AtomicInteger getBlocked() {
+    return blocked;
+  }
 }

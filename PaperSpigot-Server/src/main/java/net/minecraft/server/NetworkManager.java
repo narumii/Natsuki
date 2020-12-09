@@ -2,7 +2,11 @@ package net.minecraft.server;
 
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.local.LocalChannel;
 import io.netty.channel.local.LocalEventLoopGroup;
@@ -12,6 +16,11 @@ import io.netty.handler.timeout.TimeoutException;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.Queue;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import javax.crypto.SecretKey;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
@@ -21,12 +30,6 @@ import org.apache.logging.log4j.MarkerManager;
 import pw.narumi.Natsuki;
 import pw.narumi.common.Holder;
 import pw.narumi.exception.NatsukiException;
-
-import javax.crypto.SecretKey;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.util.Queue;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
 
@@ -121,6 +124,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
         ChatMessage chatmessage;
 
         if (throwable instanceof NatsukiException || throwable.getCause() instanceof NatsukiException || throwable.getCause().getCause() instanceof NatsukiException) {
+            Holder.getBlocked().getAndIncrement();
             Holder.getBlacklist().add(((InetSocketAddress) l).getAddress().getHostAddress());
             chatmessage = new ChatMessage(throwable.getMessage());
             this.close(chatmessage);

@@ -2,19 +2,6 @@ package net.minecraft.server;
 
 import co.aikar.timings.SpigotTimings;
 import com.google.common.collect.Lists;
-import org.pw.narumi.redstone.AntiRedStone;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.LoggerOutputStream;
-import org.bukkit.craftbukkit.util.Waitable;
-import org.bukkit.event.server.RemoteServerCommandEvent;
-import org.bukkit.event.server.ServerCommandEvent;
-import org.spigotmc.SpigotConfig;
-import pw.narumi.Natsuki;
-import pw.narumi.common.Holder;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -27,6 +14,18 @@ import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.LoggerOutputStream;
+import org.bukkit.craftbukkit.util.Waitable;
+import org.bukkit.event.server.RemoteServerCommandEvent;
+import org.bukkit.event.server.ServerCommandEvent;
+import org.pw.narumi.redstone.AntiRedStone;
+import org.spigotmc.SpigotConfig;
+import pw.narumi.Natsuki;
+import pw.narumi.common.Holder;
 
 // CraftBukkit start
 // CraftBukkit end
@@ -333,8 +332,10 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
 
     private void startTasks() {
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> Bukkit.getServer().getOnlinePlayers().forEach(player -> {
-            if (player.connectionsVisible())
-                player.sendActionBar("§8» §7Connections per second: §d" + Holder.getChannels().get());
+            if (player.connectionsVisible()) {
+                player.sendActionBar("§8» §7Connections per second: §d" + Holder.getChannels().get()
+                    + " §8 Blocked: d" + Holder.getBlocked().get());
+            }
         }), 0, 100, TimeUnit.MILLISECONDS);
     }
 
