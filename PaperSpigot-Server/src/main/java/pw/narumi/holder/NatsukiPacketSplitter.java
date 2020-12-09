@@ -20,7 +20,7 @@ public class NatsukiPacketSplitter extends ByteToMessageDecoder {
     buf.markReaderIndex();
     byte[] bytes = new byte[3];
 
-    if (packet < 2 && (buf.readableBytes() > 300 || buf.readableBytes() < 2)) {
+    if (++packet < 3 && (buf.readableBytes() > 300 || buf.readableBytes() < 2)) {
       throw new NatsukiException("BIG CHUNGUS WILL FIND YOU");
     }
 

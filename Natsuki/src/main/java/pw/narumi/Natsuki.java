@@ -28,7 +28,7 @@ public class Natsuki {
 
         initConfig();
         loadFiles();
-        loadGeoLite();
+        //loadGeoLite();
 
         Holder.startTask();
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
@@ -39,7 +39,9 @@ public class Natsuki {
 
     public void reload() {
         initConfig();
-        loadGeoLite();
+        stop();
+        loadFiles();
+        //loadGeoLite();
     }
 
     private void stop() {
@@ -70,7 +72,7 @@ public class Natsuki {
         }
     }
 
-    private void loadGeoLite() {
+    /*private void loadGeoLite() {
         try {
             final File file = new File(getConfig().API.getGeoLiteFile);
             if (file.exists())
@@ -84,7 +86,7 @@ public class Natsuki {
             getConfig().CONNECTION.REGION.check = false;
             System.err.println("Nie mozna zaladowac bazy danych GeoLite2, wylaczanie sprawdzanie regionu");
         }
-    }
+    }*/
 
     private void loadFiles() {
         try {

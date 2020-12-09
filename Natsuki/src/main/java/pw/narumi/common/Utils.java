@@ -86,11 +86,11 @@ public class Utils {
     public static boolean isCountry(final InetAddress inetAddress) {
         try {
             final Country country = Natsuki.getInstance().getDatabaseReader().country(inetAddress).getCountry();
-            if (Natsuki.getInstance().getConfig().CONNECTION.REGION.allowedRegions.contains(country.getIsoCode().toUpperCase()))
+            //if (country.getIsoCode() != null && Natsuki.getInstance().getConfig().CONNECTION.REGION.allowedRegions.contains(country.getIsoCode().toUpperCase()))
                 return true;
         } catch (final Exception e) {
             return false;
         }
-        return false;
+        //return false;
     }
 }

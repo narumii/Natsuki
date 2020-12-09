@@ -32,43 +32,43 @@ public class Config {
         put("BlockedCrashKick", "\u0026cZostales wyrzucony za probe crashu");
         put("BlockedPayLoadKick", "\u0026cWysylanie tego payloadu zostalo zablokowane");
         put("ProxyOrVpnKick", "\u0026cWykrylismy ze uzywasz VPN lub proxy\n\u00267Jesli to blad zrestartuj router lub zglos to administarcji");
-        put("RegionKick", "\u0026cPrzyjmujemy polaczenia tylko z Polski\n\u00267Jesli mieszkasz za granica zglos to administracji");
-        put("MaxConnectionsPerIp", "\u0026cPrzekroczyles limit polaczen z 1 ip");
+        //put("RegionKick", "\u0026cPrzyjmujemy polaczenia tylko z Polski\n\u00267Jesli mieszkasz za granica zglos to administracji");
+        //put("MaxConnectionsPerIp", "\u0026cPrzekroczyles limit polaczen z 1 ip");
         put("PingKick", "\u0026cYou must first ping the server, after that join again.");
         put("DoubleJoin", "\u0026cJoin again to the server.");
     }};
 
     public class Api {
-        @SerializedName(value = "GeoLite2 File Path")
-        public String getGeoLiteFile = "Natsuki/GeoLite2-Country.mmdb";
+        //TODO: FIX
+        //@SerializedName(value = "GeoLite2 File Path")
+        //public String getGeoLiteFile = "Natsuki/GeoLite2-Country.mmdb";
 
         @SerializedName(value = "Proxy Check Api Key")
         public String proxyCheckKey = "Your Key";
     }
 
     public class Connection {
-        @SerializedName(value = "Max Connections Per Address")
-        public int maxConnections = 2;
+        //TODO: FIX
+        //@SerializedName(value = "Max Connections Per Address")
+        //public int maxConnections = 2;
 
         @SerializedName(value = "Check Player Address")
         public boolean addressCheck = true;
 
-        @SerializedName(value = "Region")
-        public final Region REGION = new Region();
+        //TODO: FIX
+        //@SerializedName(value = "Region")
+        //public final Region REGION = new Region();
 
-        public class Region {
-            @SerializedName(value = "Check")
-            public boolean check = true;
+        //public class Region {
+        //    @SerializedName(value = "Check")
+        //    public boolean check = false;
 
-            @SerializedName(value = "Allowed Regions")
-            public final List<String> allowedRegions = Arrays.asList("PL", "DE");
-        }
+        //    @SerializedName(value = "Allowed Regions")
+        //    public final List<String> allowedRegions = Arrays.asList("PL", "DE");
+        //}
     }
 
     public class PacketSettings {
-
-        @SerializedName(value = "Packets per second")
-        public int maxPackets = 1200;
 
         @SerializedName(value = "Custom PacketDecoder")
         public boolean customDecoder = true;

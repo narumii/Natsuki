@@ -187,7 +187,7 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
                 }
             }
 
-            if (Natsuki.getInstance().getConfig().CONNECTION.maxConnections != -1) {
+            /*if (Natsuki.getInstance().getConfig().CONNECTION.maxConnections != -1) {
                 final long limit = Bukkit.getServer().getOnlinePlayers()
                         .stream()
                         .filter(player -> player.getAddress().getAddress().equals(inetAddress))
@@ -199,7 +199,7 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
                     this.networkManager.close(message);
                     return;
                 }
-            }
+            }*/
 
             if (checkAddress(inetAddress))
                 end(packetlogininstart);
@@ -237,12 +237,13 @@ public class LoginListener implements PacketLoginInListener, IUpdatePlayerListBo
         if (Holder.getWhitelist().contains(host) || (host.contains("localhost") || host.contains("127.0.0.1")))
             return true;
 
-        if (config.CONNECTION.REGION.check && Utils.isCountry(inetAddress)) {
+        /*if (config.CONNECTION.REGION.check && Utils.isCountry(inetAddress)) {
             disconnect(Utils.fixString(config.PREFIX
                     + "\n\n" +
-                    config.MESSAGES.get("CountryKick")));
+                    config.MESSAGES.get("RegionKick")));
             return false;
-        }
+        }*/
+
         if (config.CONNECTION.addressCheck && Utils.isProxy(host)) {
             disconnect(Utils.fixString(config.PREFIX
                     + "\n\n" +

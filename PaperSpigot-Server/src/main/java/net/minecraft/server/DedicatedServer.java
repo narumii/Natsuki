@@ -273,7 +273,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                     Natsuki.getInstance().getConfig().ANTIBOT.pingCheck = false;
                     Natsuki.getInstance().getConfig().ANTIBOT.doubleJoin = false;
                     Natsuki.getInstance().getConfig().CONNECTION.maxConnections = -1;
-                    Natsuki.getInstance().getConfig().CONNECTION.REGION.check = false;
+                    //Natsuki.getInstance().getConfig().CONNECTION.REGION.check = false;
                     Natsuki.getInstance().getConfig().CONNECTION.addressCheck = false;
                     Natsuki.getInstance().getConfig().PACKET.PAYLOAD.skipPayload = false;
                 }
