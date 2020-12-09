@@ -334,7 +334,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> Bukkit.getServer().getOnlinePlayers().forEach(player -> {
             if (player.connectionsVisible()) {
                 player.sendActionBar("§8» §7Connections per second: §d" + Holder.getChannels().get()
-                    + " §8 Blocked: d" + Holder.getBlocked().get());
+                    + " §8 | §7Blocked: §d" + Holder.getBlocked().get());
             }
         }), 0, 100, TimeUnit.MILLISECONDS);
     }

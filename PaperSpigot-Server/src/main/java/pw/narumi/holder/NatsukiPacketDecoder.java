@@ -28,10 +28,6 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
             System.out.println(channel.channel().remoteAddress() + " -> " + Arrays.toString(buf.array()) + " | [bytes: " + buf.readableBytes() + ", packet: " + packetState + ", handshake: " + handshakeIntent + "]");
 
         try {
-            if (!buf.isReadable()) {
-                throw new NatsukiException("BIG CHUNGUS WILL FIND YOU!");
-            }
-
             if (packetState < 4) {
                 if (packetState == 0 || (packetState == 1 && handshakeIntent == 2)) {
                     final PacketDataSerializer serializer = new PacketDataSerializer(buf.copy());
@@ -48,7 +44,7 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
                 packetState++;
             }
 
-            final PacketDataSerializer serializer = new PacketDataSerializer(buf.copy());
+            final PacketDataSerializer serializer = new PacketDataSerializer(buf);
             final int packetId = serializer.e();
             final Packet<?> packet = channel.channel().attr(NetworkManager.c).get().a(this.direction, packetId);
             if (packet == null) {
@@ -63,7 +59,7 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
                 objects.add(packet);
                 ++packetState;
             }
-        } catch (final IndexOutOfBoundsException | NatsukiException e) {
+        } catch (NatsukiException e) {
             channel.pipeline().remove(this);
             throw new NatsukiException(e);
         }

@@ -128,6 +128,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
             Holder.getBlacklist().add(((InetSocketAddress) l).getAddress().getHostAddress());
             chatmessage = new ChatMessage(throwable.getMessage());
             this.close(chatmessage);
+            throwable.printStackTrace();
             return;
         }
 

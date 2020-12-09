@@ -16,40 +16,40 @@ public class NatsukiPacketSplitter extends ByteToMessageDecoder {
 
   private int packet;
 
-  protected void decode(ChannelHandlerContext handlerContext, ByteBuf buf, List<Object> packets)
-      throws NatsukiException {
+  protected void decode(ChannelHandlerContext handlerContext, ByteBuf buf, List<Object> objects) throws Exception {
     buf.markReaderIndex();
     byte[] bytes = new byte[3];
 
-    for (int i = 0; i < bytes.length; i++) {
+    if (++packet < 3 && buf.readableBytes() > 300)
+      throw new NatsukiException("BIG CHUNGUS WILL FIND YOU");
+
+    for(int i = 0; i < bytes.length; ++i) {
       try {
         if (!buf.isReadable()) {
-          throw new NatsukiException("NO.");
+          buf.resetReaderIndex();
+          return;
         }
 
-        if (++packet < 3 && (buf.readableBytes() > 300 || buf.readableBytes() < 4)) {
-          throw new NatsukiException("WUT.");
-        }
-
-        byte b = bytes[i] = buf.readByte();
-        if (b >= 0) {
+        bytes[i] = buf.readByte();
+        if (bytes[i] >= 0) {
           PacketDataSerializer serializer = new PacketDataSerializer(Unpooled.wrappedBuffer(bytes));
           try {
-            int varInt = serializer.e();
-            if (buf.readableBytes() < varInt) {
-              throw new NatsukiException("YES.");
+            int size = serializer.e();
+            if (buf.readableBytes() < size) {
+              buf.resetReaderIndex();
+              return;
             }
 
-            packets.add(buf.readBytes(varInt));
+            objects.add(buf.readBytes(size));
           } finally {
             serializer.release();
           }
+          return;
         }
-      } catch (NatsukiException e) {
+      }catch (final NatsukiException e) {
         handlerContext.pipeline().remove(this);
         throw new NatsukiException(e);
       }
-      return;
     }
 
     throw new CorruptedFrameException("length wider than 21-bit");

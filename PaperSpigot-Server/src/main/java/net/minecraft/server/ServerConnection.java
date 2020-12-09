@@ -99,7 +99,7 @@ public class ServerConnection {
                     channel.pipeline().addLast("timeout",
                             new ReadTimeoutHandler(30))
                             .addLast("legacy_query", new LegacyPingHandler(ServerConnection.this))
-                        .addLast("splitter", new NatsukiPacketSplitter())
+                            .addLast("splitter", new NatsukiPacketSplitter())
                             .addLast("decoder", (Natsuki.getInstance().getConfig().PACKET.customDecoder ? new NatsukiPacketDecoder(EnumProtocolDirection.SERVERBOUND) : new PacketDecoder(EnumProtocolDirection.SERVERBOUND)))
                             .addLast("prepender", new PacketPrepender()).addLast("encoder", new PacketEncoder(EnumProtocolDirection.CLIENTBOUND));
 
