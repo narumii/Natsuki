@@ -7,6 +7,20 @@ import com.google.common.primitives.Floats;
 import io.netty.buffer.Unpooled;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,22 +37,32 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.inventory.*;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerResourcePackStatusEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.util.NumberConversions;
 import org.github.paperspigot.PaperSpigotConfig;
 import pw.narumi.Natsuki;
 import pw.narumi.common.Utils;
-
-import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 // CraftBukkit start
 // CraftBukkit end
@@ -100,7 +124,6 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     public final List<Object> keepAlive = new LinkedList<>();
     public long joinTime;
 
-    private final Map<String, Integer> packetMap = new HashMap<>();
 
     public CraftPlayer getPlayer() {
         return (this.player == null) ? null : this.player.getBukkitEntity();
@@ -109,31 +132,28 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
     private final static HashSet<Integer> invalidItems = new HashSet<Integer>(java.util.Arrays.asList(8, 9, 10, 11, 26, 34, 36, 43, 51, 52, 55, 59, 60, 62, 63, 64, 68, 71, 74, 75, 83, 90, 92, 93, 94, 104, 105, 115, 117, 118, 119, 125, 127, 132, 140, 141, 142, 144)); // TODO: Check after every update.
     // CraftBukkit end
 
+    private final Map<String, Integer> packetMap = new ConcurrentHashMap<>();
+    private long delay = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(1);
+
     private void packetSpam(final String packet) {
         if (System.currentTimeMillis() > delay) {
             packetMap.clear();
             delay = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(1);
         }
 
-
         final int delta = packetMap.getOrDefault(packet, 1);
-
-        if (!packetMap.containsKey(packet)) {
+        if (!packetMap.containsKey(packet))
             packetMap.put(packet, delta);
-        } else {
+        else
             packetMap.put(packet, delta + 1);
-        }
 
         final int max = Natsuki.getInstance().getConfig().PACKETS.getOrDefault(packet, -1);
-        if (delta > max && max != -1) {
+        if (delta > max && max != -1)
             this.closeChannel(
-                    Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
-                            + "\n\n" +
-                            Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick")));
-        }
+                Utils.fixString(Natsuki.getInstance().getConfig().PREFIX
+                    + "\n\n" +
+                    Natsuki.getInstance().getConfig().MESSAGES.get("BlockedCrashKick")));
     }
-
-    private long delay = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(1);
 
     public void c() {
         this.h = false;

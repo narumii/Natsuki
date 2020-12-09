@@ -3,28 +3,18 @@ package pw.narumi.holder;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import java.util.Arrays;
+import java.util.List;
 import net.minecraft.server.EnumProtocolDirection;
 import net.minecraft.server.NetworkManager;
 import net.minecraft.server.Packet;
 import net.minecraft.server.PacketDataSerializer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
 import pw.narumi.Natsuki;
 import pw.narumi.common.PacketUtil;
 import pw.narumi.exception.NatsukiException;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class NatsukiPacketDecoder extends ByteToMessageDecoder {
-    /*
-    Zamiennik jebanego syfu ze spigota
-     */
 
-    private static final Logger logger = LogManager.getLogger();
-    private static final Marker marker = MarkerManager.getMarker("PACKET_RECEIVED", NetworkManager.b);
     private final EnumProtocolDirection direction;
     private int packetState = 0;
     private int handshakeIntent = 0;
@@ -38,70 +28,44 @@ public class NatsukiPacketDecoder extends ByteToMessageDecoder {
             System.out.println(channel.channel().remoteAddress() + " -> " + Arrays.toString(buf.array()) + " | [bytes: " + buf.readableBytes() + ", packet: " + packetState + ", handshake: " + handshakeIntent + "]");
 
         try {
-            if (buf.readableBytes() <= 0) {
-                channel.pipeline().remove(this);
-                throw new NatsukiException("Null readable bytes received");
+            if (!buf.isReadable()) {
+                throw new NatsukiException("BIG CHUNGUS WILL FIND YOU!");
             }
 
-            if (packetState >= 4)
-                handshakeIntent = 0;
-
-            if (packetState == 0 || (packetState == 1 && handshakeIntent == 2)) {
-                try {
-                    final PacketDataSerializer buffer = new PacketDataSerializer(buf.copy());
+            if (packetState < 4) {
+                if (packetState == 0 || (packetState == 1 && handshakeIntent == 2)) {
+                    final PacketDataSerializer serializer = new PacketDataSerializer(buf.copy());
                     if (packetState == 0) {
-                        handshakeIntent = PacketUtil.checkHandshake(buffer);
+                        handshakeIntent = PacketUtil.checkHandshake(serializer);
+                    } else {
+                        PacketUtil.checkLogin(serializer);
                     }
-
-                    if (packetState == 1 && handshakeIntent == 2) {
-                        PacketUtil.checkLogin(buffer);
+                } else if (handshakeIntent == 1 && packetState == 1) {
+                    if (buf.readableBytes() >= 3) {
+                        throw new NatsukiException("Yo boi wa ta fak ju du?");
                     }
-                } catch (final NatsukiException e) {
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Decoder exception");
                 }
+                packetState++;
             }
 
-            final PacketDataSerializer serializer = new PacketDataSerializer(buf);
-            if ((handshakeIntent == 2 && packetState < 3) && serializer.readableBytes() <= 0) {
-                channel.pipeline().remove(this);
-                throw new NatsukiException("Empty packet");
-            }
-
-            if ((handshakeIntent == 1 && packetState == 1) && (serializer.readableBytes() >= 2)) {
-                channel.pipeline().remove(this);
-                throw new NatsukiException("Empty Packet");
-            }
-
-            if ((handshakeIntent == 1 && packetState == 2 || packetState == 0) && serializer.readableBytes() <= 0) {
-                channel.pipeline().remove(this);
-                throw new NatsukiException("Invalid packet data");
-            }
-
+            final PacketDataSerializer serializer = new PacketDataSerializer(buf.copy());
             final int packetId = serializer.e();
-            if (packetState == 2 && packetId != 1 && handshakeIntent == 1) {
-                channel.pipeline().remove(this);
-                throw new NatsukiException("Invalid packet");
-            }
-
             final Packet<?> packet = channel.channel().attr(NetworkManager.c).get().a(this.direction, packetId);
             if (packet == null) {
                 buf.skipBytes(buf.readableBytes());
                 serializer.skipBytes(serializer.readableBytes());
             } else {
-
                 packet.a(serializer);
                 if (serializer.isReadable()) {
-                    channel.pipeline().remove(this);
-                    throw new NatsukiException("Packet is too big");
+                    throw new NatsukiException("Packet still readable?");
                 }
 
                 objects.add(packet);
                 ++packetState;
             }
-        } catch (final IndexOutOfBoundsException e) {
+        } catch (final IndexOutOfBoundsException | NatsukiException e) {
             channel.pipeline().remove(this);
-            throw new NatsukiException("Invalid data");
+            throw new NatsukiException(e);
         }
     }
 }
