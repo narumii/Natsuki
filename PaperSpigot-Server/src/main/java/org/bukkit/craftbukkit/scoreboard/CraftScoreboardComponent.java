@@ -1,17 +1,18 @@
 package org.bukkit.craftbukkit.scoreboard;
 
 abstract class CraftScoreboardComponent {
-    private CraftScoreboard scoreboard;
 
-    CraftScoreboardComponent(CraftScoreboard scoreboard) {
-        this.scoreboard = scoreboard;
-    }
+  private CraftScoreboard scoreboard;
 
-    abstract CraftScoreboard checkState() throws IllegalStateException;
+  CraftScoreboardComponent(CraftScoreboard scoreboard) {
+    this.scoreboard = scoreboard;
+  }
 
-    public CraftScoreboard getScoreboard() {
-        return scoreboard;
-    }
+  abstract CraftScoreboard checkState() throws IllegalStateException;
 
-    abstract void unregister() throws IllegalStateException;
+  public CraftScoreboard getScoreboard() {
+    return scoreboard;
+  }
+
+  abstract void unregister() throws IllegalStateException;
 }

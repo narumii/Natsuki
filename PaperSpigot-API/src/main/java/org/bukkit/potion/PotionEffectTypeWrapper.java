@@ -1,31 +1,32 @@
 package org.bukkit.potion;
 
 public class PotionEffectTypeWrapper extends PotionEffectType {
-    protected PotionEffectTypeWrapper(int id) {
-        super(id);
-    }
 
-    @Override
-    public double getDurationModifier() {
-        return getType().getDurationModifier();
-    }
+  protected PotionEffectTypeWrapper(int id) {
+    super(id);
+  }
 
-    @Override
-    public String getName() {
-        return getType().getName();
-    }
+  @Override
+  public double getDurationModifier() {
+    return getType().getDurationModifier();
+  }
 
-    /**
-     * Get the potion type bound to this wrapper.
-     *
-     * @return The potion effect type
-     */
-    public PotionEffectType getType() {
-        return PotionEffectType.getById(getId());
-    }
+  @Override
+  public String getName() {
+    return getType().getName();
+  }
 
-    @Override
-    public boolean isInstant() {
-        return getType().isInstant();
-    }
+  /**
+   * Get the potion type bound to this wrapper.
+   *
+   * @return The potion effect type
+   */
+  public PotionEffectType getType() {
+    return PotionEffectType.getById(getId());
+  }
+
+  @Override
+  public boolean isInstant() {
+    return getType().isInstant();
+  }
 }

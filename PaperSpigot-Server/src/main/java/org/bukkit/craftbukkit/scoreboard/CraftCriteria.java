@@ -1,64 +1,64 @@
 package org.bukkit.craftbukkit.scoreboard;
 
 import com.google.common.collect.ImmutableMap;
+import java.util.Map;
 import net.minecraft.server.IScoreboardCriteria;
 import net.minecraft.server.ScoreboardObjective;
 
-import java.util.Map;
-
 final class CraftCriteria {
-    static final Map<String, CraftCriteria> DEFAULTS;
-    static final CraftCriteria DUMMY;
 
-    static {
-        ImmutableMap.Builder<String, CraftCriteria> defaults = ImmutableMap.builder();
+  static final Map<String, CraftCriteria> DEFAULTS;
+  static final CraftCriteria DUMMY;
 
-        for (Map.Entry<?, ?> entry : ((Map<?, ?>) IScoreboardCriteria.criteria).entrySet()) {
-            String name = entry.getKey().toString();
-            IScoreboardCriteria criteria = (IScoreboardCriteria) entry.getValue();
+  static {
+    ImmutableMap.Builder<String, CraftCriteria> defaults = ImmutableMap.builder();
 
-            defaults.put(name, new CraftCriteria(criteria));
-        }
+    for (Map.Entry<?, ?> entry : ((Map<?, ?>) IScoreboardCriteria.criteria).entrySet()) {
+      String name = entry.getKey().toString();
+      IScoreboardCriteria criteria = (IScoreboardCriteria) entry.getValue();
 
-        DEFAULTS = defaults.build();
-        DUMMY = DEFAULTS.get("dummy");
+      defaults.put(name, new CraftCriteria(criteria));
     }
 
-    final IScoreboardCriteria criteria;
-    final String bukkitName;
+    DEFAULTS = defaults.build();
+    DUMMY = DEFAULTS.get("dummy");
+  }
 
-    private CraftCriteria(String bukkitName) {
-        this.bukkitName = bukkitName;
-        this.criteria = DUMMY.criteria;
-    }
+  final IScoreboardCriteria criteria;
+  final String bukkitName;
 
-    private CraftCriteria(IScoreboardCriteria criteria) {
-        this.criteria = criteria;
-        this.bukkitName = criteria.getName();
-    }
+  private CraftCriteria(String bukkitName) {
+    this.bukkitName = bukkitName;
+    this.criteria = DUMMY.criteria;
+  }
 
-    static CraftCriteria getFromNMS(ScoreboardObjective objective) {
-        return DEFAULTS.get(objective.getCriteria().getName());
-    }
+  private CraftCriteria(IScoreboardCriteria criteria) {
+    this.criteria = criteria;
+    this.bukkitName = criteria.getName();
+  }
 
-    static CraftCriteria getFromBukkit(String name) {
-        final CraftCriteria criteria = DEFAULTS.get(name);
-        if (criteria != null) {
-            return criteria;
-        }
-        return new CraftCriteria(name);
-    }
+  static CraftCriteria getFromNMS(ScoreboardObjective objective) {
+    return DEFAULTS.get(objective.getCriteria().getName());
+  }
 
-    @Override
-    public boolean equals(Object that) {
-        if (!(that instanceof CraftCriteria)) {
-            return false;
-        }
-        return ((CraftCriteria) that).bukkitName.equals(this.bukkitName);
+  static CraftCriteria getFromBukkit(String name) {
+    final CraftCriteria criteria = DEFAULTS.get(name);
+    if (criteria != null) {
+      return criteria;
     }
+    return new CraftCriteria(name);
+  }
 
-    @Override
-    public int hashCode() {
-        return this.bukkitName.hashCode() ^ CraftCriteria.class.hashCode();
+  @Override
+  public boolean equals(Object that) {
+    if (!(that instanceof CraftCriteria)) {
+      return false;
     }
+    return ((CraftCriteria) that).bukkitName.equals(this.bukkitName);
+  }
+
+  @Override
+  public int hashCode() {
+    return this.bukkitName.hashCode() ^ CraftCriteria.class.hashCode();
+  }
 }

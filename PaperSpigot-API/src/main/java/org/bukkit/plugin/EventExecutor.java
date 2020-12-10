@@ -8,5 +8,6 @@ import org.bukkit.event.Listener;
  * Interface which defines the class for event call backs to plugins
  */
 public interface EventExecutor {
-    void execute(Listener listener, Event event) throws EventException;
+
+  void execute(Listener listener, Event event) throws EventException;
 }

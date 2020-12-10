@@ -6,31 +6,32 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.WitherSkull;
 
 public class CraftWitherSkull extends CraftFireball implements WitherSkull {
-    public CraftWitherSkull(CraftServer server, EntityWitherSkull entity) {
-        super(server, entity);
-    }
 
-    @Override
-    public void setCharged(boolean charged) {
-        getHandle().setCharged(charged);
-    }
+  public CraftWitherSkull(CraftServer server, EntityWitherSkull entity) {
+    super(server, entity);
+  }
 
-    @Override
-    public boolean isCharged() {
-        return getHandle().isCharged();
-    }
+  @Override
+  public void setCharged(boolean charged) {
+    getHandle().setCharged(charged);
+  }
 
-    @Override
-    public EntityWitherSkull getHandle() {
-        return (EntityWitherSkull) entity;
-    }
+  @Override
+  public boolean isCharged() {
+    return getHandle().isCharged();
+  }
 
-    @Override
-    public String toString() {
-        return "CraftWitherSkull";
-    }
+  @Override
+  public EntityWitherSkull getHandle() {
+    return (EntityWitherSkull) entity;
+  }
 
-    public EntityType getType() {
-        return EntityType.WITHER_SKULL;
-    }
+  @Override
+  public String toString() {
+    return "CraftWitherSkull";
+  }
+
+  public EntityType getType() {
+    return EntityType.WITHER_SKULL;
+  }
 }

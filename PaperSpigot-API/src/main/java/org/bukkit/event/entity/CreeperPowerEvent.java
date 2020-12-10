@@ -11,83 +11,85 @@ import org.bukkit.event.HandlerList;
  * If a Creeper Power event is cancelled, the Creeper will not be powered.
  */
 public class CreeperPowerEvent extends EntityEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean canceled;
-    private final PowerCause cause;
-    private LightningStrike bolt;
 
-    public CreeperPowerEvent(final Creeper creeper, final LightningStrike bolt, final PowerCause cause) {
-        this(creeper, cause);
-        this.bolt = bolt;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean canceled;
+  private final PowerCause cause;
+  private LightningStrike bolt;
 
-    public CreeperPowerEvent(final Creeper creeper, final PowerCause cause) {
-        super(creeper);
-        this.cause = cause;
-    }
+  public CreeperPowerEvent(final Creeper creeper, final LightningStrike bolt,
+      final PowerCause cause) {
+    this(creeper, cause);
+    this.bolt = bolt;
+  }
 
-    public boolean isCancelled() {
-        return canceled;
-    }
+  public CreeperPowerEvent(final Creeper creeper, final PowerCause cause) {
+    super(creeper);
+    this.cause = cause;
+  }
 
-    public void setCancelled(boolean cancel) {
-        canceled = cancel;
-    }
+  public boolean isCancelled() {
+    return canceled;
+  }
 
-    @Override
-    public Creeper getEntity() {
-        return (Creeper) entity;
-    }
+  public void setCancelled(boolean cancel) {
+    canceled = cancel;
+  }
+
+  @Override
+  public Creeper getEntity() {
+    return (Creeper) entity;
+  }
+
+  /**
+   * Gets the lightning bolt which is striking the Creeper.
+   *
+   * @return The Entity for the lightning bolt which is striking the Creeper
+   */
+  public LightningStrike getLightning() {
+    return bolt;
+  }
+
+  /**
+   * Gets the cause of the creeper being (un)powered.
+   *
+   * @return A PowerCause value detailing the cause of change in power.
+   */
+  public PowerCause getCause() {
+    return cause;
+  }
+
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
+
+  /**
+   * An enum to specify the cause of the change in power
+   */
+  public enum PowerCause {
 
     /**
-     * Gets the lightning bolt which is striking the Creeper.
-     *
-     * @return The Entity for the lightning bolt which is striking the Creeper
+     * Power change caused by a lightning bolt
+     * <p>
+     * Powered state: true
      */
-    public LightningStrike getLightning() {
-        return bolt;
-    }
-
+    LIGHTNING,
     /**
-     * Gets the cause of the creeper being (un)powered.
-     *
-     * @return A PowerCause value detailing the cause of change in power.
+     * Power change caused by something else (probably a plugin)
+     * <p>
+     * Powered state: true
      */
-    public PowerCause getCause() {
-        return cause;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
-
+    SET_ON,
     /**
-     * An enum to specify the cause of the change in power
+     * Power change caused by something else (probably a plugin)
+     * <p>
+     * Powered state: false
      */
-    public enum PowerCause {
-
-        /**
-         * Power change caused by a lightning bolt
-         * <p>
-         * Powered state: true
-         */
-        LIGHTNING,
-        /**
-         * Power change caused by something else (probably a plugin)
-         * <p>
-         * Powered state: true
-         */
-        SET_ON,
-        /**
-         * Power change caused by something else (probably a plugin)
-         * <p>
-         * Powered state: false
-         */
-        SET_OFF
-    }
+    SET_OFF
+  }
 }

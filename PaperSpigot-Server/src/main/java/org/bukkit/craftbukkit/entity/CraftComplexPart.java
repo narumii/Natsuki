@@ -9,35 +9,36 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class CraftComplexPart extends CraftEntity implements ComplexEntityPart {
-    public CraftComplexPart(CraftServer server, EntityComplexPart entity) {
-        super(server, entity);
-    }
 
-    public ComplexLivingEntity getParent() {
-        return (ComplexLivingEntity) ((EntityEnderDragon) getHandle().owner).getBukkitEntity();
-    }
+  public CraftComplexPart(CraftServer server, EntityComplexPart entity) {
+    super(server, entity);
+  }
 
-    @Override
-    public void setLastDamageCause(EntityDamageEvent cause) {
-        getParent().setLastDamageCause(cause);
-    }
+  public ComplexLivingEntity getParent() {
+    return (ComplexLivingEntity) ((EntityEnderDragon) getHandle().owner).getBukkitEntity();
+  }
 
-    @Override
-    public EntityDamageEvent getLastDamageCause() {
-        return getParent().getLastDamageCause();
-    }
+  @Override
+  public void setLastDamageCause(EntityDamageEvent cause) {
+    getParent().setLastDamageCause(cause);
+  }
 
-    @Override
-    public EntityComplexPart getHandle() {
-        return (EntityComplexPart) entity;
-    }
+  @Override
+  public EntityDamageEvent getLastDamageCause() {
+    return getParent().getLastDamageCause();
+  }
 
-    @Override
-    public String toString() {
-        return "CraftComplexPart";
-    }
+  @Override
+  public EntityComplexPart getHandle() {
+    return (EntityComplexPart) entity;
+  }
 
-    public EntityType getType() {
-        return EntityType.COMPLEX_PART;
-    }
+  @Override
+  public String toString() {
+    return "CraftComplexPart";
+  }
+
+  public EntityType getType() {
+    return EntityType.COMPLEX_PART;
+  }
 }

@@ -12,72 +12,72 @@ import org.bukkit.inventory.ItemStack;
  * If a Block Damage event is cancelled, the block will not be damaged.
  */
 public class BlockDamageEvent extends BlockEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private final Player player;
-    private boolean instaBreak;
-    private boolean cancel;
-    private final ItemStack itemstack;
 
-    public BlockDamageEvent(final Player player, final Block block, final ItemStack itemInHand, final boolean instaBreak) {
-        super(block);
-        this.instaBreak = instaBreak;
-        this.player = player;
-        this.itemstack = itemInHand;
-        this.cancel = false;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private final Player player;
+  private boolean instaBreak;
+  private boolean cancel;
+  private final ItemStack itemstack;
 
-    /**
-     * Gets the player damaging the block involved in this event.
-     *
-     * @return The player damaging the block involved in this event
-     */
-    public Player getPlayer() {
-        return player;
-    }
+  public BlockDamageEvent(final Player player, final Block block, final ItemStack itemInHand,
+      final boolean instaBreak) {
+    super(block);
+    this.instaBreak = instaBreak;
+    this.player = player;
+    this.itemstack = itemInHand;
+    this.cancel = false;
+  }
 
-    /**
-     * Gets if the block is set to instantly break when damaged by the player.
-     *
-     * @return true if the block should instantly break when damaged by the
-     * player
-     */
-    public boolean getInstaBreak() {
-        return instaBreak;
-    }
+  /**
+   * Gets the player damaging the block involved in this event.
+   *
+   * @return The player damaging the block involved in this event
+   */
+  public Player getPlayer() {
+    return player;
+  }
 
-    /**
-     * Sets if the block should instantly break when damaged by the player.
-     *
-     * @param bool true if you want the block to instantly break when damaged
-     *             by the player
-     */
-    public void setInstaBreak(boolean bool) {
-        this.instaBreak = bool;
-    }
+  /**
+   * Gets if the block is set to instantly break when damaged by the player.
+   *
+   * @return true if the block should instantly break when damaged by the player
+   */
+  public boolean getInstaBreak() {
+    return instaBreak;
+  }
 
-    /**
-     * Gets the ItemStack for the item currently in the player's hand.
-     *
-     * @return The ItemStack for the item currently in the player's hand
-     */
-    public ItemStack getItemInHand() {
-        return itemstack;
-    }
+  /**
+   * Sets if the block should instantly break when damaged by the player.
+   *
+   * @param bool true if you want the block to instantly break when damaged by the player
+   */
+  public void setInstaBreak(boolean bool) {
+    this.instaBreak = bool;
+  }
 
-    public boolean isCancelled() {
-        return cancel;
-    }
+  /**
+   * Gets the ItemStack for the item currently in the player's hand.
+   *
+   * @return The ItemStack for the item currently in the player's hand
+   */
+  public ItemStack getItemInHand() {
+    return itemstack;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancel = cancel;
-    }
+  public boolean isCancelled() {
+    return cancel;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancel = cancel;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

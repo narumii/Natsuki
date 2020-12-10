@@ -9,40 +9,41 @@ import org.bukkit.event.HandlerList;
  * Called when a player shears an entity
  */
 public class PlayerShearEntityEvent extends PlayerEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancel;
-    private final Entity what;
 
-    public PlayerShearEntityEvent(final Player who, final Entity what) {
-        super(who);
-        this.cancel = false;
-        this.what = what;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancel;
+  private final Entity what;
 
-    public boolean isCancelled() {
-        return cancel;
-    }
+  public PlayerShearEntityEvent(final Player who, final Entity what) {
+    super(who);
+    this.cancel = false;
+    this.what = what;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancel = cancel;
-    }
+  public boolean isCancelled() {
+    return cancel;
+  }
 
-    /**
-     * Gets the entity the player is shearing
-     *
-     * @return the entity the player is shearing
-     */
-    public Entity getEntity() {
-        return what;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancel = cancel;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Gets the entity the player is shearing
+   *
+   * @return the entity the player is shearing
+   */
+  public Entity getEntity() {
+    return what;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 
 }

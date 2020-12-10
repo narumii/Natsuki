@@ -13,20 +13,21 @@ import org.bukkit.entity.Entity;
  * </ul>
  */
 public class EntityBlockFormEvent extends BlockFormEvent {
-    private final Entity entity;
 
-    public EntityBlockFormEvent(final Entity entity, final Block block, final BlockState blockstate) {
-        super(block, blockstate);
+  private final Entity entity;
 
-        this.entity = entity;
-    }
+  public EntityBlockFormEvent(final Entity entity, final Block block, final BlockState blockstate) {
+    super(block, blockstate);
 
-    /**
-     * Get the entity that formed the block.
-     *
-     * @return Entity involved in event
-     */
-    public Entity getEntity() {
-        return entity;
-    }
+    this.entity = entity;
+  }
+
+  /**
+   * Get the entity that formed the block.
+   *
+   * @return Entity involved in event
+   */
+  public Entity getEntity() {
+    return entity;
+  }
 }

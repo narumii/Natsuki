@@ -9,14 +9,15 @@ import org.bukkit.entity.Entity;
  * If a Spawner Spawn event is cancelled, the entity will not spawn.
  */
 public class SpawnerSpawnEvent extends EntitySpawnEvent {
-    private final CreatureSpawner spawner;
 
-    public SpawnerSpawnEvent(final Entity spawnee, final CreatureSpawner spawner) {
-        super(spawnee);
-        this.spawner = spawner;
-    }
+  private final CreatureSpawner spawner;
 
-    public CreatureSpawner getSpawner() {
-        return spawner;
-    }
+  public SpawnerSpawnEvent(final Entity spawnee, final CreatureSpawner spawner) {
+    super(spawnee);
+    this.spawner = spawner;
+  }
+
+  public CreatureSpawner getSpawner() {
+    return spawner;
+  }
 }

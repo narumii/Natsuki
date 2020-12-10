@@ -1,64 +1,64 @@
 package org.bukkit.craftbukkit.inventory;
 
+import java.util.ListIterator;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ListIterator;
-
 public class InventoryIterator implements ListIterator<ItemStack> {
-    private final Inventory inventory;
-    private int nextIndex;
-    private Boolean lastDirection; // true = forward, false = backward, null = haven't moved yet
 
-    InventoryIterator(Inventory craftInventory) {
-        this.inventory = craftInventory;
-        this.nextIndex = 0;
-    }
+  private final Inventory inventory;
+  private int nextIndex;
+  private Boolean lastDirection; // true = forward, false = backward, null = haven't moved yet
 
-    InventoryIterator(Inventory craftInventory, int index) {
-        this.inventory = craftInventory;
-        this.nextIndex = index;
-    }
+  InventoryIterator(Inventory craftInventory) {
+    this.inventory = craftInventory;
+    this.nextIndex = 0;
+  }
 
-    public boolean hasNext() {
-        return nextIndex < inventory.getSize();
-    }
+  InventoryIterator(Inventory craftInventory, int index) {
+    this.inventory = craftInventory;
+    this.nextIndex = index;
+  }
 
-    public ItemStack next() {
-        lastDirection = true;
-        return inventory.getItem(nextIndex++);
-    }
+  public boolean hasNext() {
+    return nextIndex < inventory.getSize();
+  }
 
-    public int nextIndex() {
-        return nextIndex;
-    }
+  public ItemStack next() {
+    lastDirection = true;
+    return inventory.getItem(nextIndex++);
+  }
 
-    public boolean hasPrevious() {
-        return nextIndex > 0;
-    }
+  public int nextIndex() {
+    return nextIndex;
+  }
 
-    public ItemStack previous() {
-        lastDirection = false;
-        return inventory.getItem(--nextIndex);
-    }
+  public boolean hasPrevious() {
+    return nextIndex > 0;
+  }
 
-    public int previousIndex() {
-        return nextIndex - 1;
-    }
+  public ItemStack previous() {
+    lastDirection = false;
+    return inventory.getItem(--nextIndex);
+  }
 
-    public void set(ItemStack item) {
-        if (lastDirection == null) {
-            throw new IllegalStateException("No current item!");
-        }
-        int i = lastDirection ? nextIndex - 1 : nextIndex;
-        inventory.setItem(i, item);
-    }
+  public int previousIndex() {
+    return nextIndex - 1;
+  }
 
-    public void add(ItemStack item) {
-        throw new UnsupportedOperationException("Can't change the size of an inventory!");
+  public void set(ItemStack item) {
+    if (lastDirection == null) {
+      throw new IllegalStateException("No current item!");
     }
+    int i = lastDirection ? nextIndex - 1 : nextIndex;
+    inventory.setItem(i, item);
+  }
 
-    public void remove() {
-        throw new UnsupportedOperationException("Can't change the size of an inventory!");
-    }
+  public void add(ItemStack item) {
+    throw new UnsupportedOperationException("Can't change the size of an inventory!");
+  }
+
+  public void remove() {
+    throw new UnsupportedOperationException("Can't change the size of an inventory!");
+  }
 }

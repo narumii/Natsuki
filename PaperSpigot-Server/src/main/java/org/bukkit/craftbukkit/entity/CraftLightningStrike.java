@@ -6,40 +6,41 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LightningStrike;
 
 public class CraftLightningStrike extends CraftEntity implements LightningStrike {
-    public CraftLightningStrike(final CraftServer server, final EntityLightning entity) {
-        super(server, entity);
-    }
 
-    public boolean isEffect() {
-        return ((EntityLightning) super.getHandle()).isEffect;
-    }
+  public CraftLightningStrike(final CraftServer server, final EntityLightning entity) {
+    super(server, entity);
+  }
 
-    @Override
-    public EntityLightning getHandle() {
-        return (EntityLightning) entity;
-    }
+  public boolean isEffect() {
+    return ((EntityLightning) super.getHandle()).isEffect;
+  }
 
-    @Override
-    public String toString() {
-        return "CraftLightningStrike";
-    }
+  @Override
+  public EntityLightning getHandle() {
+    return (EntityLightning) entity;
+  }
 
-    public EntityType getType() {
-        return EntityType.LIGHTNING;
-    }
+  @Override
+  public String toString() {
+    return "CraftLightningStrike";
+  }
 
-    // Spigot start
-    private final LightningStrike.Spigot spigot = new LightningStrike.Spigot() {
+  public EntityType getType() {
+    return EntityType.LIGHTNING;
+  }
 
-        @Override
-        public boolean isSilent() {
-            return getHandle().isSilent;
-        }
-    };
+  // Spigot start
+  private final LightningStrike.Spigot spigot = new LightningStrike.Spigot() {
 
     @Override
-    public LightningStrike.Spigot spigot() {
-        return spigot;
+    public boolean isSilent() {
+      return getHandle().isSilent;
     }
-    // Spigot end
+  };
+
+  @Override
+  public LightningStrike.Spigot spigot() {
+    return spigot;
+  }
+  // Spigot end
 }

@@ -9,51 +9,52 @@ import org.bukkit.event.HandlerList;
  * Raised when a vehicle collides with an entity.
  */
 public class VehicleEntityCollisionEvent extends VehicleCollisionEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private final Entity entity;
-    private boolean cancelled = false;
-    private boolean cancelledPickup = false;
-    private boolean cancelledCollision = false;
 
-    public VehicleEntityCollisionEvent(final Vehicle vehicle, final Entity entity) {
-        super(vehicle);
-        this.entity = entity;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private final Entity entity;
+  private boolean cancelled = false;
+  private boolean cancelledPickup = false;
+  private boolean cancelledCollision = false;
 
-    public Entity getEntity() {
-        return entity;
-    }
+  public VehicleEntityCollisionEvent(final Vehicle vehicle, final Entity entity) {
+    super(vehicle);
+    this.entity = entity;
+  }
 
-    public boolean isCancelled() {
-        return cancelled;
-    }
+  public Entity getEntity() {
+    return entity;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
-    }
+  public boolean isCancelled() {
+    return cancelled;
+  }
 
-    public boolean isPickupCancelled() {
-        return cancelledPickup;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancelled = cancel;
+  }
 
-    public void setPickupCancelled(boolean cancel) {
-        cancelledPickup = cancel;
-    }
+  public boolean isPickupCancelled() {
+    return cancelledPickup;
+  }
 
-    public boolean isCollisionCancelled() {
-        return cancelledCollision;
-    }
+  public void setPickupCancelled(boolean cancel) {
+    cancelledPickup = cancel;
+  }
 
-    public void setCollisionCancelled(boolean cancel) {
-        cancelledCollision = cancel;
-    }
+  public boolean isCollisionCancelled() {
+    return cancelledCollision;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public void setCollisionCancelled(boolean cancel) {
+    cancelledCollision = cancel;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

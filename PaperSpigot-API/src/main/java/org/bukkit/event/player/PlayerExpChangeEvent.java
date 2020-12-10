@@ -7,38 +7,39 @@ import org.bukkit.event.HandlerList;
  * Called when a players experience changes naturally
  */
 public class PlayerExpChangeEvent extends PlayerEvent {
-    private static final HandlerList handlers = new HandlerList();
-    private int exp;
 
-    public PlayerExpChangeEvent(final Player player, final int expAmount) {
-        super(player);
-        exp = expAmount;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private int exp;
 
-    /**
-     * Get the amount of experience the player will receive
-     *
-     * @return The amount of experience
-     */
-    public int getAmount() {
-        return exp;
-    }
+  public PlayerExpChangeEvent(final Player player, final int expAmount) {
+    super(player);
+    exp = expAmount;
+  }
 
-    /**
-     * Set the amount of experience the player will receive
-     *
-     * @param amount The amount of experience to set
-     */
-    public void setAmount(int amount) {
-        exp = amount;
-    }
+  /**
+   * Get the amount of experience the player will receive
+   *
+   * @return The amount of experience
+   */
+  public int getAmount() {
+    return exp;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Set the amount of experience the player will receive
+   *
+   * @param amount The amount of experience to set
+   */
+  public void setAmount(int amount) {
+    exp = amount;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

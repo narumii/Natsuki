@@ -10,55 +10,55 @@ import org.bukkit.event.HandlerList;
  * Stores data for pigs being zapped
  */
 public class PigZapEvent extends EntityEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean canceled;
-    private final PigZombie pigzombie;
-    private final LightningStrike bolt;
 
-    public PigZapEvent(final Pig pig, final LightningStrike bolt, final PigZombie pigzombie) {
-        super(pig);
-        this.bolt = bolt;
-        this.pigzombie = pigzombie;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean canceled;
+  private final PigZombie pigzombie;
+  private final LightningStrike bolt;
 
-    public boolean isCancelled() {
-        return canceled;
-    }
+  public PigZapEvent(final Pig pig, final LightningStrike bolt, final PigZombie pigzombie) {
+    super(pig);
+    this.bolt = bolt;
+    this.pigzombie = pigzombie;
+  }
 
-    public void setCancelled(boolean cancel) {
-        canceled = cancel;
-    }
+  public boolean isCancelled() {
+    return canceled;
+  }
 
-    @Override
-    public Pig getEntity() {
-        return (Pig) entity;
-    }
+  public void setCancelled(boolean cancel) {
+    canceled = cancel;
+  }
 
-    /**
-     * Gets the bolt which is striking the pig.
-     *
-     * @return lightning entity
-     */
-    public LightningStrike getLightning() {
-        return bolt;
-    }
+  @Override
+  public Pig getEntity() {
+    return (Pig) entity;
+  }
 
-    /**
-     * Gets the zombie pig that will replace the pig, provided the event is
-     * not cancelled first.
-     *
-     * @return resulting entity
-     */
-    public PigZombie getPigZombie() {
-        return pigzombie;
-    }
+  /**
+   * Gets the bolt which is striking the pig.
+   *
+   * @return lightning entity
+   */
+  public LightningStrike getLightning() {
+    return bolt;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Gets the zombie pig that will replace the pig, provided the event is not cancelled first.
+   *
+   * @return resulting entity
+   */
+  public PigZombie getPigZombie() {
+    return pigzombie;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

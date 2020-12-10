@@ -8,80 +8,81 @@ import org.bukkit.entity.Entity;
 import org.bukkit.util.NumberConversions;
 
 public class CraftEnderDragonPart extends CraftComplexPart implements EnderDragonPart {
-    public CraftEnderDragonPart(CraftServer server, EntityComplexPart entity) {
-        super(server, entity);
-    }
 
-    @Override
-    public EnderDragon getParent() {
-        return (EnderDragon) super.getParent();
-    }
+  public CraftEnderDragonPart(CraftServer server, EntityComplexPart entity) {
+    super(server, entity);
+  }
 
-    @Override
-    public EntityComplexPart getHandle() {
-        return (EntityComplexPart) entity;
-    }
+  @Override
+  public EnderDragon getParent() {
+    return (EnderDragon) super.getParent();
+  }
 
-    @Override
-    public String toString() {
-        return "CraftEnderDragonPart";
-    }
+  @Override
+  public EntityComplexPart getHandle() {
+    return (EntityComplexPart) entity;
+  }
 
-    public void damage(double amount) {
-        getParent().damage(amount);
-    }
+  @Override
+  public String toString() {
+    return "CraftEnderDragonPart";
+  }
 
-    public void damage(double amount, Entity source) {
-        getParent().damage(amount, source);
-    }
+  public void damage(double amount) {
+    getParent().damage(amount);
+  }
 
-    public double getHealth() {
-        return getParent().getHealth();
-    }
+  public void damage(double amount, Entity source) {
+    getParent().damage(amount, source);
+  }
 
-    public void setHealth(double health) {
-        getParent().setHealth(health);
-    }
+  public double getHealth() {
+    return getParent().getHealth();
+  }
 
-    public double getMaxHealth() {
-        return getParent().getMaxHealth();
-    }
+  public void setHealth(double health) {
+    getParent().setHealth(health);
+  }
 
-    public void setMaxHealth(double health) {
-        getParent().setMaxHealth(health);
-    }
+  public double getMaxHealth() {
+    return getParent().getMaxHealth();
+  }
 
-    public void resetMaxHealth() {
-        getParent().resetMaxHealth();
-    }
+  public void setMaxHealth(double health) {
+    getParent().setMaxHealth(health);
+  }
 
-    @Deprecated
-    public void _INVALID_damage(int amount) {
-        damage(amount);
-    }
+  public void resetMaxHealth() {
+    getParent().resetMaxHealth();
+  }
 
-    @Deprecated
-    public void _INVALID_damage(int amount, Entity source) {
-        damage(amount, source);
-    }
+  @Deprecated
+  public void _INVALID_damage(int amount) {
+    damage(amount);
+  }
 
-    @Deprecated
-    public int _INVALID_getHealth() {
-        return NumberConversions.ceil(getHealth());
-    }
+  @Deprecated
+  public void _INVALID_damage(int amount, Entity source) {
+    damage(amount, source);
+  }
 
-    @Deprecated
-    public void _INVALID_setHealth(int health) {
-        setHealth(health);
-    }
+  @Deprecated
+  public int _INVALID_getHealth() {
+    return NumberConversions.ceil(getHealth());
+  }
 
-    @Deprecated
-    public int _INVALID_getMaxHealth() {
-        return NumberConversions.ceil(getMaxHealth());
-    }
+  @Deprecated
+  public void _INVALID_setHealth(int health) {
+    setHealth(health);
+  }
 
-    @Deprecated
-    public void _INVALID_setMaxHealth(int health) {
-        setMaxHealth(health);
-    }
+  @Deprecated
+  public int _INVALID_getMaxHealth() {
+    return NumberConversions.ceil(getMaxHealth());
+  }
+
+  @Deprecated
+  public void _INVALID_setMaxHealth(int health) {
+    setMaxHealth(health);
+  }
 }

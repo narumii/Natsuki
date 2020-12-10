@@ -9,54 +9,55 @@ import org.bukkit.event.HandlerList;
  * Called when a sheep's wool is dyed
  */
 public class SheepDyeWoolEvent extends EntityEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancel;
-    private DyeColor color;
 
-    public SheepDyeWoolEvent(final Sheep sheep, final DyeColor color) {
-        super(sheep);
-        this.cancel = false;
-        this.color = color;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancel;
+  private DyeColor color;
 
-    public boolean isCancelled() {
-        return cancel;
-    }
+  public SheepDyeWoolEvent(final Sheep sheep, final DyeColor color) {
+    super(sheep);
+    this.cancel = false;
+    this.color = color;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancel = cancel;
-    }
+  public boolean isCancelled() {
+    return cancel;
+  }
 
-    @Override
-    public Sheep getEntity() {
-        return (Sheep) entity;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancel = cancel;
+  }
 
-    /**
-     * Gets the DyeColor the sheep is being dyed
-     *
-     * @return the DyeColor the sheep is being dyed
-     */
-    public DyeColor getColor() {
-        return color;
-    }
+  @Override
+  public Sheep getEntity() {
+    return (Sheep) entity;
+  }
 
-    /**
-     * Sets the DyeColor the sheep is being dyed
-     *
-     * @param color the DyeColor the sheep will be dyed
-     */
-    public void setColor(DyeColor color) {
-        this.color = color;
-    }
+  /**
+   * Gets the DyeColor the sheep is being dyed
+   *
+   * @return the DyeColor the sheep is being dyed
+   */
+  public DyeColor getColor() {
+    return color;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Sets the DyeColor the sheep is being dyed
+   *
+   * @param color the DyeColor the sheep will be dyed
+   */
+  public void setColor(DyeColor color) {
+    this.color = color;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 
 }

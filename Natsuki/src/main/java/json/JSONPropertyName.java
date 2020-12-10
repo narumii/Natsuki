@@ -24,12 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
 @Retention(RUNTIME)
@@ -40,8 +40,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * will have the Bean parser fall back to the default field name processing.
  */
 public @interface JSONPropertyName {
-    /**
-     * @return The name of the property as to be used in the JSON Object.
-     */
-    String value();
+
+  /**
+   * @return The name of the property as to be used in the JSON Object.
+   */
+  String value();
 }

@@ -9,23 +9,24 @@ import org.bukkit.inventory.Inventory;
 
 @SuppressWarnings("deprecation")
 public class CraftMinecartChest extends CraftMinecart implements StorageMinecart {
-    private final CraftInventory inventory;
 
-    public CraftMinecartChest(CraftServer server, EntityMinecartChest entity) {
-        super(server, entity);
-        inventory = new CraftInventory(entity);
-    }
+  private final CraftInventory inventory;
 
-    public Inventory getInventory() {
-        return inventory;
-    }
+  public CraftMinecartChest(CraftServer server, EntityMinecartChest entity) {
+    super(server, entity);
+    inventory = new CraftInventory(entity);
+  }
 
-    @Override
-    public String toString() {
-        return "CraftMinecartChest{" + "inventory=" + inventory + '}';
-    }
+  public Inventory getInventory() {
+    return inventory;
+  }
 
-    public EntityType getType() {
-        return EntityType.MINECART_CHEST;
-    }
+  @Override
+  public String toString() {
+    return "CraftMinecartChest{" + "inventory=" + inventory + '}';
+  }
+
+  public EntityType getType() {
+    return EntityType.MINECART_CHEST;
+  }
 }

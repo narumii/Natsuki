@@ -6,21 +6,22 @@ import org.bukkit.entity.EnderSignal;
 import org.bukkit.entity.EntityType;
 
 public class CraftEnderSignal extends CraftEntity implements EnderSignal {
-    public CraftEnderSignal(CraftServer server, EntityEnderSignal entity) {
-        super(server, entity);
-    }
 
-    @Override
-    public EntityEnderSignal getHandle() {
-        return (EntityEnderSignal) entity;
-    }
+  public CraftEnderSignal(CraftServer server, EntityEnderSignal entity) {
+    super(server, entity);
+  }
 
-    @Override
-    public String toString() {
-        return "CraftEnderSignal";
-    }
+  @Override
+  public EntityEnderSignal getHandle() {
+    return (EntityEnderSignal) entity;
+  }
 
-    public EntityType getType() {
-        return EntityType.ENDER_SIGNAL;
-    }
+  @Override
+  public String toString() {
+    return "CraftEnderSignal";
+  }
+
+  public EntityType getType() {
+    return EntityType.ENDER_SIGNAL;
+  }
 }

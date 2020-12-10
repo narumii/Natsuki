@@ -11,88 +11,91 @@ import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
 
 public abstract class CraftMinecart extends CraftVehicle implements Minecart {
-    public CraftMinecart(CraftServer server, EntityMinecartAbstract entity) {
-        super(server, entity);
-    }
 
-    public void setDamage(double damage) {
-        getHandle().setDamage((float) damage);
-    }
+  public CraftMinecart(CraftServer server, EntityMinecartAbstract entity) {
+    super(server, entity);
+  }
 
-    public double getDamage() {
-        return getHandle().getDamage();
-    }
+  public void setDamage(double damage) {
+    getHandle().setDamage((float) damage);
+  }
 
-    public double getMaxSpeed() {
-        return getHandle().maxSpeed;
-    }
+  public double getDamage() {
+    return getHandle().getDamage();
+  }
 
-    public void setMaxSpeed(double speed) {
-        if (speed >= 0D) {
-            getHandle().maxSpeed = speed;
-        }
-    }
+  public double getMaxSpeed() {
+    return getHandle().maxSpeed;
+  }
 
-    public boolean isSlowWhenEmpty() {
-        return getHandle().slowWhenEmpty;
+  public void setMaxSpeed(double speed) {
+    if (speed >= 0D) {
+      getHandle().maxSpeed = speed;
     }
+  }
 
-    public void setSlowWhenEmpty(boolean slow) {
-        getHandle().slowWhenEmpty = slow;
-    }
+  public boolean isSlowWhenEmpty() {
+    return getHandle().slowWhenEmpty;
+  }
 
-    public Vector getFlyingVelocityMod() {
-        return getHandle().getFlyingVelocityMod();
-    }
+  public void setSlowWhenEmpty(boolean slow) {
+    getHandle().slowWhenEmpty = slow;
+  }
 
-    public void setFlyingVelocityMod(Vector flying) {
-        getHandle().setFlyingVelocityMod(flying);
-    }
+  public Vector getFlyingVelocityMod() {
+    return getHandle().getFlyingVelocityMod();
+  }
 
-    public Vector getDerailedVelocityMod() {
-        return getHandle().getDerailedVelocityMod();
-    }
+  public void setFlyingVelocityMod(Vector flying) {
+    getHandle().setFlyingVelocityMod(flying);
+  }
 
-    public void setDerailedVelocityMod(Vector derailed) {
-        getHandle().setDerailedVelocityMod(derailed);
-    }
+  public Vector getDerailedVelocityMod() {
+    return getHandle().getDerailedVelocityMod();
+  }
 
-    @Override
-    public EntityMinecartAbstract getHandle() {
-        return (EntityMinecartAbstract) entity;
-    }
+  public void setDerailedVelocityMod(Vector derailed) {
+    getHandle().setDerailedVelocityMod(derailed);
+  }
 
-    @Deprecated
-    public void _INVALID_setDamage(int damage) {
-        setDamage(damage);
-    }
+  @Override
+  public EntityMinecartAbstract getHandle() {
+    return (EntityMinecartAbstract) entity;
+  }
 
-    @Deprecated
-    public int _INVALID_getDamage() {
-        return NumberConversions.ceil(getDamage());
-    }
+  @Deprecated
+  public void _INVALID_setDamage(int damage) {
+    setDamage(damage);
+  }
 
-    public void setDisplayBlock(MaterialData material) {
-        if (material != null) {
-            IBlockData block = CraftMagicNumbers.getBlock(material.getItemTypeId()).fromLegacyData(material.getData());
-            this.getHandle().setDisplayBlock(block);
-        } else {
-            // Set block to air (default) and set the flag to not have a display block.
-            this.getHandle().setDisplayBlock(Blocks.AIR.getBlockData());
-            this.getHandle().a(false);
-        }
-    }
+  @Deprecated
+  public int _INVALID_getDamage() {
+    return NumberConversions.ceil(getDamage());
+  }
 
-    public MaterialData getDisplayBlock() {
-        IBlockData blockData = getHandle().getDisplayBlock();
-        return CraftMagicNumbers.getMaterial(blockData.getBlock()).getNewData((byte) blockData.getBlock().toLegacyData(blockData));
+  public void setDisplayBlock(MaterialData material) {
+    if (material != null) {
+      IBlockData block = CraftMagicNumbers.getBlock(material.getItemTypeId())
+          .fromLegacyData(material.getData());
+      this.getHandle().setDisplayBlock(block);
+    } else {
+      // Set block to air (default) and set the flag to not have a display block.
+      this.getHandle().setDisplayBlock(Blocks.AIR.getBlockData());
+      this.getHandle().a(false);
     }
+  }
 
-    public void setDisplayBlockOffset(int offset) {
-        getHandle().SetDisplayBlockOffset(offset);
-    }
+  public MaterialData getDisplayBlock() {
+    IBlockData blockData = getHandle().getDisplayBlock();
+    return CraftMagicNumbers.getMaterial(blockData.getBlock())
+        .getNewData((byte) blockData.getBlock().toLegacyData(blockData));
+  }
 
-    public int getDisplayBlockOffset() {
-        return getHandle().getDisplayBlockOffset();
-    }
+  public void setDisplayBlockOffset(int offset) {
+    getHandle().SetDisplayBlockOffset(offset);
+  }
+
+  public int getDisplayBlockOffset() {
+    return getHandle().getDisplayBlockOffset();
+  }
 }

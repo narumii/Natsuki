@@ -7,33 +7,33 @@ import org.bukkit.inventory.FurnaceInventory;
  */
 public interface Furnace extends BlockState, ContainerBlock {
 
-    /**
-     * Get burn time.
-     *
-     * @return Burn time
-     */
-    short getBurnTime();
+  /**
+   * Get burn time.
+   *
+   * @return Burn time
+   */
+  short getBurnTime();
 
-    /**
-     * Set burn time.
-     *
-     * @param burnTime Burn time
-     */
-    void setBurnTime(short burnTime);
+  /**
+   * Set burn time.
+   *
+   * @param burnTime Burn time
+   */
+  void setBurnTime(short burnTime);
 
-    /**
-     * Get cook time.
-     *
-     * @return Cook time
-     */
-    short getCookTime();
+  /**
+   * Get cook time.
+   *
+   * @return Cook time
+   */
+  short getCookTime();
 
-    /**
-     * Set cook time.
-     *
-     * @param cookTime Cook time
-     */
-    void setCookTime(short cookTime);
+  /**
+   * Set cook time.
+   *
+   * @param cookTime Cook time
+   */
+  void setCookTime(short cookTime);
 
-    FurnaceInventory getInventory();
+  FurnaceInventory getInventory();
 }

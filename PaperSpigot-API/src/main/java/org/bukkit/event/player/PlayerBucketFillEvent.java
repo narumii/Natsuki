@@ -11,18 +11,20 @@ import org.bukkit.inventory.ItemStack;
  * Called when a player fills a bucket
  */
 public class PlayerBucketFillEvent extends PlayerBucketEvent {
-    private static final HandlerList handlers = new HandlerList();
 
-    public PlayerBucketFillEvent(final Player who, final Block blockClicked, final BlockFace blockFace, final Material bucket, final ItemStack itemInHand) {
-        super(who, blockClicked, blockFace, bucket, itemInHand);
-    }
+  private static final HandlerList handlers = new HandlerList();
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public PlayerBucketFillEvent(final Player who, final Block blockClicked,
+      final BlockFace blockFace, final Material bucket, final ItemStack itemInHand) {
+    super(who, blockClicked, blockFace, bucket, itemInHand);
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

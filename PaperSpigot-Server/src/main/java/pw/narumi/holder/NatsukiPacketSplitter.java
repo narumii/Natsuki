@@ -16,7 +16,8 @@ public class NatsukiPacketSplitter extends ByteToMessageDecoder {
 
   private int packet;
 
-  protected void decode(ChannelHandlerContext handlerContext, ByteBuf buf, List<Object> objects) throws Exception {
+  protected void decode(ChannelHandlerContext handlerContext, ByteBuf buf, List<Object> objects)
+      throws Exception {
     buf.markReaderIndex();
     byte[] bytes = new byte[3];
 
@@ -24,7 +25,7 @@ public class NatsukiPacketSplitter extends ByteToMessageDecoder {
       throw new NatsukiException("BIG CHUNGUS WILL FIND YOU");
     }
 
-    for(int i = 0; i < bytes.length; ++i) {
+    for (int i = 0; i < bytes.length; ++i) {
       try {
         if (!buf.isReadable()) {
           buf.resetReaderIndex();
@@ -47,7 +48,7 @@ public class NatsukiPacketSplitter extends ByteToMessageDecoder {
           }
           return;
         }
-      }catch (final NatsukiException e) {
+      } catch (final NatsukiException e) {
         handlerContext.pipeline().remove(this);
         throw new NatsukiException(e);
       }

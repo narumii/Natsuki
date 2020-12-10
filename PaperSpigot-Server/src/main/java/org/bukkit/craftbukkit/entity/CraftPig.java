@@ -6,28 +6,29 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Pig;
 
 public class CraftPig extends CraftAnimals implements Pig {
-    public CraftPig(CraftServer server, EntityPig entity) {
-        super(server, entity);
-    }
 
-    public boolean hasSaddle() {
-        return getHandle().hasSaddle();
-    }
+  public CraftPig(CraftServer server, EntityPig entity) {
+    super(server, entity);
+  }
 
-    public void setSaddle(boolean saddled) {
-        getHandle().setSaddle(saddled);
-    }
+  public boolean hasSaddle() {
+    return getHandle().hasSaddle();
+  }
 
-    public EntityPig getHandle() {
-        return (EntityPig) entity;
-    }
+  public void setSaddle(boolean saddled) {
+    getHandle().setSaddle(saddled);
+  }
 
-    @Override
-    public String toString() {
-        return "CraftPig";
-    }
+  public EntityPig getHandle() {
+    return (EntityPig) entity;
+  }
 
-    public EntityType getType() {
-        return EntityType.PIG;
-    }
+  @Override
+  public String toString() {
+    return "CraftPig";
+  }
+
+  public EntityType getType() {
+    return EntityType.PIG;
+  }
 }

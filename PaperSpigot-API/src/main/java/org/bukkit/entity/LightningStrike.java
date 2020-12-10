@@ -5,26 +5,26 @@ package org.bukkit.entity;
  */
 public interface LightningStrike extends Weather {
 
-    /**
-     * Returns whether the strike is an effect that does no damage.
+  /**
+   * Returns whether the strike is an effect that does no damage.
+   *
+   * @return whether the strike is an effect
+   */
+  boolean isEffect();
+
+
+  class Spigot extends Entity.Spigot {
+
+    /*
+     * Returns whether the strike is silent.
      *
-     * @return whether the strike is an effect
+     * @return whether the strike is silent.
      */
-    boolean isEffect();
-
-
-    class Spigot extends Entity.Spigot {
-
-        /*
-         * Returns whether the strike is silent.
-         *
-         * @return whether the strike is silent.
-         */
-        public boolean isSilent() {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
+    public boolean isSilent() {
+      throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    Spigot spigot();
+  }
+
+  Spigot spigot();
 }

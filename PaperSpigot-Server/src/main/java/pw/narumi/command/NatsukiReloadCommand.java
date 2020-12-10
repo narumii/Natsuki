@@ -7,19 +7,20 @@ import pw.narumi.Natsuki;
 
 public class NatsukiReloadCommand extends Command {
 
-    public NatsukiReloadCommand() {
-        super("NatsukiReload");
-    }
+  public NatsukiReloadCommand() {
+    super("NatsukiReload");
+  }
 
-    @Override
-    public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
-        if (sender instanceof ConsoleCommandSender) {
-            Natsuki.getInstance().reload();
-            sender.sendMessage(" §8» §7Reloaded Natsuki");
-            return false;
-        } else {
-            sender.sendMessage(" §8» §7Command only for console");
-        }
-        return false;
+  @Override
+  public boolean execute(final CommandSender sender, final String commandLabel,
+      final String[] args) {
+    if (sender instanceof ConsoleCommandSender) {
+      Natsuki.getInstance().reload();
+      sender.sendMessage(" §8» §7Reloaded Natsuki");
+      return false;
+    } else {
+      sender.sendMessage(" §8» §7Command only for console");
     }
+    return false;
+  }
 }

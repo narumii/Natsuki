@@ -6,21 +6,22 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LeashHitch;
 
 public class CraftLeash extends CraftHanging implements LeashHitch {
-    public CraftLeash(CraftServer server, EntityLeash entity) {
-        super(server, entity);
-    }
 
-    @Override
-    public EntityLeash getHandle() {
-        return (EntityLeash) entity;
-    }
+  public CraftLeash(CraftServer server, EntityLeash entity) {
+    super(server, entity);
+  }
 
-    @Override
-    public String toString() {
-        return "CraftLeash";
-    }
+  @Override
+  public EntityLeash getHandle() {
+    return (EntityLeash) entity;
+  }
 
-    public EntityType getType() {
-        return EntityType.LEASH_HITCH;
-    }
+  @Override
+  public String toString() {
+    return "CraftLeash";
+  }
+
+  public EntityType getType() {
+    return EntityType.LEASH_HITCH;
+  }
 }

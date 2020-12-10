@@ -6,51 +6,50 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.Recipe;
 
 public class PrepareItemCraftEvent extends InventoryEvent {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean repair;
-    private CraftingInventory matrix;
 
-    public PrepareItemCraftEvent(CraftingInventory what, InventoryView view, boolean isRepair) {
-        super(view);
-        this.matrix = what;
-        this.repair = isRepair;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean repair;
+  private CraftingInventory matrix;
 
-    /**
-     * Get the recipe that has been formed. If this event was triggered by a
-     * tool repair, this will be a temporary shapeless recipe representing the
-     * repair.
-     *
-     * @return The recipe being crafted.
-     */
-    public Recipe getRecipe() {
-        return matrix.getRecipe();
-    }
+  public PrepareItemCraftEvent(CraftingInventory what, InventoryView view, boolean isRepair) {
+    super(view);
+    this.matrix = what;
+    this.repair = isRepair;
+  }
 
-    /**
-     * @return The crafting inventory on which the recipe was formed.
-     */
-    @Override
-    public CraftingInventory getInventory() {
-        return matrix;
-    }
+  /**
+   * Get the recipe that has been formed. If this event was triggered by a tool repair, this will be
+   * a temporary shapeless recipe representing the repair.
+   *
+   * @return The recipe being crafted.
+   */
+  public Recipe getRecipe() {
+    return matrix.getRecipe();
+  }
 
-    /**
-     * Check if this event was triggered by a tool repair operation rather
-     * than a crafting recipe.
-     *
-     * @return True if this is a repair.
-     */
-    public boolean isRepair() {
-        return repair;
-    }
+  /**
+   * @return The crafting inventory on which the recipe was formed.
+   */
+  @Override
+  public CraftingInventory getInventory() {
+    return matrix;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Check if this event was triggered by a tool repair operation rather than a crafting recipe.
+   *
+   * @return True if this is a repair.
+   */
+  public boolean isRepair() {
+    return repair;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

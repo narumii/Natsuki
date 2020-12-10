@@ -9,74 +9,77 @@ import org.bukkit.entity.CreatureType;
 import org.bukkit.entity.EntityType;
 
 public class CraftCreatureSpawner extends CraftBlockState implements CreatureSpawner {
-    private final TileEntityMobSpawner spawner;
 
-    public CraftCreatureSpawner(final Block block) {
-        super(block);
+  private final TileEntityMobSpawner spawner;
 
-        spawner = (TileEntityMobSpawner) ((CraftWorld) block.getWorld()).getTileEntityAt(getX(), getY(), getZ());
+  public CraftCreatureSpawner(final Block block) {
+    super(block);
+
+    spawner = (TileEntityMobSpawner) ((CraftWorld) block.getWorld())
+        .getTileEntityAt(getX(), getY(), getZ());
+  }
+
+  public CraftCreatureSpawner(final Material material, TileEntityMobSpawner te) {
+    super(material);
+    spawner = te;
+  }
+
+  @Deprecated
+  public CreatureType getCreatureType() {
+    return CreatureType.fromName(spawner.getSpawner().getMobName());
+  }
+
+  public EntityType getSpawnedType() {
+    return EntityType.fromName(spawner.getSpawner().getMobName());
+  }
+
+  @Deprecated
+  public void setCreatureType(CreatureType creatureType) {
+    spawner.getSpawner().setMobName(creatureType.getName());
+  }
+
+  public void setSpawnedType(EntityType entityType) {
+    if (entityType == null || entityType.getName() == null) {
+      throw new IllegalArgumentException(
+          "Can't spawn EntityType " + entityType + " from mobspawners!");
     }
 
-    public CraftCreatureSpawner(final Material material, TileEntityMobSpawner te) {
-        super(material);
-        spawner = te;
-    }
+    spawner.getSpawner().setMobName(entityType.getName());
+  }
 
-    @Deprecated
-    public CreatureType getCreatureType() {
-        return CreatureType.fromName(spawner.getSpawner().getMobName());
-    }
+  @Deprecated
+  public String getCreatureTypeId() {
+    return spawner.getSpawner().getMobName();
+  }
 
-    public EntityType getSpawnedType() {
-        return EntityType.fromName(spawner.getSpawner().getMobName());
-    }
+  @Deprecated
+  public void setCreatureTypeId(String creatureName) {
+    setCreatureTypeByName(creatureName);
+  }
 
-    @Deprecated
-    public void setCreatureType(CreatureType creatureType) {
-        spawner.getSpawner().setMobName(creatureType.getName());
-    }
+  public String getCreatureTypeName() {
+    return spawner.getSpawner().getMobName();
+  }
 
-    public void setSpawnedType(EntityType entityType) {
-        if (entityType == null || entityType.getName() == null) {
-            throw new IllegalArgumentException("Can't spawn EntityType " + entityType + " from mobspawners!");
-        }
-
-        spawner.getSpawner().setMobName(entityType.getName());
+  public void setCreatureTypeByName(String creatureType) {
+    // Verify input
+    EntityType type = EntityType.fromName(creatureType);
+    if (type == null) {
+      return;
     }
+    setSpawnedType(type);
+  }
 
-    @Deprecated
-    public String getCreatureTypeId() {
-        return spawner.getSpawner().getMobName();
-    }
+  public int getDelay() {
+    return spawner.getSpawner().spawnDelay;
+  }
 
-    @Deprecated
-    public void setCreatureTypeId(String creatureName) {
-        setCreatureTypeByName(creatureName);
-    }
+  public void setDelay(int delay) {
+    spawner.getSpawner().spawnDelay = delay;
+  }
 
-    public String getCreatureTypeName() {
-        return spawner.getSpawner().getMobName();
-    }
-
-    public void setCreatureTypeByName(String creatureType) {
-        // Verify input
-        EntityType type = EntityType.fromName(creatureType);
-        if (type == null) {
-            return;
-        }
-        setSpawnedType(type);
-    }
-
-    public int getDelay() {
-        return spawner.getSpawner().spawnDelay;
-    }
-
-    public void setDelay(int delay) {
-        spawner.getSpawner().spawnDelay = delay;
-    }
-
-    @Override
-    public TileEntityMobSpawner getTileEntity() {
-        return spawner;
-    }
+  @Override
+  public TileEntityMobSpawner getTileEntity() {
+    return spawner;
+  }
 }

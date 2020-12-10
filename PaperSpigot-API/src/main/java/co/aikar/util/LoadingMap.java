@@ -25,9 +25,13 @@ package co.aikar.util;
 
 
 import com.google.common.base.Function;
-
 import java.lang.reflect.Constructor;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Allows you to pass a Loader function that when a key is accessed that doesn't exists,
@@ -37,7 +41,8 @@ import java.util.*;
  * <p>
  * You may pass any backing Map to use.
  * <p>
- * This class is not thread safe and should be wrapped with Collections.synchronizedMap on the OUTSIDE of the LoadingMap if needed.
+ * This class is not thread safe and should be wrapped with Collections.synchronizedMap on the
+ * OUTSIDE of the LoadingMap if needed.
  * <p>
  * Do not wrap the backing map with Collections.synchronizedMap.
  *
@@ -45,309 +50,262 @@ import java.util.*;
  * @param <V> Value
  */
 public class LoadingMap<K, V> extends AbstractMap<K, V> {
-    private final Map<K, V> backingMap;
-    private final Function<K, V> loader;
 
-    /**
-     * Initializes an auto loading map using specified loader and backing map
-     *
-     * @param backingMap
-     * @param loader
-     */
-    public LoadingMap(Map<K, V> backingMap, Function<K, V> loader) {
-        this.backingMap = backingMap;
-        this.loader = loader;
+  private final Map<K, V> backingMap;
+  private final Function<K, V> loader;
+
+  /**
+   * Initializes an auto loading map using specified loader and backing map
+   */
+  public LoadingMap(Map<K, V> backingMap, Function<K, V> loader) {
+    this.backingMap = backingMap;
+    this.loader = loader;
+  }
+
+  /**
+   * Creates a new LoadingMap with the specified map and loader
+   */
+  public static <K, V> Map<K, V> of(Map<K, V> backingMap, Function<K, V> loader) {
+    return new LoadingMap<K, V>(backingMap, loader);
+  }
+
+  /**
+   * Creates a LoadingMap with an auto instantiating loader.
+   * <p>
+   * Will auto construct class of of Value when not found
+   * <p>
+   * Since this uses Reflection, It is more effecient to define your own static loader than using
+   * this helper, but if performance is not critical, this is easier.
+   *
+   * @param backingMap Actual map being used.
+   * @param keyClass Class used for the K generic
+   * @param valueClass Class used for the V generic
+   * @param <K> Key Type of the Map
+   * @param <V> Value Type of the Map
+   * @return Map that auto instantiates on .get()
+   */
+  public static <K, V> Map<K, V> newAutoMap(Map<K, V> backingMap, final Class<? extends K> keyClass,
+      final Class<? extends V> valueClass) {
+    return new LoadingMap<K, V>(backingMap,
+        new AutoInstantiatingLoader<K, V>(keyClass, valueClass));
+  }
+
+  /**
+   * Creates a LoadingMap with an auto instantiating loader.
+   * <p>
+   * Will auto construct class of of Value when not found
+   * <p>
+   * Since this uses Reflection, It is more effecient to define your own static loader than using
+   * this helper, but if performance is not critical, this is easier.
+   *
+   * @param backingMap Actual map being used.
+   * @param valueClass Class used for the V generic
+   * @param <K> Key Type of the Map
+   * @param <V> Value Type of the Map
+   * @return Map that auto instantiates on .get()
+   */
+  public static <K, V> Map<K, V> newAutoMap(Map<K, V> backingMap,
+      final Class<? extends V> valueClass) {
+    return newAutoMap(backingMap, null, valueClass);
+  }
+
+  /**
+   * @see #newAutoMap
+   * <p>
+   * new Auto initializing map using a HashMap.
+   */
+  public static <K, V> Map<K, V> newHashAutoMap(final Class<? extends K> keyClass,
+      final Class<? extends V> valueClass) {
+    return newAutoMap(new HashMap<K, V>(), keyClass, valueClass);
+  }
+
+  /**
+   * @see #newAutoMap
+   * <p>
+   * new Auto initializing map using a HashMap.
+   */
+  public static <K, V> Map<K, V> newHashAutoMap(final Class<? extends V> valueClass) {
+    return newHashAutoMap(null, valueClass);
+  }
+
+  /**
+   * @see #newAutoMap
+   * <p>
+   * new Auto initializing map using a HashMap.
+   */
+  public static <K, V> Map<K, V> newHashAutoMap(final Class<? extends K> keyClass,
+      final Class<? extends V> valueClass, int initialCapacity, float loadFactor) {
+    return newAutoMap(new HashMap<K, V>(initialCapacity, loadFactor), keyClass, valueClass);
+  }
+
+  /**
+   * @see #newAutoMap
+   * <p>
+   * new Auto initializing map using a HashMap.
+   */
+  public static <K, V> Map<K, V> newHashAutoMap(final Class<? extends V> valueClass,
+      int initialCapacity, float loadFactor) {
+    return newHashAutoMap(null, valueClass, initialCapacity, loadFactor);
+  }
+
+  /**
+   * Initializes an auto loading map using a HashMap
+   */
+  public static <K, V> Map<K, V> newHashMap(Function<K, V> loader) {
+    return new LoadingMap<K, V>(new HashMap<K, V>(), loader);
+  }
+
+  /**
+   * Initializes an auto loading map using a HashMap
+   */
+  public static <K, V> Map<K, V> newHashMap(Function<K, V> loader, int initialCapacity,
+      float loadFactor) {
+    return new LoadingMap<K, V>(new HashMap<K, V>(initialCapacity, loadFactor), loader);
+  }
+
+  /**
+   * Initializes an auto loading map using an Identity HashMap
+   */
+  public static <K, V> Map<K, V> newIdentityHashMap(Function<K, V> loader) {
+    return new LoadingMap<K, V>(new IdentityHashMap<K, V>(), loader);
+  }
+
+  /**
+   * Initializes an auto loading map using an Identity HashMap
+   */
+  public static <K, V> Map<K, V> newIdentityHashMap(Function<K, V> loader, int initialCapacity) {
+    return new LoadingMap<K, V>(new IdentityHashMap<K, V>(initialCapacity), loader);
+  }
+
+  @Override
+  public int size() {
+    return backingMap.size();
+  }
+
+  @Override
+  public boolean isEmpty() {
+    return backingMap.isEmpty();
+  }
+
+  @Override
+  public boolean containsKey(Object key) {
+    return backingMap.containsKey(key);
+  }
+
+  @Override
+  public boolean containsValue(Object value) {
+    return backingMap.containsValue(value);
+  }
+
+  @Override
+  public V get(Object key) {
+    V res = backingMap.get(key);
+    if (res == null && key != null) {
+      res = loader.apply((K) key);
+      if (res != null) {
+        backingMap.put((K) key, res);
+      }
     }
+    return res;
+  }
 
-    /**
-     * Creates a new LoadingMap with the specified map and loader
-     *
-     * @param backingMap
-     * @param loader
-     * @param <K>
-     * @param <V>
-     * @return
-     */
-    public static <K, V> Map<K, V> of(Map<K, V> backingMap, Function<K, V> loader) {
-        return new LoadingMap<K, V>(backingMap, loader);
-    }
+  public V put(K key, V value) {
+    return backingMap.put(key, value);
+  }
 
-    /**
-     * Creates a LoadingMap with an auto instantiating loader.
-     * <p>
-     * Will auto construct class of of Value when not found
-     * <p>
-     * Since this uses Reflection, It is more effecient to define your own static loader
-     * than using this helper, but if performance is not critical, this is easier.
-     *
-     * @param backingMap Actual map being used.
-     * @param keyClass   Class used for the K generic
-     * @param valueClass Class used for the V generic
-     * @param <K>        Key Type of the Map
-     * @param <V>        Value Type of the Map
-     * @return Map that auto instantiates on .get()
-     */
-    public static <K, V> Map<K, V> newAutoMap(Map<K, V> backingMap, final Class<? extends K> keyClass,
-                                              final Class<? extends V> valueClass) {
-        return new LoadingMap<K, V>(backingMap, new AutoInstantiatingLoader<K, V>(keyClass, valueClass));
-    }
+  @Override
+  public V remove(Object key) {
+    return backingMap.remove(key);
+  }
 
-    /**
-     * Creates a LoadingMap with an auto instantiating loader.
-     * <p>
-     * Will auto construct class of of Value when not found
-     * <p>
-     * Since this uses Reflection, It is more effecient to define your own static loader
-     * than using this helper, but if performance is not critical, this is easier.
-     *
-     * @param backingMap Actual map being used.
-     * @param valueClass Class used for the V generic
-     * @param <K>        Key Type of the Map
-     * @param <V>        Value Type of the Map
-     * @return Map that auto instantiates on .get()
-     */
-    public static <K, V> Map<K, V> newAutoMap(Map<K, V> backingMap,
-                                              final Class<? extends V> valueClass) {
-        return newAutoMap(backingMap, null, valueClass);
-    }
+  public void putAll(Map<? extends K, ? extends V> m) {
+    backingMap.putAll(m);
+  }
 
-    /**
-     * @param keyClass
-     * @param valueClass
-     * @param <K>
-     * @param <V>
-     * @return
-     * @see #newAutoMap
-     * <p>
-     * new Auto initializing map using a HashMap.
-     */
-    public static <K, V> Map<K, V> newHashAutoMap(final Class<? extends K> keyClass, final Class<? extends V> valueClass) {
-        return newAutoMap(new HashMap<K, V>(), keyClass, valueClass);
-    }
+  @Override
+  public void clear() {
+    backingMap.clear();
+  }
 
-    /**
-     * @param valueClass
-     * @param <K>
-     * @param <V>
-     * @return
-     * @see #newAutoMap
-     * <p>
-     * new Auto initializing map using a HashMap.
-     */
-    public static <K, V> Map<K, V> newHashAutoMap(final Class<? extends V> valueClass) {
-        return newHashAutoMap(null, valueClass);
-    }
+  @Override
+  public Set<K> keySet() {
+    return backingMap.keySet();
+  }
 
-    /**
-     * @param keyClass
-     * @param valueClass
-     * @param initialCapacity
-     * @param loadFactor
-     * @param <K>
-     * @param <V>
-     * @return
-     * @see #newAutoMap
-     * <p>
-     * new Auto initializing map using a HashMap.
-     */
-    public static <K, V> Map<K, V> newHashAutoMap(final Class<? extends K> keyClass, final Class<? extends V> valueClass, int initialCapacity, float loadFactor) {
-        return newAutoMap(new HashMap<K, V>(initialCapacity, loadFactor), keyClass, valueClass);
-    }
+  @Override
+  public Collection<V> values() {
+    return backingMap.values();
+  }
 
-    /**
-     * @param valueClass
-     * @param initialCapacity
-     * @param loadFactor
-     * @param <K>
-     * @param <V>
-     * @return
-     * @see #newAutoMap
-     * <p>
-     * new Auto initializing map using a HashMap.
-     */
-    public static <K, V> Map<K, V> newHashAutoMap(final Class<? extends V> valueClass, int initialCapacity, float loadFactor) {
-        return newHashAutoMap(null, valueClass, initialCapacity, loadFactor);
-    }
+  @Override
+  public boolean equals(Object o) {
+    return backingMap.equals(o);
+  }
 
-    /**
-     * Initializes an auto loading map using a HashMap
-     *
-     * @param loader
-     * @param <K>
-     * @param <V>
-     * @return
-     */
-    public static <K, V> Map<K, V> newHashMap(Function<K, V> loader) {
-        return new LoadingMap<K, V>(new HashMap<K, V>(), loader);
-    }
+  @Override
+  public int hashCode() {
+    return backingMap.hashCode();
+  }
 
-    /**
-     * Initializes an auto loading map using a HashMap
-     *
-     * @param loader
-     * @param initialCapacity
-     * @param loadFactor
-     * @param <K>
-     * @param <V>
-     * @return
-     */
-    public static <K, V> Map<K, V> newHashMap(Function<K, V> loader, int initialCapacity, float loadFactor) {
-        return new LoadingMap<K, V>(new HashMap<K, V>(initialCapacity, loadFactor), loader);
-    }
+  @Override
+  public Set<Entry<K, V>> entrySet() {
+    return backingMap.entrySet();
+  }
 
-    /**
-     * Initializes an auto loading map using an Identity HashMap
-     *
-     * @param loader
-     * @param <K>
-     * @param <V>
-     * @return
-     */
-    public static <K, V> Map<K, V> newIdentityHashMap(Function<K, V> loader) {
-        return new LoadingMap<K, V>(new IdentityHashMap<K, V>(), loader);
-    }
+  public LoadingMap<K, V> clone() {
+    return new LoadingMap<K, V>(backingMap, loader);
+  }
 
-    /**
-     * Initializes an auto loading map using an Identity HashMap
-     *
-     * @param loader
-     * @param initialCapacity
-     * @param <K>
-     * @param <V>
-     * @return
-     */
-    public static <K, V> Map<K, V> newIdentityHashMap(Function<K, V> loader, int initialCapacity) {
-        return new LoadingMap<K, V>(new IdentityHashMap<K, V>(initialCapacity), loader);
-    }
+  private static class AutoInstantiatingLoader<K, V> implements Function<K, V> {
 
-    @Override
-    public int size() {
-        return backingMap.size();
-    }
+    final Constructor<? extends V> constructor;
+    private final Class<? extends V> valueClass;
 
-    @Override
-    public boolean isEmpty() {
-        return backingMap.isEmpty();
-    }
-
-    @Override
-    public boolean containsKey(Object key) {
-        return backingMap.containsKey(key);
-    }
-
-    @Override
-    public boolean containsValue(Object value) {
-        return backingMap.containsValue(value);
-    }
-
-    @Override
-    public V get(Object key) {
-        V res = backingMap.get(key);
-        if (res == null && key != null) {
-            res = loader.apply((K) key);
-            if (res != null) {
-                backingMap.put((K) key, res);
-            }
+    AutoInstantiatingLoader(Class<? extends K> keyClass, Class<? extends V> valueClass) {
+      try {
+        this.valueClass = valueClass;
+        if (keyClass != null) {
+          constructor = valueClass.getConstructor(keyClass);
+        } else {
+          constructor = null;
         }
-        return res;
-    }
-
-    public V put(K key, V value) {
-        return backingMap.put(key, value);
-    }
-
-    @Override
-    public V remove(Object key) {
-        return backingMap.remove(key);
-    }
-
-    public void putAll(Map<? extends K, ? extends V> m) {
-        backingMap.putAll(m);
+      } catch (NoSuchMethodException e) {
+        throw new IllegalStateException(
+            valueClass.getName() + " does not have a constructor for " + (keyClass != null
+                ? keyClass.getName() : null));
+      }
     }
 
     @Override
-    public void clear() {
-        backingMap.clear();
-    }
-
-    @Override
-    public Set<K> keySet() {
-        return backingMap.keySet();
-    }
-
-    @Override
-    public Collection<V> values() {
-        return backingMap.values();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return backingMap.equals(o);
+    public V apply(K input) {
+      try {
+        return (constructor != null ? constructor.newInstance(input) : valueClass.newInstance());
+      } catch (Exception e) {
+        throw new ExceptionInInitializerError(e);
+      }
     }
 
     @Override
     public int hashCode() {
-        return backingMap.hashCode();
+      return super.hashCode();
     }
 
     @Override
-    public Set<Entry<K, V>> entrySet() {
-        return backingMap.entrySet();
+    public boolean equals(Object object) {
+      return false;
+    }
+  }
+
+  /**
+   * Due to java stuff, you will need to cast it to (Function) for some cases
+   */
+  public abstract static class Feeder<T> implements Function<T, T> {
+
+    @Override
+    public T apply(Object input) {
+      return apply();
     }
 
-    public LoadingMap<K, V> clone() {
-        return new LoadingMap<K, V>(backingMap, loader);
-    }
-
-    private static class AutoInstantiatingLoader<K, V> implements Function<K, V> {
-        final Constructor<? extends V> constructor;
-        private final Class<? extends V> valueClass;
-
-        AutoInstantiatingLoader(Class<? extends K> keyClass, Class<? extends V> valueClass) {
-            try {
-                this.valueClass = valueClass;
-                if (keyClass != null) {
-                    constructor = valueClass.getConstructor(keyClass);
-                } else {
-                    constructor = null;
-                }
-            } catch (NoSuchMethodException e) {
-                throw new IllegalStateException(
-                        valueClass.getName() + " does not have a constructor for " + (keyClass != null ? keyClass.getName() : null));
-            }
-        }
-
-        @Override
-        public V apply(K input) {
-            try {
-                return (constructor != null ? constructor.newInstance(input) : valueClass.newInstance());
-            } catch (Exception e) {
-                throw new ExceptionInInitializerError(e);
-            }
-        }
-
-        @Override
-        public int hashCode() {
-            return super.hashCode();
-        }
-
-        @Override
-        public boolean equals(Object object) {
-            return false;
-        }
-    }
-
-    /**
-     * Due to java stuff, you will need to cast it to (Function) for some cases
-     *
-     * @param <T>
-     */
-    public abstract static class Feeder<T> implements Function<T, T> {
-        @Override
-        public T apply(Object input) {
-            return apply();
-        }
-
-        public abstract T apply();
-    }
+    public abstract T apply();
+  }
 }

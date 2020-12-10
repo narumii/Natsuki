@@ -11,42 +11,44 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
  * Represents input from a command block
  */
 public class CraftBlockCommandSender extends ServerCommandSender implements BlockCommandSender {
-    private final CommandBlockListenerAbstract commandBlock;
 
-    public CraftBlockCommandSender(CommandBlockListenerAbstract commandBlockListenerAbstract) {
-        super();
-        this.commandBlock = commandBlockListenerAbstract;
-    }
+  private final CommandBlockListenerAbstract commandBlock;
 
-    public Block getBlock() {
-        return commandBlock.getWorld().getWorld().getBlockAt(commandBlock.getChunkCoordinates().getX(), commandBlock.getChunkCoordinates().getY(), commandBlock.getChunkCoordinates().getZ());
-    }
+  public CraftBlockCommandSender(CommandBlockListenerAbstract commandBlockListenerAbstract) {
+    super();
+    this.commandBlock = commandBlockListenerAbstract;
+  }
 
-    public void sendMessage(String message) {
-        for (IChatBaseComponent component : CraftChatMessage.fromString(message)) {
-            commandBlock.sendMessage(component);
-        }
-    }
+  public Block getBlock() {
+    return commandBlock.getWorld().getWorld().getBlockAt(commandBlock.getChunkCoordinates().getX(),
+        commandBlock.getChunkCoordinates().getY(), commandBlock.getChunkCoordinates().getZ());
+  }
 
-    public void sendMessage(String[] messages) {
-        for (String message : messages) {
-            sendMessage(message);
-        }
+  public void sendMessage(String message) {
+    for (IChatBaseComponent component : CraftChatMessage.fromString(message)) {
+      commandBlock.sendMessage(component);
     }
+  }
 
-    public String getName() {
-        return commandBlock.getName();
+  public void sendMessage(String[] messages) {
+    for (String message : messages) {
+      sendMessage(message);
     }
+  }
 
-    public boolean isOp() {
-        return true;
-    }
+  public String getName() {
+    return commandBlock.getName();
+  }
 
-    public void setOp(boolean value) {
-        throw new UnsupportedOperationException("Cannot change operator status of a block");
-    }
+  public boolean isOp() {
+    return true;
+  }
 
-    public ICommandListener getTileEntity() {
-        return commandBlock;
-    }
+  public void setOp(boolean value) {
+    throw new UnsupportedOperationException("Cannot change operator status of a block");
+  }
+
+  public ICommandListener getTileEntity() {
+    return commandBlock;
+  }
 }

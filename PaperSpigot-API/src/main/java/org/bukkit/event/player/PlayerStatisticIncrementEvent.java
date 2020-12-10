@@ -10,106 +10,110 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a player statistic is incremented.
  * <p>
- * This event is not called for {@link org.bukkit.Statistic#PLAY_ONE_TICK} or
- * movement based statistics.
+ * This event is not called for {@link org.bukkit.Statistic#PLAY_ONE_TICK} or movement based
+ * statistics.
  */
 public class PlayerStatisticIncrementEvent extends PlayerEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    protected final Statistic statistic;
-    private final int initialValue;
-    private final int newValue;
-    private boolean isCancelled = false;
-    private final EntityType entityType;
-    private final Material material;
 
-    public PlayerStatisticIncrementEvent(Player player, Statistic statistic, int initialValue, int newValue) {
-        super(player);
-        this.statistic = statistic;
-        this.initialValue = initialValue;
-        this.newValue = newValue;
-        this.entityType = null;
-        this.material = null;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  protected final Statistic statistic;
+  private final int initialValue;
+  private final int newValue;
+  private boolean isCancelled = false;
+  private final EntityType entityType;
+  private final Material material;
 
-    public PlayerStatisticIncrementEvent(Player player, Statistic statistic, int initialValue, int newValue, EntityType entityType) {
-        super(player);
-        this.statistic = statistic;
-        this.initialValue = initialValue;
-        this.newValue = newValue;
-        this.entityType = entityType;
-        this.material = null;
-    }
+  public PlayerStatisticIncrementEvent(Player player, Statistic statistic, int initialValue,
+      int newValue) {
+    super(player);
+    this.statistic = statistic;
+    this.initialValue = initialValue;
+    this.newValue = newValue;
+    this.entityType = null;
+    this.material = null;
+  }
 
-    public PlayerStatisticIncrementEvent(Player player, Statistic statistic, int initialValue, int newValue, Material material) {
-        super(player);
-        this.statistic = statistic;
-        this.initialValue = initialValue;
-        this.newValue = newValue;
-        this.entityType = null;
-        this.material = material;
-    }
+  public PlayerStatisticIncrementEvent(Player player, Statistic statistic, int initialValue,
+      int newValue, EntityType entityType) {
+    super(player);
+    this.statistic = statistic;
+    this.initialValue = initialValue;
+    this.newValue = newValue;
+    this.entityType = entityType;
+    this.material = null;
+  }
 
-    /**
-     * Gets the statistic that is being incremented.
-     *
-     * @return the incremented statistic
-     */
-    public Statistic getStatistic() {
-        return statistic;
-    }
+  public PlayerStatisticIncrementEvent(Player player, Statistic statistic, int initialValue,
+      int newValue, Material material) {
+    super(player);
+    this.statistic = statistic;
+    this.initialValue = initialValue;
+    this.newValue = newValue;
+    this.entityType = null;
+    this.material = material;
+  }
 
-    /**
-     * Gets the previous value of the statistic.
-     *
-     * @return the previous value of the statistic
-     */
-    public int getPreviousValue() {
-        return initialValue;
-    }
+  /**
+   * Gets the statistic that is being incremented.
+   *
+   * @return the incremented statistic
+   */
+  public Statistic getStatistic() {
+    return statistic;
+  }
 
-    /**
-     * Gets the new value of the statistic.
-     *
-     * @return the new value of the statistic
-     */
-    public int getNewValue() {
-        return newValue;
-    }
+  /**
+   * Gets the previous value of the statistic.
+   *
+   * @return the previous value of the statistic
+   */
+  public int getPreviousValue() {
+    return initialValue;
+  }
 
-    /**
-     * Gets the EntityType if {@link #getStatistic() getStatistic()} is an
-     * entity statistic otherwise returns null.
-     *
-     * @return the EntityType of the statistic
-     */
-    public EntityType getEntityType() {
-        return entityType;
-    }
+  /**
+   * Gets the new value of the statistic.
+   *
+   * @return the new value of the statistic
+   */
+  public int getNewValue() {
+    return newValue;
+  }
 
-    /**
-     * Gets the Material if {@link #getStatistic() getStatistic()} is a block
-     * or item statistic otherwise returns null.
-     *
-     * @return the Material of the statistic
-     */
-    public Material getMaterial() {
-        return material;
-    }
+  /**
+   * Gets the EntityType if {@link #getStatistic() getStatistic()} is an entity statistic otherwise
+   * returns null.
+   *
+   * @return the EntityType of the statistic
+   */
+  public EntityType getEntityType() {
+    return entityType;
+  }
 
-    public boolean isCancelled() {
-        return isCancelled;
-    }
+  /**
+   * Gets the Material if {@link #getStatistic() getStatistic()} is a block or item statistic
+   * otherwise returns null.
+   *
+   * @return the Material of the statistic
+   */
+  public Material getMaterial() {
+    return material;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.isCancelled = cancel;
-    }
+  public boolean isCancelled() {
+    return isCancelled;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public void setCancelled(boolean cancel) {
+    this.isCancelled = cancel;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

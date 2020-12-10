@@ -7,8 +7,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Called when a block spreads based on world conditions.
  * <p>
- * Use {@link BlockFormEvent} to catch blocks that "randomly" form instead of
- * actually spread.
+ * Use {@link BlockFormEvent} to catch blocks that "randomly" form instead of actually spread.
  * <p>
  * Examples:
  * <ul>
@@ -21,29 +20,30 @@ import org.bukkit.event.HandlerList;
  * @see BlockFormEvent
  */
 public class BlockSpreadEvent extends BlockFormEvent {
-    private static final HandlerList handlers = new HandlerList();
-    private final Block source;
 
-    public BlockSpreadEvent(final Block block, final Block source, final BlockState newState) {
-        super(block, newState);
-        this.source = source;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private final Block source;
 
-    /**
-     * Gets the source block involved in this event.
-     *
-     * @return the Block for the source block involved in this event.
-     */
-    public Block getSource() {
-        return source;
-    }
+  public BlockSpreadEvent(final Block block, final Block source, final BlockState newState) {
+    super(block, newState);
+    this.source = source;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Gets the source block involved in this event.
+   *
+   * @return the Block for the source block involved in this event.
+   */
+  public Block getSource() {
+    return source;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

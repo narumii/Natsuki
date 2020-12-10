@@ -7,18 +7,19 @@ import org.bukkit.event.HandlerList;
  * Called when a World is initializing
  */
 public class WorldInitEvent extends WorldEvent {
-    private static final HandlerList handlers = new HandlerList();
 
-    public WorldInitEvent(final World world) {
-        super(world);
-    }
+  private static final HandlerList handlers = new HandlerList();
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public WorldInitEvent(final World world) {
+    super(world);
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

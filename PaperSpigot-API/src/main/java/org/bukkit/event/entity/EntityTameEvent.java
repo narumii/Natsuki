@@ -9,43 +9,44 @@ import org.bukkit.event.HandlerList;
  * Thrown when a LivingEntity is tamed
  */
 public class EntityTameEvent extends EntityEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
-    private final AnimalTamer owner;
 
-    public EntityTameEvent(final LivingEntity entity, final AnimalTamer owner) {
-        super(entity);
-        this.owner = owner;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancelled;
+  private final AnimalTamer owner;
 
-    @Override
-    public LivingEntity getEntity() {
-        return (LivingEntity) entity;
-    }
+  public EntityTameEvent(final LivingEntity entity, final AnimalTamer owner) {
+    super(entity);
+    this.owner = owner;
+  }
 
-    public boolean isCancelled() {
-        return cancelled;
-    }
+  @Override
+  public LivingEntity getEntity() {
+    return (LivingEntity) entity;
+  }
 
-    public void setCancelled(boolean cancel) {
-        cancelled = cancel;
-    }
+  public boolean isCancelled() {
+    return cancelled;
+  }
 
-    /**
-     * Gets the owning AnimalTamer
-     *
-     * @return the owning AnimalTamer
-     */
-    public AnimalTamer getOwner() {
-        return owner;
-    }
+  public void setCancelled(boolean cancel) {
+    cancelled = cancel;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Gets the owning AnimalTamer
+   *
+   * @return the owning AnimalTamer
+   */
+  public AnimalTamer getOwner() {
+    return owner;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

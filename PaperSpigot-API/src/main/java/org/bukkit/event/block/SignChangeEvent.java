@@ -11,74 +11,72 @@ import org.bukkit.event.HandlerList;
  * If a Sign Change event is cancelled, the sign will not be changed.
  */
 public class SignChangeEvent extends BlockEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancel = false;
-    private final Player player;
-    private final String[] lines;
 
-    public SignChangeEvent(final Block theBlock, final Player thePlayer, final String[] theLines) {
-        super(theBlock);
-        this.player = thePlayer;
-        this.lines = theLines;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancel = false;
+  private final Player player;
+  private final String[] lines;
 
-    /**
-     * Gets the player changing the sign involved in this event.
-     *
-     * @return the Player involved in this event
-     */
-    public Player getPlayer() {
-        return player;
-    }
+  public SignChangeEvent(final Block theBlock, final Player thePlayer, final String[] theLines) {
+    super(theBlock);
+    this.player = thePlayer;
+    this.lines = theLines;
+  }
 
-    /**
-     * Gets all of the lines of text from the sign involved in this event.
-     *
-     * @return the String array for the sign's lines new text
-     */
-    public String[] getLines() {
-        return lines;
-    }
+  /**
+   * Gets the player changing the sign involved in this event.
+   *
+   * @return the Player involved in this event
+   */
+  public Player getPlayer() {
+    return player;
+  }
 
-    /**
-     * Gets a single line of text from the sign involved in this event.
-     *
-     * @param index index of the line to get
-     * @return the String containing the line of text associated with the
-     * provided index
-     * @throws IndexOutOfBoundsException thrown when the provided index is {@literal > 3
-     *                                   or < 0}
-     */
-    public String getLine(int index) throws IndexOutOfBoundsException {
-        return lines[index];
-    }
+  /**
+   * Gets all of the lines of text from the sign involved in this event.
+   *
+   * @return the String array for the sign's lines new text
+   */
+  public String[] getLines() {
+    return lines;
+  }
 
-    /**
-     * Sets a single line for the sign involved in this event
-     *
-     * @param index index of the line to set
-     * @param line  text to set
-     * @throws IndexOutOfBoundsException thrown when the provided index is {@literal > 3
-     *                                   or < 0}
-     */
-    public void setLine(int index, String line) throws IndexOutOfBoundsException {
-        lines[index] = line;
-    }
+  /**
+   * Gets a single line of text from the sign involved in this event.
+   *
+   * @param index index of the line to get
+   * @return the String containing the line of text associated with the provided index
+   * @throws IndexOutOfBoundsException thrown when the provided index is {@literal > 3 or < 0}
+   */
+  public String getLine(int index) throws IndexOutOfBoundsException {
+    return lines[index];
+  }
 
-    public boolean isCancelled() {
-        return cancel;
-    }
+  /**
+   * Sets a single line for the sign involved in this event
+   *
+   * @param index index of the line to set
+   * @param line text to set
+   * @throws IndexOutOfBoundsException thrown when the provided index is {@literal > 3 or < 0}
+   */
+  public void setLine(int index, String line) throws IndexOutOfBoundsException {
+    lines[index] = line;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancel = cancel;
-    }
+  public boolean isCancelled() {
+    return cancel;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancel = cancel;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

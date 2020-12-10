@@ -9,44 +9,46 @@ import org.bukkit.craftbukkit.inventory.CraftInventoryBrewer;
 import org.bukkit.inventory.BrewerInventory;
 
 public class CraftBrewingStand extends CraftBlockState implements BrewingStand {
-    private final TileEntityBrewingStand brewingStand;
 
-    public CraftBrewingStand(Block block) {
-        super(block);
+  private final TileEntityBrewingStand brewingStand;
 
-        brewingStand = (TileEntityBrewingStand) ((CraftWorld) block.getWorld()).getTileEntityAt(getX(), getY(), getZ());
+  public CraftBrewingStand(Block block) {
+    super(block);
+
+    brewingStand = (TileEntityBrewingStand) ((CraftWorld) block.getWorld())
+        .getTileEntityAt(getX(), getY(), getZ());
+  }
+
+  public CraftBrewingStand(final Material material, final TileEntityBrewingStand te) {
+    super(material);
+    brewingStand = te;
+  }
+
+  public BrewerInventory getInventory() {
+    return new CraftInventoryBrewer(brewingStand);
+  }
+
+  @Override
+  public boolean update(boolean force, boolean applyPhysics) {
+    boolean result = super.update(force, applyPhysics);
+
+    if (result) {
+      brewingStand.update();
     }
 
-    public CraftBrewingStand(final Material material, final TileEntityBrewingStand te) {
-        super(material);
-        brewingStand = te;
-    }
+    return result;
+  }
 
-    public BrewerInventory getInventory() {
-        return new CraftInventoryBrewer(brewingStand);
-    }
+  public int getBrewingTime() {
+    return brewingStand.brewTime;
+  }
 
-    @Override
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+  public void setBrewingTime(int brewTime) {
+    brewingStand.brewTime = brewTime;
+  }
 
-        if (result) {
-            brewingStand.update();
-        }
-
-        return result;
-    }
-
-    public int getBrewingTime() {
-        return brewingStand.brewTime;
-    }
-
-    public void setBrewingTime(int brewTime) {
-        brewingStand.brewTime = brewTime;
-    }
-
-    @Override
-    public TileEntityBrewingStand getTileEntity() {
-        return brewingStand;
-    }
+  @Override
+  public TileEntityBrewingStand getTileEntity() {
+    return brewingStand;
+  }
 }

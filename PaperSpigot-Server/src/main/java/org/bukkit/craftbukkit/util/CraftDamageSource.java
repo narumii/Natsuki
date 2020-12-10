@@ -4,28 +4,29 @@ import net.minecraft.server.DamageSource;
 
 // Util class to create custom DamageSources.
 public final class CraftDamageSource extends DamageSource {
-    public static DamageSource copyOf(final DamageSource original) {
-        CraftDamageSource newSource = new CraftDamageSource(original.translationIndex);
 
-        // Check ignoresArmor
-        if (original.ignoresArmor()) {
-            newSource.setIgnoreArmor();
-        }
+  public static DamageSource copyOf(final DamageSource original) {
+    CraftDamageSource newSource = new CraftDamageSource(original.translationIndex);
 
-        // Check magic
-        if (original.isMagic()) {
-            newSource.setMagic();
-        }
-
-        // Check fire
-        if (original.isExplosion()) {
-            newSource.setExplosion();
-        }
-
-        return newSource;
+    // Check ignoresArmor
+    if (original.ignoresArmor()) {
+      newSource.setIgnoreArmor();
     }
 
-    private CraftDamageSource(String identifier) {
-        super(identifier);
+    // Check magic
+    if (original.isMagic()) {
+      newSource.setMagic();
     }
+
+    // Check fire
+    if (original.isExplosion()) {
+      newSource.setExplosion();
+    }
+
+    return newSource;
+  }
+
+  private CraftDamageSource(String identifier) {
+    super(identifier);
+  }
 }

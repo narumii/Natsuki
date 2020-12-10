@@ -27,46 +27,47 @@ package co.aikar.timings;
  * Provides an ability to time sections of code within the Minecraft Server
  */
 public interface Timing extends AutoCloseable {
-    /**
-     * Starts timing the execution until {@link #stopTiming()} is called.
-     */
-    void startTiming();
 
-    /**
-     * <p>Stops timing and records the data. Propagates the data up to group handlers.</p>
-     * <p>
-     * Will automatically be called when this Timing is used with try-with-resources
-     */
-    void stopTiming();
+  /**
+   * Starts timing the execution until {@link #stopTiming()} is called.
+   */
+  void startTiming();
 
-    /**
-     * Starts timing the execution until {@link #stopTiming()} is called.
-     * <p>
-     * But only if we are on the primary thread.
-     */
-    void startTimingIfSync();
+  /**
+   * <p>Stops timing and records the data. Propagates the data up to group handlers.</p>
+   * <p>
+   * Will automatically be called when this Timing is used with try-with-resources
+   */
+  void stopTiming();
 
-    /**
-     * <p>Stops timing and records the data. Propagates the data up to group handlers.</p>
-     *
-     * <p>Will automatically be called when this Timing is used with try-with-resources</p>
-     * <p>
-     * But only if we are on the primary thread.
-     */
-    void stopTimingIfSync();
+  /**
+   * Starts timing the execution until {@link #stopTiming()} is called.
+   * <p>
+   * But only if we are on the primary thread.
+   */
+  void startTimingIfSync();
 
-    /**
-     * Stops timing and disregards current timing data.
-     */
-    void abort();
+  /**
+   * <p>Stops timing and records the data. Propagates the data up to group handlers.</p>
+   *
+   * <p>Will automatically be called when this Timing is used with try-with-resources</p>
+   * <p>
+   * But only if we are on the primary thread.
+   */
+  void stopTimingIfSync();
 
-    /**
-     * Used internally to get the actual backing Handler in the case of delegated Handlers
-     *
-     * @return TimingHandler
-     */
-    TimingHandler getTimingHandler();
+  /**
+   * Stops timing and disregards current timing data.
+   */
+  void abort();
 
-    @Override
-    void close();
+  /**
+   * Used internally to get the actual backing Handler in the case of delegated Handlers
+   *
+   * @return TimingHandler
+   */
+  TimingHandler getTimingHandler();
+
+  @Override
+  void close();
 }

@@ -9,52 +9,54 @@ import org.bukkit.craftbukkit.inventory.CraftInventoryFurnace;
 import org.bukkit.inventory.FurnaceInventory;
 
 public class CraftFurnace extends CraftBlockState implements Furnace {
-    private final TileEntityFurnace furnace;
 
-    public CraftFurnace(final Block block) {
-        super(block);
+  private final TileEntityFurnace furnace;
 
-        furnace = (TileEntityFurnace) ((CraftWorld) block.getWorld()).getTileEntityAt(getX(), getY(), getZ());
+  public CraftFurnace(final Block block) {
+    super(block);
+
+    furnace = (TileEntityFurnace) ((CraftWorld) block.getWorld())
+        .getTileEntityAt(getX(), getY(), getZ());
+  }
+
+  public CraftFurnace(final Material material, final TileEntityFurnace te) {
+    super(material);
+    furnace = te;
+  }
+
+  public FurnaceInventory getInventory() {
+    return new CraftInventoryFurnace(furnace);
+  }
+
+  @Override
+  public boolean update(boolean force, boolean applyPhysics) {
+    boolean result = super.update(force, applyPhysics);
+
+    if (result) {
+      furnace.update();
     }
 
-    public CraftFurnace(final Material material, final TileEntityFurnace te) {
-        super(material);
-        furnace = te;
-    }
+    return result;
+  }
 
-    public FurnaceInventory getInventory() {
-        return new CraftInventoryFurnace(furnace);
-    }
+  public short getBurnTime() {
+    return (short) furnace.burnTime;
+  }
 
-    @Override
-    public boolean update(boolean force, boolean applyPhysics) {
-        boolean result = super.update(force, applyPhysics);
+  public void setBurnTime(short burnTime) {
+    furnace.burnTime = burnTime;
+  }
 
-        if (result) {
-            furnace.update();
-        }
+  public short getCookTime() {
+    return (short) furnace.cookTime;
+  }
 
-        return result;
-    }
+  public void setCookTime(short cookTime) {
+    furnace.cookTime = cookTime;
+  }
 
-    public short getBurnTime() {
-        return (short) furnace.burnTime;
-    }
-
-    public void setBurnTime(short burnTime) {
-        furnace.burnTime = burnTime;
-    }
-
-    public short getCookTime() {
-        return (short) furnace.cookTime;
-    }
-
-    public void setCookTime(short cookTime) {
-        furnace.cookTime = cookTime;
-    }
-
-    @Override
-    public TileEntityFurnace getTileEntity() {
-        return furnace;
-    }
+  @Override
+  public TileEntityFurnace getTileEntity() {
+    return furnace;
+  }
 }

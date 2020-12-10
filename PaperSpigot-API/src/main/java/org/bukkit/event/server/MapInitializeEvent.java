@@ -7,28 +7,29 @@ import org.bukkit.map.MapView;
  * Called when a map is initialized.
  */
 public class MapInitializeEvent extends ServerEvent {
-    private static final HandlerList handlers = new HandlerList();
-    private final MapView mapView;
 
-    public MapInitializeEvent(final MapView mapView) {
-        this.mapView = mapView;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private final MapView mapView;
 
-    /**
-     * Gets the map initialized in this event.
-     *
-     * @return Map for this event
-     */
-    public MapView getMap() {
-        return mapView;
-    }
+  public MapInitializeEvent(final MapView mapView) {
+    this.mapView = mapView;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Gets the map initialized in this event.
+   *
+   * @return Map for this event
+   */
+  public MapView getMap() {
+    return mapView;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

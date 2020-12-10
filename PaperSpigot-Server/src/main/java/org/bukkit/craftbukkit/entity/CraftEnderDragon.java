@@ -2,6 +2,7 @@ package org.bukkit.craftbukkit.entity;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSet.Builder;
+import java.util.Set;
 import net.minecraft.server.EntityComplexPart;
 import net.minecraft.server.EntityEnderDragon;
 import org.bukkit.craftbukkit.CraftServer;
@@ -9,34 +10,33 @@ import org.bukkit.entity.ComplexEntityPart;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.EntityType;
 
-import java.util.Set;
-
 public class CraftEnderDragon extends CraftComplexLivingEntity implements EnderDragon {
-    public CraftEnderDragon(CraftServer server, EntityEnderDragon entity) {
-        super(server, entity);
+
+  public CraftEnderDragon(CraftServer server, EntityEnderDragon entity) {
+    super(server, entity);
+  }
+
+  public Set<ComplexEntityPart> getParts() {
+    Builder<ComplexEntityPart> builder = ImmutableSet.builder();
+
+    for (EntityComplexPart part : getHandle().children) {
+      builder.add((ComplexEntityPart) part.getBukkitEntity());
     }
 
-    public Set<ComplexEntityPart> getParts() {
-        Builder<ComplexEntityPart> builder = ImmutableSet.builder();
+    return builder.build();
+  }
 
-        for (EntityComplexPart part : getHandle().children) {
-            builder.add((ComplexEntityPart) part.getBukkitEntity());
-        }
+  @Override
+  public EntityEnderDragon getHandle() {
+    return (EntityEnderDragon) entity;
+  }
 
-        return builder.build();
-    }
+  @Override
+  public String toString() {
+    return "CraftEnderDragon";
+  }
 
-    @Override
-    public EntityEnderDragon getHandle() {
-        return (EntityEnderDragon) entity;
-    }
-
-    @Override
-    public String toString() {
-        return "CraftEnderDragon";
-    }
-
-    public EntityType getType() {
-        return EntityType.ENDER_DRAGON;
-    }
+  public EntityType getType() {
+    return EntityType.ENDER_DRAGON;
+  }
 }

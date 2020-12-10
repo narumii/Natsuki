@@ -7,31 +7,31 @@ import org.bukkit.inventory.ItemStack;
  */
 public interface Item extends Entity {
 
-    /**
-     * Gets the item stack associated with this item drop.
-     *
-     * @return An item stack.
-     */
-    ItemStack getItemStack();
+  /**
+   * Gets the item stack associated with this item drop.
+   *
+   * @return An item stack.
+   */
+  ItemStack getItemStack();
 
-    /**
-     * Sets the item stack associated with this item drop.
-     *
-     * @param stack An item stack.
-     */
-    void setItemStack(ItemStack stack);
+  /**
+   * Sets the item stack associated with this item drop.
+   *
+   * @param stack An item stack.
+   */
+  void setItemStack(ItemStack stack);
 
-    /**
-     * Gets the delay before this Item is available to be picked up by players
-     *
-     * @return Remaining delay
-     */
-    int getPickupDelay();
+  /**
+   * Gets the delay before this Item is available to be picked up by players
+   *
+   * @return Remaining delay
+   */
+  int getPickupDelay();
 
-    /**
-     * Sets the delay before this Item is available to be picked up by players
-     *
-     * @param delay New delay
-     */
-    void setPickupDelay(int delay);
+  /**
+   * Sets the delay before this Item is available to be picked up by players
+   *
+   * @param delay New delay
+   */
+  void setPickupDelay(int delay);
 }

@@ -10,49 +10,50 @@ import org.bukkit.inventory.Inventory;
  * Called when a hopper or hopper minecart picks up a dropped item.
  */
 public class InventoryPickupItemEvent extends Event implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
-    private final Inventory inventory;
-    private final Item item;
 
-    public InventoryPickupItemEvent(final Inventory inventory, final Item item) {
-        super();
-        this.inventory = inventory;
-        this.item = item;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancelled;
+  private final Inventory inventory;
+  private final Item item;
 
-    /**
-     * Gets the Inventory that picked up the item
-     *
-     * @return Inventory
-     */
-    public Inventory getInventory() {
-        return inventory;
-    }
+  public InventoryPickupItemEvent(final Inventory inventory, final Item item) {
+    super();
+    this.inventory = inventory;
+    this.item = item;
+  }
 
-    /**
-     * Gets the Item entity that was picked up
-     *
-     * @return Item
-     */
-    public Item getItem() {
-        return item;
-    }
+  /**
+   * Gets the Inventory that picked up the item
+   *
+   * @return Inventory
+   */
+  public Inventory getInventory() {
+    return inventory;
+  }
 
-    public boolean isCancelled() {
-        return cancelled;
-    }
+  /**
+   * Gets the Item entity that was picked up
+   *
+   * @return Item
+   */
+  public Item getItem() {
+    return item;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
-    }
+  public boolean isCancelled() {
+    return cancelled;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancelled = cancel;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

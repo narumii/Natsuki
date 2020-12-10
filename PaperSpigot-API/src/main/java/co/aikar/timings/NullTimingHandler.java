@@ -24,38 +24,39 @@
 package co.aikar.timings;
 
 public final class NullTimingHandler implements Timing {
-    @Override
-    public void startTiming() {
 
-    }
+  @Override
+  public void startTiming() {
 
-    @Override
-    public void stopTiming() {
+  }
 
-    }
+  @Override
+  public void stopTiming() {
 
-    @Override
-    public void startTimingIfSync() {
+  }
 
-    }
+  @Override
+  public void startTimingIfSync() {
 
-    @Override
-    public void stopTimingIfSync() {
+  }
 
-    }
+  @Override
+  public void stopTimingIfSync() {
 
-    @Override
-    public void abort() {
+  }
 
-    }
+  @Override
+  public void abort() {
 
-    @Override
-    public TimingHandler getTimingHandler() {
-        return null;
-    }
+  }
 
-    @Override
-    public void close() {
+  @Override
+  public TimingHandler getTimingHandler() {
+    return null;
+  }
 
-    }
+  @Override
+  public void close() {
+
+  }
 }

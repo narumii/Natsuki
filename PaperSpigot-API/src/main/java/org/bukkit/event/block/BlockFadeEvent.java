@@ -15,45 +15,43 @@ import org.bukkit.event.HandlerList;
  * <li>Fire burning out after time, without destroying fuel block.
  * </ul>
  * <p>
- * If a Block Fade event is cancelled, the block will not fade, melt or
- * disappear.
+ * If a Block Fade event is cancelled, the block will not fade, melt or disappear.
  */
 public class BlockFadeEvent extends BlockEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
-    private final BlockState newState;
 
-    public BlockFadeEvent(final Block block, final BlockState newState) {
-        super(block);
-        this.newState = newState;
-        this.cancelled = false;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancelled;
+  private final BlockState newState;
 
-    /**
-     * Gets the state of the block that will be fading, melting or
-     * disappearing.
-     *
-     * @return The block state of the block that will be fading, melting or
-     * disappearing
-     */
-    public BlockState getNewState() {
-        return newState;
-    }
+  public BlockFadeEvent(final Block block, final BlockState newState) {
+    super(block);
+    this.newState = newState;
+    this.cancelled = false;
+  }
 
-    public boolean isCancelled() {
-        return cancelled;
-    }
+  /**
+   * Gets the state of the block that will be fading, melting or disappearing.
+   *
+   * @return The block state of the block that will be fading, melting or disappearing
+   */
+  public BlockState getNewState() {
+    return newState;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
-    }
+  public boolean isCancelled() {
+    return cancelled;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancelled = cancel;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

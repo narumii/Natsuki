@@ -10,50 +10,50 @@ import org.bukkit.event.HandlerList;
  * If an Entity Combust event is cancelled, the entity will not combust.
  */
 public class EntityCombustEvent extends EntityEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private int duration;
-    private boolean cancel;
 
-    public EntityCombustEvent(final Entity combustee, final int duration) {
-        super(combustee);
-        this.duration = duration;
-        this.cancel = false;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private int duration;
+  private boolean cancel;
 
-    public boolean isCancelled() {
-        return cancel;
-    }
+  public EntityCombustEvent(final Entity combustee, final int duration) {
+    super(combustee);
+    this.duration = duration;
+    this.cancel = false;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancel = cancel;
-    }
+  public boolean isCancelled() {
+    return cancel;
+  }
 
-    /**
-     * @return the amount of time (in seconds) the combustee should be alight
-     * for
-     */
-    public int getDuration() {
-        return duration;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancel = cancel;
+  }
 
-    /**
-     * The number of seconds the combustee should be alight for.
-     * <p>
-     * This value will only ever increase the combustion time, not decrease
-     * existing combustion times.
-     *
-     * @param duration the time in seconds to be alight for.
-     */
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
+  /**
+   * @return the amount of time (in seconds) the combustee should be alight for
+   */
+  public int getDuration() {
+    return duration;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * The number of seconds the combustee should be alight for.
+   * <p>
+   * This value will only ever increase the combustion time, not decrease existing combustion
+   * times.
+   *
+   * @param duration the time in seconds to be alight for.
+   */
+  public void setDuration(int duration) {
+    this.duration = duration;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

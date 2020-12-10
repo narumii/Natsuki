@@ -4,35 +4,38 @@ import net.minecraft.server.ChatComponentText;
 import net.minecraft.server.RemoteControlCommandListener;
 import org.bukkit.command.RemoteConsoleCommandSender;
 
-public class CraftRemoteConsoleCommandSender extends ServerCommandSender implements RemoteConsoleCommandSender {
-    public CraftRemoteConsoleCommandSender() {
-        super();
-    }
+public class CraftRemoteConsoleCommandSender extends ServerCommandSender implements
+    RemoteConsoleCommandSender {
 
-    @Override
-    public void sendMessage(String message) {
-        RemoteControlCommandListener.getInstance().sendMessage(new ChatComponentText(message + "\n")); // Send a newline after each message, to preserve formatting.
-    }
+  public CraftRemoteConsoleCommandSender() {
+    super();
+  }
 
-    @Override
-    public void sendMessage(String[] messages) {
-        for (String message : messages) {
-            sendMessage(message);
-        }
-    }
+  @Override
+  public void sendMessage(String message) {
+    RemoteControlCommandListener.getInstance().sendMessage(new ChatComponentText(
+        message + "\n")); // Send a newline after each message, to preserve formatting.
+  }
 
-    @Override
-    public String getName() {
-        return "Rcon";
+  @Override
+  public void sendMessage(String[] messages) {
+    for (String message : messages) {
+      sendMessage(message);
     }
+  }
 
-    @Override
-    public boolean isOp() {
-        return true;
-    }
+  @Override
+  public String getName() {
+    return "Rcon";
+  }
 
-    @Override
-    public void setOp(boolean value) {
-        throw new UnsupportedOperationException("Cannot change operator status of remote controller.");
-    }
+  @Override
+  public boolean isOp() {
+    return true;
+  }
+
+  @Override
+  public void setOp(boolean value) {
+    throw new UnsupportedOperationException("Cannot change operator status of remote controller.");
+  }
 }

@@ -7,13 +7,14 @@ import org.bukkit.plugin.RegisteredServiceProvider;
  * org.bukkit.plugin.ServicesManager}
  */
 public abstract class ServiceEvent extends ServerEvent {
-    private final RegisteredServiceProvider<?> provider;
 
-    public ServiceEvent(final RegisteredServiceProvider<?> provider) {
-        this.provider = provider;
-    }
+  private final RegisteredServiceProvider<?> provider;
 
-    public RegisteredServiceProvider<?> getProvider() {
-        return provider;
-    }
+  public ServiceEvent(final RegisteredServiceProvider<?> provider) {
+    this.provider = provider;
+  }
+
+  public RegisteredServiceProvider<?> getProvider() {
+    return provider;
+  }
 }

@@ -8,249 +8,238 @@ import org.bukkit.inventory.InventoryHolder;
  */
 public interface Horse extends Animals, Vehicle, InventoryHolder, Tameable {
 
+  /**
+   * Represents the different types of horses that may exist.
+   */
+  enum Variant {
     /**
-     * Represents the different types of horses that may exist.
+     * A normal horse
      */
-    enum Variant {
-        /**
-         * A normal horse
-         */
-        HORSE,
-        /**
-         * A donkey
-         */
-        DONKEY,
-        /**
-         * A mule
-         */
-        MULE,
-        /**
-         * An undead horse
-         */
-        UNDEAD_HORSE,
-        /**
-         * A skeleton horse
-         */
-        SKELETON_HORSE,
-        ;
-    }
-
+    HORSE,
     /**
-     * Represents the base color that the horse has.
+     * A donkey
      */
-    enum Color {
-        /**
-         * Snow white
-         */
-        WHITE,
-        /**
-         * Very light brown
-         */
-        CREAMY,
-        /**
-         * Chestnut
-         */
-        CHESTNUT,
-        /**
-         * Light brown
-         */
-        BROWN,
-        /**
-         * Pitch black
-         */
-        BLACK,
-        /**
-         * Gray
-         */
-        GRAY,
-        /**
-         * Dark brown
-         */
-        DARK_BROWN,
-        ;
-    }
-
+    DONKEY,
     /**
-     * Represents the style, or markings, that the horse has.
+     * A mule
      */
-    enum Style {
-        /**
-         * No markings
-         */
-        NONE,
-        /**
-         * White socks or stripes
-         */
-        WHITE,
-        /**
-         * Milky splotches
-         */
-        WHITEFIELD,
-        /**
-         * Round white dots
-         */
-        WHITE_DOTS,
-        /**
-         * Small black dots
-         */
-        BLACK_DOTS,
-        ;
-    }
-
+    MULE,
     /**
-     * Gets the horse's variant.
-     * <p>
-     * A horse's variant defines its physical appearance and capabilities.
-     * Whether a horse is a regular horse, donkey, mule, or other kind of
-     * horse is determined using the variant.
-     *
-     * @return a {@link Variant} representing the horse's variant
+     * An undead horse
      */
-    Variant getVariant();
-
+    UNDEAD_HORSE,
     /**
-     * Sets the horse's variant.
-     * <p>
-     * A horse's variant defines its physical appearance and capabilities.
-     * Whether a horse is a regular horse, donkey, mule, or other kind of
-     * horse can be set using the variant.
-     * <p>
-     * Setting a horse's variant does not change its attributes such as
-     * its owner and its tamed status, but changing a mule or donkey
-     * with a chest to another variant which does not support a chest
-     * will remove the chest and its contents.
-     *
-     * @param variant a {@link Variant} for this horse
+     * A skeleton horse
      */
-    void setVariant(Variant variant);
+    SKELETON_HORSE,
+    ;
+  }
 
+  /**
+   * Represents the base color that the horse has.
+   */
+  enum Color {
     /**
-     * Gets the horse's color.
-     * <p>
-     * Colors only apply to horses, not to donkeys, mules, skeleton horses
-     * or undead horses.
-     *
-     * @return a {@link Color} representing the horse's group
+     * Snow white
      */
-    Color getColor();
-
+    WHITE,
     /**
-     * Sets the horse's color.
-     * <p>
-     * Attempting to set a color for any donkey, mule, skeleton horse or
-     * undead horse will not result in a change.
-     *
-     * @param color a {@link Color} for this horse
+     * Very light brown
      */
-    void setColor(Color color);
-
+    CREAMY,
     /**
-     * Gets the horse's style.
-     * Styles determine what kind of markings or patterns a horse has.
-     * <p>
-     * Styles only apply to horses, not to donkeys, mules, skeleton horses
-     * or undead horses.
-     *
-     * @return a {@link Style} representing the horse's style
+     * Chestnut
      */
-    Style getStyle();
-
+    CHESTNUT,
     /**
-     * Sets the style of this horse.
-     * Styles determine what kind of markings or patterns a horse has.
-     * <p>
-     * Attempting to set a style for any donkey, mule, skeleton horse or
-     * undead horse will not result in a change.
-     *
-     * @param style a {@link Style} for this horse
+     * Light brown
      */
-    void setStyle(Style style);
-
+    BROWN,
     /**
-     * Gets whether the horse has a chest equipped.
-     *
-     * @return true if the horse has chest storage
+     * Pitch black
      */
-    boolean isCarryingChest();
-
+    BLACK,
     /**
-     * Sets whether the horse has a chest equipped.
-     * Removing a chest will also clear the chest's inventory.
-     *
-     * @param chest true if the horse should have a chest
+     * Gray
      */
-    void setCarryingChest(boolean chest);
-
+    GRAY,
     /**
-     * Gets the domestication level of this horse.
-     * <p>
-     * A higher domestication level indicates that the horse is closer to
-     * becoming tame. As the domestication level gets closer to the max
-     * domestication level, the chance of the horse becoming tame increases.
-     *
-     * @return domestication level
+     * Dark brown
      */
-    int getDomestication();
+    DARK_BROWN,
+    ;
+  }
 
+  /**
+   * Represents the style, or markings, that the horse has.
+   */
+  enum Style {
     /**
-     * Sets the domestication level of this horse.
-     * <p>
-     * Setting the domestication level to a high value will increase the
-     * horse's chances of becoming tame.
-     * <p>
-     * Domestication level must be greater than zero and no greater than
-     * the max domestication level of the horse, determined with
-     * {@link #getMaxDomestication()}
-     *
-     * @param level domestication level
+     * No markings
      */
-    void setDomestication(int level);
-
+    NONE,
     /**
-     * Gets the maximum domestication level of this horse.
-     * <p>
-     * The higher this level is, the longer it will likely take
-     * for the horse to be tamed.
-     *
-     * @return the max domestication level
+     * White socks or stripes
      */
-    int getMaxDomestication();
-
+    WHITE,
     /**
-     * Sets the maximum domestication level of this horse.
-     * <p>
-     * Setting a higher max domestication will increase the amount of
-     * domesticating (feeding, riding, etc.) necessary in order to tame it,
-     * while setting a lower max value will have the opposite effect.
-     * <p>
-     * Maximum domestication must be greater than zero.
-     *
-     * @param level the max domestication level
+     * Milky splotches
      */
-    void setMaxDomestication(int level);
-
+    WHITEFIELD,
     /**
-     * Gets the jump strength of this horse.
-     * <p>
-     * Jump strength defines how high the horse can jump. A higher jump strength
-     * increases how high a jump will go.
-     *
-     * @return the horse's jump strength
+     * Round white dots
      */
-    double getJumpStrength();
-
+    WHITE_DOTS,
     /**
-     * Sets the jump strength of this horse.
-     * <p>
-     * A higher jump strength increases how high a jump will go.
-     * Setting a jump strength to 0 will result in no jump.
-     * You cannot set a jump strength to a value below 0 or
-     * above 2.
-     *
-     * @param strength jump strength for this horse
+     * Small black dots
      */
-    void setJumpStrength(double strength);
+    BLACK_DOTS,
+    ;
+  }
 
-    @Override
-    HorseInventory getInventory();
+  /**
+   * Gets the horse's variant.
+   * <p>
+   * A horse's variant defines its physical appearance and capabilities. Whether a horse is a
+   * regular horse, donkey, mule, or other kind of horse is determined using the variant.
+   *
+   * @return a {@link Variant} representing the horse's variant
+   */
+  Variant getVariant();
+
+  /**
+   * Sets the horse's variant.
+   * <p>
+   * A horse's variant defines its physical appearance and capabilities. Whether a horse is a
+   * regular horse, donkey, mule, or other kind of horse can be set using the variant.
+   * <p>
+   * Setting a horse's variant does not change its attributes such as its owner and its tamed
+   * status, but changing a mule or donkey with a chest to another variant which does not support a
+   * chest will remove the chest and its contents.
+   *
+   * @param variant a {@link Variant} for this horse
+   */
+  void setVariant(Variant variant);
+
+  /**
+   * Gets the horse's color.
+   * <p>
+   * Colors only apply to horses, not to donkeys, mules, skeleton horses or undead horses.
+   *
+   * @return a {@link Color} representing the horse's group
+   */
+  Color getColor();
+
+  /**
+   * Sets the horse's color.
+   * <p>
+   * Attempting to set a color for any donkey, mule, skeleton horse or undead horse will not result
+   * in a change.
+   *
+   * @param color a {@link Color} for this horse
+   */
+  void setColor(Color color);
+
+  /**
+   * Gets the horse's style. Styles determine what kind of markings or patterns a horse has.
+   * <p>
+   * Styles only apply to horses, not to donkeys, mules, skeleton horses or undead horses.
+   *
+   * @return a {@link Style} representing the horse's style
+   */
+  Style getStyle();
+
+  /**
+   * Sets the style of this horse. Styles determine what kind of markings or patterns a horse has.
+   * <p>
+   * Attempting to set a style for any donkey, mule, skeleton horse or undead horse will not result
+   * in a change.
+   *
+   * @param style a {@link Style} for this horse
+   */
+  void setStyle(Style style);
+
+  /**
+   * Gets whether the horse has a chest equipped.
+   *
+   * @return true if the horse has chest storage
+   */
+  boolean isCarryingChest();
+
+  /**
+   * Sets whether the horse has a chest equipped. Removing a chest will also clear the chest's
+   * inventory.
+   *
+   * @param chest true if the horse should have a chest
+   */
+  void setCarryingChest(boolean chest);
+
+  /**
+   * Gets the domestication level of this horse.
+   * <p>
+   * A higher domestication level indicates that the horse is closer to becoming tame. As the
+   * domestication level gets closer to the max domestication level, the chance of the horse
+   * becoming tame increases.
+   *
+   * @return domestication level
+   */
+  int getDomestication();
+
+  /**
+   * Sets the domestication level of this horse.
+   * <p>
+   * Setting the domestication level to a high value will increase the horse's chances of becoming
+   * tame.
+   * <p>
+   * Domestication level must be greater than zero and no greater than the max domestication level
+   * of the horse, determined with {@link #getMaxDomestication()}
+   *
+   * @param level domestication level
+   */
+  void setDomestication(int level);
+
+  /**
+   * Gets the maximum domestication level of this horse.
+   * <p>
+   * The higher this level is, the longer it will likely take for the horse to be tamed.
+   *
+   * @return the max domestication level
+   */
+  int getMaxDomestication();
+
+  /**
+   * Sets the maximum domestication level of this horse.
+   * <p>
+   * Setting a higher max domestication will increase the amount of domesticating (feeding, riding,
+   * etc.) necessary in order to tame it, while setting a lower max value will have the opposite
+   * effect.
+   * <p>
+   * Maximum domestication must be greater than zero.
+   *
+   * @param level the max domestication level
+   */
+  void setMaxDomestication(int level);
+
+  /**
+   * Gets the jump strength of this horse.
+   * <p>
+   * Jump strength defines how high the horse can jump. A higher jump strength increases how high a
+   * jump will go.
+   *
+   * @return the horse's jump strength
+   */
+  double getJumpStrength();
+
+  /**
+   * Sets the jump strength of this horse.
+   * <p>
+   * A higher jump strength increases how high a jump will go. Setting a jump strength to 0 will
+   * result in no jump. You cannot set a jump strength to a value below 0 or above 2.
+   *
+   * @param strength jump strength for this horse
+   */
+  void setJumpStrength(double strength);
+
+  @Override
+  HorseInventory getInventory();
 }

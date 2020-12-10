@@ -6,18 +6,19 @@ import pw.narumi.Natsuki;
 
 public class NatsukiCommand extends Command {
 
-    public NatsukiCommand() {
-        super("Natsuki");
-    }
+  public NatsukiCommand() {
+    super("Natsuki");
+  }
 
-    @Override
-    public boolean execute(final CommandSender sender, final String commandLabel, final String[] args) {
-        sender.sendMessage(" ");
-        sender.sendMessage(" §8» §7Version: §d" + Natsuki.getInstance().getVersion());
-        sender.sendMessage(" §8» §7Developer: §dなるみ#4977");
-        sender.sendMessage(" §8» §7Discord: §dhttps://discord.gg/amutHux");
-        sender.sendMessage(" ");
+  @Override
+  public boolean execute(final CommandSender sender, final String commandLabel,
+      final String[] args) {
+    sender.sendMessage(" ");
+    sender.sendMessage(" §8» §7Version: §d" + Natsuki.getInstance().getVersion());
+    sender.sendMessage(" §8» §7Developer: §dnarumi");
+    sender.sendMessage(" §8» §7Discord: §dhttps://discord.gg/WDqGGt5");
+    sender.sendMessage(" ");
 
-        return false;
-    }
+    return false;
+  }
 }

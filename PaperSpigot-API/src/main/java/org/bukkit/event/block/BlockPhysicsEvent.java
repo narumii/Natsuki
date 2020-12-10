@@ -9,55 +9,56 @@ import org.bukkit.event.HandlerList;
  * Thrown when a block physics check is called
  */
 public class BlockPhysicsEvent extends BlockEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private final int changed;
-    private boolean cancel = false;
 
-    /**
-     * @param block   the block involved in this event
-     * @param changed the changed block's type id
-     * @deprecated Magic value
-     */
-    @Deprecated
-    public BlockPhysicsEvent(final Block block, final int changed) {
-        super(block);
-        this.changed = changed;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private final int changed;
+  private boolean cancel = false;
 
-    /**
-     * Gets the type of block that changed, causing this event
-     *
-     * @return Changed block's type id
-     * @deprecated Magic value
-     */
-    @Deprecated
-    public int getChangedTypeId() {
-        return changed;
-    }
+  /**
+   * @param block the block involved in this event
+   * @param changed the changed block's type id
+   * @deprecated Magic value
+   */
+  @Deprecated
+  public BlockPhysicsEvent(final Block block, final int changed) {
+    super(block);
+    this.changed = changed;
+  }
 
-    /**
-     * Gets the type of block that changed, causing this event
-     *
-     * @return Changed block's type
-     */
-    public Material getChangedType() {
-        return Material.getMaterial(changed);
-    }
+  /**
+   * Gets the type of block that changed, causing this event
+   *
+   * @return Changed block's type id
+   * @deprecated Magic value
+   */
+  @Deprecated
+  public int getChangedTypeId() {
+    return changed;
+  }
 
-    public boolean isCancelled() {
-        return cancel;
-    }
+  /**
+   * Gets the type of block that changed, causing this event
+   *
+   * @return Changed block's type
+   */
+  public Material getChangedType() {
+    return Material.getMaterial(changed);
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancel = cancel;
-    }
+  public boolean isCancelled() {
+    return cancel;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancel = cancel;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

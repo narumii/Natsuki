@@ -9,47 +9,48 @@ import org.bukkit.util.Vector;
  * Called when the velocity of a player changes.
  */
 public class PlayerVelocityEvent extends PlayerEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancel = false;
-    private Vector velocity;
 
-    public PlayerVelocityEvent(final Player player, final Vector velocity) {
-        super(player);
-        this.velocity = velocity;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancel = false;
+  private Vector velocity;
 
-    public boolean isCancelled() {
-        return cancel;
-    }
+  public PlayerVelocityEvent(final Player player, final Vector velocity) {
+    super(player);
+    this.velocity = velocity;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancel = cancel;
-    }
+  public boolean isCancelled() {
+    return cancel;
+  }
 
-    /**
-     * Gets the velocity vector that will be sent to the player
-     *
-     * @return Vector the player will get
-     */
-    public Vector getVelocity() {
-        return velocity;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancel = cancel;
+  }
 
-    /**
-     * Sets the velocity vector that will be sent to the player
-     *
-     * @param velocity The velocity vector that will be sent to the player
-     */
-    public void setVelocity(Vector velocity) {
-        this.velocity = velocity;
-    }
+  /**
+   * Gets the velocity vector that will be sent to the player
+   *
+   * @return Vector the player will get
+   */
+  public Vector getVelocity() {
+    return velocity;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Sets the velocity vector that will be sent to the player
+   *
+   * @param velocity The velocity vector that will be sent to the player
+   */
+  public void setVelocity(Vector velocity) {
+    this.velocity = velocity;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

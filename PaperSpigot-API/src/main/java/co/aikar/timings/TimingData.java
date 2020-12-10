@@ -23,11 +23,10 @@
  */
 package co.aikar.timings;
 
-import com.google.common.base.Function;
-
-import java.util.List;
-
 import static co.aikar.util.JSONUtil.toArray;
+
+import com.google.common.base.Function;
+import java.util.List;
 
 /**
  * <p>Lightweight object for tracking timing data</p>
@@ -35,71 +34,72 @@ import static co.aikar.util.JSONUtil.toArray;
  * This is broken out to reduce memory usage
  */
 class TimingData {
-    static Function<Integer, TimingData> LOADER = new Function<Integer, TimingData>() {
-        @Override
-        public TimingData apply(Integer input) {
-            return new TimingData(input);
-        }
-    };
-    int id;
-    int count = 0;
-    int lagCount = 0;
-    long totalTime = 0;
-    long lagTotalTime = 0;
 
-    int curTickCount = 0;
-    int curTickTotal = 0;
-
-    TimingData(int id) {
-        this.id = id;
+  static Function<Integer, TimingData> LOADER = new Function<Integer, TimingData>() {
+    @Override
+    public TimingData apply(Integer input) {
+      return new TimingData(input);
     }
+  };
+  int id;
+  int count = 0;
+  int lagCount = 0;
+  long totalTime = 0;
+  long lagTotalTime = 0;
 
-    TimingData(TimingData data) {
-        this.id = data.id;
-        this.totalTime = data.totalTime;
-        this.lagTotalTime = data.lagTotalTime;
-        this.count = data.count;
-        this.lagCount = data.lagCount;
-    }
+  int curTickCount = 0;
+  int curTickTotal = 0;
 
-    void add(long diff) {
-        ++curTickCount;
-        curTickTotal += diff;
-    }
+  TimingData(int id) {
+    this.id = id;
+  }
 
-    void processTick(boolean violated) {
-        totalTime += curTickTotal;
-        count += curTickCount;
-        if (violated) {
-            lagTotalTime += curTickTotal;
-            lagCount += curTickCount;
-        }
-        curTickTotal = 0;
-        curTickCount = 0;
-    }
+  TimingData(TimingData data) {
+    this.id = data.id;
+    this.totalTime = data.totalTime;
+    this.lagTotalTime = data.lagTotalTime;
+    this.count = data.count;
+    this.lagCount = data.lagCount;
+  }
 
-    void reset() {
-        count = 0;
-        lagCount = 0;
-        curTickTotal = 0;
-        curTickCount = 0;
-        totalTime = 0;
-        lagTotalTime = 0;
-    }
+  void add(long diff) {
+    ++curTickCount;
+    curTickTotal += diff;
+  }
 
-    protected TimingData clone() {
-        return new TimingData(this);
+  void processTick(boolean violated) {
+    totalTime += curTickTotal;
+    count += curTickCount;
+    if (violated) {
+      lagTotalTime += curTickTotal;
+      lagCount += curTickCount;
     }
+    curTickTotal = 0;
+    curTickCount = 0;
+  }
 
-    public List export() {
-        List list = toArray(
-                id,
-                count,
-                totalTime);
-        if (lagCount > 0) {
-            list.add(lagCount);
-            list.add(lagTotalTime);
-        }
-        return list;
+  void reset() {
+    count = 0;
+    lagCount = 0;
+    curTickTotal = 0;
+    curTickCount = 0;
+    totalTime = 0;
+    lagTotalTime = 0;
+  }
+
+  protected TimingData clone() {
+    return new TimingData(this);
+  }
+
+  public List export() {
+    List list = toArray(
+        id,
+        count,
+        totalTime);
+    if (lagCount > 0) {
+      list.add(lagCount);
+      list.add(lagTotalTime);
     }
+    return list;
+  }
 }

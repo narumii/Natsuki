@@ -7,42 +7,42 @@ import org.bukkit.event.block.BlockEvent;
 import org.bukkit.inventory.BrewerInventory;
 
 /**
- * Called when the brewing of the contents inside the Brewing Stand is
- * complete.
+ * Called when the brewing of the contents inside the Brewing Stand is complete.
  */
 public class BrewEvent extends BlockEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private BrewerInventory contents;
-    private boolean cancelled;
 
-    public BrewEvent(Block brewer, BrewerInventory contents) {
-        super(brewer);
-        this.contents = contents;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private BrewerInventory contents;
+  private boolean cancelled;
 
-    /**
-     * Gets the contents of the Brewing Stand.
-     *
-     * @return the contents
-     */
-    public BrewerInventory getContents() {
-        return contents;
-    }
+  public BrewEvent(Block brewer, BrewerInventory contents) {
+    super(brewer);
+    this.contents = contents;
+  }
 
-    public boolean isCancelled() {
-        return cancelled;
-    }
+  /**
+   * Gets the contents of the Brewing Stand.
+   *
+   * @return the contents
+   */
+  public BrewerInventory getContents() {
+    return contents;
+  }
 
-    public void setCancelled(boolean cancel) {
-        cancelled = cancel;
-    }
+  public boolean isCancelled() {
+    return cancelled;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public void setCancelled(boolean cancel) {
+    cancelled = cancel;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

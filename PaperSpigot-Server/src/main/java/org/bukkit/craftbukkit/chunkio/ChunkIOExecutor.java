@@ -7,30 +7,34 @@ import net.minecraft.server.World;
 import org.bukkit.craftbukkit.util.AsynchronousExecutor;
 
 public class ChunkIOExecutor {
-    static final int BASE_THREADS = 2; // PaperSpigot - Bumped value
-    static final int PLAYERS_PER_THREAD = 50;
 
-    private static final AsynchronousExecutor<QueuedChunk, Chunk, Runnable, RuntimeException> instance = new AsynchronousExecutor<QueuedChunk, Chunk, Runnable, RuntimeException>(new ChunkIOProvider(), BASE_THREADS);
+  static final int BASE_THREADS = 2; // PaperSpigot - Bumped value
+  static final int PLAYERS_PER_THREAD = 50;
 
-    public static Chunk syncChunkLoad(World world, ChunkRegionLoader loader, ChunkProviderServer provider, int x, int z) {
-        return instance.getSkipQueue(new QueuedChunk(x, z, loader, world, provider));
-    }
+  private static final AsynchronousExecutor<QueuedChunk, Chunk, Runnable, RuntimeException> instance = new AsynchronousExecutor<QueuedChunk, Chunk, Runnable, RuntimeException>(
+      new ChunkIOProvider(), BASE_THREADS);
 
-    public static void queueChunkLoad(World world, ChunkRegionLoader loader, ChunkProviderServer provider, int x, int z, Runnable runnable) {
-        instance.add(new QueuedChunk(x, z, loader, world, provider), runnable);
-    }
+  public static Chunk syncChunkLoad(World world, ChunkRegionLoader loader,
+      ChunkProviderServer provider, int x, int z) {
+    return instance.getSkipQueue(new QueuedChunk(x, z, loader, world, provider));
+  }
 
-    // Abuses the fact that hashCode and equals for QueuedChunk only use world and coords
-    public static void dropQueuedChunkLoad(World world, int x, int z, Runnable runnable) {
-        instance.drop(new QueuedChunk(x, z, null, world, null), runnable);
-    }
+  public static void queueChunkLoad(World world, ChunkRegionLoader loader,
+      ChunkProviderServer provider, int x, int z, Runnable runnable) {
+    instance.add(new QueuedChunk(x, z, loader, world, provider), runnable);
+  }
 
-    public static void adjustPoolSize(int players) {
-        int size = Math.max(BASE_THREADS, (int) Math.ceil(players / PLAYERS_PER_THREAD));
-        instance.setActiveThreads(size);
-    }
+  // Abuses the fact that hashCode and equals for QueuedChunk only use world and coords
+  public static void dropQueuedChunkLoad(World world, int x, int z, Runnable runnable) {
+    instance.drop(new QueuedChunk(x, z, null, world, null), runnable);
+  }
 
-    public static void tick() {
-        instance.finishActive();
-    }
+  public static void adjustPoolSize(int players) {
+    int size = Math.max(BASE_THREADS, (int) Math.ceil(players / PLAYERS_PER_THREAD));
+    instance.setActiveThreads(size);
+  }
+
+  public static void tick() {
+    instance.finishActive();
+  }
 }

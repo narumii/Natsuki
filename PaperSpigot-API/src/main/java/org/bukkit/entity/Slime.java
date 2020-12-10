@@ -5,13 +5,13 @@ package org.bukkit.entity;
  */
 public interface Slime extends LivingEntity {
 
-    /**
-     * @return The size of the slime
-     */
-    int getSize();
+  /**
+   * @return The size of the slime
+   */
+  int getSize();
 
-    /**
-     * @param sz The new size of the slime.
-     */
-    void setSize(int sz);
+  /**
+   * @param sz The new size of the slime.
+   */
+  void setSize(int sz);
 }

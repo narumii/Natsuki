@@ -9,55 +9,54 @@ import org.bukkit.inventory.InventoryView;
  * Represents a player related inventory event
  */
 public class InventoryOpenEvent extends InventoryEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
 
-    public InventoryOpenEvent(InventoryView transaction) {
-        super(transaction);
-        this.cancelled = false;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancelled;
 
-    /**
-     * Returns the player involved in this event
-     *
-     * @return Player who is involved in this event
-     */
-    public final HumanEntity getPlayer() {
-        return transaction.getPlayer();
-    }
+  public InventoryOpenEvent(InventoryView transaction) {
+    super(transaction);
+    this.cancelled = false;
+  }
 
-    /**
-     * Gets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins.
-     * <p>
-     * If an inventory open event is cancelled, the inventory screen will not
-     * show.
-     *
-     * @return true if this event is cancelled
-     */
-    public boolean isCancelled() {
-        return cancelled;
-    }
+  /**
+   * Returns the player involved in this event
+   *
+   * @return Player who is involved in this event
+   */
+  public final HumanEntity getPlayer() {
+    return transaction.getPlayer();
+  }
 
-    /**
-     * Sets the cancellation state of this event. A cancelled event will not
-     * be executed in the server, but will still pass to other plugins.
-     * <p>
-     * If an inventory open event is cancelled, the inventory screen will not
-     * show.
-     *
-     * @param cancel true if you wish to cancel this event
-     */
-    public void setCancelled(boolean cancel) {
-        cancelled = cancel;
-    }
+  /**
+   * Gets the cancellation state of this event. A cancelled event will not be executed in the
+   * server, but will still pass to other plugins.
+   * <p>
+   * If an inventory open event is cancelled, the inventory screen will not show.
+   *
+   * @return true if this event is cancelled
+   */
+  public boolean isCancelled() {
+    return cancelled;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Sets the cancellation state of this event. A cancelled event will not be executed in the
+   * server, but will still pass to other plugins.
+   * <p>
+   * If an inventory open event is cancelled, the inventory screen will not show.
+   *
+   * @param cancel true if you wish to cancel this event
+   */
+  public void setCancelled(boolean cancel) {
+    cancelled = cancel;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

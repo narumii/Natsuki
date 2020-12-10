@@ -9,39 +9,40 @@ import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftItem extends CraftEntity implements Item {
-    private final EntityItem item;
 
-    public CraftItem(CraftServer server, Entity entity, EntityItem item) {
-        super(server, entity);
-        this.item = item;
-    }
+  private final EntityItem item;
 
-    public CraftItem(CraftServer server, EntityItem entity) {
-        this(server, entity, entity);
-    }
+  public CraftItem(CraftServer server, Entity entity, EntityItem item) {
+    super(server, entity);
+    this.item = item;
+  }
 
-    public ItemStack getItemStack() {
-        return CraftItemStack.asCraftMirror(item.getItemStack());
-    }
+  public CraftItem(CraftServer server, EntityItem entity) {
+    this(server, entity, entity);
+  }
 
-    public void setItemStack(ItemStack stack) {
-        item.setItemStack(CraftItemStack.asNMSCopy(stack));
-    }
+  public ItemStack getItemStack() {
+    return CraftItemStack.asCraftMirror(item.getItemStack());
+  }
 
-    public int getPickupDelay() {
-        return item.pickupDelay;
-    }
+  public void setItemStack(ItemStack stack) {
+    item.setItemStack(CraftItemStack.asNMSCopy(stack));
+  }
 
-    public void setPickupDelay(int delay) {
-        item.pickupDelay = Math.min(delay, Short.MAX_VALUE);
-    }
+  public int getPickupDelay() {
+    return item.pickupDelay;
+  }
 
-    @Override
-    public String toString() {
-        return "CraftItem";
-    }
+  public void setPickupDelay(int delay) {
+    item.pickupDelay = Math.min(delay, Short.MAX_VALUE);
+  }
 
-    public EntityType getType() {
-        return EntityType.DROPPED_ITEM;
-    }
+  @Override
+  public String toString() {
+    return "CraftItem";
+  }
+
+  public EntityType getType() {
+    return EntityType.DROPPED_ITEM;
+  }
 }

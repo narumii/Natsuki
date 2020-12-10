@@ -9,38 +9,39 @@ import org.bukkit.event.HandlerList;
  * Stores data for lightning striking
  */
 public class LightningStrikeEvent extends WeatherEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean canceled;
-    private final LightningStrike bolt;
 
-    public LightningStrikeEvent(final World world, final LightningStrike bolt) {
-        super(world);
-        this.bolt = bolt;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean canceled;
+  private final LightningStrike bolt;
 
-    public boolean isCancelled() {
-        return canceled;
-    }
+  public LightningStrikeEvent(final World world, final LightningStrike bolt) {
+    super(world);
+    this.bolt = bolt;
+  }
 
-    public void setCancelled(boolean cancel) {
-        canceled = cancel;
-    }
+  public boolean isCancelled() {
+    return canceled;
+  }
 
-    /**
-     * Gets the bolt which is striking the earth.
-     *
-     * @return lightning entity
-     */
-    public LightningStrike getLightning() {
-        return bolt;
-    }
+  public void setCancelled(boolean cancel) {
+    canceled = cancel;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Gets the bolt which is striking the earth.
+   *
+   * @return lightning entity
+   */
+  public LightningStrike getLightning() {
+    return bolt;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

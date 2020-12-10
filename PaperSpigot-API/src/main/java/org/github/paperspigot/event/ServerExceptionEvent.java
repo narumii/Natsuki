@@ -9,28 +9,29 @@ import org.github.paperspigot.exception.ServerException;
  * Called whenever an exception is thrown in a recoverable section of the server.
  */
 public class ServerExceptionEvent extends Event {
-    private static final HandlerList handlers = new HandlerList();
-    private ServerException exception;
 
-    public ServerExceptionEvent(ServerException exception) {
-        this.exception = Preconditions.checkNotNull(exception, "exception");
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private ServerException exception;
 
-    /**
-     * Gets the wrapped exception that was thrown.
-     *
-     * @return Exception thrown
-     */
-    public ServerException getException() {
-        return exception;
-    }
+  public ServerExceptionEvent(ServerException exception) {
+    this.exception = Preconditions.checkNotNull(exception, "exception");
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Gets the wrapped exception that was thrown.
+   *
+   * @return Exception thrown
+   */
+  public ServerException getException() {
+    return exception;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }

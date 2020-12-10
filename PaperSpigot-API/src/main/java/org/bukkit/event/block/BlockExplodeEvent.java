@@ -1,69 +1,69 @@
 package org.bukkit.event.block;
 
+import java.util.List;
 import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
-
-import java.util.List;
 
 /**
  * Called when a block explodes
  */
 public class BlockExplodeEvent extends BlockEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancel;
-    private final List<Block> blocks;
-    private float yield;
 
-    public BlockExplodeEvent(final Block what, final List<Block> blocks, final float yield) {
-        super(what);
-        this.blocks = blocks;
-        this.yield = yield;
-        this.cancel = false;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancel;
+  private final List<Block> blocks;
+  private float yield;
 
-    public boolean isCancelled() {
-        return cancel;
-    }
+  public BlockExplodeEvent(final Block what, final List<Block> blocks, final float yield) {
+    super(what);
+    this.blocks = blocks;
+    this.yield = yield;
+    this.cancel = false;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancel = cancel;
-    }
+  public boolean isCancelled() {
+    return cancel;
+  }
 
-    /**
-     * Returns the list of blocks that would have been removed or were removed
-     * from the explosion event.
-     *
-     * @return All blown-up blocks
-     */
-    public List<Block> blockList() {
-        return blocks;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancel = cancel;
+  }
 
-    /**
-     * Returns the percentage of blocks to drop from this explosion
-     *
-     * @return The yield.
-     */
-    public float getYield() {
-        return yield;
-    }
+  /**
+   * Returns the list of blocks that would have been removed or were removed from the explosion
+   * event.
+   *
+   * @return All blown-up blocks
+   */
+  public List<Block> blockList() {
+    return blocks;
+  }
 
-    /**
-     * Sets the percentage of blocks to drop from this explosion
-     *
-     * @param yield The new yield percentage
-     */
-    public void setYield(float yield) {
-        this.yield = yield;
-    }
+  /**
+   * Returns the percentage of blocks to drop from this explosion
+   *
+   * @return The yield.
+   */
+  public float getYield() {
+    return yield;
+  }
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  /**
+   * Sets the percentage of blocks to drop from this explosion
+   *
+   * @param yield The new yield percentage
+   */
+  public void setYield(float yield) {
+    this.yield = yield;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 }
