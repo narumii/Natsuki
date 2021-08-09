@@ -1,4 +1,4 @@
-# Don't use it please this shit has a lot of bugs and it's also replaced by premium version that is available here: https://discord.gg/XWxPRHDfkK
+# Don't use it please this shit has a lot of bugs and it's also going to be replaced by premium version that is available here: https://discord.gg/XWxPRHDfkK
 # I made repo public only because `AvarionTeam (Szymeko, Noxerek)` started selling this(my) fork and they called it `AvarionSpigot`
 
 ## Natsuki 
