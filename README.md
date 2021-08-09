@@ -5,15 +5,15 @@
 PaperSpigot 1.8.8 with patched exploits.
 
 #### Features
-» Mostly patched exploits. (NBT, Handshake/Ping/Packet spam, itd). `Removed NBT Reading, Packet per second limit, Custom Spliter/Decoder`
-» McProtocolLib blocking. `I'm not sure xd`
-» AntiBot (bad). `Bad as fuck`
-» AntiVPN. `Bad`
-» AntiRedstoneCrasher. `Better version: https://github.com/narumii/RedstoneLimiter`
+- Mostly patched exploits. (NBT, Handshake/Ping/Packet spam, itd). `Removed NBT Reading, Packet per second limit, Custom Spliter/Decoder`
+- McProtocolLib blocking. `I'm not sure xd`
+- AntiBot (bad). `Bad as fuck`
+- AntiVPN. `Bad`
+- AntiRedstoneCrasher. `Better version: https://github.com/narumii/RedstoneLimiter`
 
 #### TODO
-› Optimization.
-› Patch move/fly crashers.
+- Optimization.
+- Patch move/fly crashers.
 
 
 ### PaperMC
