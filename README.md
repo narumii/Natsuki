@@ -1,34 +1,22 @@
+# Don't use it please this shit has a lot of bugs and it's also replaced by premium version that is available here: https://discord.gg/XWxPRHDfkK
+# I made repo public only because `AvarionTeam (Szymeko, Noxerek)` started selling this(my) fork and they called it `AvarionSpigot`
+
 ## Natsuki 
 PaperSpigot 1.8.8 with patched exploits.
 
-## Informations
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-ff69b4.svg)](https://opensource.org/licenses/GPL-3.0)
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8da8aa07a7fe47e0ba019bdd7dbce634)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=narumii/Natsuki&amp;utm_campaign=Badge_Grade)
-
-[![Version Badge](https://img.shields.io/static/v1?label=Version&message=0.9.9&color=ff69b4)]()
-
-[![Discord Badge](https://discordapp.com/api/guilds/683324651010785337/widget.png)](https://discord.gg/QqW7ZPv)
-
-
-#### Posiada
-» Mostly patched exploits. (NBT, Handshake/Ping/Packet spam, itd).
-
-» McProtocolLib blocking.
-
-» AntiBot (bad).
-
-» AntiVPN.
-
-» AntiRedstoneCrasher.
+#### Features
+» Mostly patched exploits. (NBT, Handshake/Ping/Packet spam, itd). `Removed NBT Reading, Packet per second limit, Custom Spliter/Decoder`
+» McProtocolLib blocking. `I'm not sure xd`
+» AntiBot (bad). `Bad as fuck`
+» AntiVPN. `Bad`
+» AntiRedstoneCrasher. `Better version: https://github.com/narumii/RedstoneLimiter`
 
 #### TODO
 › Optimization.
-
 › Patch move/fly crashers.
 
 
 ### PaperMC
-[![Paper2 Badge](https://img.shields.io/static/v1?label=PaperMC&message=Repo&color=ff69b4)](https://github.com/PaperMC/Paper)
+https://github.com/PaperMC/Paper
 
 [![PaperLicense Badge](https://img.shields.io/static/v1?label=PaperMC&message=Lincese&color=ff69b4)](https://github.com/PaperMC/Paper/blob/master/LICENSE.md)
